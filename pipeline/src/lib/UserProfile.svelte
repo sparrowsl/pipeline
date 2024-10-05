@@ -258,7 +258,7 @@
                 class="w-[17px] aspect-square object-contain"
                 alt=""
               />
-              <a href="#profile">Profile</a>
+              <a href="/profile">Profile</a>
             </li>
             <li class="flex gap-4 items-center mt-6">
               <img
