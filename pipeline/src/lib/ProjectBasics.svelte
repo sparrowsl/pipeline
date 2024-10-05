@@ -1,0 +1,186 @@
+<script>
+      import { createEventDispatcher } from 'svelte';
+
+let selectedTags = [];
+let isOpen = false;
+let inputValue = '';
+
+const dispatch = createEventDispatcher();
+
+const availableTags = [
+  'Technology', 'Environment', 'Education', 'Healthcare', 'Social Impact',
+  'Art & Culture', 'Community Development', 'Innovation'
+  // Add more tags as needed
+];
+
+function toggleDropdown() {
+  event.preventDefault();
+  isOpen = !isOpen;
+}
+
+function addTag(tag) {
+  if (!selectedTags.includes(tag)) {
+    selectedTags = [...selectedTags, tag];
+    dispatch('change', selectedTags);
+  }
+  inputValue = '';
+  isOpen = false;
+}
+
+function removeTag(tag) {
+  selectedTags = selectedTags.filter(t => t !== tag);
+  dispatch('change', selectedTags);
+}
+
+$: filteredTags = availableTags.filter(tag => 
+  tag.toLowerCase().includes(inputValue.toLowerCase()) && !selectedTags.includes(tag)
+);
+
+let currentSection = 'basics';
+
+// Function to check if a section is active
+function isActive(section) {
+  return currentSection === section;
+}
+</script>
+
+<section class="flex flex-col self-center p-10 mt-16 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
+    <nav class="flex flex-wrap gap-10 justify-between items-center w-full text-3xl leading-none text-black whitespace-nowrap max-md:max-w-full">
+        <a href="/project/basics" class="flex flex-col items-center justify-center w-[184px] text-center" on:click={() => currentSection = 'basics'}>
+          <div class="w-full">Basics</div>
+          {#if isActive('basics')}
+            <div class="mt-2.5 bg-lime-800 rounded h-[7px] w-full max-w-[184px]"></div>
+          {/if}
+        </a>
+        <a href="/createProject/team" class="flex flex-col items-center justify-center w-[184px] text-center" class:font-semibold={isActive('team')} on:click={() => currentSection = 'team'}>
+          <div class="w-full">Team</div>
+          {#if isActive('team')}
+            <div class="mt-2.5 bg-lime-800 rounded h-[7px] w-full max-w-[184px]"></div>
+          {/if}
+        </a>
+        <a href="/createProject/links" class="flex flex-col items-center justify-center w-[184px] text-center" class:font-semibold={isActive('links')} on:click={() => currentSection = 'links'}>
+          <div class="w-full">Links</div>
+          {#if isActive('links')}
+            <div class="mt-2.5 bg-lime-800 rounded h-[7px] w-full max-w-[184px]"></div>
+          {/if}
+        </a>
+        <a href="/createProject/funding" class="flex flex-col items-center justify-center w-[184px] text-center" class:font-semibold={isActive('funding')} on:click={() => currentSection = 'funding'}>
+          <div class="w-full">Funding</div>
+          {#if isActive('funding')}
+            <div class="mt-2.5 bg-lime-800 rounded h-[7px] w-full max-w-[184px]"></div>
+          {/if}
+        </a>
+      </nav>
+  
+    <form class="flex flex-col mt-14 w-full max-md:mt-10">
+      <div class="flex flex-col w-full max-md:max-w-full">
+        <div class="flex flex-col items-start w-full leading-none max-md:max-w-full">
+          <div class="flex flex-col max-w-full w-[409px]">
+            <h2 class="text-4xl font-semibold text-black">Project Images</h2>
+            <p class="mt-2.5 text-xl text-stone-300">Click to change Project's Cover & Profile photo</p>
+          </div>
+        </div>
+        <div class="flex relative flex-col mt-12 w-full max-md:mt-10 max-md:max-w-full">
+          <div class="flex z-0 gap-2.5 w-full bg-stone-300 min-h-[347px] rounded-[43px] max-md:max-w-full" role="img" aria-label="Project cover image"></div>
+          <div class="flex absolute z-0 gap-2.5 items-center border-white border-solid aspect-square bg-stone-300 border-[10px] bottom-[-106px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" role="img" aria-label="Project profile image"></div>
+        </div>
+      </div>
+  
+      <div class="flex flex-col justify-center mt-44 w-full max-md:mt-10 max-md:max-w-full">
+        <div class="flex flex-col w-full max-md:max-w-full">
+          <label for="projectTitle" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project title</label>
+          <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">What is the title of your project</p>
+          <input type="text" id="projectTitle" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:max-w-full mt-2.5 px-4" aria-required="true" />
+        </div>
+  
+        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+          <label for="projectBio" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project bio</label>
+          <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Give a short description of your project</p>
+          <textarea id="projectBio" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[150px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
+        </div>
+
+        
+          
+          <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+            <label for="projectTags" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project tags</label>
+            <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Select the keywords that best describe your project.</p>
+            
+            <div class="relative mt-2.5 w-full">
+              <div class="flex flex-wrap items-center py-3 px-6 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] bg-white">
+                <div class="flex flex-wrap flex-grow gap-2 items-center pr-8"> <!-- Added pr-8 for arrow space -->
+                  {#each selectedTags as tag}
+                    <span class="flex items-center px-3 py-1 text-lime-800 bg-lime-200 rounded-full">
+                      {tag}
+                      <button on:click={() => removeTag(tag)} class="ml-2 text-lime-800 hover:text-lime-900">×</button>
+                    </span>
+                  {/each}
+                  <input
+                    type="text"
+                    bind:value={inputValue}
+                    on:focus={toggleDropdown}
+                    placeholder="Type to add tags"
+                    class="flex-grow bg-transparent border-none outline-none"
+                  />
+                </div>
+                <button 
+                  on:click={toggleDropdown} 
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 focus:outline-none"
+                  aria-label="Toggle tag dropdown"
+                >
+                  <img 
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/5884aaa40d84100252b9385acefd99519ea142223ddf8cccbdc39ac10099df1f?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
+                    alt="Dropdown arrow" 
+                    class="w-5 h-5 object-contain transition-transform duration-200 {isOpen ? 'rotate-180' : ''}"
+                  />
+                </button>
+              </div>
+              
+              {#if isOpen}
+                <div class="overflow-auto absolute z-10 mt-1 w-full max-h-60 bg-white rounded-md border border-gray-300 shadow-lg">
+                  {#each filteredTags as tag}
+                    <button
+                      on:click={() => addTag(tag)}
+                      class="block px-4 py-2 w-full text-left hover:bg-lime-100 focus:bg-lime-200 focus:outline-none"
+                    >
+                      {tag}
+                    </button>
+                  {/each}
+                </div>
+              {/if}
+            </div>
+          </div>
+
+          
+        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+          <label for="projectCountry" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Country</label>
+          <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Choose the location where you are running the project.</p>
+          <div class="flex flex-col mt-2.5 w-full max-md:max-w-full">
+            <div class="flex gap-1.5 items-center py-6 pr-20 pl-6 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:px-5 max-md:max-w-full">
+              <select id="projectCountry" class="flex-grow bg-transparent border-none outline-none" aria-label="Select project country">
+                <option value="">Select a country</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+                <option value="Australia">Australia</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="India">India</option>
+              </select>
+            </div>
+          </div>
+        </div>
+  
+        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+          <label for="projectDetails" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project details</label>
+          <p class="mt-2.5 text-xl leading-5 text-stone-300 max-md:max-w-full">Tell potential contributors more about your project. Provide details that will motivate people to contribute. A good pitch is compelling, informative, and easy to digest.</p>
+          <textarea id="projectDetails" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
+        </div>
+  
+        <button type="submit" class="self-end px-28 py-7 mt-9 text-lg font-light leading-none text-lime-100 bg-lime-800 rounded-[73px] max-md:px-5">
+          save & continue
+        </button>
+      </div>
+    </form>
+  </section>
