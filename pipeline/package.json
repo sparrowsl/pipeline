@@ -43,6 +43,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"svelte-routing": "^2.13.0",
 		"svelte-styled-components": "^0.0.1"
 	}
 }
