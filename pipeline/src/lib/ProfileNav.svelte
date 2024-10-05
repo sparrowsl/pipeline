@@ -1,8 +1,6 @@
-
-
-  <script>
+<script>
     import { createEventDispatcher } from 'svelte';
-    import { goto } from '$app/navigation'; // Import this if you're using SvelteKit
+    import { goto } from '$app/navigation';
   
     export let navSections = [];
     export let currentSection = navSections[0]?.id || '';
@@ -24,21 +22,20 @@
     }
   </script>
   
-  <nav class="flex flex-wrap gap-10 justify-between items-center w-full text-3xl leading-none text-black whitespace-nowrap max-md:max-w-full">
+  <nav class="flex flex-wrap gap-10 justify-between items-center w-full text-3xl whitespace-nowrap max-md:max-w-full">
     {#each navSections as section (section.id)}
       <a 
         href={section.href} 
-        class="flex flex-col items-center justify-center w-[184px] text-center" 
-        class:font-semibold={isActive(section.id)} 
+        class="flex flex-col justify-center items-center self-stretch my-auto w-[184px]"
+        class:font-semibold={isActive(section.id)}
         on:click|preventDefault={() => handleClick(section)}
       >
-        <div class="w-full">
-          <slot name="item" {section}>
-            {section.label}
-          </slot>
+        <div class="flex gap-2 items-center">
+          <img loading="lazy" src={section.icon} alt="" class="object-contain self-stretch my-auto w-10 shrink-0 aspect-square" />
+          <span class="self-stretch my-auto">{section.label}</span>
         </div>
         {#if isActive(section.id)}
-          <div class="mt-2.5 bg-lime-800 rounded h-[7px] w-full max-w-[184px]"></div>
+          <div class="flex mt-2.5 max-w-full bg-lime-800 rounded min-h-[7px] w-[184px]" aria-hidden="true"></div>
         {/if}
       </a>
     {/each}

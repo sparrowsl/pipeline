@@ -1,5 +1,5 @@
 <script>
-    import Header from '../../../lib/Header.svelte';
+    import Nav from '../../../lib/Nav.svelte';
     import ProfileInfo from '../../../lib/ProfileInfo.svelte';
 
     import Footer from '../../../lib/Footer.svelte';
@@ -24,7 +24,7 @@
     </script>
     
     <div class="flex overflow-hidden flex-col items-center bg-white">
-      <Header />
+      <Nav />
       <ProfileInfo />
 
      

@@ -2,19 +2,35 @@
     <div class="flex flex-col max-md:max-w-full">
       <div class="flex flex-col w-full max-md:max-w-full">
         <div class="flex relative flex-col w-full max-md:max-w-full">
-          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/8030ec6426e85620456b5636b4a5396ca24f43b5e55a6739527e90baef3c9203?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Profile background" class="object-contain z-0 gap-2.5 w-full aspect-[3.33] min-h-[347px] rounded-[43px] max-md:max-w-full" />
+          <img 
+            loading="lazy" 
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8030ec6426e85620456b5636b4a5396ca24f43b5e55a6739527e90baef3c9203?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
+            alt="Profile background" 
+            class="object-cover z-0 w-full aspect-[3.33] min-h-[347px] rounded-[43px] max-md:max-w-full" 
+          />
           <!-- svelte-ignore a11y-img-redundant-alt -->
-          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/8be346601e8268ae519222ba68db448c3acfbf4c7f5a8ae0e074beb1eb837349?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Profile picture" class="object-contain absolute z-0 gap-2.5 items-center max-w-full aspect-[1.01] bottom-[-105px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" />
-       
+          <img 
+            loading="lazy" 
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8be346601e8268ae519222ba68db448c3acfbf4c7f5a8ae0e074beb1eb837349?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
+            alt="Profile picture" 
+            class="object-cover absolute z-10 bottom-[-105px] left-[123px] w-[211px] h-[211px] rounded-full" 
+          />
         </div>
       </div>
     </div>
-    <a href="/profile/edit">
-    <button class="flex gap-2.5 justify-center items-center self-end px-6 py-3.5 mt-12 text-2xl leading-none text-lime-800 bg-lime-200 border-2 border-lime-800 border-solid rounded-[50px] max-md:px-5 max-md:mt-10">
-      Edit Profile
-      <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/6ace0eb1d4bfd4db87a6bf2277283b6a10948092c6fe21a68b635fae72ce805b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="" class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square" />
-    </button>
-</a>
+    <div class="flex justify-end mt-12 max-md:mt-10">
+      <a href="/profile/edit" class="inline-block">
+        <button class="flex gap-2.5 justify-center items-center px-6 py-3.5 text-2xl leading-none text-lime-800 bg-lime-200 border-2 border-lime-800 border-solid rounded-[50px] max-md:px-5">
+          Edit Profile
+          <img 
+            loading="lazy" 
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/6ace0eb1d4bfd4db87a6bf2277283b6a10948092c6fe21a68b635fae72ce805b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
+            alt="" 
+            class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square" 
+          />
+        </button>
+      </a>
+    </div>
   </section>
   
   <section class="flex flex-col mt-16 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
