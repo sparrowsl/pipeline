@@ -9,10 +9,12 @@
         </div>
       </div>
     </div>
+    <a href="/profile/edit">
     <button class="flex gap-2.5 justify-center items-center self-end px-6 py-3.5 mt-12 text-2xl leading-none text-lime-800 bg-lime-200 border-2 border-lime-800 border-solid rounded-[50px] max-md:px-5 max-md:mt-10">
       Edit Profile
       <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/6ace0eb1d4bfd4db87a6bf2277283b6a10948092c6fe21a68b635fae72ce805b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="" class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square" />
     </button>
+</a>
   </section>
   
   <section class="flex flex-col mt-16 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
