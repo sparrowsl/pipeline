@@ -47,7 +47,7 @@
   
   {#if $modalOpen}
     <div class="flex fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50">
-      <div class="p-4 bg-white rounded-lg">
+      <div class="p-4 rounded-lg">
         <WalletPopup {projectName} {totalAmount} />
       </div>
     </div>
