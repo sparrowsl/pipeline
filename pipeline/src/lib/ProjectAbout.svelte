@@ -6,7 +6,11 @@
   </article>
   <article class="flex flex-col w-full">
     <h2 class="text-2xl font-semibold leading-none text-black max-md:max-w-full">Features</h2>
-    <p class="mt-5 text-xl leading-7 text-neutral-700 max-md:max-w-full">
-      Senectus adipiscing elit ipsum ut eu eget enim vestibulum. Elit enim vestibulum habitasse id id nunc pellentesque nibh. Velit tristique auctor bibendum laoreet. Scelerisque facilisis quam et tellus. <br /><br />Gravida amet sagittis id lectus quam. Libero tincidunt nascetur vitae elementum fringilla. Quam curabitur in vitae posuere gravida. Tristique enim commodo tempor aliquet malesuada maecenas augue. <br /><br />Adipiscing eget diam nulla tempor in quam gravida lorem vitae. Sit ullamcorper nec euismod nam convallis aliquam scelerisque fermentum. Diam elementum quam ultricies facilisis et. Morbi vitae sagittis quis leo nibh. Pulvinar at nibh habitant curabitur nulla ipsum lorem ut.
-    </p>
+    <ol class="pl-6 mt-5 space-y-4 text-xl leading-7 list-decimal text-neutral-700">
+        <li>Senectus adipiscing elit ipsum ut eu eget enim vestibulum. Elit enim vestibulum habitasse id id nunc pellentesque nibh. Velit tristique auctor bibendum laoreet. Scelerisque facilisis quam et tellus.</li>
+        
+        <li>Gravida amet sagittis id lectus quam. Libero tincidunt nascetur vitae elementum fringilla. Quam curabitur in vitae posuere gravida. Tristique enim commodo tempor aliquet malesuada maecenas augue.</li>
+        
+        <li>Adipiscing eget diam nulla tempor in quam gravida lorem vitae. Sit ullamcorper nec euismod nam convallis aliquam scelerisque fermentum. Diam elementum quam ultricies facilisis et. Morbi vitae sagittis quis leo nibh. Pulvinar at nibh habitant curabitur nulla ipsum lorem ut.</li>
+      </ol>
   </article>
