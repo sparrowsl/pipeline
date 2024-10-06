@@ -21,10 +21,11 @@
       const { href, id } = event.detail;
       goto(href);
     }
+    export let data;
     </script>
     
     <div class="flex overflow-hidden flex-col items-center bg-white">
-      <Header />
+      <Header {data}/>
       <ProfileInfo />
 
      

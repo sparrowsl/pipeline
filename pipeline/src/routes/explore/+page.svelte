@@ -20,6 +20,7 @@
         <div class="mx-auto max-w-4xl text-center">
             <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
                 Discover impact projects, donate directly,<br/>& participate in funding rounds.
+                
             </h1>
         </div>
     </div>

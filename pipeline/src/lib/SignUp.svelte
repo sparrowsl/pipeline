@@ -57,6 +57,30 @@
 
 
 <script>
+  export let name = '';
+  export let email = '';
+  export let password = '';
+  export let loading = false;
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log('Submitted:', { name, email, password });
+
+    if (name && email && password) {
+      dispatch("signUp", {
+        name,
+        email,
+        password
+      });
+    }else {
+      console.log("Form fields are missing data");
+    }
+  }
+
   let rememberMe = false;
 </script>
 
@@ -66,24 +90,24 @@
       <p class="mt-4 text-xl text-neutral-400 max-md:text-lg">Enter your info to sign up for PipeLine</p>
   </header>
 
-  <form class="flex flex-col mt-12 w-full text-lg max-md:mt-8 max-md:max-w-full">
+  <form on:submit={handleSubmit} class="flex flex-col mt-12 w-full text-lg max-md:mt-8 max-md:max-w-full">
       <div class="flex flex-col w-full font-medium text-black whitespace-nowrap max-md:max-w-full">
           <label for="name" class="max-md:max-w-full">Name</label>
-          <input type="text" id="name" class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
+          <input type="text" id="name" bind:value={name} class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
       </div>
 
       <div class="flex flex-col mt-6 w-full font-medium text-black whitespace-nowrap max-md:max-w-full">
           <label for="email" class="max-md:max-w-full">Email</label>
-          <input type="email" id="email" class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
+          <input type="email" id="email" bind:value={email} class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
       </div>
 
       <div class="flex flex-col mt-6 w-full font-medium text-black whitespace-nowrap max-md:max-w-full">
           <label for="password" class="max-md:max-w-full">Password</label>
-          <input type="password" id="password" class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
+          <input type="password" id="password" bind:value={password} class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4 max-md:max-w-full" required />
       </div>
 
-      <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base font-light text-white bg-teal-900 h-[45px] rounded-full max-md:px-5 max-md:max-w-full">
-          Sign up
+      <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base font-light text-white bg-teal-900 h-[45px] rounded-full max-md:px-5 max-md:max-w-full" disabled={loading}>
+          {loading ? 'Signing up...' : 'Sign up'}
       </button>
 
       <div class="flex flex-wrap gap-6 justify-between items-center mt-6 w-full text-sm leading-none max-md:max-w-full">

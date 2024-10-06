@@ -183,9 +183,15 @@
 
   <script>
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
+    import { invalidateAll } from '$app/navigation';
+    import { browser } from '$app/environment';
     
     let isOpen = false;
     let dropdownNode;
+    let user = null; // To store user information
+    let error = null; // To handle errors
+    const defaultImageUrl = "https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg";
   
     function toggleDropdown(event) {
       event.stopPropagation();
@@ -198,19 +204,74 @@
       }
     }
   
-    onMount(() => {
-      const handleGlobalClick = (event) => {
-        if (isOpen && dropdownNode && !dropdownNode.contains(event.target)) {
-          handleClickOutside(event);
+    onMount(async () => {
+        const handleGlobalClick = (event) => {
+          if (isOpen && dropdownNode && !dropdownNode.contains(event.target)) {
+            handleClickOutside(event);
+          }
+        };
+
+        document.addEventListener('click', handleGlobalClick);
+
+        try {
+          const response = await fetch('/api/me', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            user = result.user; // Store user data
+          } else {
+            const result = await response.json();
+            error = result.error; // Store error message
+          }
+        } catch (err) {
+          error = 'Failed to fetch user data'; // Handle fetch errors
         }
-      };
-  
-      document.addEventListener('click', handleGlobalClick);
-  
-      return () => {
-        document.removeEventListener('click', handleGlobalClick);
-      };
-    });
+
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  });
+
+
+    async function handleLogout() {
+      try {
+        const response = await fetch('/api/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success) {
+
+            if (browser) {
+              localStorage.clear();
+              sessionStorage.clear();
+            }
+
+            // Invalidate all current `load` functions
+            await invalidateAll();
+            // Redirect to home page or login page after successful logout
+            goto('/signIn');
+          } else {
+            console.error('Logout was not successful');
+          }
+        } else {
+          console.error('Logout request failed');
+        }
+      } catch (error) {
+        console.error('Error during logout:', error);
+      }
+    }
+
+
   </script>
   
   <div class="flex relative items-center">
@@ -221,12 +282,14 @@
       aria-expanded={isOpen}
       aria-haspopup="true"
     >
+    {#if user && user.id}
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/96beec81ef327e5423daad349680a010114e431e2dde868d082043ddbe2bcb6a?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
+        src={(user.image_url && user.image_url !== "") ? user.image_url : defaultImageUrl}
         alt="User avatar"
         class="w-[25px] aspect-square object-contain"
       />
+      {/if}
     </button>
   
     <!-- Dropdown -->
@@ -240,12 +303,11 @@
             <div class="flex p-3 rounded-3xl border-2 border-white bg-zinc-300">
               <img
                 loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/f50886c560a5ea3db3b34b8d41e664325576c095b4bd239ce6486cf15c9fcce6?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                class="w-[22px] object-contain aspect-square"
+                src={(user.image_url && user.image_url !== "") ? user.image_url : defaultImageUrl}                class="w-[22px] object-contain aspect-square"
                 alt="User avatar"
               />
             </div>
-            <span class="text-white">Username</span>
+            <span class="text-white">{user.display_name}</span>
           </div>
   
           <hr class="mt-4 w-full border-stone-300" />
@@ -308,7 +370,7 @@
                 class="w-[18px] aspect-square object-contain"
                 alt=""
               />
-              <a href="#logout">Logout</a>
+              <button on:click={handleLogout} class="text-left">Logout</button>
             </li>
           </ul>
         </nav>
