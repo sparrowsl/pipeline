@@ -329,7 +329,7 @@
                 class="w-[17px] aspect-[0.94] object-contain"
                 alt=""
               />
-              <a href="#projects">Projects</a>
+              <a href="/userProjects">Projects</a>
             </li>
             <li class="flex gap-4 items-center mt-6">
               <img
@@ -361,7 +361,7 @@
                 class="w-[18px] aspect-[1.06] object-contain"
                 alt=""
               />
-              <a href="#settings">Settings</a>
+              <a href="/profile/edit">Settings</a>
             </li>
             <li class="flex gap-4 items-center mt-4">
               <img
