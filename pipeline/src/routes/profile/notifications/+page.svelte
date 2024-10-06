@@ -21,18 +21,12 @@
       const { href, id } = event.detail;
       goto(href);
     }
-    export let data;
     </script>
     
     <div class="flex overflow-hidden flex-col items-center bg-white">
-<<<<<<< HEAD
-      <Header {data}/>
-=======
       <Nav />
->>>>>>> main
       <ProfileInfo />
 
-     
         <div class="w-full max-w-[1156px] mt-20">
           <SubNav {navSections} bind:currentSection on:navigate={handleNavigation} />
     
