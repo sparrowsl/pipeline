@@ -87,11 +87,15 @@
     </div>
     </div>
     <div class="flex flex-wrap gap-10 justify-between items-center mt-11 w-full text-2xl font-medium leading-none max-md:mt-10 max-md:max-w-full">
-      <button class="gap-2.5 self-stretch px-16 py-7 my-auto text-white bg-teal-900 min-w-[240px] rounded-[49px] w-[710px] max-md:px-5 max-md:max-w-full">
+      <a href="/createProject">
+        <button class="gap-2.5 self-stretch px-16 py-7 my-auto text-white bg-teal-900 min-w-[240px] rounded-[49px] w-[710px] max-md:px-5 max-md:max-w-full">
         Create Project
       </button>
+    </a>
+    <a href="/explore">
       <button class="gap-2.5 self-stretch px-16 py-7 my-auto bg-lime-200 border-2 border-lime-800 border-solid min-w-[240px] rounded-[49px] text-teal-950 w-[372px] max-md:px-5">
         Explore Projects
       </button>
+    </a>
     </div>
   </section>
