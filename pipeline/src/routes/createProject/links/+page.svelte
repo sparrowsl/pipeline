@@ -19,6 +19,18 @@
         imageLoaded = true;
       };
     });
+
+    function navigateToNextSection() {
+    const currentIndex = navSections.findIndex(section => section.id === currentSection);
+    if (currentIndex < navSections.length - 1) {
+      const nextSection = navSections[currentIndex + 1];
+      currentSection = nextSection.id;
+      goto(nextSection.href);
+    } else {
+      // If it's the last section, you might want to submit the form or do something else
+      console.log('Project creation completed');
+    }
+  }
 </script>
 
 <div class="w-full min-h-screen bg-white">
@@ -54,7 +66,7 @@
           <a href="/createProject/funding" class="gap-2.5 self-stretch my-auto">Funding</a>
         </nav>
       
-        <section class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full">
+        <section class="flex flex-col justify-center mt-14 w-[90%] text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full">
           <form>
             <LinkInput label="Email" />
             <LinkInput label="Portfolio" />
@@ -64,7 +76,7 @@
             <LinkInput label="Website" />
             <LinkInput label="Others" />
       
-            <button type="submit" class="gap-1 self-stretch px-12 py-8 mt-9 w-full text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5 max-md:max-w-full">
+            <button type="submit" on:click={navigateToNextSection} class="gap-1 self-stretch px-12 py-8 mt-9 w-full text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5 max-md:max-w-full">
               save & continue
             </button>
           </form>

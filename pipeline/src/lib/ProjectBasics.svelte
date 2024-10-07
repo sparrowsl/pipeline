@@ -71,8 +71,8 @@
     }
 </script>
 
-<section class="flex flex-col self-center p-10 mt-16 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
-  <SubNav {navSections} bind:currentSection on:navigate={handleNavigation} />
+<section class="flex flex-col self-center p-10 mt-5 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
+ 
   
   {#if currentSection === 'basics'}
     <form class="flex flex-col mt-14 w-full max-md:mt-10">
@@ -202,9 +202,6 @@
           <textarea id="projectDetails" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
         </div>
   
-        <button type="submit" class="self-end px-28 py-7 mt-9 text-lg font-light leading-none text-lime-100 bg-lime-800 rounded-[73px] max-md:px-5">
-          save & continue
-        </button>
       </div>
     </form>
   {:else if currentSection === 'team'}
