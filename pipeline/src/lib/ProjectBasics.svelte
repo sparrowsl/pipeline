@@ -1,9 +1,31 @@
 <script>
+	import { projectStore } from './../stores/projectStore.js';
+  import {get } from 'svelte/store';
   import { createEventDispatcher } from 'svelte';
   import SubNav from '../lib/SubNav.svelte';
   import { goto } from '$app/navigation'; // Import this if you're using SvelteKit
+  
 
-  let selectedTags = [];
+  let title = get(projectStore).title;
+  let bio = get(projectStore).bio;
+  let country = get(projectStore).country;
+  let details = get(projectStore).details;
+
+  let selectedTags = [...get(projectStore).tags];
+
+  function updateStore() {
+    projectStore.update(data => {
+      data.title = title;
+      data.bio = bio;
+      data.tags = tags;
+      data.country = country;
+      data.details = details;
+      return data
+    })
+  }
+ 
+
+  //let selectedTags = [];
   let isOpen = false;
   let inputValue = '';
 
@@ -117,13 +139,13 @@
         <div class="flex flex-col w-full max-md:max-w-full">
           <label for="projectTitle" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project title</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">What is the title of your project</p>
-          <input type="text" id="projectTitle" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:max-w-full mt-2.5 px-4" aria-required="true" />
+          <input type="text" id="projectTitle" bind:value={title} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:max-w-full mt-2.5 px-4" aria-required="true" />
         </div>
   
         <div class="flex flex-col mt-9 w-full max-md:max-w-full">
           <label for="projectBio" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project bio</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Give a short description of your project</p>
-          <textarea id="projectBio" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[150px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
+          <textarea id="projectBio" bind:value={bio} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[150px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
         </div>
         
         <div class="flex flex-col mt-9 w-full max-md:max-w-full">
@@ -180,7 +202,7 @@
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Choose the location where you are running the project.</p>
           <div class="flex flex-col mt-2.5 w-full max-md:max-w-full">
             <div class="flex gap-1.5 items-center py-6 pr-20 pl-6 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:px-5 max-md:max-w-full">
-              <select id="projectCountry" class="flex-grow bg-transparent border-none outline-none" aria-label="Select project country">
+              <select id="projectCountry" bind:value={country} on:change={updateStore} class="flex-grow bg-transparent border-none outline-none" aria-label="Select project country">
                 <option value="">Select a country</option>
                 <option value="USA">USA</option>
                 <option value="Canada">Canada</option>
@@ -199,7 +221,7 @@
         <div class="flex flex-col mt-9 w-full max-md:max-w-full">
           <label for="projectDetails" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project details</label>
           <p class="mt-2.5 text-xl leading-5 text-stone-300 max-md:max-w-full">Tell potential contributors more about your project. Provide details that will motivate people to contribute. A good pitch is compelling, informative, and easy to digest.</p>
-          <textarea id="projectDetails" class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
+          <textarea id="projectDetails" bind:value={details} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
         </div>
   
       </div>

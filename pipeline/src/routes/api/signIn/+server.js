@@ -37,4 +37,4 @@ export async function POST({ request }) {
       console.error('Server error during sign-in:', err);
       return json({ error: 'Failed to sign in' }, { status: 500 });
     }
-  }
+}
