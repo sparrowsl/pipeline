@@ -1,13 +1,56 @@
 <script>
-  import Contributors from './../../lib/Contributors.svelte';
-  import Nav from '../../lib/Nav.svelte';
-  import ProfileInfo from '../../lib/ProfileInfo.svelte';
-  import Footer from '../../lib/Footer.svelte';
-  import UserNav from '../../lib/UserNav.svelte';
-  import ProjectAbout from '../../lib/ProjectAbout.svelte';
-  import Card from '../../lib/Card.svelte';
-  import ProjectMembers from '../../lib/ProjectMembers.svelte';
-  import DpgStatus from '../../lib/dpgStatus.svelte';
+  import Contributors from '../../../lib/Contributors.svelte';
+  import Nav from '../../../lib/Nav.svelte';
+  import ProfileInfo from '../../../lib/ProfileInfo.svelte';
+  import Footer from '../../../lib/Footer.svelte';
+  import UserNav from '../../../lib/UserNav.svelte';
+  import ProjectAbout from '../../../lib/ProjectAbout.svelte';
+  import Card from '../../../lib/Card.svelte';
+  import ProjectMembers from '../../../lib/ProjectMembers.svelte';
+  import DpgStatus from '../../../lib/dpgStatus.svelte';
+  import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+
+  let id;
+    $: id = $page.params.id;
+
+  let project = {};
+  let loading = true;
+  let error = null;
+
+  let imageUrl = 'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
+  async function getSingleProject() {
+    try {
+      const response = await fetch(`/api/projects/singleProject/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+
+        project = data.project;
+
+      
+    } catch (error) {
+        error = e.message;
+        alert(error);
+      }finally{
+        loading = false;
+      }
+    }
+  
+    onMount(() => {
+      getSingleProject();
+    })
+
+
 
   let activeNavItem = 'projectDetails';
 
@@ -44,35 +87,16 @@
 
 <div class="flex overflow-hidden flex-col items-center bg-white">
   <Nav />
-  <div class="w-full max-w-[1300px] mx-auto px-4 mt-10">
-    <div class="relative mb-24">
-      <label for="banner-upload" class="block cursor-pointer">
-        <div class="w-full h-[295.61px] bg-[#d9d9d9] rounded-[37.69px] flex justify-center items-center overflow-hidden">
-          {#if ProjectBannerImage}
-            <img src={ProjectBannerImage} alt="Banner" class="object-cover w-full h-full" />
-          {:else}
-            <div class="text-center">Click to upload banner image</div>
-          {/if}
-        </div>
-      </label>
-      <input type="file" id="banner-upload" class="hidden" accept="image/*" on:change={handleBannerUpload} />
-      
-      <label for="profile-upload" class="cursor-pointer absolute bottom-[-92.6px] left-7">
-        <div class="w-[185.19px] h-[185.19px] bg-[#d9d9d9] rounded-full border-8 border-white flex justify-center items-center overflow-hidden">
-          {#if ProjectProfileImage}
-            <img src={ProjectProfileImage} alt="Profile" class="object-cover w-full h-full rounded-full" />
-          {:else}
-            <div class="text-sm text-center">Click to upload profile picture</div>
-          {/if}
-        </div>
-      </label>
-      <input type="file" id="profile-upload" class="hidden" accept="image/*" on:change={handleProfileUpload} />
-    </div>
+  <div class="w-full max-w-[1300px] mx-auto px-4">
+    <section class="flex relative flex-col mt-8 w-full max-w-[1300px] max-md:mt-10 max-md:max-w-full mb-[160px] ">
+      <img src={imageUrl} class="flex z-0 gap-2.5 w-full bg-stone-300 h-[500px] rounded-[48px] max-md:max-w-full" role="img" aria-label="Project hero image" alt="Project image"/>
+    
+    </section>
 
-    <section class="flex flex-col w-full">
+    <section class="flex flex-col w-full mt-5">
       <div class="flex flex-wrap gap-10 justify-between items-center w-full">
         <h1 class="text-6xl font-semibold leading-none text-black max-w-[852px] max-md:max-w-full max-md:text-4xl">
-          Project Title
+          {project.title || 'Project Title'}
         </h1>
         <div class="flex gap-1.5 items-center text-xl leading-loose text-neutral-600">
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/edd6d143a10aa89a67f0101c84563e276eb2ea6bc943000847a62b3bcaeb9863?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Date icon" class="object-contain w-[30px] h-[30px]" />
@@ -80,7 +104,7 @@
         </div>
       </div>
       <p class="mt-5 text-3xl font-light leading-10 text-black">
-        Lorem ipsum dolor sit amet consectetur. Turpis egestas ultricies eget vitae dignissim amet diam. Turpis egestas ultricies eget vitae dignissim amet diam.
+        {project.bio || 'Project bio'}
       </p>
     </section>
 
@@ -90,7 +114,14 @@
           Tags
         </h2>
         <div class="flex flex-wrap gap-4 items-center self-stretch my-auto text-2xl leading-none text-lime-800">
-          <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
+          {#if project.tags && project.tags.length > 0}
+            {#each project.tags as tag}
+              <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
+                {tag}
+              </span>
+            {/each}
+          {/if}
+          <!-- <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
             Design
           </span>
           <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
@@ -98,7 +129,7 @@
           </span>
           <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
             Art
-          </span>
+          </span> -->
         </div>
       </div>
       <div class="flex gap-5 items-center self-stretch my-auto">
@@ -154,7 +185,7 @@
       
       <section class="flex overflow-hidden flex-col items-center mt-16 max-w-full w-[1085px] max-md:mt-10">
         {#if activeNavItem === 'projectDetails'}
-          <ProjectAbout />
+          <ProjectAbout {project} />
         {:else if activeNavItem === 'team'}
           <ProjectMembers />
         {:else if activeNavItem === 'dpgStatus'}
@@ -174,9 +205,9 @@
     <h2 class='text-3xl font-semibold leading-none text-black'>Similar Projects</h2>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1300px] mx-auto px-4 pt-4 pb-8">
+    <!-- <Card />
     <Card />
-    <Card />
-    <Card />
+    <Card /> -->
   </div>
 
 

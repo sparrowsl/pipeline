@@ -9,9 +9,9 @@
     let loading = true;
     let error = null;
 
-    async function fetchUserProjects() {
+    async function fetchMyProjects() {
       try {
-        const response = await fetch('/api/projects/userprojects', {
+        const response = await fetch('/api/projects/myProjects', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -36,7 +36,7 @@
     }
 
     onMount(() => {
-      fetchUserProjects();
+      fetchMyProjects();
     });
 
 

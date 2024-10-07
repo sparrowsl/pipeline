@@ -45,7 +45,7 @@
     </header> -->
 
     <header class="relative pt-[75%]">
-      <a href="/singleProject">
+      <a href="/singleProject/{project.id}">
       <img 
         loading="lazy" 
         src="https://s3-alpha-sig.figma.com/img/b145/e71a/4f52857904881646898dd594ee6b92a5?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Tt2xMwhQvYmcWeuMlhHsbwmV3TbFYJJ~T1XJSGBNff-FoACYJarUQmb6a~Vmh81Jef1oqcYhZUmS7Nb4N~CXNLaTcCgn2prDFa7jcMD35Z-X2G7HTRh682o7iFRuZQ14vEtrwYrAcG6ScIKWMvAjcOL5J-rRzwGHWeAObM6bdtYfjACUy9Nu4vMucAP4SS0QwXbZ1nZcNHb6N0RYoJ8nLB6xZt-1fh3djQB4FBOR-jFl1rTYi2~q8LviNZjR5cHXRvpTmcHNigVfkgMvbkS4vx20NZ5~HCBAKk40SG4c1mu2c62qFZXf5jzhamYBs2~i8BC4fDczAduSeGu2ZG9lFw__" 
