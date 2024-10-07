@@ -13,6 +13,7 @@ export const projectStore = writable({
   twitter: '',
   website: '',
   other: '',
+  funding_goal: '',
   bank_acct: '',
   wallet_address: ''
 });

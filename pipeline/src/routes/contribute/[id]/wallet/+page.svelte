@@ -1,21 +1,31 @@
 <script>
 
-    import Nav from '../../../lib/Nav.svelte';   
+  import Nav from '../../../../lib/Nav.svelte';   
 
-    import Footer from '../../../lib/Footer.svelte';
-    import Contribute from '../../../lib/Contribute.svelte';
-    import ContributeBtn from '../../../lib/ContributeBtn.svelte';
+  import Footer from '../../../../lib/Footer.svelte';
+  import Contribute from '../../../../lib/Contribute.svelte';
+  import ContributeBtn from '../../../../lib/ContributeBtn.svelte';
   import Wallet from '$lib/Wallet.svelte';
+  import { page } from '$app/stores';
+
+  let id;
+  $: id = $page.params.id;
   
-    let myButtons = [
-      { label: 'Donate', active: true, href: '/contribute' },
-      { label: 'Apply', active: false, href: '/contribute/apply' }
+  let myButtons = [];
+  $: if (id) {
+    myButtons = [
+      { label: 'Donate', active: true, href: `/contribute/${id}/wallet` },
+      { label: 'Apply', active: false, href: `/contribute/${id}/apply` }
     ];
+  }
   
     function handleButtonClick(event) {
       console.log(`Button clicked: ${event.detail.label}, navigating to: ${event.detail.href}`);
       // Add your navigation logic here if needed
     }
+    
+
+    
   </script>
   
   <div class="w-full min-h-screen bg-white">

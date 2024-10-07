@@ -3,6 +3,8 @@
     import { page } from '$app/stores';
     import Card from '../lib/Card.svelte';
     import SubNav from '../lib/SubNav.svelte';
+
+    export let projects = [];
   
     let navSections = [
       { id: 'created', label: 'Projects created', href: '/profile' },
@@ -24,9 +26,13 @@
       <SubNav {navSections} bind:currentSection on:navigate={handleNavigation} />
       
       <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
-        <Card />
-        <Card />
-        <Card />
+        {#if projects.length > 0}
+            {#each projects as project}
+            <Card {project}/>
+            {/each}
+        {:else}
+          <p>No projects found.</p>
+        {/if}
       </div>
     </div>
   </section>

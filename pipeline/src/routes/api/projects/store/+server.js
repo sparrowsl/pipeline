@@ -25,6 +25,8 @@ export async function POST({ request }) {
         return json({ error: userError.message }, { status: 401 });
     }
 
+    let user = userData.user;
+
 
     try {
         const {
@@ -45,13 +47,11 @@ export async function POST({ request }) {
             funding_goal,
         } = await request.json();
 
-
-        console.log('body:', title, bio, tags, country, details, email, portfolio, github, linkedin, twitter, website, other, bank_acct, wallet_address);
-
         const { data, error } = await supabase
             .from('projects')
             .insert([
                 { 
+                    user_id: user.id,
                     title, 
                     bio, 
                     tags, 
@@ -59,7 +59,7 @@ export async function POST({ request }) {
                     details, 
                     email, 
                     portfolio, 
-                    github, 
+                    github_repo: github, 
                     linkedin,
                     twitter,
                     website,
@@ -67,7 +67,7 @@ export async function POST({ request }) {
                     bank_acct,
                     wallet_address,
                     funding_goal,
-                    creator_id: userData.user.id
+                    
                 }
             ]);
 

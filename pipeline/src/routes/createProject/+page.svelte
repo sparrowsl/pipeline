@@ -81,6 +81,7 @@
     }
   }
 
+  let funding_goal = get(projectStore).funding_goal;
   let bank_acct = get(projectStore).bank_acct;
   let wallet_address = get(projectStore).wallet_address;
   let email = get(projectStore).email;
@@ -100,6 +101,7 @@
       data.twitter = twitter;
       data.website = website;
       data.other = other;
+      data.funding_goal = funding_goal;
       data.bank_acct = bank_acct;
       data.wallet_address = wallet_address;
       return data;
@@ -163,6 +165,8 @@
               <label for="funding goal" class="max-md:max-w-full">Funding Goal</label>
               <input
                 id="bankAccount"
+                bind:value={funding_goal}
+                on:change={updateStore}
                 type="number"
                 class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Funding Goal"
@@ -226,7 +230,7 @@
             on:click={saveProject}
             class="px-12 py-8 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
           >
-            Save
+          {loading ? 'Saving...' : 'Save'}
           </button>
         {/if}
       </div>
