@@ -322,7 +322,7 @@
               />
               <a href="/profile">Profile</a>
             </li>
-            <li class="flex gap-4 items-center mt-6">
+            <!-- <li class="flex gap-4 items-center mt-6">
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f94f282a088dca0f4f3cff9d000fcf49231532d17ca9669bc27adc8e207ecb09?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
@@ -330,7 +330,7 @@
                 alt=""
               />
               <a href="/userProjects">Projects</a>
-            </li>
+            </li> -->
             <li class="flex gap-4 items-center mt-6">
               <img
                 loading="lazy"
