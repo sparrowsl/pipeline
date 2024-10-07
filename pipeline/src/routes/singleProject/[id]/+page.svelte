@@ -166,15 +166,15 @@
       <div class="shrink-0 self-stretch my-auto w-0 border border-solid border-neutral-400 h-[174px]" role="separator"></div>
       <div class="flex flex-col self-stretch my-auto w-[201px]">
         <div class="w-full text-7xl font-semibold leading-none text-center whitespace-nowrap max-md:text-4xl">
-          $50
+          ${project.funding_goal}
         </div>
         <div class="flex flex-col justify-center items-center mt-5 w-full font-medium">
           <div class="flex gap-3 items-center max-w-full w-[194px]">
-            <div class="self-stretch my-auto text-xl leading-tight">$50</div>
+            <div class="self-stretch my-auto text-xl leading-tight">${project.funding_goal}</div>
             <div class="self-stretch my-auto text-xs leading-6 text-teal-800">
               Raised of
             </div>
-            <div class="self-stretch my-auto text-base">$10,000</div>
+            <div class="self-stretch my-auto text-base">${project.current_funding || 0}</div>
           </div>
         </div>
       </div>
