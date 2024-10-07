@@ -13,11 +13,12 @@
   import FAQ from '../../lib/FAQ.svelte';
   import Journey from '$lib/Journey.svelte';
   import Footer from '../../lib/Footer.svelte';
+  export let data;
 </script>
 
 <main class="flex flex-col self-stretch pb-48 w-full bg-teal-950 max-md:pb-24">
-  <Header />
-  <Hero />
+  <Header {data}/>
+  <Hero {data}/>
 </main>
 
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-20">

@@ -1,3 +1,37 @@
+
+<script>
+ import { onMount } from 'svelte';
+
+ let user = {}; // To store user information
+ let error = null; 
+ const defaultImageUrl = "https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg";
+
+ onMount(async () => {
+    try {
+          const response = await fetch('/api/me', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            user = result.user; // Store user data
+            
+          } else {
+            const result = await response.json();
+            error = result.error; // Store error message
+          }
+        } catch (err) {
+          error = 'Failed to fetch user data'; 
+      }
+ })
+
+
+</script>
+
+
 <section class="flex flex-col mt-24 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
     <div class="flex flex-col max-md:max-w-full">
       <div class="flex flex-col w-full max-md:max-w-full">
@@ -9,12 +43,9 @@
             class="object-cover z-0 w-full aspect-[3.33] min-h-[347px] rounded-[43px] max-md:max-w-full" 
           />
           <!-- svelte-ignore a11y-img-redundant-alt -->
-          <img 
-            loading="lazy" 
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8be346601e8268ae519222ba68db448c3acfbf4c7f5a8ae0e074beb1eb837349?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
-            alt="Profile picture" 
-            class="object-cover absolute z-10 bottom-[-105px] left-[123px] w-[211px] h-[211px] rounded-full" 
-          />
+          {#if user && user.id}
+          <img loading="lazy" src={(user.image_url && user.image_url !== "") ? user.image_url : defaultImageUrl} alt="Profile picture" class="object-contain absolute z-0 gap-2.5 items-center max-w-full aspect-[1.01] bottom-[-105px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" />
+          {/if}
         </div>
       </div>
     </div>
@@ -36,7 +67,7 @@
   <section class="flex flex-col mt-16 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
     <div class="flex flex-wrap gap-4 justify-between items-center w-full text-black max-md:max-w-full">
       <h1 class="self-stretch my-auto text-5xl font-semibold leading-none max-md:text-4xl">
-        Username
+        {user?.display_name || ''}
       </h1>
       <div class="flex flex-wrap gap-3.5 justify-center items-center self-stretch my-auto min-w-[240px]">
         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/666cc6c084510091bc36590aca32111e2626269012592e3d661478bdf0f2aa32?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Contribution points icon" class="object-contain shrink-0 self-stretch my-auto aspect-square w-[82px]" />
@@ -44,28 +75,30 @@
           Contribution points:
         </div>
         <div class="self-stretch my-auto text-3xl font-semibold leading-loose">
-          30
+          {user?.points || 0}
         </div>
       </div>
     </div>
     <p class="mt-11 text-2xl font-light leading-9 text-black max-md:mt-10 max-md:max-w-full">
-      Lorem ipsum dolor sit amet consectetur. Turpis egestas ultricies eget vitae dignissim amet diam.Turpis egestas ultricies eget vitae dignissim amet diam.
+      {user?.bio || ''}
     </p>
     <div class="flex flex-wrap gap-4 justify-between items-center mt-11 w-full max-md:mt-10 max-md:max-w-full">
       <div class="flex flex-wrap gap-4 items-center self-stretch my-auto whitespace-nowrap min-w-[240px] max-md:max-w-full">
         <h2 class="self-stretch my-auto text-4xl leading-none text-center text-black">
-          Interests
+          Interests 
         </h2>
         <div class="flex flex-wrap gap-3 items-center self-stretch my-auto text-base leading-none text-lime-800 min-w-[240px]">
-          <span class="self-stretch py-3.5 pr-6 pl-6 my-auto border-2 border-lime-800 border-solid rounded-[72px] max-md:px-5">
-            Design
-          </span>
-          <span class="self-stretch py-3.5 pr-6 pl-6 my-auto border-2 border-lime-800 border-solid rounded-[72px] max-md:px-5">
-            Engineering
-          </span>
-          <span class="self-stretch py-3.5 pr-6 pl-6 my-auto border-2 border-lime-800 border-solid rounded-[72px] max-md:px-5">
-            Art
-          </span>
+          {#if user.interests && user.interests.length > 0}
+            {#each user.interests as interest}
+              <span class="self-stretch py-3.5 pr-6 pl-6 my-auto border-2 border-lime-800 border-solid rounded-[72px] max-md:px-5">
+                {interest}
+              </span>
+            {/each}
+          {:else}
+            <span class="self-stretch py-3.5 pr-6 pl-6 my-auto border-2 border-lime-800 border-solid rounded-[72px] max-md:px-5">
+              No interests specified
+            </span>
+          {/if}
         </div>
       </div>
       <div class="flex flex-wrap gap-2 items-center self-stretch my-auto">

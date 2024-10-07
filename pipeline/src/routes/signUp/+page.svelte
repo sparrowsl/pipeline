@@ -59,9 +59,52 @@
    -->
 
 
-   <script>
+<script>
     import SignUp from '../../lib/SignUp.svelte';
     import Logo from '../../lib/Logo.svelte';
+    
+
+    let loading = false
+    let name = ''
+    let email = ''
+    let password = ''
+    
+    const handleSignUp = async (event) => {
+      const { name, email, password } = event.detail;
+
+      try {
+        console.log({ name, email, password });
+        loading = true
+
+        const response = await fetch('/api/signUp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password
+          })
+        })
+
+        const result = await response.json()
+
+        if (response.ok) {
+          alert('Sign-up successful!');
+        } else {
+          alert(`Sign-up error: ${result.error}`);
+        }
+        
+        
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+      }finally{
+        loading = false
+      }
+    }
 </script>
 
 <main class="overflow-hidden h-screen bg-white max-md:pr-5">
@@ -90,7 +133,7 @@
                         </a>
                     </div>
                 </nav>
-                <SignUp />
+                <SignUp {loading} {name} {email} {password} on:signUp={handleSignUp} />
             </div>
         </section>
     </div>

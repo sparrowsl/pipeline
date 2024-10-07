@@ -1,7 +1,41 @@
 <script>
-    import SignInForm from '../../lib/SignInForm.svelte';
-    import Logo from '../../lib/Logo.svelte';
-  </script>
+  import SignInForm from '../../lib/SignInForm.svelte';
+  import Logo from '../../lib/Logo.svelte';
+
+  let loading = false;
+  let email = '';
+  let password = '';
+
+  const handleSignIn = async (event) => {
+    const { email, password } = event.detail;
+
+    try {
+      console.log({ email, password });
+      loading = true;
+
+      const response = await fetch('/api/signIn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        window.location.href = result.redirectTo || '/explore';
+      } else {
+        alert(`Sign-in error: ${result.error}`);
+      }
+
+    } catch (error) {
+      alert(`Sign-in failed: ${error.message}`);
+    } finally {
+      loading = false;
+    }
+  };
+</script>
   
   <main class="overflow-hidden h-screen bg-white max-md:pr-5">
     <div class="flex gap-5 h-full max-md:flex-col">
@@ -29,7 +63,7 @@
               <div class="flex mt-3 h-1.5 w-[179px] rounded-[30px]" />
             </div>
           </nav>
-          <SignInForm />
+          <SignInForm {loading} {email} {password} on:signIn={handleSignIn} />
         </div>
       </section>
     </div>

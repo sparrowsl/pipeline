@@ -27,7 +27,6 @@
       <Nav />
       <ProfileInfo />
 
-     
         <div class="w-full max-w-[1156px] mt-20">
           <SubNav {navSections} bind:currentSection on:navigate={handleNavigation} />
     
