@@ -217,12 +217,16 @@
             </div>
           </div>
         </div>
+
+
   
         <div class="flex flex-col mt-9 w-full max-md:max-w-full">
           <label for="projectDetails" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project details</label>
           <p class="mt-2.5 text-xl leading-5 text-stone-300 max-md:max-w-full">Tell potential contributors more about your project. Provide details that will motivate people to contribute. A good pitch is compelling, informative, and easy to digest.</p>
           <textarea id="projectDetails" bind:value={details} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
         </div>
+
+       
   
       </div>
     </form>

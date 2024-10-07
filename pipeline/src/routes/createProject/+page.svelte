@@ -160,6 +160,16 @@
         <section class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-md:mt-10 max-md:max-w-full">
           <form class="flex flex-col w-full max-md:max-w-full">
             <div class="flex flex-col mt-11 w-full max-md:mt-10 max-md:max-w-full">
+              <label for="funding goal" class="max-md:max-w-full">Funding Goal</label>
+              <input
+                id="bankAccount"
+                type="number"
+                class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
+                aria-label="Funding Goal"
+              />
+            </div>
+            
+            <div class="flex flex-col mt-11 w-full max-md:mt-10 max-md:max-w-full">
               <label for="bankAccount" class="max-md:max-w-full">Bank Account</label>
               <input
                 id="bankAccount"
