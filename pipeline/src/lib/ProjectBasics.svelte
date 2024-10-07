@@ -51,6 +51,24 @@
   $: filteredTags = availableTags.filter(tag => 
     tag.toLowerCase().includes(inputValue.toLowerCase()) && !selectedTags.includes(tag)
   );
+
+
+  let ProjectBannerImage = null;
+    let ProjectProfileImage = null;
+  
+    function handleBannerUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        ProjectBannerImage = URL.createObjectURL(file);
+      }
+    }
+  
+    function handleProfileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        ProjectProfileImage = URL.createObjectURL(file);
+      }
+    }
 </script>
 
 <section class="flex flex-col self-center p-10 mt-16 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -65,9 +83,33 @@
             <p class="mt-2.5 text-xl text-stone-300">Click to change Project's Cover & Profile photo</p>
           </div>
         </div>
-        <div class="flex relative flex-col mt-12 w-full max-md:mt-10 max-md:max-w-full">
+        <!-- <div class="flex relative flex-col mt-12 w-full max-md:mt-10 max-md:max-w-full">
           <div class="flex z-0 gap-2.5 w-full bg-stone-300 min-h-[347px] rounded-[43px] max-md:max-w-full" role="img" aria-label="Project cover image"></div>
           <div class="flex absolute z-0 gap-2.5 items-center border-white border-solid aspect-square bg-stone-300 border-[10px] bottom-[-106px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" role="img" aria-label="Project profile image"></div>
+        </div> -->
+
+        <div class="self-stretch h-[295.61px] relative mb-[141px]">
+          <label for="banner-upload" class="cursor-pointer">
+            <div class="w-full h-full bg-[#d9d9d9] rounded-[37.69px] flex justify-center items-center overflow-hidden">
+              {#if ProjectBannerImage}
+                <img src={ProjectBannerImage} alt="Banner" class="object-cover w-full h-full" />
+              {:else}
+                <div class="text-center">Click to upload banner image</div>
+              {/if}
+            </div>
+          </label>
+          <input type="file" id="banner-upload" class="hidden" accept="image/*" on:change={handleBannerUpload} />
+          
+          <label for="profile-upload" class="cursor-pointer">
+            <div class="absolute bottom-[-92.6px] left-[46.69px] w-[185.19px] h-[185.19px] bg-[#d9d9d9] rounded-full border-8 border-white flex justify-center items-center overflow-hidden">
+              {#if ProjectProfileImage}
+                <img src=ProjectProfileImage} alt="Profile" class="object-cover w-full h-full rounded-full" />
+              {:else}
+                <div class="text-sm text-center">Click to upload profile picture</div>
+              {/if}
+            </div>
+          </label>
+          <input type="file" id="profile-upload" class="hidden" accept="image/*" on:change={handleProfileUpload} />
         </div>
       </div>
   

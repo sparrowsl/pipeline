@@ -40,7 +40,7 @@
           <h1 class="text-8xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
             <slot></slot>
           </h1>
-        </div>
+        </div>   
       </section>
 
 

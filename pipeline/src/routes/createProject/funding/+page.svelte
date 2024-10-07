@@ -61,7 +61,7 @@
               <input
                 id="bankAccount"
                 type="text"
-                class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full"
+                class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Bank Account"
               />
             </div>
@@ -77,7 +77,7 @@
               <input
                 id="walletAddress"
                 type="text"
-                class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full"
+                class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Wallet Address"
               />
             </div>

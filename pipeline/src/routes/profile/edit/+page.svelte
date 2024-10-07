@@ -70,7 +70,7 @@
   </script>
   
   <main class="flex overflow-hidden flex-col bg-white">
-    <Nav />
+    <Nav />  
 
     <section class="flex flex-wrap gap-5 justify-between self-center mt-32 w-full max-w-[1080px] max-md:mt-10 max-md:max-w-full">
         <h1 class="text-6xl font-semibold leading-none text-black max-md:text-4xl">Username</h1>
