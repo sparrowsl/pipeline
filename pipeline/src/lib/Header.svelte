@@ -1,5 +1,7 @@
 <script>
+  import UserProfile from "./UserProfile.svelte";
   export let data;
+  
 </script>
 
 <div class="flex flex-col justify-center px-16 py-9 w-full text-xl tracking-tighter leading-none text-center text-lime-800 bg-cyan-950 max-md:px-5 max-md:max-w-full">
@@ -9,6 +11,7 @@
         {#if !data.isAuthenticated}
         <a href="/signIn" class="px-4 py-4 bg-lime-300 rounded-3xl max-md:px-5">Sign up / Log in</a>
         {/if}
+        <UserProfile />
       </nav>
     </div>
 </div>
