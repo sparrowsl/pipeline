@@ -13,7 +13,42 @@
   import FAQ from '../../lib/FAQ.svelte';
   import Journey from '$lib/Journey.svelte';
   import Footer from '../../lib/Footer.svelte';
+
+  import { onMount } from 'svelte';
   export let data;
+
+    let featureProjects = []
+    let loading = true;
+    let error = null;
+
+    async function fetchFeatureProjects() {
+        try {
+            const response = await fetch('/api/projects/allprojects', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+            throw new Error(response.statusText);
+            }
+
+            const data = await response.json();
+
+            featureProjects = data.projects.slice(0, 6);
+
+        } catch (error) {
+        error = e.message;
+        alert(error);
+      }finally{
+        loading = false;
+      }
+    }
+
+    onMount(() => {
+        fetchFeatureProjects();
+    })
 </script>
 
 <main class="flex flex-col self-stretch pb-48 w-full bg-teal-950 max-md:pb-24">
@@ -30,12 +65,14 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
-    <Card />
-    <Card />
-    <Card />
-    <Card />
-    <Card />
-    <Card />
+    {#if featureProjects.length > 0}    
+          {#each featureProjects as project}
+        <Card {project}/> 
+        {/each}
+        {:else}
+        <p>No projects found.</p>
+      
+        {/if}
   </div>
 
   <div class="max-w-4xl mx-auto mt-20">

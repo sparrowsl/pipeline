@@ -3,10 +3,15 @@
   import Footer from '../../lib/Footer.svelte';
   import ProjectBasics from '../../lib/ProjectBasics.svelte';
   import TeamForm from '../../lib/TeamForm.svelte';
+  import { projectStore } from '../../stores/projectStore.js';
   import CreatorProfile from '../../lib/CreatorProfile.svelte';
+  import { get } from 'svelte/store';
   import LinkInput from '../../lib/LinkInput.svelte';
   import UserNav from '../../lib/UserNav.svelte';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation'; 
+
+  let loading = false;
 
   let activeNavItem = 'Basics';
   const navItems = [
@@ -34,14 +39,73 @@
     }
   }
 
+  
+
+
   function sendInvitation() {
     // Implement send invitation logic here
     console.log('Sending invitation...');
   }
 
-  function saveProject() {
-    // Implement save project logic here
-    console.log('Saving project...');
+  const saveProject = async (event) => {
+    try {
+      loading = true
+
+      const projectData = get(projectStore);
+
+      const response = await fetch('/api/projects/store', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(
+            projectData
+          )
+        })
+
+        const result = await response.json()
+
+        if (response.ok) {
+          alert('Project created successfully!');
+          goto('/profile');
+        } else {
+          alert(`Project creation error: ${result.error}`);
+        }
+
+    } catch (error) {
+      if (error instanceof Error) {
+          alert(error.message)
+        }
+    }finally{
+      loading = false
+    }
+  }
+
+  let funding_goal = get(projectStore).funding_goal;
+  let bank_acct = get(projectStore).bank_acct;
+  let wallet_address = get(projectStore).wallet_address;
+  let email = get(projectStore).email;
+  let portfolio = get(projectStore).portfolio;
+  let github = get(projectStore).github;
+  let linkedin = get(projectStore).linkedin;
+  let twitter = get(projectStore).twitter;
+  let website = get(projectStore).website;
+  let other = get(projectStore).other;
+
+  function updateStore() {
+    projectStore.update(data => {
+      data.email = email;
+      data.portfolio = portfolio;
+      data.github = github;
+      data.linkedin = linkedin;
+      data.twitter = twitter;
+      data.website = website;
+      data.other = other;
+      data.funding_goal = funding_goal;
+      data.bank_acct = bank_acct;
+      data.wallet_address = wallet_address;
+      return data;
+    });
   }
 
   let imageLoaded = false;
@@ -85,13 +149,13 @@
       {:else if activeNavItem === 'Links'}
         <section class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full">
           <form>
-            <LinkInput label="Email" />
-            <LinkInput label="Portfolio" />
-            <LinkInput label="Github" />
-            <LinkInput label="LinkedIn" />
-            <LinkInput label="X" />
-            <LinkInput label="Website" />
-            <LinkInput label="Others" />
+            <LinkInput label="Email" bind:value={email} />
+            <LinkInput label="Portfolio" bind:value={portfolio} />
+            <LinkInput label="Github" bind:value={github} />
+            <LinkInput label="LinkedIn" bind:value={linkedin} />
+            <LinkInput label="X" bind:value={twitter} /> <!-- X here is Twitter -->
+            <LinkInput label="Website" bind:value={website} />
+            <LinkInput label="Others" bind:value={other} />
           </form>
         </section>
       {:else if activeNavItem === 'Funding'}
@@ -101,6 +165,8 @@
               <label for="funding goal" class="max-md:max-w-full">Funding Goal</label>
               <input
                 id="bankAccount"
+                bind:value={funding_goal}
+                on:change={updateStore}
                 type="number"
                 class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Funding Goal"
@@ -111,6 +177,8 @@
               <label for="bankAccount" class="max-md:max-w-full">Bank Account</label>
               <input
                 id="bankAccount"
+                bind:value={bank_acct}
+                on:change={updateStore}
                 type="text"
                 class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Bank Account"
@@ -127,6 +195,8 @@
               <label for="walletAddress" class="max-md:max-w-full">Wallet Address</label>
               <input
                 id="walletAddress"
+                bind:value={wallet_address}
+                on:change={updateStore}
                 type="text"
                 class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
                 aria-label="Wallet Address"
@@ -160,7 +230,7 @@
             on:click={saveProject}
             class="px-12 py-8 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
           >
-            Save
+          {loading ? 'Saving...' : 'Save'}
           </button>
         {/if}
       </div>
