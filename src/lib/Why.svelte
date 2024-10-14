@@ -1,5 +1,4 @@
 <script>
-    import Why from './Why.svelte';
     import WhyCard from './WhyCard.svelte';
     </script>
 
@@ -8,7 +7,7 @@
         <span class="text-6xl">Why</span><br />
         <span class="text-7xl">Join Pipeline</span>
       </h2>
-      <div class="flex flex-wrap gap-11 items-start mt-10 w-full max-md:max-w-full">
+      <div class="flex flex-wrap items-start w-full mt-10 gap-11 max-md:max-w-full">
         <WhyCard
           iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/6a77f676782fe66b7a80cb870402b85d423749d1d46197bf618c2c8f547d7e83?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
           title="Creators"

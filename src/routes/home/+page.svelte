@@ -51,14 +51,14 @@
     })
 </script>
 
-<main class="flex flex-col self-stretch pb-48 w-full bg-teal-950 max-md:pb-24">
+<main class="flex flex-col self-stretch w-full pb-48 bg-teal-950 max-md:pb-24">
   <Header {data}/>
   <Hero {data}/>
 </main>
 
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+<div class="container px-4 mx-auto mt-20 sm:px-6 lg:px-8">
   <div class="flex flex-wrap justify-between items-center gap-4 max-w-[1156px] mx-auto">
-    <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-black">
+    <h2 class="text-2xl font-semibold text-black sm:text-3xl md:text-4xl">
       Featured Projects
     </h2>
     <ViewAllButton />
@@ -87,10 +87,14 @@
     <Examples />
   </div>
 
-  <div class="max-w-4xl mx-auto mt-8 flex justify-center mb-16">
+  <div class="flex justify-center max-w-4xl mx-auto mt-8 mb-16 text-center">
     <LearnMoreButton />
   </div>
+
 </div>
+
+
+
 
 <SubHero />
 

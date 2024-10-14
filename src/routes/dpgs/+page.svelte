@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="px-4 py-8 mx-auto max-w-4xl text-start">
+<div class="max-w-[1076px] px-4 py-8 mx-auto text-start">
     <h1 class="mb-6 text-4xl font-semibold text-gray-800">What are DPGs?</h1>
     <p class="h-[259.67px] text-black text-[22.78px] font-normal font-['PP Mori'] leading-[45.89px]">
       Digital public goods are the resources, data sheets, AI models, and software available to all citizens for free contributing to sustainable development. These are non-excludable which means no one is excluded from using these resources and services and non-rivalrous which means they are available and accessible to all communities and one person's use will not diminish their availability for other people in the communities.
@@ -95,7 +95,7 @@
     </p>
   </div>
 
-  <div class="px-4 py-8 mx-auto max-w-4xl text-center">
+  <div class="max-w-[1076px] px-4 py-8 mx-auto text-center">
   
     <div class="space-y-8 text-left">
       <div>
