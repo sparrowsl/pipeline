@@ -1,4 +1,5 @@
 <script>
+
     import WhyCard from './WhyCard.svelte';
     </script>
 
@@ -21,7 +22,7 @@
         <WhyCard
           iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/67d5425f762082f2c4e1e13ac77f2d91150a46ffd042c78fd4057a0220600339?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
           title="Contributors"
-          description="Develop skills, join projects, and connect with changemakers."
+          description="Develop valuable skills, join exciting projects, and connect with passionate changemakers"
         />
         <WhyCard
           iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/588c81605e1770d221d25e4f6b62ddf8c4179e92ae739414b5169ec7d15d1031?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
