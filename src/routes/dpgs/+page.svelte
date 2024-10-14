@@ -2,6 +2,18 @@
     import Nav from '../../lib/Nav.svelte';
     import Journey from '../../lib/Journey.svelte';
     import Footer from '../../lib/Footer.svelte';
+
+    import { onMount } from 'svelte';
+
+let imageLoaded = false;
+
+onMount(() => {
+  const img = new Image();
+  img.src = "https://cdn.builder.io/api/v1/image/assets/TEMP/2e79f9f0f0676cc1340e4648692e7dd2c076c54bc6408583026e9461be5dccd4?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8";
+  img.onload = () => {
+    imageLoaded = true;
+  };
+});
 </script>
 
 
@@ -11,21 +23,39 @@
 </main>
 
 
-<div class="w-[100%] h-[417px] bg-[#d1ea9a]/90 justify-center items-center gap-2.5 inline-flex mb-20">
+<!-- <div class="w-[100%] h-[417px] bg-[#d1ea9a]/90 justify-center items-center gap-2.5 inline-flex mb-20">
     <div class="flex-col justify-start items-center gap-[14.67px] inline-flex">
+      <img src="https://s3-alpha-sig.figma.com/img/f7f4/7999/74709a5d690ece6b2d8e0fbee98a787a?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E2R3CiXJIjn2rAVeMIETSpzE7BntJ~MuC7dHH5dj-7Z06svc~icmbBG2eACWP1az6FFZLjIkI9u8MMuyKVwI4R54UiS4LbDe574SV7QTWOa8cUWr1inS-3mJ3I0xv4qLkgg3Jush0j-a2TlIftJfQvQSkBUtATyUjtmUiuNINTmM7RgVvAH2p9dqQ3OYRIj5Rs9bZwcwJ4TOhzib1Bdnc0InSsbhSHxT7xWia5xBa44vCfmvTntMmCo9EsokwGrnYxKAQspwc4pfn8qHZ4oiS-hUTKifXKcdGNZEYPYbpRXFFl~a~gXbHIYcM1Zu6sRPYPpmUv8ZdEboIWl1DA8DFw__">
         <div class="text-center text-black text-[89.62px] font-semibold font-['PP Mori'] leading-[98.58px]">What are<br/>Digital Public Goods?</div>
     </div>
-</div>
+</div> -->
+
+<section class="relative min-h-[417px] flex flex-col justify-center items-center">
+  {#if imageLoaded}
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/2e79f9f0f0676cc1340e4648692e7dd2c076c54bc6408583026e9461be5dccd4?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
+      alt=""
+      class="absolute inset-0 object-cover w-full h-full"
+      aria-hidden="true"
+    />
+  {/if}
+  <div class="relative z-10 flex flex-col items-center self-stretch my-auto min-w-[240px] max-w-full">
+    <h1 class="text-8xl font-semibold text-center text-black leading-[99px] max-md:text-4xl max-md:leading-[49px]">
+      <slot></slot>
+    </h1>
+  </div>
+</section>
+
 
 <div class="max-w-[1076px] px-4 py-8 mx-auto text-start">
-    <h1 class="mb-6 text-4xl font-semibold text-gray-800">What are DPGs?</h1>
-    <p class="h-[259.67px] text-black text-[22.78px] font-normal font-['PP Mori'] leading-[45.89px]">
+    <h1 class="mb-4 text-[43.06px] font-semibold text-gray-800">What are DPGs?</h1>
+    <p class="h-[229.67px] text-black text-[22.78px] font-normal font-['PP Mori'] leading-[45.89px]">
       Digital public goods are the resources, data sheets, AI models, and software available to all citizens for free contributing to sustainable development. These are non-excludable which means no one is excluded from using these resources and services and non-rivalrous which means they are available and accessible to all communities and one person's use will not diminish their availability for other people in the communities.
     </p>
   
-    <div class="my-8 border-t border-gray-300"></div>
+    <div class="my-8 border-t border-black"></div>
   
-    <h2 class="mb-6 text-3xl font-semibold text-gray-800">Examples of DPGs</h2>
+    <h2 class="mb-6 text-[43.06px] font-semibold text-gray-800">Examples of DPGs</h2>
     <div class="space-y-6 text-left">
       <div>
         <h3 class="mb-2 text-[32px] font-semibold text-gray-800">OpenAI Models:</h3>
@@ -51,7 +81,7 @@
   
     <div class="my-8 border-t border-gray-300"></div>
   
-    <h2 class="mb-6 text-3xl font-semibold text-gray-800">Why are DPGs important?</h2>
+    <h2 class="mb-6 text-[43.06px] font-semibold text-gray-800">Why are DPGs important?</h2>
     <p class="mb-6 text-xl text-gray-700">
       Digital Public Goods (DPGs) like OpenAI models, open software, open data, open content, and open standards are incredibly important because they foster innovation, inclusivity, and collaboration on a global scale. Here's why they matter:
     </p>
@@ -84,12 +114,12 @@
   
     <div class="my-8 border-t border-gray-300"></div>
   
-    <h2 class="mb-6 text-3xl font-semibold text-gray-800">Digital Public Goods Standard</h2>
+    <h2 class="mb-6 text-[43.06px] font-semibold text-gray-800">Digital Public Goods Standard</h2>
     <p class="mb-8 text-[22px] text-gray-700">
       The Digital Public Goods Standard is a set of specifications and guidelines designed to maximise consensus about whether a digital solution conforms to the definition of a digital public good. According to the UN Secretary General's Roadmap for Digital Cooperation, digital public goods are open-source software, open standards, open data, open AI systems, and open content collections that adhere to privacy and other applicable best practices, do no harm, and are of high relevance for attainment of the United Nations 2030 Sustainable Development Goals (SDGs).
     </p>
   
-    <h2 class="mb-6 text-3xl font-semibold text-gray-800">Requirements to be a DPG</h2>
+    <h2 class="mb-6 text-[43.06px] font-semibold text-gray-800">Requirements to be a DPG</h2>
     <p class="text-[25px] text-gray-700">
       Below are the 9 indicators and requirements that determine if nominated software, data, AI systems, and/or content collections can be considered a DPG.
     </p>
@@ -151,3 +181,6 @@
   </div>
   
   <Footer />
+
+
+  
