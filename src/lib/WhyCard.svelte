@@ -8,11 +8,11 @@
       <div class="flex gap-4 items-center self-end p-4 bg-lime-300 h-[84px] rounded-[81px] w-[84px]">
         <img loading="lazy" src={iconSrc} alt="" class="object-contain self-stretch my-auto aspect-square w-[51px]" />
       </div>
-      <div class="flex flex-col mt-14 w-full max-md:mt-10 max-md:max-w-full">
+      <div class="flex flex-col w-full mt-14 max-md:mt-10 max-md:max-w-full">
         <h3 class="text-5xl font-semibold leading-none text-lime-300 max-md:max-w-full">
           {title}
         </h3>
-        <p class="mt-3 text-3xl leading-10 text-white max-md:max-w-full">
+        <p class="text-white text-3xl  font-normal font-['PP Mori'] leading-[40.86px]">
           {description}
         </p>
       </div>
