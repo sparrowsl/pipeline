@@ -56,3 +56,6 @@ To publish your library to [npm](https://www.npmjs.com):
 ```bash
 npm publish
 ```
+
+// test
+This project directly contributes to SDG 7 and SDG 9
