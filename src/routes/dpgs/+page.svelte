@@ -22,14 +22,6 @@ onMount(() => {
     <Nav />
 </main>
 
-
-<!-- <div class="w-[100%] h-[417px] bg-[#d1ea9a]/90 justify-center items-center gap-2.5 inline-flex mb-20">
-    <div class="flex-col justify-start items-center gap-[14.67px] inline-flex">
-      <img src="https://s3-alpha-sig.figma.com/img/f7f4/7999/74709a5d690ece6b2d8e0fbee98a787a?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E2R3CiXJIjn2rAVeMIETSpzE7BntJ~MuC7dHH5dj-7Z06svc~icmbBG2eACWP1az6FFZLjIkI9u8MMuyKVwI4R54UiS4LbDe574SV7QTWOa8cUWr1inS-3mJ3I0xv4qLkgg3Jush0j-a2TlIftJfQvQSkBUtATyUjtmUiuNINTmM7RgVvAH2p9dqQ3OYRIj5Rs9bZwcwJ4TOhzib1Bdnc0InSsbhSHxT7xWia5xBa44vCfmvTntMmCo9EsokwGrnYxKAQspwc4pfn8qHZ4oiS-hUTKifXKcdGNZEYPYbpRXFFl~a~gXbHIYcM1Zu6sRPYPpmUv8ZdEboIWl1DA8DFw__">
-        <div class="text-center text-black text-[89.62px] font-semibold font-['PP Mori'] leading-[98.58px]">What are<br/>Digital Public Goods?</div>
-    </div>
-</div> -->
-
 <section class="relative min-h-[417px] flex flex-col justify-center items-center">
   {#if imageLoaded}
     <img

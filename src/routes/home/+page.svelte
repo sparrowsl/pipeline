@@ -115,9 +115,8 @@
   <Why />
 </div>
 
-<div class="w-full max-w-[1076px] mx-auto mt-16 ">
   <FAQ />
-</div>
+
 
 
   <Journey />

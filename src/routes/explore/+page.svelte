@@ -79,18 +79,19 @@ onMount(() => {
 
 <div class="w-full min-h-screen bg-white">
     <Nav />
-    <div class="w-full bg-[#d1ea9a]/90 py-16">
-        <div class="mx-auto max-w-4xl text-center">
-            <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
-                Discover impact projects, donate directly,<br/>& participate in funding rounds.
-                
-            </h1>
-        </div>
-    </div>
+    <section class="hero-section">
+        <!-- svelte-ignore a11y-img-redundant-alt -->
+        <img 
+          loading="lazy" 
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9198195a880fdd4288f6b82f6353ae09afe25d954ea1d7698e4e1f410ee99a1?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
+          alt="Hero section decorative image"
+          class="object-cover gap-2.5 justify-center items-center w-full text-5xl font-semibold text-center aspect-[4.29] leading-[55px] min-h-[335px] text-teal-950 max-md:text-4xl max-md:leading-[54px]"
+        />
+      </section>
 
-    <div class="flex justify-center px-4 w-full">
+    <div class="flex justify-center w-full px-4">
         <main class="flex flex-col mt-24 w-full text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
-            <section class="flex flex-wrap gap-5 justify-between items-center w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full">
+            <section class="flex flex-wrap items-center justify-between w-full gap-5 font-thin leading-none text-center text-lime-100 max-md:max-w-full">
                 <Search />
                 <CategoryDropdown />
                 <SortDropdown />
@@ -123,9 +124,10 @@ onMount(() => {
         {/if}
     </div>
 
-    <div class="flex justify-center items-center mt-8 mb-16">
-        <LearnMoreButton />
-    </div>
-  
+    <div class="flex items-center justify-center">
+        <div class="px-[30px] py-[18px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center">
+          <button class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
+        </div>
+      </div>
     <Footer />
 </div>

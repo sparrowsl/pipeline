@@ -35,7 +35,7 @@
   </script>
   
   <section class="container px-4 py-16 mx-auto mt-16 font-semibold text-center sm:px-6 lg:px-8 sm:py-24 sm:mt-32">
-    <div class="max-w-[1076px] mx-auto border-2 border-solid border-teal-950 rounded-3xl sm:rounded-[57px] p-6 sm:p-10">
+    <div class="max-w-[1276px] mx-auto border-2 border-solid border-teal-950 rounded-3xl sm:rounded-[57px] p-6 sm:p-10">
         <h1 class="mb-8 text-4xl sm:text-5xl lg:text-7xl text-emerald-950 sm:mb-12">FAQ</h1>
         <div class="space-y-6 sm:space-y-8">
             {#each faqItems as item}
