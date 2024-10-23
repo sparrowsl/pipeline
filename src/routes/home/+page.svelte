@@ -56,21 +56,17 @@
   <Hero {data}/>
 </main>
 
-<!-- <div class="container px-4 mx-auto mt-20 sm:px-6 lg:px-8">
-  <div class="flex flex-wrap justify-between items-center gap-4 max-w-[1156px] mx-auto">
-    <h2 class="text-2xl font-semibold text-black sm:text-3xl md:text-4xl">
-      Featured Projects
-    </h2>
-    <ViewAllButton />
-  </div> -->
+
 
   <div class="container px-4 mx-auto mt-20 sm:px-6 lg:px-8">
     <div class="flex flex-wrap justify-between items-center gap-4 max-w-[1156px] mx-auto">
-      <h2 class="text-2xl font-semibold text-black sm:text-3xl md:text-4xl max-md:text-2xl">
+      <h2 class="text-2xl font-semibold text-black sm:text-xl md:text-4xl max-md:text-2xl">
         Featured Projects
       </h2>
       <ViewAllButton class="max-md:text-sm max-md:px-4 max-md:py-2" />
     </div>
+
+    
 
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
@@ -111,13 +107,15 @@
   <How />
 </div>
 
+
+
 <div class="w-full max-w-[1076px] mx-auto mt-16 ">
   <Why />
 </div>
 
-<div class="w-full max-w-[1076px] mx-auto mt-16 ">
+
   <FAQ />
-</div>
+
 
 
   <Journey />

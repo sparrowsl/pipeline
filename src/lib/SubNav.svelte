@@ -2,7 +2,7 @@
 
   <script>
     import { createEventDispatcher } from 'svelte';
-    import { goto } from '$app/navigation'; // Import this if you're using SvelteKit
+    import { goto } from '$app/navigation'; 
   
     export let navSections = [];
     export let currentSection = navSections[0]?.id || '';
@@ -15,16 +15,11 @@
   
     function handleClick(section) {
       currentSection = section.id;
-      
-      // If using SvelteKit, uncomment the next line
-      // goto(section.href);
-  
-      // If not using SvelteKit, dispatch a custom event
       dispatch('navigate', { href: section.href, id: section.id });
     }
   </script>
   
-  <nav class="flex flex-wrap gap-10 justify-between items-center w-full text-3xl leading-none text-black whitespace-nowrap max-md:max-w-full">
+  <nav class="flex flex-wrap items-center justify-between w-full gap-10 text-3xl leading-none text-black whitespace-nowrap max-md:max-w-full">
     {#each navSections as section (section.id)}
       <a 
         href={section.href} 

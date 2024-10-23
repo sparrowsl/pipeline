@@ -48,6 +48,7 @@
 
 </div>
 
-<div class="flex justify-center max-w-4xl mx-auto mt-8 mb-16 text-center">
+<div class="flex justify-center max-w-4xl mx-auto mt-8 mb-16 text-center max-sm:w-[300px]">
     <LearnMoreButton />
   </div>
+

@@ -57,12 +57,12 @@
     </div>
 </div>
 
-    <main class="flex overflow-hidden justify-center items-center w-full">
-        <!-- svelte-ignore a11y-img-redundant-alt -->
+    <main class="flex items-center justify-center w-full overflow-hidden">
+       
         <img src="how.png" alt="Description of the image" class="object-cover w-full h-full" />
     </main>
       
-    <section class="flex justify-center items-center px-7 w-full text-black max-md:px-5">
+    <section class="flex items-center justify-center w-full text-black px-7 max-md:px-5">
         <div class="flex flex-col items-center w-full max-w-[1101px]">
           {#each steps as step}
             <Step number={step.number} title={step.title} description={step.description} />
@@ -78,7 +78,7 @@
       
     
     <style>
-        /* Ensure the body and html take up full height */
+       
         :global(body), :global(html) {
             
             margin: 0;

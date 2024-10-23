@@ -80,7 +80,7 @@ onMount(() => {
 <div class="w-full min-h-screen bg-white">
     <Nav />
     <div class="w-full bg-[#d1ea9a]/90 py-16">
-        <div class="mx-auto max-w-4xl text-center">
+        <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
                 Discover impact projects, donate directly,<br/>& participate in funding rounds.
                 
@@ -88,17 +88,22 @@ onMount(() => {
         </div>
     </div>
 
-    <div class="flex justify-center px-4 w-full">
+    <div class="flex justify-center w-full px-4">
         <main class="flex flex-col mt-24 w-full text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
-            <section class="flex flex-wrap gap-5 justify-between items-center w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full">
-                <Search />
-                <CategoryDropdown />
-                <SortDropdown />
-            </section>
-            <ProjectCategory />
+          
+    
+          <section class="flex flex-wrap items-center justify-between w-full gap-2 font-thin leading-none text-center text-lime-100 max-md:flex-col max-md:gap-2 max-md:max-w-full">
+            <Search />
+            <CategoryDropdown />
+            <SortDropdown />
+          </section>
+      
+  
+          <ProjectCategory />
         </main>
-    </div>
+      </div>
 
+      
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-20">Top Projects</div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
         {#if topProjects.length > 0}    
@@ -123,9 +128,11 @@ onMount(() => {
         {/if}
     </div>
 
-    <div class="flex justify-center items-center mt-8 mb-16">
+
+    <div class="flex justify-center max-w-4xl mx-auto mt-8 mb-16 text-center max-sm:w-[80%]">
         <LearnMoreButton />
-    </div>
+      </div>
+
   
     <Footer />
 </div>
