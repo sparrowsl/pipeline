@@ -17,7 +17,7 @@
   
     h1 {
       font-size: 2rem;
-      color: #4CAF50; /* You can style this as you like */
+      color: #4CAF50; 
     }
   
     p {
