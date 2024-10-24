@@ -24,16 +24,18 @@
   
     <nav class="flex mb-4 space-x-28">
       {#each navSections as section}
-        <button
-          class="px-4 py-3 text-2xl font-semibold transition-all duration-200 border-b-2"
-          class:border-b-blue-500={section.id === currentSection}
-          on:click={() => handleNavigation(section.id)}
-        >
-          {section.label}
-        </button>
-      {/each}
+      <button
+        class="px-4 py-3 text-2xl font-semibold transition-all duration-200 border-b-4 {section.id === currentSection ? 'border-b-[#bde25b]' : ''}"
+        on:click={() => handleNavigation(section.id)}
+      >
+        {section.label}
+      </button>
+    {/each}
+    
+    
     </nav>
     <div class="mt-8">
+      <!-- svelte-ignore empty-block -->
       {#if currentSection === 'created'}
         <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {#if projects.length > 0}
@@ -65,15 +67,7 @@
           {/if}
         </div>
       {:else if currentSection === 'notifications'}
-        <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {#if projects.length > 0}
-            {#each projects as project}
-              <Card {project}/>
-            {/each}
-          {:else}
-            <p>No projects found.</p>
-          {/if}
-        </div>
+ 
       {/if}
     </div>
   </div>
