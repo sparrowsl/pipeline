@@ -29,8 +29,8 @@
   });
 </script>
 
-<header class="relative z-50 flex items-center justify-between pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
-  <div class="flex items-center justify-between w-full">
+<header class="flex items-center justify-between w-full pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
+  <div class="flex flex-wrap gap-10 justify-between items-center self-stretch my-auto min-w-[240px] w-[1298px]">
     <Logo />  
 
     <button 
@@ -60,7 +60,7 @@
           />
         </button>
         {#if isResourcesOpen}
-          <div class="absolute left-0 z-40 w-48 py-2 mt-2 transform rounded-md shadow-lg top-full bg-cyan-900">
+          <div class="absolute z-10 w-48 py-2 mt-2 transform -translate-x-1/2 rounded-md shadow-lg top-full left-1/2 bg-cyan-900">
             <a href="/about" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About Pipeline</a>
             <a href="/dpgs" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About DPGs</a>
           </div>
