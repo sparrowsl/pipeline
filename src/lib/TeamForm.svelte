@@ -6,7 +6,7 @@
       currentSection = nextSection.id;
       goto(nextSection.href);
     } else {
-      // If it's the last section, you might want to submit the form or do something else
+      
       console.log('Project creation completed');
     }
   }
