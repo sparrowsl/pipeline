@@ -5,9 +5,14 @@
   import { onMount } from 'svelte';
 
   let isResourcesOpen = false;
+  let isMenuOpen = false;
 
   function toggleResources() {
       isResourcesOpen = !isResourcesOpen;
+  }
+
+  function toggleMenu() {
+      isMenuOpen = !isMenuOpen;
   }
 
   function closeResources(event) {
@@ -27,7 +32,18 @@
 <header class="flex items-center justify-between w-full pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
   <div class="flex flex-wrap gap-10 justify-between items-center self-stretch my-auto min-w-[240px] w-[1298px]">
     <Logo />  
-    <nav class="flex gap-10 justify-center items-center self-stretch my-auto text-sm font-medium leading-none text-center text-lime-300 min-w-[240px] max-md:max-w-full">
+
+    <button 
+      class="z-50 block md:hidden text-lime-300 focus:outline-none" 
+      on:click={toggleMenu} 
+      aria-label="Toggle Menu"
+    >
+      <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+
+    <nav class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center md:flex text-lime-300">
       <a href="/explore" class="gap-0.5 self-stretch my-auto">Explore Projects</a>
       <a href="/createProject" class="gap-2.5 self-stretch my-auto">Create Project</a>
       <div class="relative resources-dropdown">
@@ -51,9 +67,52 @@
         {/if}
       </div>
     </nav>
-    <div class="flex gap-3.5 items-center self-stretch my-auto min-w-[240px]">
+
+    <div class="hidden md:flex gap-3.5 items-center self-stretch my-auto z-40">
       <SearchBar />
       <UserProfile /> 
     </div>
   </div>
+
+
+  {#if isMenuOpen}
+    <div class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-lime-300">
+      <div class="w-full pt-4 mt-4 border-b border-cyan-800">
+        <div class="ml-[15px] mb-2">
+        <UserProfile />
+      </div>
+      </div>
+      <nav class="flex flex-col items-center w-full gap-4 text-sm font-medium leading-none text-center">
+        <a href="/explore" class="block w-full px-4 py-2 mr-3 border-b border-cyan-800">Explore Projects</a>
+        <a href="/createProject" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Create Project</a>
+        <div class="relative w-full resources-dropdown">
+          <button 
+            on:click={toggleResources}
+            class="flex items-center justify-between w-full px-4 py-4 border-b focus:outline-none border-cyan-800"
+          >
+            <span>Resources</span>
+            <img 
+              loading="lazy" 
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/e816977c627d70abd1c95d4ce2ad2f32e49e85597447cdf82aaa7f9042ea8b80" 
+              alt="" 
+              class="w-[17px] transform transition-transform duration-200 {isResourcesOpen ? 'rotate-180' : ''}"
+            />
+          </button>
+          {#if isResourcesOpen}
+            <div class="absolute left-0 z-50 w-full mt-2 rounded-md shadow-lg bg-cyan-900 top-full">
+              <a href="/about" class="block w-full px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About Pipeline</a>
+              <a href="/dpgs" class="block w-full px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About DPGs</a>
+            </div>
+          {/if}
+        </div>
+      </nav>
+
+  
+   
+    </div>
+  {/if}
 </header>
+
+
+
+

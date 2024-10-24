@@ -1,58 +1,47 @@
-# create-svelte
+# DPG Pipeline (WIP)
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+DPG Pipeline is a web-based platform built with **SvelteKit** and **NodeJS** using the [Hono](https://hono.dev) framework, designed to support the development, funding, and sustainability of Digital Public Goods (DPGs). The platform enables users to contribute both financial and non-financial resources to DPG projects and helps projects meet the Digital Public Goods Standard.
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+> The codebase is a work-in-progress (WIP) and is still under development.
 
-## Creating a project
+## Prerequisites
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Node.js (version 20.12.X or higher)
+- [Vercel CLI](https://vercel.com/cli) (for local development)
+- Supabase account for database and authentication
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Local Development
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+1. Clone the repository:
 
-## Developing
+   ```sh
+   git clone https://github.com/christex-foundation/pipeline
+   cd pipeline
+   ```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+2. Install dependencies:
 
-```bash
-npm run dev
+   ```sh
+   npm install
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+3. Set up environment variables:
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+   - Option 1: Pull from Vercel
 
-## Building
+     ```sh
+     npx vercel env pull
+     ```
 
-To build your library:
+   - Option 2: Create a `.env` file based on `.env.example`
 
-```bash
-npm run package
-```
+4. Set up Supabase:
 
-To create a production version of your showcase app:
+   - Follow the [Supabase setup guide](https://supabase.com/docs/guides/getting-started) to create your project.
+   - Populate the necessary API keys and database details in your `.env` file.
 
-```bash
-npm run build
-```
+5. Start the development server:
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+   ```sh
+   npm run dev
+   ```

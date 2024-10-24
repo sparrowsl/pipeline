@@ -1,36 +1,3 @@
-<!-- <form class="flex flex-col mt-14 w-full text-3xl max-md:mt-10 max-md:max-w-full">
-    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3c7979cefe1fbf01e884bffe7d230ed9a363e6898b0332cfd026ba99e64dd7c1?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Profile banner" class="object-contain w-full aspect-[3.64] max-md:max-w-full" />
-    <div class="flex flex-col mt-36 w-full max-md:mt-10 max-md:max-w-full">
-      <div class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full whitespace-nowrap max-md:mt-10 max-md:max-w-full">
-        <label for="firstName" class="self-stretch my-auto">First Name</label>
-        <input type="text" id="firstName" class="flex shrink-0 self-stretch my-auto border-2 border-lime-800 border-solid h-[73px] min-w-[240px] rounded-[61px] w-[839px] px-4" />
-      </div>
-      <div class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full max-md:mt-10 max-md:max-w-full">
-        <label for="lastName" class="self-stretch my-auto">Last Name</label>
-        <input type="text" id="lastName" class="flex shrink-0 self-stretch my-auto border-2 border-lime-800 border-solid h-[73px] min-w-[240px] rounded-[61px] w-[839px] px-4" />
-      </div>
-      <div class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full whitespace-nowrap max-md:mt-10 max-md:max-w-full">
-        <label for="username" class="self-stretch my-auto">Username</label>
-        <input type="text" id="username" class="flex shrink-0 self-stretch my-auto border-2 border-lime-800 border-solid h-[73px] min-w-[240px] rounded-[61px] w-[839px] px-4" />
-      </div>
-      <div class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full whitespace-nowrap max-md:mt-10 max-md:max-w-full">
-        <label for="email" class="self-stretch my-auto">Email</label>
-        <input type="email" id="email" class="flex shrink-0 self-stretch my-auto border-2 border-lime-800 border-solid h-[73px] min-w-[240px] rounded-[61px] w-[839px] px-4" />
-      </div>
-      <div class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full whitespace-nowrap max-md:mt-10 max-md:max-w-full">
-        <label for="country" class="self-stretch my-auto">Country</label>
-        <input type="text" id="country" class="flex shrink-0 self-stretch my-auto border-2 border-lime-800 border-solid h-[73px] min-w-[240px] rounded-[61px] w-[839px] px-4" />
-      </div>
-      <div class="flex flex-wrap gap-10 justify-between items-start mt-12 w-full whitespace-nowrap max-md:mt-10 max-md:max-w-full">
-        <label for="bio" class="self-stretch">Bio</label>
-        <textarea id="bio" class="flex shrink-0 border-2 border-lime-800 border-solid h-[368px] min-w-[240px] rounded-[37px] w-[839px] p-4"></textarea>
-      </div>
-      <button type="submit" class="self-end px-16 py-8 mt-12 text-3xl font-medium text-gray-200 bg-lime-800 rounded-[128px] max-md:px-5 max-md:mt-10">
-        save & continue
-      </button>
-    </div>
-  </form> -->
-
   <script>
     let bannerImage = null;
     let profileImage = null;
@@ -76,27 +43,27 @@
     </div>
   
     <div class="flex flex-col gap-[47px]">
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" placeholder="Enter your first name" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <label for="lastName">Last Name</label>
         <input type="text" id="lastName" placeholder="Enter your last name" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <label for="username">Username</label>
         <input type="text" id="username" placeholder="Choose a username" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="Enter your email address" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <label for="country">Country</label>
         <input type="text" id="country" placeholder="Enter your country" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
-      <div class="flex justify-between items-start">
+      <div class="flex items-start justify-between">
         <label for="bio">Bio</label>
         <textarea id="bio" placeholder="Write a short bio about yourself" class="w-[838.93px] h-[368.20px] rounded-[37.29px] border-2 border-[#516027] p-4"></textarea>
       </div>
