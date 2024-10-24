@@ -9,6 +9,7 @@
     isOpen = !isOpen;
   }
 </script>
+
 <article class="flex flex-col mt-12 max-w-full bg-white rounded-2xl w-[1199px] max-md:mt-10">
   <div class="flex flex-col justify-center w-full border border-solid px-7 py-7 rounded-2xl border-teal-950 max-md:px-5 max-md:max-w-full">
     <div class="flex flex-col w-full max-md:max-w-full">

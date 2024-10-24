@@ -22,12 +22,20 @@ onMount(() => {
     <Nav />
 </main>
 
+<section class="relative min-h-[417px] flex flex-col justify-center items-center">
+  {#if imageLoaded}
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/2e79f9f0f0676cc1340e4648692e7dd2c076c54bc6408583026e9461be5dccd4?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
+      alt=""
+      class="absolute inset-0 object-cover w-full h-full"
+      aria-hidden="true"
+    />
+  {/if}
+  <div class="relative z-10 flex flex-col items-center self-stretch my-auto min-w-[240px] max-w-full">
+    <h1 class="text-8xl font-semibold text-center text-black leading-[99px] max-md:text-4xl max-md:leading-[49px]">
+      <slot></slot>
+    </h1>
 
-<div class="relative w-full h-[417px] bg-[#d1ea9a]/80 flex justify-center items-center gap-2.5">
-  <div class="flex flex-col justify-start items-center gap-[14.67px]">
-    <div class="text-center text-black text-[89.62px] font-semibold leading-[98.58px] font-['PP Mori'] max-sm:text-6xl">
-      What are<br/>Digital Public Goods?
-    </div>
   </div>
 
  
