@@ -2,7 +2,7 @@
 <script>
  import { onMount } from 'svelte';
 
- let user = {}; // To store user information
+ let user = {};
  let error = null; 
  const defaultImageUrl = "https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg";
 
@@ -17,11 +17,11 @@
 
           if (response.ok) {
             const result = await response.json();
-            user = result.user; // Store user data
+            user = result.user; 
             
           } else {
             const result = await response.json();
-            error = result.error; // Store error message
+            error = result.error; 
           }
         } catch (err) {
           error = 'Failed to fetch user data'; 
@@ -35,14 +35,14 @@
 <section class="flex flex-col mt-24 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
     <div class="flex flex-col max-md:max-w-full">
       <div class="flex flex-col w-full max-md:max-w-full">
-        <div class="flex relative flex-col w-full max-md:max-w-full">
+        <div class="relative flex flex-col w-full max-md:max-w-full">
           <img 
             loading="lazy" 
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/8030ec6426e85620456b5636b4a5396ca24f43b5e55a6739527e90baef3c9203?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
             alt="Profile background" 
             class="object-cover z-0 w-full aspect-[3.33] min-h-[347px] rounded-[43px] max-md:max-w-full" 
           />
-          <!-- svelte-ignore a11y-img-redundant-alt -->
+      
           {#if user && user.id}
           <img loading="lazy" src={(user.image_url && user.image_url !== "") ? user.image_url : defaultImageUrl} alt="Profile picture" class="object-contain absolute z-0 gap-2.5 items-center max-w-full aspect-[1.01] bottom-[-105px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" />
           {/if}
@@ -57,7 +57,7 @@
             loading="lazy" 
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/6ace0eb1d4bfd4db87a6bf2277283b6a10948092c6fe21a68b635fae72ce805b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" 
             alt="" 
-            class="object-contain self-stretch my-auto w-6 shrink-0 aspect-square" 
+            class="self-stretch object-contain w-6 my-auto shrink-0 aspect-square" 
           />
         </button>
       </a>
@@ -65,7 +65,7 @@
   </section>
   
   <section class="flex flex-col mt-16 w-full max-w-[1155px] max-md:mt-10 max-md:max-w-full">
-    <div class="flex flex-wrap gap-4 justify-between items-center w-full text-black max-md:max-w-full">
+    <div class="flex flex-wrap items-center justify-between w-full gap-4 text-black max-md:max-w-full">
       <h1 class="self-stretch my-auto text-5xl font-semibold leading-none max-md:text-4xl">
         {user?.display_name || ''}
       </h1>
@@ -79,10 +79,10 @@
         </div>
       </div>
     </div>
-    <p class="mt-11 text-2xl font-light leading-9 text-black max-md:mt-10 max-md:max-w-full">
+    <p class="text-2xl font-light leading-9 text-black mt-11 max-md:mt-10 max-md:max-w-full">
       {user?.bio || ''}
     </p>
-    <div class="flex flex-wrap gap-4 justify-between items-center mt-11 w-full max-md:mt-10 max-md:max-w-full">
+    <div class="flex flex-wrap items-center justify-between w-full gap-4 mt-11 max-md:mt-10 max-md:max-w-full">
       <div class="flex flex-wrap gap-4 items-center self-stretch my-auto whitespace-nowrap min-w-[240px] max-md:max-w-full">
         <h2 class="self-stretch my-auto text-4xl leading-none text-center text-black">
           Interests 
@@ -101,7 +101,7 @@
           {/if}
         </div>
       </div>
-      <div class="flex flex-wrap gap-2 items-center self-stretch my-auto">
+      <div class="flex flex-wrap items-center self-stretch gap-2 my-auto">
         <a href="/">
         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ed41f92bba82baae689f0c6bf194e5e860148c6bf243751d8f5bad9269b52c35?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Social media icon" class="object-contain shrink-0 self-stretch my-auto aspect-square w-[38px]" />   
     </a>
@@ -119,7 +119,7 @@
     </a>
     </div>
     </div>
-    <div class="flex flex-wrap gap-10 justify-between items-center mt-11 w-full text-2xl font-medium leading-none max-md:mt-10 max-md:max-w-full">
+    <div class="flex flex-wrap items-center justify-between w-full gap-10 text-2xl font-medium leading-none mt-11 max-md:mt-10 max-md:max-w-full">
       <a href="/createProject">
         <button class="gap-2.5 self-stretch px-16 py-7 my-auto text-white bg-teal-900 min-w-[240px] rounded-[49px] w-[710px] max-md:px-5 max-md:max-w-full">
         Create Project

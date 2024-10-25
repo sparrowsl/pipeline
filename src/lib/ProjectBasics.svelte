@@ -3,7 +3,7 @@
   import {get } from 'svelte/store';
   import { createEventDispatcher } from 'svelte';
   import SubNav from '../lib/SubNav.svelte';
-  import { goto } from '$app/navigation'; // Import this if you're using SvelteKit
+  import { goto } from '$app/navigation'; 
   
 
   let title = get(projectStore).title;
@@ -97,7 +97,7 @@
  
   
   {#if currentSection === 'basics'}
-    <form class="flex flex-col mt-14 w-full max-md:mt-10">
+    <form class="flex flex-col w-full mt-14 max-md:mt-10">
       <div class="flex flex-col w-full max-md:max-w-full">
         <div class="flex flex-col items-start w-full leading-none max-md:max-w-full">
           <div class="flex flex-col max-w-full w-[409px]">
@@ -105,10 +105,6 @@
             <p class="mt-2.5 text-xl text-stone-300">Click to change Project's Cover & Profile photo</p>
           </div>
         </div>
-        <!-- <div class="flex relative flex-col mt-12 w-full max-md:mt-10 max-md:max-w-full">
-          <div class="flex z-0 gap-2.5 w-full bg-stone-300 min-h-[347px] rounded-[43px] max-md:max-w-full" role="img" aria-label="Project cover image"></div>
-          <div class="flex absolute z-0 gap-2.5 items-center border-white border-solid aspect-square bg-stone-300 border-[10px] bottom-[-106px] h-[211px] left-[123px] min-h-[211px] rounded-[106px] w-[211px]" role="img" aria-label="Project profile image"></div>
-        </div> -->
 
         <div class="self-stretch h-[295.61px] relative mb-[141px]">
           <label for="banner-upload" class="cursor-pointer">
@@ -135,28 +131,28 @@
         </div>
       </div>
   
-      <div class="flex flex-col justify-center mt-44 w-full max-md:mt-10 max-md:max-w-full">
+      <div class="flex flex-col justify-center w-full mt-44 max-md:mt-10 max-md:max-w-full">
         <div class="flex flex-col w-full max-md:max-w-full">
           <label for="projectTitle" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project title</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">What is the title of your project</p>
           <input type="text" id="projectTitle" bind:value={title} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] max-md:max-w-full mt-2.5 px-4" aria-required="true" />
         </div>
   
-        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+        <div class="flex flex-col w-full mt-9 max-md:max-w-full">
           <label for="projectBio" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project bio</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Give a short description of your project</p>
           <textarea id="projectBio" bind:value={bio} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[150px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>
         </div>
         
-        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+        <div class="flex flex-col w-full mt-9 max-md:max-w-full">
           <label for="projectTags" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project tags</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Select the keywords that best describe your project.</p>
           
           <div class="relative mt-2.5 w-full">
             <div class="flex flex-wrap items-center py-3 px-6 w-full border-2 border-lime-800 border-solid min-h-[70px] rounded-[75px] bg-white">
-              <div class="flex flex-wrap flex-grow gap-2 items-center pr-8">
+              <div class="flex flex-wrap items-center flex-grow gap-2 pr-8">
                 {#each selectedTags as tag}
-                  <span class="flex items-center px-3 py-1 text-lime-800 bg-lime-200 rounded-full">
+                  <span class="flex items-center px-3 py-1 rounded-full text-lime-800 bg-lime-200">
                     {tag}
                     <button on:click={() => removeTag(tag)} class="ml-2 text-lime-800 hover:text-lime-900">×</button>
                   </span>
@@ -171,7 +167,7 @@
               </div>
               <button 
                 on:click={toggleDropdown} 
-                class="absolute right-4 top-1/2 transform -translate-y-1/2 focus:outline-none"
+                class="absolute transform -translate-y-1/2 right-4 top-1/2 focus:outline-none"
                 aria-label="Toggle tag dropdown"
               >
                 <img 
@@ -183,11 +179,11 @@
             </div>
             
             {#if isOpen}
-              <div class="overflow-auto absolute z-10 mt-1 w-full max-h-60 bg-white rounded-md border border-gray-300 shadow-lg">
+              <div class="absolute z-10 w-full mt-1 overflow-auto bg-white border border-gray-300 rounded-md shadow-lg max-h-60">
                 {#each filteredTags as tag}
                   <button
                     on:click={() => addTag(tag)}
-                    class="block px-4 py-2 w-full text-left hover:bg-lime-100 focus:bg-lime-200 focus:outline-none"
+                    class="block w-full px-4 py-2 text-left hover:bg-lime-100 focus:bg-lime-200 focus:outline-none"
                   >
                     {tag}
                   </button>
@@ -197,7 +193,7 @@
           </div>
         </div>
         
-        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+        <div class="flex flex-col w-full mt-9 max-md:max-w-full">
           <label for="projectCountry" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Country</label>
           <p class="mt-2.5 text-xl leading-none text-stone-300 max-md:max-w-full">Choose the location where you are running the project.</p>
           <div class="flex flex-col mt-2.5 w-full max-md:max-w-full">
@@ -220,7 +216,7 @@
 
 
   
-        <div class="flex flex-col mt-9 w-full max-md:max-w-full">
+        <div class="flex flex-col w-full mt-9 max-md:max-w-full">
           <label for="projectDetails" class="text-4xl font-semibold leading-none text-black max-md:max-w-full">Project details</label>
           <p class="mt-2.5 text-xl leading-5 text-stone-300 max-md:max-w-full">Tell potential contributors more about your project. Provide details that will motivate people to contribute. A good pitch is compelling, informative, and easy to digest.</p>
           <textarea id="projectDetails" bind:value={details} on:change={updateStore} class="flex gap-1.5 w-full border-2 border-lime-800 border-solid min-h-[581px] rounded-[31px] max-md:max-w-full mt-2.5 p-4" aria-required="true"></textarea>

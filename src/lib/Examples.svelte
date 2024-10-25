@@ -2,8 +2,8 @@
   import ExampleCard from './ExampleCard.svelte';
   </script>
   
-  <section class="flex flex-col items-center mt-16 w-full text-black max-w-6xl mx-auto px-4 max-md:mt-10">
-    <h2 class="text-5xl font-semibold leading-none text-center mb-8 max-md:text-4xl">Examples</h2>
+  <section class="flex flex-col items-center w-full max-w-6xl px-4 mx-auto mt-16 text-black max-md:mt-10">
+    <h2 class="mb-8 text-5xl font-semibold leading-none text-center max-md:text-4xl">When is a Product a DPG?</h2>
     <div class="flex flex-wrap gap-8 justify-center items-center w-full text-5xl font-thin leading-[50px] max-md:text-4xl max-md:leading-[49px]">
       <ExampleCard
         imageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/2d296a83957a9191e4b8dbb798d505dbf3941e3e66870811a646b02bf1ab858d?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"

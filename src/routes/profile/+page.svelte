@@ -42,7 +42,7 @@
 
     </script>
     
-    <div class="flex overflow-hidden flex-col items-center bg-white">
+    <div class="flex flex-col items-center overflow-hidden bg-white">
       <Nav />
       <ProfileInfo />
       {#if loading}
@@ -55,4 +55,6 @@
 
     </div>
 
-    <Footer />
+    <Footer /> 
+
+
