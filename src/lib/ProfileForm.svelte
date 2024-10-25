@@ -17,7 +17,7 @@
     }
   </script>
   
-  <form class="flex flex-col w-full text-[30.91px] font-normal font-['PP Mori'] leading-[34px]">
+  <form class="flex flex-col w-[80%] text-[30.91px] font-normal font-['PP Mori'] leading-[34px]">
     <div class="self-stretch h-[295.61px] relative mb-[141px]">
       <label for="banner-upload" class="cursor-pointer">
         <div class="w-full h-full bg-[#d9d9d9] rounded-[37.69px] flex justify-center items-center overflow-hidden">
@@ -45,27 +45,27 @@
     <div class="flex flex-col gap-[47px]">
       <div class="flex items-center justify-between">
         <label for="firstName">First Name</label>
-        <input type="text" id="firstName" placeholder="Enter your first name" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+        <input type="text" id="firstName" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
       <div class="flex items-center justify-between">
         <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" placeholder="Enter your last name" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+        <input type="text" id="lastName" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
       <div class="flex items-center justify-between">
         <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Choose a username" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+        <input type="text" id="username" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
       <div class="flex items-center justify-between">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email address" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+        <input type="email" id="email" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
       <div class="flex items-center justify-between">
         <label for="country">Country</label>
-        <input type="text" id="country" placeholder="Enter your country" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+        <input type="text" id="country" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
       </div>
       <div class="flex items-start justify-between">
         <label for="bio">Bio</label>
-        <textarea id="bio" placeholder="Write a short bio about yourself" class="w-[838.93px] h-[368.20px] rounded-[37.29px] border-2 border-[#516027] p-4"></textarea>
+        <textarea id="bio" class="w-[838.93px] h-[368.20px] rounded-[37.29px] border-2 border-[#516027] p-4"></textarea>
       </div>
     </div>
   
