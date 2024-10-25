@@ -62,8 +62,6 @@
     "Civic Engagement",
     "Cultural Events"
   ];
-
-
   
     function handleNavChange(event) {
       activeNavItem = event.detail;

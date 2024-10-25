@@ -1,7 +1,7 @@
 
+
   <form class="flex flex-col w-full text-[30.91px] font-normal font-['PP Mori'] leading-[34px]">
-  
-  
+   
     <div class="flex flex-col gap-[47px] w-[75%] self-center">
         <div class="flex items-center justify-between">
           <label for="twitter">X</label>

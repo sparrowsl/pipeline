@@ -78,6 +78,7 @@ onMount(() => {
 
 <div class="w-full min-h-screen bg-white">
     <Nav />
+
     <div class="w-full bg-[#d1ea9a]/90 py-16">
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
@@ -96,8 +97,9 @@ onMount(() => {
             </section>
             <ProjectCategory />
         </main>
-    </div>
+      </div>
 
+      
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-20">Top Projects</div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
         {#if topProjects.length > 0}    
@@ -127,7 +129,5 @@ onMount(() => {
           <button class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
         </div>
       </div>
-      
-  
     <Footer />
 </div>

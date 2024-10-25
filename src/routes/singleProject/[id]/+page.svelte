@@ -85,7 +85,7 @@
   }
 </script>
 
-<div class="flex overflow-hidden flex-col items-center bg-white">
+<div class="flex flex-col items-center overflow-hidden bg-white">
   <Nav />
   <div class="w-full max-w-[1300px] mx-auto px-4">
     <section class="flex relative flex-col mt-8 w-full max-w-[1300px] max-md:mt-10 max-md:max-w-full mb-[160px] ">
@@ -94,7 +94,7 @@
     </section>
 
     <section class="flex flex-col w-full mt-5">
-      <div class="flex flex-wrap gap-10 justify-between items-center w-full">
+      <div class="flex flex-wrap items-center justify-between w-full gap-10">
         <h1 class="text-6xl font-semibold leading-none text-black max-w-[852px] max-md:max-w-full max-md:text-4xl">
           {project.title || 'Project Title'}
         </h1>
@@ -108,12 +108,12 @@
       </p>
     </section>
 
-    <section class="flex flex-wrap gap-10 justify-between items-center mt-12 w-full">
-      <div class="flex flex-wrap gap-5 items-center self-stretch my-auto whitespace-nowrap">
+    <section class="flex flex-wrap items-center justify-between w-full gap-10 mt-12">
+      <div class="flex flex-wrap items-center self-stretch gap-5 my-auto whitespace-nowrap">
         <h2 class="self-stretch my-auto text-4xl leading-none text-center text-black">
           Tags
         </h2>
-        <div class="flex flex-wrap gap-4 items-center self-stretch my-auto text-2xl leading-none text-lime-800">
+        <div class="flex flex-wrap items-center self-stretch gap-4 my-auto text-2xl leading-none text-lime-800">
           {#if project.tags && project.tags.length > 0}
             {#each project.tags as tag}
               <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
@@ -121,18 +121,9 @@
               </span>
             {/each}
           {/if}
-          <!-- <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
-            Design
-          </span>
-          <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
-            Engineering
-          </span>
-          <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
-            Art
-          </span> -->
         </div>
       </div>
-      <div class="flex gap-5 items-center self-stretch my-auto">
+      <div class="flex items-center self-stretch gap-5 my-auto">
         <a href="/">
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/25d20ce21b5381fa4bb91daca604ede459a95788c00e5a42a9afd7b391c4745c?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Social media icon" class="w-[42px] h-[42px]" />
         </a>
@@ -153,22 +144,22 @@
     
     <section class="flex flex-wrap gap-10 justify-between items-center px-16 py-11 mt-16 w-full bg-lime-300 min-h-[258px] rounded-[33px] text-teal-950 max-md:px-5 max-md:mt-10">
       <div class="flex flex-col self-stretch my-auto leading-none text-center whitespace-nowrap w-[201px]">
-        <div class="text-7xl font-semibold max-md:text-4xl">6</div>
+        <div class="font-semibold text-7xl max-md:text-4xl">6</div>
         <div class="mt-2 text-2xl">Contributors</div>
       </div>
       <div class="shrink-0 self-stretch my-auto w-0 border border-solid border-neutral-400 h-[174px]" role="separator"></div>
       <div class="flex flex-col self-stretch my-auto leading-none text-center w-[201px]">
-        <div class="text-7xl font-semibold max-md:text-4xl">
+        <div class="font-semibold text-7xl max-md:text-4xl">
           5<span class="text-5xl">/</span><span class="text-5xl text-teal-800">9</span>
         </div>
         <div class="mt-2 text-2xl">DPG Status</div>
       </div>
       <div class="shrink-0 self-stretch my-auto w-0 border border-solid border-neutral-400 h-[174px]" role="separator"></div>
       <div class="flex flex-col self-stretch my-auto w-[201px]">
-        <div class="w-full text-7xl font-semibold leading-none text-center whitespace-nowrap max-md:text-4xl">
+        <div class="w-full font-semibold leading-none text-center text-7xl whitespace-nowrap max-md:text-4xl">
           ${project.funding_goal}
         </div>
-        <div class="flex flex-col justify-center items-center mt-5 w-full font-medium">
+        <div class="flex flex-col items-center justify-center w-full mt-5 font-medium">
           <div class="flex gap-3 items-center max-w-full w-[194px]">
             <div class="self-stretch my-auto text-xl leading-tight">${project.funding_goal}</div>
             <div class="self-stretch my-auto text-xs leading-6 text-teal-800">
@@ -205,9 +196,6 @@
     <h2 class='text-3xl font-semibold leading-none text-black'>Similar Projects</h2>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1300px] mx-auto px-4 pt-4 pb-8">
-    <!-- <Card />
-    <Card />
-    <Card /> -->
   </div>
 
 

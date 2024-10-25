@@ -1,4 +1,3 @@
-
   <script>
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
@@ -41,13 +40,13 @@
 
           if (response.ok) {
             const result = await response.json();
-            user = result.user; // Store user data
+            user = result.user; 
           } else {
             const result = await response.json();
-            error = result.error; // Store error message
+            error = result.error; 
           }
         } catch (err) {
-          error = 'Failed to fetch user data'; // Handle fetch errors
+          error = 'Failed to fetch user data'; 
         }
 
     return () => {
@@ -74,9 +73,9 @@
               sessionStorage.clear();
             }
 
-            // Invalidate all current `load` functions
+            
             await invalidateAll();
-            // Redirect to home page or login page after successful logout
+            
             goto('/signIn');
           } else {
             console.error('Logout was not successful');
@@ -110,7 +109,7 @@
       {/if}
     </button>
   
-    <!-- Dropdown -->
+
     {#if isOpen}
       <div
         bind:this={dropdownNode}
@@ -140,7 +139,6 @@
               />
               <a href="/profile">Profile</a>
             </li>
-        
             <li class="flex items-center gap-4 mt-6">
               <img
                 loading="lazy"
