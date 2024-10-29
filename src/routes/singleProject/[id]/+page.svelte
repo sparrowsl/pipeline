@@ -116,7 +116,7 @@
         <div class="flex flex-wrap items-center self-stretch gap-4 my-auto text-2xl leading-none text-lime-800">
           {#if project.tags && project.tags.length > 0}
             {#each project.tags as tag}
-              <span class="px-9 py-6 border-lime-800 border-solid border-[3px] rounded-[108px] max-md:px-5">
+              <span class="px-4 py-2 border-lime-800 border-solid border-[2px] rounded-[108px] max-md:px-5 text-xl">
                 {tag}
               </span>
             {/each}
@@ -174,7 +174,7 @@
     <main class="flex flex-col justify-center items-center px-10 py-12 mt-11 bg-white rounded-[37px] max-md:px-5 max-md:mt-10">
       <UserNav {navItems} bind:activeItem={activeNavItem} on:navChange={handleNavChange} />
       
-      <section class="flex overflow-hidden flex-col items-center mt-16 max-w-full w-[1085px] max-md:mt-10">
+      <section class="flex overflow-hidden flex-col items-center mt-16 max-w-full w-[985px] max-md:mt-10">
         {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
         {:else if activeNavItem === 'team'}

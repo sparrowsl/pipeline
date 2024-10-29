@@ -169,7 +169,7 @@
                 class="w-[18px] aspect-[1.06] object-contain"
                 alt=""
               />
-              <a href="/profile">Settings</a>
+              <a href="/profile/edit">Settings</a>
             </li>
             <li class="flex items-center gap-4 mt-4">
               <img

@@ -116,20 +116,19 @@
 <div class="w-full min-h-screen bg-white">
   <Nav />
 
-  <section class="relative min-h-[417px] w-full">
-    {#if imageLoaded}
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e31ab375db047d220f54398e16c4cc0f0001d612779f0974e0d8c39c0fea9107?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-        alt=""
-        class="absolute inset-0 object-cover w-full h-full"
-        aria-hidden="true"
-      />
-    {/if}
-  </section>
+  <div class="w-full bg-[#d1ea9a]/90 py-16">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
+           Let's Build The Future Together
+            
+        </h1>
+    </div>
+</div>
+
   <div
-    class="relative flex flex-col items-center justify-center gap-2 p-4 text-center text-black min-h-[217px]"
+    class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[365px]"
   >
-    <h1 class="text-8xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
+    <h1 class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
       Create a Project
     </h1>
   </div>
@@ -218,11 +217,11 @@
         </section>
       {/if}
 
-      <div class="flex justify-between w-full mt-10">
+      <div class="flex justify-between w-[80%] mt-10">
         {#if activeNavItem !== 'Basics'}
           <button
             on:click={navigateToPrevious}
-            class="px-[112px] py-8 text-2xl font-medium text-lime-800 bg-white border-2 border-lime-800 rounded-[82px] max-md:px-5"
+            class="px-[112px] py-4 text-xl font-medium text-lime-800 bg-white border-2 border-lime-800 rounded-[82px] max-md:px-5"
           >
             Previous
           </button>
@@ -234,7 +233,7 @@
         {#if activeNavItem !== 'Funding'}
           <button
             on:click={navigateToNext}
-            class="px-[112px] py-8 text-2xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
+            class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
           >
             Next
           </button>

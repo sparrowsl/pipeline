@@ -18,9 +18,9 @@
   let rememberMe = false;
 </script>
 
-<form on:submit={handleSubmit} class="flex flex-col w-full text-lg">
+<form on:submit={handleSubmit} class="flex flex-col text-lg">
   <h2 class="mb-2 text-4xl font-semibold leading-none text-black">Sign in</h2>
-  <p class="mb-4 opacity-50">Enter your Info to sign up</p>
+  <p class="mb-8 opacity-50">Enter your Info to sign up</p>
   <div class="flex flex-col w-full font-medium text-black whitespace-nowrap">
     <label for="email" class="max-md:max-w-full">Email</label>
     <input type="email" id="email" bind:value={email} class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4" required />
@@ -31,7 +31,7 @@
     <input type="password" id="password" bind:value={password} class="flex mt-3 w-full border border-black border-solid h-[45px] rounded-full px-4" required />
   </div>
   
-  <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base font-light text-white bg-teal-900 h-[45px] rounded-full" disabled={loading}>
+  <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base text-center font-light text-white bg-teal-900 h-[52px] rounded-full" disabled={loading}>
     {loading ? 'Signing in...' : 'Sign in'}
   </button>
   

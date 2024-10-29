@@ -133,7 +133,7 @@
           />
         </div>
       </a>
-      <div class="absolute top-10 right-8">
+      <div class="absolute top-4 right-3">
         <div class="relative inline-block text-left dropdown-container">
           <div>
             <button 
@@ -170,18 +170,18 @@
       <div class="flex items-center justify-between mb-2">
         <h2 class="text-xl font-semibold text-black">{project.title}</h2>
         <p class="text-xs text-neutral-400">
-          <span class="text-sm font-semibold">${project.current_funding || 0}</span> raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
+          <DPGRating rating={5} />
         </p>
       </div>
-      <p class="mb-2 text-xs text-black">
+      <!-- <p class="mb-2 text-xs text-black">
         {project.bio}
-      </p>
-      <div class="flex gap-2 mb-4">
+      </p> -->
+      <div class="flex gap-2 ml-[-2px] mb-4">
         <CategoryTag text="category 1" />
         <CategoryTag text="category 2" />
       </div>
       
-      <DPGRating rating={5} total={9} />
+      <span class="text-sm font-semibold">${project.current_funding || 0}</span> raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
       <ProgressBar progress={206} total={289} />
       
       <ContributeButton project={project} />
