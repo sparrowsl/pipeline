@@ -16,7 +16,6 @@
   let activeNavItem = 'Basics';
   const navItems = [
     { id: 'Basics', label: 'Basics', width: '184px' },
-    { id: 'Team', label: 'Team', width: '184px' },
     { id: 'Links', label: 'Links', width: '184px' },
     { id: 'Funding', label: 'Funding', width: '184px' },
   ];
@@ -143,8 +142,6 @@
     >
       {#if activeNavItem === 'Basics'}
         <ProjectBasics />
-      {:else if activeNavItem === 'Team'}
-        <TeamForm />
       {:else if activeNavItem === 'Links'}
         <section
           class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full"
@@ -160,64 +157,67 @@
           </form>
         </section>
       {:else if activeNavItem === 'Funding'}
-        <section
-          class="flex flex-col justify-center w-[80%] ml-20 text-3xl font-semibold mt-14 max-md:mt-10 max-md:max-w-full"
-        >
-          <form class="flex flex-col w-full max-md:max-w-full">
-            <div class="flex flex-col w-full mt-11 max-md:mt-10 max-md:max-w-full">
-              <div class="flex flex-col w-full mt-11 max-md:mt-10 max-md:max-w-full">
-                <label for="funding goal" class="max-md:max-w-full">Funding Goal</label>
-                <input
-                  id="bankAccount"
-                  bind:value={funding_goal}
-                  on:change={updateStore}
-                  type="number"
-                  class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
-                  aria-label="Funding Goal"
-                />
-              </div>
+        
+        <section class="w-full max-w-[1038px] mx-auto mt-10 text-black">
+          <div class="flex flex-col mb-10">
+            <h2 class="mb-6 text-2xl font-semibold">Payout Method</h2>
 
-              <div class="flex flex-col w-full mt-11 max-md:mt-10 max-md:max-w-full">
-                <label for="bankAccount" class="max-md:max-w-full">Bank Account</label>
-                <input
-                  id="bankAccount"
-                  bind:value={bank_acct}
-                  on:change={updateStore}
-                  type="text"
-                  class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
-                  aria-label="Bank Account"
-                />
-              </div>
-
-              <div
-                class="flex flex-wrap gap-3.5 justify-center items-center mt-11 w-full text-4xl leading-none whitespace-nowrap text-neutral-400 max-md:mt-10 max-md:max-w-full"
-              >
-                <hr
-                  class="shrink-0 self-stretch my-auto h-0.5 border-2 border-solid border-zinc-300 w-[165px]"
-                />
-                <span class="self-stretch my-auto">or</span>
-                <hr
-                  class="shrink-0 self-stretch my-auto h-0.5 border-2 border-solid border-zinc-300 w-[165px]"
-                />
-              </div>
-
-              <div class="flex flex-col w-full mt-11 max-md:mt-10 max-md:max-w-full">
-                <label for="walletAddress" class="max-md:max-w-full">Wallet Address</label>
-                <input
-                  id="walletAddress"
-                  bind:value={wallet_address}
-                  on:change={updateStore}
-                  type="text"
-                  class="flex gap-2 mt-5 w-full border border-black border-solid min-h-[80px] rounded-[52px] max-md:max-w-full px-8"
-                  aria-label="Wallet Address"
-                />
-              </div>
+            <div class="flex items-center">
+              <label for="fundingGoal" class="w-1/3 text-lg font-semibold">Funding Goal</label>
+              <input
+                id="fundingGoal"
+                bind:value={funding_goal}
+                on:change={updateStore}
+                type="number"
+                class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+                aria-label="Funding Goal"
+              />
             </div>
-          </form>
-        </section>
-      {/if}
 
-      <div class="flex justify-between w-[80%] mt-10">
+            <hr class="my-8 border-neutral-300" />
+  
+            <div class="flex items-center mt-10 mb-6">
+              <label for="bankAccount" class="w-1/3 text-lg font-medium">Bank Account</label>
+              <input
+                id="bankAccount"
+                bind:value={bank_acct}
+                on:change={updateStore}
+                type="text"
+                class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+                aria-label="Bank Account"
+              />
+            </div>
+        
+
+            <div class="flex items-center justify-center my-4 text-neutral-400">
+              <hr class="flex-grow border-t-2 border-neutral-300" />
+              <span class="px-4 text-lg font-medium">or</span>
+              <hr class="flex-grow border-t-2 border-neutral-300" />
+            </div>
+        
+      
+            <div class="flex items-center mt-6">
+              <label for="walletAddress" class="w-1/3 text-lg font-medium">Wallet Address</label>
+              <input
+                id="walletAddress"
+                bind:value={wallet_address}
+                on:change={updateStore}
+                type="text"
+                class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+                aria-label="Wallet Address"
+              />
+            </div>
+          </div>
+        
+        
+        
+    
+          
+        </section>
+        
+        {/if}
+
+      <div class="flex justify-between w-full max-w-[1038px] mt-10">
         {#if activeNavItem !== 'Basics'}
           <button
             on:click={navigateToPrevious}
@@ -227,7 +227,6 @@
           </button>
         {:else}
           <div></div>
-          <!-- Empty div to maintain layout when there's no Previous button -->
         {/if}
 
         {#if activeNavItem !== 'Funding'}
@@ -240,7 +239,7 @@
         {:else}
           <button
             on:click={saveProject}
-            class="px-[112px] py-8 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
+            class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
           >
             {loading ? 'Saving...' : 'Save'}
           </button>
