@@ -25,6 +25,7 @@
 
 
   let currentUser = { id: 'user123' };
+  let isFollowing = false;
   
   async function getSingleProject() {
     try {
@@ -51,6 +52,10 @@
         loading = false;
       }
     }
+
+    function toggleFollow() {
+    isFollowing = !isFollowing;
+  }
   
     onMount(() => {
       getSingleProject();
@@ -140,26 +145,13 @@
         <div class="flex flex-wrap gap-2 text-lg text-lime-800">
           {#if project.tags && project.tags.length > 0}
             {#each project.tags as tag}
-              <span class="px-2 py-0.5 text-base border-2 rounded-md border-lime-800 max-md:px-3">
+              <span class="px-2 py-0.5 text-base border-2 rounded-md border-[#0b383c] max-md:px-3">
                 {tag}
               </span>
             {/each}
           {/if}
         </div>
       </section>
-
-      <!-- <div class="flex items-center gap-3 mt-6">
-        <a href="/contribute" class="bg-[#0b383c] text-[#e9f5d3] text-center text-base font-semibold py-4 rounded-full w-[50%]">
-        <button >
-          CONTRIBUTE
-        </button>
-      </a>
-      <a href="/" class="border-2 border-[#516027] text-[#516027] text-center text-base font-semibold py-4 rounded-full w-[50%]">
-        <button >
-          FOLLOW
-        </button>
-      </a>
-      </div> -->
 
       <div class="flex items-center gap-3 mt-6">
         {#if currentUser.id === project.creatorId}
@@ -170,9 +162,15 @@
           <a href="/contribute" class="bg-[#0b383c] text-[#e9f5d3] text-center text-base font-semibold py-4 rounded-full w-[50%]">
             <button>CONTRIBUTE</button>
           </a>
-          <a href="/" class="border-2 border-[#516027] text-[#516027] text-center text-base font-semibold py-4 rounded-full w-[50%]">
-            <button>FOLLOW</button>
-          </a>
+          <button
+          on:click={toggleFollow}
+          class="border-2 text-center text-base font-semibold py-4 rounded-full w-[50%]"
+          class:bg-[#e9f5d3]={isFollowing} 
+          class:text-black={isFollowing} 
+        >
+          {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+        </button>
+        
         {/if}
       </div>
       
