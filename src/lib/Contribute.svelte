@@ -205,6 +205,10 @@
   let cryptoAddress = "";
   let bankAccount = "";
   let isBillingSame = true;
+  let name="";
+  let routingNumber = "";
+  let checkingAccount = "";
+  let idNumber = "";
 
   function selectTab(tab) {
       selectedTab = tab;
@@ -258,38 +262,51 @@
 
           <div class="mb-4">
               <label class="block mb-1 text-sm text-gray-600">Card number</label>
-              <input type="text" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={cardNumber} placeholder="XXXX XXXX XXXX XXXX" />
+              <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={cardNumber} placeholder="XXXX XXXX XXXX XXXX" />
           </div>
           <div class="grid grid-cols-2 gap-2 mb-4">
               <div>
                   <label class="block mb-1 text-sm text-gray-600">Expiry</label>
-                  <input type="text" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={expiry} placeholder="MM / YY" />
+                  <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={expiry} placeholder="MM / YY" />
               </div>
               <div>
                   <label class="block mb-1 text-sm text-gray-600">CVC</label>
-                  <input type="text" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={cvc} placeholder="CVC" />
+                  <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={cvc} placeholder="CVC" />
               </div>
           </div>
 
           <div class="grid grid-cols-2 gap-2 mb-4">
             <div>
                 <label class="block mb-1 text-sm text-gray-600">Country</label>
-                <input type="text" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={expiry} placeholder="MM / YY" />
+                <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={expiry} placeholder="MM / YY" />
             </div>
             <div>
                 <label class="block mb-1 text-sm text-gray-600">ZIP</label>
-                <input type="number" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={zip} placeholder="ZIP" />
+                <input type="number" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={zip} placeholder="ZIP" />
             </div>
         </div>
         {:else if selectedTab === 'Crypto'}
-        <!-- Bank Payment Form -->
        <Wallet />
       {:else if selectedTab === 'Bank'}
-          <!-- Bank Payment Form -->
-          <div class="mb-4">
-              <label class="block mb-1 text-sm text-gray-600">Bank Account Number</label>
-              <input type="text" class="w-full p-2 bg-gray-100 border rounded-md" bind:value={bankAccount} placeholder="Enter your bank account number" />
-          </div>
+      <div class="mb-4">
+        <label class="block mb-1 text-sm text-gray-600">Name</label>
+        <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={name} placeholder="Enter account holder's name" />
+    </div>
+    <div class="mb-4">
+        <label class="block mb-1 text-sm text-gray-600">Routing Number</label>
+        <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={routingNumber} placeholder="Enter routing number" />
+    </div>
+    <div class="mb-4">
+        <label class="block mb-1 text-sm text-gray-600">Checking Account Number</label>
+        <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={checkingAccount} placeholder="Enter checking account number" />
+    </div>
+    <div class="mb-4">
+        <label class="block mb-1 text-sm text-gray-600">ID Number</label>
+        <input type="text" class="w-full p-2 bg-gray-100 border rounded-md focus:outline-none focus:border-[#0b383c] transition-colors duration-200" bind:value={idNumber} placeholder="Enter ID number" />
+    </div>
+
+    <!-- Disclaimer -->
+    <p class="mb-6 text-sm text-gray-500">For banks in the US only.</p>
       {/if}
 
 
