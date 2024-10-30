@@ -3,10 +3,18 @@
   
     const dispatch = createEventDispatcher();
   
-    // Function to handle "Back to Updates" button click
     function goBack() {
        console.log("goBack function triggered");
-      dispatch('goBack'); // Emit event to trigger switch back to Updates component
+      dispatch('goBack'); 
+    }
+
+    let newComment = '';
+
+    function addComment() {
+        if (newComment.trim()) {
+            console.log("Adding comment:", newComment);
+            newComment = ''; 
+        }
     }
   </script>
 
@@ -186,4 +194,21 @@
             </div>
         </div>
     </div>
+
+    
+</div>
+
+<div class="flex flex-col items-start self-stretch justify-start gap-4 pt-4 pb-8 w-[90%] pl-10">
+    <input
+        type="text"
+        bind:value={newComment}
+        placeholder="Add a comment..."
+        class="w-full border-2 border-[#dcdedd] rounded-lg px-4 py-2 text-base text-[#0b383c] focus:outline-none focus:border-[#0b383c] transition-colors duration-200"
+    />
+    <button
+        on:click={addComment}
+        class="w-full md:w-1/4 px-4 py-2 bg-[#0b383c] text-white text-base rounded-lg transition-colors duration-300 focus:outline-none focus:border-[#0b383c]"
+    >
+        Submit Comment
+    </button>
 </div>
