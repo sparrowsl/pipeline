@@ -44,7 +44,7 @@ onMount(() => {
     alt="Digital Public Goods Background"
     class="absolute inset-0 w-full h-full object-cover z-[-1] opacity-50"
   />
-</div>
+</section>
 
 
 
