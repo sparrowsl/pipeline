@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-const PROTECTED_ROUTES = ['/explore', '/profile', '/createProject', '']; // Add your protected routes here
+const PROTECTED_ROUTES = ['/profile', '/createProject', '']; // Add your protected routes here
 const PUBLIC_ROUTES = ['/signUp', '/signIn'];
 
 export async function handle({ event, resolve }) {
@@ -17,9 +17,9 @@ export async function handle({ event, resolve }) {
       throw redirect(302, '/signIn');
     }
   
-    if (PUBLIC_ROUTES.includes(path) && accessToken) {
-      throw redirect(302, '/explore');
-    }
+    // if (PUBLIC_ROUTES.includes(path) && accessToken) {
+    //   throw redirect(302, '/explore');
+    // }
     
   
     return resolve(event);
