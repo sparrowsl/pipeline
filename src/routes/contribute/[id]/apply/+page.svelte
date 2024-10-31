@@ -14,21 +14,21 @@
     let myButtons = [];
     $: if (id) {
       myButtons = [
-        { label: 'Donate', active: true, href: `/contribute/${id}/wallet` },
-        { label: 'Apply', active: false, href: `/contribute/${id}/apply` }
+        { label: 'Funding', active: true, href: `/contribute/${id}/wallet` },
+        { label: 'Resources', active: false, href: `/contribute/${id}/apply` }
       ];
     }
   
     function handleButtonClick(event) {
       console.log(`Button clicked: ${event.detail.label}, navigating to: ${event.detail.href}`);
-      // Add your navigation logic here if needed
+   
     }
   </script>
   
   <div class="w-full min-h-screen bg-white">
     <Nav />
     <div class="w-full bg-[#d1ea9a]/90 py-16">
-        <div class="mx-auto max-w-4xl text-center">
+        <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-[#08292c] text-[85.43px] font-semibold font-['PP Mori'] leading-tight header-text">
             Make a Difference
             <br/>
