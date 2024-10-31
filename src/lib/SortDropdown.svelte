@@ -19,7 +19,7 @@
         }
     }
   
-    
+       
     onMount(() => {
         document.addEventListener('click', closeDropdown);
         return () => {
@@ -28,9 +28,9 @@
     });
   </script>
   
-  <div class="dropdown relative flex gap-1.5 justify-center items-center self-stretch px-8 py-6 my-auto bg-teal-950 rounded-[43px] max-md:px-2" role="button" tabindex="0">
+  <div class="dropdown relative flex gap-1.5 justify-center items-center self-stretch px-6 py-4 my-auto bg-teal-950 rounded-[43px] max-md:px-2" role="button" tabindex="0">
   <button on:click={toggleDropdown} class="dropdown relative flex gap-1.5 justify-center items-center self-stretch px-2 my-auto bg-teal-950 rounded-[43px] max-md:px-5" role="button" tabindex="0">
-    <span class="self-stretch my-auto cursor-pointer" >{selectedOption}</span>
+    <span class="self-stretch my-auto text-lg cursor-pointer" >{selectedOption}</span>
     <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/06ffd7e20c2e1885ffcdb09988de28f3f926e106789fafcb6c3b52dba9b903f8?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="" class="self-stretch object-contain w-6 my-auto shrink-0 aspect-square" />
   </button>
       

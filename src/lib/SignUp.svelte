@@ -37,7 +37,7 @@
     <input type="password" id="password" bind:value={password} class="flex mt-3 w-full border border-black border-solid h-[40px] rounded-full px-4" required />
   </div>
 
-  <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base font-light text-white bg-teal-900 h-[40px] rounded-full" disabled={loading}>
+  <button type="submit" class="self-stretch px-10 py-4 mt-8 w-full text-base font-light text-white bg-teal-900 h-[52px] rounded-full" disabled={loading}>
     {loading ? 'Signing up...' : 'Sign up'}
   </button>
 
