@@ -12,6 +12,7 @@
   import { goto } from '$app/navigation';
 
   let loading = false;
+  
 
   let activeNavItem = 'Basics';
   const navItems = [

@@ -47,8 +47,10 @@
 		"axios": "^1.7.7",
 		"countries-list": "^3.1.1",
 		"dotenv": "^16.4.5",
+		"novel-svelte": "^0.1.7",
 		"openai": "^4.68.0",
 		"svelte-styled-components": "^0.0.1",
+		"tailwind-editor": "^0.3.3",
 		"zod": "^3.23.8"
 	}
 }

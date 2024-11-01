@@ -47,6 +47,9 @@ export async function POST({ request }) {
             funding_goal,
         } = await request.json();
 
+        console.log("title:", title)
+        console.log("Details to save: ", details)
+
         const { data, error } = await supabase
             .from('projects')
             .insert([

@@ -2,11 +2,16 @@
 	import { projectStore } from './../stores/projectStore.js';
   import {get } from 'svelte/store';
   import { createEventDispatcher } from 'svelte';
+
+    
+  import { onMount } from 'svelte';
+  let Editor;
+  
   import SubNav from '../lib/SubNav.svelte';
   import { goto } from '$app/navigation'; 
   import { countries } from 'countries-list';
 
-const countryList = Object.values(countries);
+ const countryList = Object.values(countries);
 
   
 
@@ -15,7 +20,13 @@ const countryList = Object.values(countries);
   let country = get(projectStore).country;
   let details = get(projectStore).details;
 
+
   let selectedTags = [...get(projectStore).tags];
+
+  //validation
+  export function validateFields() {
+    return title && bio && country && details && selectedTags.length > 0;
+  }
 
   function updateStore() {
     projectStore.update(data => {
@@ -93,6 +104,11 @@ const countryList = Object.values(countries);
         ProjectProfileImage = URL.createObjectURL(file);
       }
     }
+
+    onMount(async () => {
+      const module = await import("novel-svelte");
+      Editor = module.Editor;
+   });
 </script>
 
 <section class="flex flex-col self-center p-10 mt-5 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -253,6 +269,17 @@ const countryList = Object.values(countries);
             </p>
           </div>
           <div class="w-[50%] max-md:w-full">
+            
+            <!-- {#if Editor}
+              <Editor
+                on:change={(event) => {
+                  details = event.detail; // Update based on how `Editor` emits change events
+                  console.log(event);
+                  updateStore();
+                }}
+                class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[100px]"
+              />
+            {/if} -->
             <textarea
               id="projectDetails"
               bind:value={details}
