@@ -1,4 +1,5 @@
 <script>
+	import { read } from './../../node_modules/@popperjs/core/dist/esm/enums.js';
 	import { projectStore } from './../stores/projectStore.js';
   import {get } from 'svelte/store';
   import { createEventDispatcher } from 'svelte';
@@ -12,8 +13,6 @@
   import { countries } from 'countries-list';
 
  const countryList = Object.values(countries);
-
-  
 
   let title = get(projectStore).title;
   let bio = get(projectStore).bio;
@@ -44,25 +43,9 @@
 
   const dispatch = createEventDispatcher();
 
-  const availableTags = [
-    'Technology', 'Environment', 'Education', 'Healthcare', 'Social Impact',
-    'Art & Culture', 'Community Development', 'Innovation'
-  ];
-
-  let navSections = [
-    { id: 'basics', label: 'Basics', href: '/createProject' },
-    { id: 'team', label: 'Team', href: '/createProject/team' },
-    { id: 'links', label: 'Links', href: '/createProject/links' },
-    { id: 'funding', label: 'Funding', href: '/createProject/funding' }
-  ];
+  let availableTags = [];
 
   let currentSection = 'basics';
-
-  function handleNavigation(event) {
-  const { href, id } = event.detail;
-  currentSection = id;
-  goto(href);
-}
 
   function toggleDropdown(event) {
     event.preventDefault();
@@ -70,7 +53,7 @@
   }
 
   function addTag(tag) {
-    if (!selectedTags.includes(tag)) {
+    if (!selectedTags.some(selected => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
       dispatch('change', selectedTags);
     }
@@ -79,33 +62,59 @@
   }
 
   function removeTag(tag) {
-    selectedTags = selectedTags.filter(t => t !== tag);
+    selectedTags = selectedTags.filter(t => t.title !== tag.title);
     dispatch('change', selectedTags);
   }
 
   $: filteredTags = availableTags.filter(tag => 
-    tag.toLowerCase().includes(inputValue.toLowerCase()) && !selectedTags.includes(tag)
+    tag.title.toLowerCase().includes(inputValue.toLowerCase()) && 
+    !selectedTags.some(selected => selected.title === tag.title)
   );
 
 
+
   let ProjectBannerImage = null;
-    let ProjectProfileImage = null;
+  let ProjectProfileImage = null;
+
+  const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
   
-    function handleBannerUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        ProjectBannerImage = URL.createObjectURL(file);
-      }
+  function handleBannerUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      ProjectBannerImage = URL.createObjectURL(file);
     }
-  
-    function handleProfileUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        ProjectProfileImage = URL.createObjectURL(file);
-      }
+  }
+
+  function handleProfileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      ProjectProfileImage = URL.createObjectURL(file);
     }
+  }
+
+
+  async function fetchAllCategories() {
+    try {
+      const response = await fetch('/api/categories', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      availableTags = data.categories;
+    } catch (error) {
+      
+    }
+  }
 
     onMount(async () => {
+      fetchAllCategories();
       const module = await import("novel-svelte");
       Editor = module.Editor;
    });
@@ -133,18 +142,18 @@
               {/if}
             </div>
           </label>
-          <input type="file" id="banner-upload" class="hidden" accept="image/*" on:change={handleBannerUpload} />
+          <input type="file" id="banner-upload" class="hidden" accept={authorizedExtensions.join(',')} on:change={handleBannerUpload}  />
           
           <label for="profile-upload" class="cursor-pointer">
             <div class="absolute bottom-[-92.6px] left-[46.69px] w-[185.19px] h-[185.19px] bg-[#d9d9d9] rounded-full border-8 border-white flex justify-center items-center overflow-hidden">
               {#if ProjectProfileImage}
-                <img src=ProjectProfileImage} alt="Profile" class="object-cover w-full h-full rounded-full" />
+                <img src={ProjectProfileImage} alt="Profile" class="object-cover w-full h-full rounded-full" />
               {:else}
                 <div class="text-sm text-center">Click to upload profile picture</div>
               {/if}
             </div>
           </label>
-          <input type="file" id="profile-upload" class="hidden" accept="image/*" on:change={handleProfileUpload} />
+          <input type="file" id="profile-upload" class="hidden" accept={authorizedExtensions.join(',')} on:change={handleProfileUpload}  />
         </div>
       </div>
 
@@ -195,14 +204,14 @@
               <div class="flex flex-wrap items-center flex-grow gap-2 pr-8">
                 {#each selectedTags as tag}
                   <span class="flex items-center px-3 py-1 rounded-full text-lime-800 bg-lime-200">
-                    {tag}
+                    {tag.title}
                     <button on:click={() => removeTag(tag)} class="ml-2 text-lime-800 hover:text-lime-900">×</button>
                   </span>
                 {/each}
                 <input
                   type="text"
                   bind:value={inputValue}
-                  on:focus={toggleDropdown}
+                  
                   placeholder="Type to add tags"
                   class="flex-grow bg-transparent border-none outline-none"
                 />
@@ -227,7 +236,7 @@
                     on:click={() => addTag(tag)}
                     class="block w-full px-4 py-2 text-left hover:bg-lime-100 focus:bg-lime-200 focus:outline-none"
                   >
-                    {tag}
+                    {tag.title}
                   </button>
                 {/each}
               </div>
