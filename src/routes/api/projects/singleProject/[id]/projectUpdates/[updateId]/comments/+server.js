@@ -12,6 +12,7 @@ export async function GET({ params }) {
         .eq('project_id', id)
         .eq('update_id', updateId);
 
+      
       return json({ comments: data }, { status: 200 });
       
     } catch (error) {

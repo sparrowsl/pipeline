@@ -1,14 +1,16 @@
 import { supabase } from '$lib/server/supabase.js';
 import { json } from '@sveltejs/kit';
 
-export async function GET({ request }) {
+export async function POST({ params, request }) {
+    const { id } = params;
+    const {title, body } = await request.json();
 
     const cookies = request.headers.get('cookie');
-
+  
     if (!cookies) {
-        return new Response(JSON.stringify({ error: 'No cookies found' }), { status: 401 });
-    }   
-
+      return new Response(JSON.stringify({ error: 'No cookies found' }), { status: 401 });
+    }
+  
     // Parse cookies to extract the access token
     const accessToken = cookies
       .split(';')
@@ -29,19 +31,27 @@ export async function GET({ request }) {
     let user = userData.user;
 
     try {
-        const { data, error } = await supabase
-          .from('projects')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false });
 
-        return json({ projects: data }, { status: 200 });
+      const { data, error } = await supabase
+        .from('project_updates')
+        .insert([
+            {
+                project_id: id,
+                title,
+                body,
+                user_id: user.id
+            }
+        ])
+        .select()
+        
+        if (error) {
+            return json({ error: error.message }, { status: 400 });
+        }
 
-
+        return json({ success: true }, { status: 200 });
+      
     } catch (error) {
-        return json({ error: error.message }, { status: 500 });
+      return json({ error: error.message }, { status: 500 });
     }
+  }
 
-
-
-}

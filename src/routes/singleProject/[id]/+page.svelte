@@ -18,14 +18,16 @@
     $: id = $page.params.id;
 
   let project = {};
+  let projectUpdates = [];
   let loading = true;
   let error = null;
 
   let imageUrl = 'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
 
-  let currentUser = { id: 'user123' };
+  let currentUser = { id: 'b43e79b5-7dbe-4753-8705-9209afd9ae00' };
   let isFollowing = false;
+  let isAddingUpdate = false;
   
   async function getSingleProject() {
     try {
@@ -41,9 +43,8 @@
         }
 
         const data = await response.json();
-
         project = data.project;
-
+      
       
     } catch (error) {
         error = e.message;
@@ -51,15 +52,11 @@
       }finally{
         loading = false;
       }
-    }
+  }
 
     function toggleFollow() {
     isFollowing = !isFollowing;
   }
-  
-    onMount(() => {
-      getSingleProject();
-    })
     
     let showUpdatePopup = false;
     let updateTitle = '';
@@ -77,31 +74,73 @@
   }
 
   async function submitUpdate() {
+    
+    isAddingUpdate = true;
     try {
-      const response = await fetch('/api/projects/addUpdate', {
+      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates/store`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectId: project.id,
-          title: updateTitle,
-          body: updateBody,
-        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: updateTitle, body: updateBody }),
       });
-      if (!response.ok) throw new Error('Failed to add update');
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+      }
+
       closeUpdatePopup();
+
+      await getProjectUpdates();
+
       alert('Update added successfully');
+
     } catch (e) {
       alert(e.message);
+    }finally{
+      isAddingUpdate = false;
     }
+  }
+
+  async function getProjectUpdates() {
+    try {
+
+      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+        console.log(data)
+        
+        projectUpdates = data.projectUpdates;
+
+    } catch (error) {
+    
+        alert(error);
+      }finally{
+        loading = false;
+      }
   }
 
   let activeNavItem = 'projectDetails';
   let showUpdateDetail = false; 
+  let selectedUpdate = null;
 
 
   const navItems = [
     { id: 'projectDetails', label: 'About', width: '70px' },
-    { id: 'team', label: 'Team', width: '65px' },
+
+    ...(project.user_id != currentUser.id
+      ? [{ id: 'team', label: 'Team', width: '65px' }]
+      : []),
+
     { id: 'updates', label: 'Updates', width: '95px' },
     { id: 'contributors', label: 'Contributors', width: '150px' },
   ];
@@ -111,12 +150,14 @@
     showUpdateDetail = false;
   }
 
-  function handleShowDetail() {
+  function handleShowDetail(event) {
+    selectedUpdate = event.detail.update;
     showUpdateDetail = true;
   }
 
   function handleGoBack() {
     showUpdateDetail = false;
+    selectedUpdate = null;
   }
   
   let ProjectBannerImage = null;
@@ -135,6 +176,11 @@
       ProjectProfileImage = URL.createObjectURL(file);
     }
   }
+
+  onMount(async () => {
+      await getSingleProject();
+      await getProjectUpdates();
+    })
 </script>
 
 
@@ -191,7 +237,7 @@
       </section>
 
       <div class="flex items-center gap-3 mt-6">
-        {#if currentUser.id === project.creatorId}
+        {#if currentUser.id === project.user_id}
         <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
           <button>EDIT PROJECT</button>
         </a>
@@ -212,51 +258,52 @@
         >
           {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
         </button>
-      
-        
         
         {/if}
       </div>
 
   
       {#if showUpdatePopup}
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
-      <!-- Close Button -->
-      <button
-        on:click={closeUpdatePopup}
-        class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-gray-700"
-        style="z-index: 1000;"
-      >
-        &times;
-      </button>
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
+            <!-- Close Button -->
+            <button
+              on:click={closeUpdatePopup}
+              class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-gray-700"
+              style="z-index: 1000;"
+            >
+              &times;
+            </button>
 
-      <h2 class="mb-4 text-xl font-bold">Add Update</h2>
-      <label class="block mb-2 text-sm font-medium text-gray-700">
-        Title
-        <input
-          type="text"
-          bind:value={updateTitle}
-          class="w-full p-2 mt-1 border rounded-lg"
-        />
-      </label>
-      <label class="block mb-4 text-sm font-medium text-gray-700">
-        Body
-        <textarea
-          bind:value={updateBody}
-          rows="4"
-          class="w-full p-2 mt-1 border rounded-lg resize-none"
-        ></textarea>
-      </label>
-      <button
-        on:click={submitUpdate}
-        class="w-full py-2 text-black rounded-lg bg-lime-300"
-      >
-        Submit Update
-      </button>
-    </div>
-  </div>
-{/if}
+            <h2 class="mb-4 text-xl font-bold">Add Update</h2>
+            <label class="block mb-2 text-sm font-medium text-gray-700">
+              Title
+              <input
+                type="text"
+                bind:value={updateTitle}
+                class="w-full p-2 mt-1 border rounded-lg"
+                require
+              />
+            </label>
+            <label class="block mb-4 text-sm font-medium text-gray-700">
+              Body
+              <textarea
+                bind:value={updateBody}
+                rows="4"
+                class="w-full p-2 mt-1 border rounded-lg resize-none"
+                require
+              ></textarea>
+            </label>
+            <button
+              on:click={submitUpdate}
+              class="w-full py-2 text-black rounded-lg bg-lime-300" disabled={isAddingUpdate}>
+
+            {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
+  
+            </button>
+          </div>
+        </div>
+      {/if}
 
 
       
@@ -296,14 +343,20 @@
           {#if activeNavItem === 'projectDetails'}
             <ProjectAbout {project} />
         
-          {:else if activeNavItem === 'team'}
+          {:else if activeNavItem === 'team' && project.user_id === currentUser.id}
             <ProjectMembers />
         
           {:else if activeNavItem === 'updates'}
             {#if showUpdateDetail}
-              <UpdateDetail on:goBack={handleGoBack} /> 
+              <UpdateDetail {selectedUpdate} on:goBack={handleGoBack} /> 
             {:else}
-              <Updates on:showDetail={handleShowDetail} /> 
+            {#if (projectUpdates.length > 0)}
+              {#each projectUpdates as update}
+                <Updates on:showDetail={handleShowDetail} {update}/> 
+              {/each}
+            {:else}
+            <p>No updates</p>
+              {/if}
             {/if}
         
           {:else if activeNavItem === 'contributors'}

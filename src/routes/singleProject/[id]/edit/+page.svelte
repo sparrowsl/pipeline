@@ -125,10 +125,10 @@
   </div>
   
     <div
-      class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[365px]"
+      class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[290px]"
     >
       <h1 class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
-        Create a Project
+        Edit Project - 
       </h1>
     </div>
   

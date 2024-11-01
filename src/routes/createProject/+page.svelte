@@ -15,6 +15,7 @@
   
 
   let activeNavItem = 'Basics';
+  
   const navItems = [
     { id: 'Basics', label: 'Basics', width: '184px' },
     { id: 'Links', label: 'Links', width: '184px' },

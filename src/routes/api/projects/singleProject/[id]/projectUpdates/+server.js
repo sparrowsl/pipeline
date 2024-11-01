@@ -9,7 +9,12 @@ export async function GET({ params }) {
       const { data, error } = await supabase
         .from('project_updates')
         .select('*')
-        .eq('project_id', id);
+        .eq('project_id', id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        return json({ error: error.message }, { status: 500 });
+      }
 
       return json({ projectUpdates: data }, { status: 200 });
       
