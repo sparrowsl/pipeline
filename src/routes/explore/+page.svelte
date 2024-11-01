@@ -1,30 +1,38 @@
 <script>
+	import Search from './../../lib/Search.svelte';
 	import ProjectCategory from '../../lib/ProjectCategory.svelte';
     import Nav from '../../lib/Nav.svelte';   
-    import Search from '../../lib/Search.svelte';
     import CategoryDropdown from '../../lib/CategoryDropdown.svelte';
     import SortDropdown from '../../lib/SortDropdown.svelte';
     import Card from '../../lib/Card.svelte';
     import Footer from '../../lib/Footer.svelte';
   import { onMount } from 'svelte';
-  
-    let activeCategory = 'Categories';
-    let activeFilter = 'All projects';
-  
-    const filters = ['All projects', 'Design', 'Engineering', 'Art', 'Development'];   
+
 
     let allProjects = []
     let topProjects = []
+    let searchResults = [];
+    let categoryResult = [];
     let loading = true;
     let error = null;
+    let searchTerm = '';
+    let selectedTag = '';
+    
+
+    // Pagination state
+    let currentPage = 1;
+    let searchPage = 1;
+    const itemsPerPage = 6;
+    let allProjectsLoaded = false;
+    let searchResultsLoaded = false;
 
 
     async function fetchAllProjects() {
         try {
-            const response = await fetch('/api/projects/allprojects', {
+            const response = await fetch(`/api/projects/allprojects?page=${currentPage}&limit=${itemsPerPage}`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
                 }
             });
 
@@ -34,7 +42,11 @@
 
             const data = await response.json();
 
-            allProjects = data.projects;
+            if (data.projects.length < itemsPerPage) {
+                allProjectsLoaded = true; // No more items to load
+            }
+
+            allProjects = [...allProjects, ...data.projects];
 
         }  catch (error) {
         error = e.message;
@@ -69,10 +81,79 @@
       }
     }
 
-onMount(() => {
-    fetchAllProjects();
-    fetchTopProjects();
-})
+    async function searchProjects(term) {
+        try {
+            const response = await fetch(`/api/projects/search?term=${term}&page=${searchPage}&limit=${itemsPerPage}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) throw new Error(response.statusText);
+
+        const data = await response.json();
+        searchResults = data.projects;
+        } catch (e) {
+            error = e.message;
+            alert(error);
+        } finally {
+            loading = false;
+        }
+    }
+
+    async function projectByCategory(tag) {
+        try {
+            const response = await fetch(`/api/projects/projectByCategory?tag=${tag}&page=${searchPage}&limit=${itemsPerPage}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) throw new Error(response.statusText);
+
+        const data = await response.json();
+        categoryResult = data.projects;
+
+        } catch (e) {
+            error = e.message;
+            alert(error);
+        } finally {
+            loading = false;
+        }
+    }
+
+    function loadMoreProjects() {
+        currentPage += 1;
+        fetchAllProjects();
+    }
+
+    function loadMoreSearchResults() {
+        searchPage += 1;
+        searchProjects(searchTerm);
+    }
+
+    function handleSearch(event) {
+        searchTerm = event.detail.searchTerm;
+        searchPage = 1; // set page to 1 when searching on new term
+        searchResults = [];
+        searchResultsLoaded = false;
+
+        if (searchTerm) {
+            searchProjects(searchTerm);
+        }
+    }
+
+    function handleCategorySelected(event) {
+        const selectedCategory = event.detail;
+        selectedTag = selectedCategory.title === 'All Projects' ? '' : selectedCategory.title;
+        // currentPage = 1;
+        // allProjects = [];
+        projectByCategory(selectedTag);
+        
+  }
+
+    onMount(() => {
+        fetchAllProjects();
+        fetchTopProjects();
+    })
 
 </script>
 
@@ -91,16 +172,28 @@ onMount(() => {
     <div class="flex justify-center w-full px-4">
         <main class="flex flex-col mt-18  text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
             <section class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full">
-                <Search />
+                <Search on:search={handleSearch}/>
                 <!-- <CategoryDropdown /> -->
-             
                 <SortDropdown />
-       
             </section>
-            <ProjectCategory />
+            <ProjectCategory on:categorySelected={handleCategorySelected} />
         </main>
       </div>
 
+    {#if searchTerm && searchResults.length > 0}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-12">Search results for "{searchTerm}"</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
+        {#each searchResults as project}
+          <Card {project} />
+        {/each}
+      </div>
+      {#if !searchResultsLoaded}
+        <div class="flex items-center justify-center mt-8">
+          <button on:click={loadMoreSearchResults} class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
+        </div>
+      {/if}
+
+    {:else if !searchTerm}
       
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-12">Top Projects</div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
@@ -122,14 +215,20 @@ onMount(() => {
         {/each}
         {:else}
         <p>No projects found.</p>
-      
         {/if}
     </div>
 
+    {#if !allProjectsLoaded}
     <div class="flex items-center justify-center">
         <div class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center">
-          <button class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
+          <button on:click={loadMoreProjects} class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
         </div>
       </div>
+      {/if}
+
     <Footer />
-</div>
+
+    {:else}
+  <p class="text-center">No search results found.</p>
+{/if}
+</div> 

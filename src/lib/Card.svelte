@@ -112,6 +112,8 @@
     }
   
     export let project;
+
+    console.log(project);
   
     onMount(() => {
       document.addEventListener('click', closeDropdown);
@@ -177,8 +179,13 @@
         {project.bio}
       </p> -->
       <div class="flex gap-2 ml-[-2px] mb-4">
-        <CategoryTag text="category 1" />
-        <CategoryTag text="category 2" />
+        {#if project.tags.length > 0}
+        {#each project.tags as tag}
+          <CategoryTag text={tag} />
+        {/each}
+        {:else}
+          <CategoryTag text="No tags" />
+        {/if}
       </div>
       
       <span class="text-sm font-semibold">${project.current_funding || 0}</span> raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
