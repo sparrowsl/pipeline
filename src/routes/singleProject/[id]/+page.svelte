@@ -192,7 +192,7 @@
 
       <div class="flex items-center gap-3 mt-6">
         {#if currentUser.id === project.creatorId}
-        <a href="/edit-project" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
+        <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
           <button>EDIT PROJECT</button>
         </a>
         <button
@@ -212,6 +212,10 @@
         >
           {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
         </button>
+        <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
+          <button>EDIT PROJECT</button>
+        </a>
+        
         
         {/if}
       </div>
