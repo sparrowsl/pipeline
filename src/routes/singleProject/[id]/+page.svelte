@@ -212,9 +212,7 @@
         >
           {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
         </button>
-        <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
-          <button>EDIT PROJECT</button>
-        </a>
+      
         
         
         {/if}
