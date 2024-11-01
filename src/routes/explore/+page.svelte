@@ -79,7 +79,7 @@ onMount(() => {
 <div class="w-full min-h-screen bg-white">
     <Nav />
 
-    <div class="w-full bg-[#d1ea9a]/90 py-16">
+    <div class="w-full bg-[#d1ea9a]/90 py-16 mb-16">
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
                 Discover impact projects, donate directly,<br/>& participate in funding rounds.
@@ -89,18 +89,20 @@ onMount(() => {
     </div>
 
     <div class="flex justify-center w-full px-4">
-        <main class="flex flex-col mt-24 w-full text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
-            <section class="flex flex-wrap items-center justify-between w-full gap-5 font-thin leading-none text-center text-lime-100 max-md:max-w-full">
+        <main class="flex flex-col mt-18  text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
+            <section class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full">
                 <Search />
-                <CategoryDropdown />
+                <!-- <CategoryDropdown /> -->
+             
                 <SortDropdown />
+       
             </section>
             <ProjectCategory />
         </main>
       </div>
 
       
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-20">Top Projects</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-12">Top Projects</div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]">
         {#if topProjects.length > 0}    
             {#each topProjects as project}
@@ -125,7 +127,7 @@ onMount(() => {
     </div>
 
     <div class="flex items-center justify-center">
-        <div class="px-[30px] py-[18px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center">
+        <div class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center">
           <button class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug">Load more</button>
         </div>
       </div>

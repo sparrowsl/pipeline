@@ -84,15 +84,17 @@
     <div class="flex flex-col h-full gap-5 md:flex-row">
       <section class="w-full h-full md:w-5/12">
         <div class="flex items-center h-full gap-2.5 py-10 pr-2 pl-5 grow bg-cyan-950 md:py-24 md:pl-12">
-          <div class="flex flex-col self-stretch w-full my-auto min-w-[240px] max-w-[534px]">
-            <Logo />
+          <div class="flex flex-col self-stretch w-full my-auto min-w-[240px] max-w-[534px] items-center">
+            <a href="/" >
+              <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ad49722deb9607c50bec0aa4159ff15d8108741c5e49ac832886fb785b83c09b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="Pipeline logo" class="object-contain max-w-full aspect-[5.95] h-[48px] ml-36" />
+              </a>
             <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/f2c87d36d522646afc65e2334ae141b78ca66fc63c07d8edf349286480639e46?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8" alt="" class="object-contain w-full mt-10 aspect-[1.34] md:mt-48" />
           </div>
         </div>
       </section>
       <section class=" h-full pt-[3%] md:w-7/12 md:ml-5">
         <div class="flex flex-col items-center justify-start h-full pt-20 bg-white">
-          <nav class="flex justify-center gap-20 mb-8 text-4xl md:gap-60">
+          <nav class="flex justify-start gap-20 mb-8 text-4xl md:gap-60">
             <div class="flex flex-col items-center justify-center h-[72px]">
               <button
                 on:click={() => (isSignUp = false)}
@@ -118,7 +120,7 @@
               {/if}
             </div>
           </nav>
-          <div class="flex-grow w-[60%] pt-8 overflow-y-auto">
+          <div class="flex-grow w-[50%] pt-8 overflow-y-auto">
             {#if isSignUp}
               <SignUp {loading} {name} {email} {password} on:signUp={handleSignUp} />
             {:else}

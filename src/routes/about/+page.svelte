@@ -51,9 +51,9 @@
 </main>
 
 
-<div class="w-[100%] h-[417px] bg-[#d1ea9a]/90 justify-center items-center gap-2.5 inline-flex mb-20">
+<div class="w-[100%] h-[417px] bg-[#d1ea9a]/70 justify-center items-center gap-2.5 inline-flex mb-20">
     <div class="flex-col justify-start items-center gap-[14.67px] inline-flex">
-        <div class="text-center text-black text-[89.62px] font-semibold font-['PP Mori'] leading-[98.58px]">How<br/>Pipeline Works</div>
+        <div class="text-center text-black text-[89.62px] font-semibold font-['PP Mori'] leading-[98.58px]">How Pipeline Works</div>
     </div>
 </div>
 

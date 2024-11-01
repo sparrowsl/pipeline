@@ -45,14 +45,14 @@
     </button>
 
     <nav class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center md:flex text-lime-300">
-      <a href="/explore" class="gap-0.5 self-stretch my-auto">Explore Projects</a>
-      <a href="/createProject" class="gap-2.5 self-stretch my-auto">Create Project</a>
+      <a href="/explore" class="gap-0.5 self-stretch my-auto text-base">Explore Projects</a>
+      <!-- <a href="/createProject" class="gap-2.5 self-stretch my-auto text-bas">Create Project</a> -->
       <div class="relative resources-dropdown">
         <button 
           on:click={toggleResources}
           class="flex gap-0.5 items-center self-stretch my-auto whitespace-nowrap focus:outline-none"
         >
-          <span class="self-stretch my-auto">Resources</span>
+          <span class="self-stretch my-auto text-bas">Resources</span>
           <img 
             loading="lazy" 
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/e816977c627d70abd1c95d4ce2ad2f32e49e85597447cdf82aaa7f9042ea8b80" 
@@ -62,11 +62,12 @@
         </button>
         {#if isResourcesOpen}
           <div class="absolute z-10 w-48 py-2 mt-2 transform -translate-x-1/2 rounded-md shadow-lg top-full left-1/2 bg-cyan-900">
-            <a href="/about" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About Pipeline</a>
-            <a href="/dpgs" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About DPGs</a>
+            <a href="/about" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800 text-bas">About Pipeline</a>
+            <a href="/dpgs" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800 text-bas">About DPGs</a>
           </div>
         {/if}
       </div>
+      <a href="/" class="gap-0.5 self-stretch my-auto text-base">Contact Us</a>
     </nav>
 
     <div class="hidden md:flex gap-3.5 items-center self-stretch my-auto z-40">
@@ -85,7 +86,8 @@
       </div>
       <nav class="flex flex-col items-center w-full gap-4 text-sm font-medium leading-none text-center">
         <a href="/explore" class="block w-full px-4 py-2 mr-3 border-b border-cyan-800">Explore Projects</a>
-        <a href="/createProject" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Create Project</a>
+        
+        <!-- <a href="/createProject" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Create Project</a> -->
         <div class="relative w-full resources-dropdown">
           <button 
             on:click={toggleResources}
@@ -106,6 +108,7 @@
             </div>
           {/if}
         </div>
+        <a href="/" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Contact Us</a>
       </nav>
 
   
