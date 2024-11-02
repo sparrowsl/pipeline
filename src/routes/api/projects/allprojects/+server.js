@@ -8,14 +8,14 @@ export async function GET({ url }) {
     const start = (page - 1) * limit;
     const end = start + limit - 1;
 
-    //console.log('start:', start, 'end:', end, 'page:', page, 'limit:', limit);
   
     try {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .range(start, end); // Fetch only the specified range
-  
+        .range(start, end); 
+
+
       if (error) throw error;
   
       return json({ projects: data }, { status: 200 });
