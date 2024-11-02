@@ -35,9 +35,9 @@
                     <img class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]" src="https://via.placeholder.com/42x42" alt=""/>
                     <div class="w-[120.07px] flex-col justify-start items-start inline-flex">
                         <div class="inline-flex items-center self-stretch justify-start gap-2">
-                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">9thLevel</div>
+                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">{update.userProfile.name}</div>
                             <div class="px-[5px] py-[0.25px] bg-[#05ce78] rounded-[3px] flex-col justify-center items-start inline-flex">
-                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">Creator</div>
+                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">{update.user_id === update.userProfile.user_id ? 'Creator' : 'Member'}</div>
                             </div>
                         </div>
                         <div class="self-stretch h-[18px] text-[#282828]/50 text-[13px] font-normal font-['Inter'] leading-[18px]"><DateTimeFormat date={update.created_at}/></div>

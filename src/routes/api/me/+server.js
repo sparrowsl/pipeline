@@ -34,12 +34,12 @@ export async function GET({ request }) {
       return new Response(JSON.stringify({ error: error.message }), { status: 401 });
     }
   
-    // Ensure the data and user object exist before proceeding
+    
     if (!data || !data.user) {
       return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
     }
   
-    // Assign the user object only when it is guaranteed to exist
+   
     const user = {
         'id': data.user.id,
         'email': data.user.email,

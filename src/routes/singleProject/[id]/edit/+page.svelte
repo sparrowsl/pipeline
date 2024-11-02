@@ -14,6 +14,7 @@
     let loading = false;
   
     let activeNavItem = 'Basics';
+    export let data;
     const navItems = [
       { id: 'Basics', label: 'Basics', width: '184px' },
       { id: 'Links', label: 'Links', width: '184px' },
@@ -113,7 +114,7 @@
   </script>
   
   <div class="w-full min-h-screen bg-white">
-    <Nav />
+    <Nav {data}/>
   
     <div class="w-full bg-[#d1ea9a]/90 py-16">
       <div class="max-w-4xl mx-auto text-center">

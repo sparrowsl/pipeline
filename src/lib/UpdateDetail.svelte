@@ -13,6 +13,7 @@
 
     let newComment = '';
     let comments = [];
+    let loading = false;
 
     async function getUpdateComments() {
         try {
@@ -40,6 +41,7 @@
     }
 
     async function addUpdateComment() {
+        loading = true;
         try {
         const response = await fetch(`/api/projects/singleProject/${selectedUpdate.project_id}/projectUpdates/${selectedUpdate.id}/comments/store`, {
             method: 'POST',
@@ -53,6 +55,8 @@
             throw new Error(response.statusText);
         }
 
+        newComment = '';
+
         await getUpdateComments();
 
         alert('Comment added successfully');
@@ -63,13 +67,6 @@
             alert(error);
         }finally{
             loading = false;
-        }
-    }
-
-    function addComment() {
-        if (newComment.trim()) {
-            console.log("Adding comment:", newComment);
-            newComment = ''; 
         }
     }
 
@@ -117,9 +114,9 @@
                     <img class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]" src="https://via.placeholder.com/42x42" alt="" />
                     <div class="w-[120.07px] flex-col justify-start items-start inline-flex">
                         <div class="inline-flex items-center self-stretch justify-start gap-2">
-                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">9thLevel</div>
+                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">{selectedUpdate.userProfile.name}</div>
                             <div class="px-[5px] py-[0.25px] bg-[#05ce78] rounded-[3px] flex-col justify-center items-start inline-flex">
-                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">Creator</div>
+                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">{selectedUpdate.user_id === selectedUpdate.userProfile.user_id ? 'Creator' : 'Member'}</div>
                             </div>
                         </div>
                         <div class="self-stretch h-[18px] text-[#282828]/50 text-[13px] font-normal font-['Inter'] leading-[18px]"><DateTimeFormat date={selectedUpdate.created_at} /></div>
@@ -147,7 +144,7 @@
                         </div>
                         <div class="w-[195.45px] flex-col justify-start items-start inline-flex">
                             <div class="inline-flex items-center self-stretch justify-start gap-3">
-                                <div class="w-[92.93px] h-[21px] text-[#282828] text-sm font-normal font-['Inter'] leading-[21px]">Gary Johnson</div>
+                                <div class="w-[92.93px] h-[21px] text-[#282828] text-sm font-normal font-['Inter'] leading-[21px]">{comment.userProfile.name}</div>
                             </div>
                             <div class="self-stretch h-[18px] flex-col justify-start items-start flex">
                                 <div class="text-[#9b9e9e] text-xs font-normal font-['Inter'] leading-[18px]"><DateTimeFormat date={comment.created_at} /></div>
@@ -183,7 +180,8 @@
     <button
         on:click={addUpdateComment}
         class="w-full md:w-1/4 px-4 py-2 bg-[#0b383c] text-white text-base rounded-lg transition-colors duration-300 focus:outline-none focus:border-[#0b383c]"
+        disabled={loading}
     >
-        Submit Comment
+       {loading ? 'Submitting...' : 'Comment'}
     </button>
 </div>

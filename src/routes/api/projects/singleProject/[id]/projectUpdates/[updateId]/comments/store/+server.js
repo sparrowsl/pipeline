@@ -31,10 +31,6 @@ export async function POST({ params, request }) {
     let user = userData.user;
 
     try {
-
-        console.log('id:', id);
-        console.log('updateId:', updateId);
-        console.log('body:', body);
         
         const {data, error} = await supabase
           .from('project_update_comment')

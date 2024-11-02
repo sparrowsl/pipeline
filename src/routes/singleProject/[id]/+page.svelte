@@ -1,4 +1,5 @@
  <script>
+	import ProjectMembers from './../../../lib/ProjectMembers.svelte';
   import Contributors from '../../../lib/Contributors.svelte';
   import Nav from '../../../lib/Nav.svelte';
   import ProfileInfo from '../../../lib/ProfileInfo.svelte';
@@ -6,7 +7,6 @@
   import ProjectNav from '../../../lib/ProjectNav.svelte';
   import ProjectAbout from '../../../lib/ProjectAbout.svelte';
   import Card from '../../../lib/Card.svelte';
-  import ProjectMembers from '../../../lib/ProjectMembers.svelte';
   import DpgStatus from '../../../lib/dpgStatus.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -15,12 +15,15 @@
   import Resources from '../../../lib/Resources.svelte';
   
   let id;
-    $: id = $page.params.id;
+  $: id = $page.params.id;
 
   let project = {};
   let projectUpdates = [];
+  let projectTeam = [];
   let loading = true;
+  let user = null;
   let error = null;
+  export let data;
 
   let imageUrl = 'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
@@ -129,6 +132,33 @@
       }
   }
 
+  async function getProjectMembers() {
+    try {
+
+      const response = await fetch(`/api/projects/singleProject/${id}/projectMembers`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+        console.log(data)
+        
+        projectTeam = data.members;
+
+    } catch (error) {
+    
+        alert(error);
+      }finally{
+        loading = false;
+      }
+  }
+
   let activeNavItem = 'projectDetails';
   let showUpdateDetail = false; 
   let selectedUpdate = null;
@@ -136,11 +166,7 @@
 
   const navItems = [
     { id: 'projectDetails', label: 'About', width: '70px' },
-
-    ...(project.user_id != currentUser.id
-      ? [{ id: 'team', label: 'Team', width: '65px' }]
-      : []),
-
+    { id: 'team', label: 'Team', width: '65px' },
     { id: 'updates', label: 'Updates', width: '95px' },
     { id: 'contributors', label: 'Contributors', width: '150px' },
   ];
@@ -163,29 +189,22 @@
   let ProjectBannerImage = null;
   let ProjectProfileImage = null;
 
-  function handleBannerUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      ProjectBannerImage = URL.createObjectURL(file);
-    }
-  }
-
-  function handleProfileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      ProjectProfileImage = URL.createObjectURL(file);
-    }
-  }
-
   onMount(async () => {
       await getSingleProject();
       await getProjectUpdates();
+      await getProjectMembers();
+      if(data.isAuthenticated){
+        user = data.user;
+      }
     })
+
+    
 </script>
 
 
 <div class="bg-white">
-  <Nav />
+  <Nav {data}/>
+  
 
   <div class="flex items-start max-w-[1500px] mx-auto px-4">
 
@@ -236,8 +255,9 @@
         </div>
       </section>
 
+      {#if user}
       <div class="flex items-center gap-3 mt-6">
-        {#if currentUser.id === project.user_id}
+        {#if user.id === project.user_id}
         <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
           <button>EDIT PROJECT</button>
         </a>
@@ -261,6 +281,7 @@
         
         {/if}
       </div>
+      {/if}
 
   
       {#if showUpdatePopup}
@@ -344,7 +365,7 @@
             <ProjectAbout {project} />
         
           {:else if activeNavItem === 'team' && project.user_id === currentUser.id}
-            <ProjectMembers />
+            <ProjectMembers {data} {projectTeam} />
         
           {:else if activeNavItem === 'updates'}
             {#if showUpdateDetail}

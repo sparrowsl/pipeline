@@ -8,6 +8,8 @@
     let dropdownNode;
     let user = null; 
     let error = null;
+    export let data;
+
     const defaultImageUrl = "https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg";
   
     function toggleDropdown(event) {
@@ -30,23 +32,8 @@
 
         document.addEventListener('click', handleGlobalClick);
 
-        try {
-          const response = await fetch('/api/me', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            user = result.user; 
-          } else {
-            const result = await response.json();
-            error = result.error; 
-          }
-        } catch (err) {
-          error = 'Failed to fetch user data'; 
+        if(data.isAuthenticated) {
+          user = data.user;
         }
 
     return () => {
@@ -92,6 +79,7 @@
   </script>
   
   <div class="relative flex items-center">
+    
     <button
       on:click={toggleDropdown}
       class="flex items-center justify-center p-2.5 bg-lime-100 h-[43px] rounded-[51px] w-[43px]"
