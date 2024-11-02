@@ -68,8 +68,49 @@ export async function PUT({ request, params }) {
             });
 
 
-            if (error) {
+          if (error) {
               return json({ error: error.message }, { status: 400 });
+          }
+
+          const { data: existingTags, error: existingTagsError } = await supabase
+            .from('category_project')
+            .select('category_id')
+            .eq('project_id', projectId);
+
+          if (existingTagsError) {
+              return json({ error: existingTagsError.message }, { status: 400 });
+          }
+
+          const existingTagIds = existingTags.map(tag => tag.category_id);
+          const newTagIds = tags.map(tag => tag.id);
+
+          // Determine tags to remove and add
+          const tagsToRemove = existingTagIds.filter(tagId => !newTagIds.includes(tagId));
+          const tagsToAdd = newTagIds.filter(tagId => !existingTagIds.includes(tagId));
+
+          // Remove tags no longer associated with the project
+          if (tagsToRemove.length > 0) {
+              const { error: removeError } = await supabase
+                  .from('category_project')
+                  .delete()
+                  .in('category_id', tagsToRemove)
+                  .eq('project_id', projectId);
+
+              if (removeError) {
+                  return json({ error: removeError.message }, { status: 400 });
+              }
+          }
+
+          // Add new tags
+          if (tagsToAdd.length > 0) {
+              const insertData = tagsToAdd.map(tagId => ({ project_id: projectId, category_id: tagId }));
+              const { error: addError } = await supabase
+                  .from('category_project')
+                  .insert(insertData);
+
+              if (addError) {
+                  return json({ error: addError.message }, { status: 400 });
+              }
           }
   
           return json({ success: true }, { status: 200 });

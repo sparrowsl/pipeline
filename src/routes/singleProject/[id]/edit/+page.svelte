@@ -6,20 +6,28 @@
     import { projectStore } from '../../../../stores/projectStore.js';
     import CreatorProfile from '../../../../lib/CreatorProfile.svelte';
     import { get } from 'svelte/store';
+    import { page } from '$app/stores';
     import LinkInput from '../../../../lib/LinkInput.svelte';
     import UserNav from '../../../../lib/UserNav.svelte';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+
+    let id;
+    $: id = $page.params.id;
   
     let loading = false;
+    let project = {};
   
     let activeNavItem = 'Basics';
     export let data;
+
     const navItems = [
       { id: 'Basics', label: 'Basics', width: '184px' },
       { id: 'Links', label: 'Links', width: '184px' },
       { id: 'Funding', label: 'Funding', width: '184px' },
     ];
+
+    let funding_goal, bank_acct, wallet_address, email, portfolio, github, linkedin, twitter, website, other;
   
     function handleNavChange(event) {
       activeNavItem = event.detail;
@@ -38,12 +46,43 @@
         activeNavItem = navItems[currentIndex + 1].id;
       }
     }
-  
-    function sendInvitation() {
-      console.log('Sending invitation...');
+
+    async function getSingleProject() {
+        try {
+        loading = true;
+        const response = await fetch(`/api/projects/singleProject/${id}`);
+        if (!response.ok) throw new Error(response.statusText);
+
+        const { project: fetchedProject } = await response.json();
+        console.log(fetchedProject);
+        projectStore.set(fetchedProject); // Initialize projectStore with data
+
+        // Destructure to set local variables for form bindings
+        ({ funding_goal, bank_acct, wallet_address, email, portfolio, github, linkedin, twitter, website, other } = fetchedProject);
+      } catch (error) {
+        alert(`Error loading project: ${error.message}`);
+      } finally {
+        loading = false;
+      }
     }
   
-    const saveProject = async (event) => {
+    function updateStore() {
+      projectStore.update(project => ({
+        ...project,
+        funding_goal,
+        bank_acct,
+        wallet_address,
+        email,
+        portfolio,
+        github,
+        linkedin,
+        twitter,
+        website,
+        other,
+      }));
+    }
+
+    const updateProject = async (event) => {
       try {
         loading = true;
   
@@ -60,7 +99,7 @@
         const result = await response.json();
   
         if (response.ok) {
-          alert('Project created successfully!');
+          alert('Project updated successfully!');
           goto('/profile');
         } else {
           alert(`Project creation error: ${result.error}`);
@@ -74,36 +113,11 @@
       }
     };
   
-    let funding_goal = get(projectStore).funding_goal;
-    let bank_acct = get(projectStore).bank_acct;
-    let wallet_address = get(projectStore).wallet_address;
-    let email = get(projectStore).email;
-    let portfolio = get(projectStore).portfolio;
-    let github = get(projectStore).github;
-    let linkedin = get(projectStore).linkedin;
-    let twitter = get(projectStore).twitter;
-    let website = get(projectStore).website;
-    let other = get(projectStore).other;
-  
-    function updateStore() {
-      projectStore.update((data) => {
-        data.email = email;
-        data.portfolio = portfolio;
-        data.github = github;
-        data.linkedin = linkedin;
-        data.twitter = twitter;
-        data.website = website;
-        data.other = other;
-        data.funding_goal = funding_goal;
-        data.bank_acct = bank_acct;
-        data.wallet_address = wallet_address;
-        return data;
-      });
-    }
   
     let imageLoaded = false;
   
-    onMount(() => {
+    onMount(async () => {
+       getSingleProject();
       const img = new Image();
       img.src =
         'https://cdn.builder.io/api/v1/image/assets/TEMP/e31ab375db047d220f54398e16c4cc0f0001d612779f0974e0d8c39c0fea9107?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8';
@@ -239,10 +253,10 @@
             </button>
           {:else}
             <button
-              on:click={saveProject}
+              on:click={updateProject}
               class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
             >
-              {loading ? 'Saving...' : 'Save'}
+              {loading ? 'Updating...' : 'Update'}
             </button>
           {/if}
         </div>

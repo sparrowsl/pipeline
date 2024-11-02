@@ -27,8 +27,6 @@
 
   let imageUrl = 'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
-
-  let currentUser = { id: 'b43e79b5-7dbe-4753-8705-9209afd9ae00' };
   let isFollowing = false;
   let isAddingUpdate = false;
   
@@ -248,7 +246,7 @@
           {#if project.tags && project.tags.length > 0}
             {#each project.tags as tag}
               <span class="px-2 py-0.5 text-base border-2 rounded-md border-[#0b383c] max-md:px-3">
-                {tag}
+                {tag.title}
               </span>
             {/each}
           {/if}

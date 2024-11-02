@@ -12,6 +12,7 @@
   import { goto } from '$app/navigation';
 
   let loading = false;
+  export let data;
   
 
   let activeNavItem = 'Basics';
@@ -40,11 +41,8 @@
     }
   }
 
-  function sendInvitation() {
-    console.log('Sending invitation...');
-  }
-
   const saveProject = async (event) => {
+    
     try {
       loading = true;
 
@@ -115,7 +113,7 @@
 </script>
 
 <div class="w-full min-h-screen bg-white">
-  <Nav />
+  <Nav {data}/>
 
   <div class="w-full bg-[#d1ea9a]/90 py-16">
     <div class="max-w-4xl mx-auto text-center">

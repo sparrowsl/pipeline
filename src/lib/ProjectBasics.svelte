@@ -1,5 +1,4 @@
 <script>
-	import { read } from './../../node_modules/@popperjs/core/dist/esm/enums.js';
 	import { projectStore } from './../stores/projectStore.js';
   import {get } from 'svelte/store';
   import { createEventDispatcher } from 'svelte';
@@ -7,9 +6,6 @@
     
   import { onMount } from 'svelte';
   let Editor;
-  
-  import SubNav from '../lib/SubNav.svelte';
-  import { goto } from '$app/navigation'; 
   import { countries } from 'countries-list';
 
  const countryList = Object.values(countries);
@@ -31,10 +27,10 @@
     projectStore.update(data => {
       data.title = title;
       data.bio = bio;
-      data.tags = tags;
+      data.tags = selectedTags;
       data.country = country;
       data.details = details;
-      return data
+      return data;
     })
   }
  
@@ -55,15 +51,19 @@
   function addTag(tag) {
     if (!selectedTags.some(selected => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
+      updateStore();
       dispatch('change', selectedTags);
     }
+
     inputValue = '';
     isOpen = false;
   }
 
   function removeTag(tag) {
     selectedTags = selectedTags.filter(t => t.title !== tag.title);
+    updateStore();
     dispatch('change', selectedTags);
+    console.log(selectedTags);
   }
 
   $: filteredTags = availableTags.filter(tag => 
@@ -281,11 +281,8 @@
             
             <!-- {#if Editor}
               <Editor
-                on:change={(event) => {
-                  details = event.detail; // Update based on how `Editor` emits change events
-                  console.log(event);
-                  updateStore();
-                }}
+              bind:value={details}
+              on:change={updateStore}
                 class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[100px]"
               />
             {/if} -->
