@@ -48,6 +48,8 @@
 
             allProjects = [...allProjects, ...data.projects];
 
+            console.log(allProjects)
+
         }  catch (error) {
         error = e.message;
         alert(error);
