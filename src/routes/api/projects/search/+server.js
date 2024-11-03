@@ -19,8 +19,6 @@ export async function GET({ url }) {
         .range(start, end); 
   
       if (error) throw error;
-
-      console.log(data);
   
       return json({ projects: data }, { status: 200 });
     } catch (error) {

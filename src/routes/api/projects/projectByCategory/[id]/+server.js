@@ -36,7 +36,7 @@ export async function GET({ url, params }) {
       }
 
       const { data: projectCategories, error: pivotError } = await supabase
-          .from('category_project')  // Replace with the actual pivot table name
+          .from('category_project')  
           .select('project_id, category_id')
           .in('project_id', projectIds);
 
@@ -46,7 +46,7 @@ export async function GET({ url, params }) {
 
       const categoryIds = [...new Set(projectCategories.map(pc => pc.category_id))];
       const { data: categories, error: categoryDetailsError } = await supabase
-          .from('categories')  // Replace with the actual categories table name
+          .from('categories')  
           .select('*')
           .in('id', categoryIds);
 
@@ -67,7 +67,7 @@ export async function GET({ url, params }) {
 
         return {
             ...project,
-            tags: tagsForProject.filter(Boolean) // Filter out any null values
+            tags: tagsForProject.filter(Boolean) 
         };
     });
 
@@ -77,4 +77,5 @@ export async function GET({ url, params }) {
     } catch (error) {
       return json({ error: error.message }, { status: 500 });
     }
+
   }
