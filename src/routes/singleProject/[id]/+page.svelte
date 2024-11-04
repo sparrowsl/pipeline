@@ -20,6 +20,7 @@
   let project = {};
   let projectUpdates = [];
   let projectTeam = [];
+  let projectResource = [];
   let loading = true;
   let user = null;
   let error = null;
@@ -55,8 +56,9 @@
       }
   }
 
-    function toggleFollow() {
+  async function toggleFollow() {
     isFollowing = !isFollowing;
+    await bookmarkProject();
   }
     
     let showUpdatePopup = false;
@@ -64,7 +66,7 @@
     let updateBody = '';
 
 
-    function openUpdatePopup() {
+  function openUpdatePopup() {
     showUpdatePopup = true;
   }
 
@@ -118,7 +120,6 @@
         }
 
         const data = await response.json();
-        console.log(data)
         
         projectUpdates = data.projectUpdates;
 
@@ -145,7 +146,6 @@
         }
 
         const data = await response.json();
-        console.log(data)
         
         projectTeam = data.members;
 
@@ -155,6 +155,53 @@
       }finally{
         loading = false;
       }
+  }
+
+  async function getProjectResources() {
+    try {
+
+      const response = await fetch(`/api/projects/singleProject/${id}/contribution/resources`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+        
+        projectResource = data.resources;
+
+    } catch (error) {
+    
+        alert(error);
+      }finally{
+        loading = false;
+      }
+  }
+
+  async function bookmarkProject() {
+    
+    try {
+      const response = await fetch(`/api/projects/singleProject/${id}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+
+      if (!response.ok) {
+          throw new Error(response.statusText);
+      }
+
+      alert('Project bookmarked successfully');
+
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   let activeNavItem = 'projectDetails';
@@ -191,6 +238,7 @@
       await getSingleProject();
       await getProjectUpdates();
       await getProjectMembers();
+      await getProjectResources();
       if(data.isAuthenticated){
         user = data.user;
       }
@@ -255,7 +303,8 @@
 
       {#if user}
       <div class="flex items-center gap-3 mt-6">
-        {#if user.id === project.user_id}
+        <!-- {#if user.id === project.user_id} -->
+        {#if 1 > 2}
         <a href="/singleProject/{id}/edit" class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full">
           <button>EDIT PROJECT</button>
         </a>
@@ -362,7 +411,7 @@
           {#if activeNavItem === 'projectDetails'}
             <ProjectAbout {project} />
         
-          {:else if activeNavItem === 'team' && project.user_id === currentUser.id}
+          {:else if activeNavItem === 'team'}
             <ProjectMembers {data} {projectTeam} />
         
           {:else if activeNavItem === 'updates'}
@@ -385,10 +434,12 @@
                 <slot name="header">Resources</slot>
               </div>
             </div>
+            {#if projectResource.length > 0}
+              {#each projectResource as resource}
             <Resources
-            username="@username392"
-            title="UX Case Study for an Internship App in Sierra Leone"
-            description="A brief summary of what the resource is about."
+            username={resource.user_profile.name}
+            title={resource.title}
+            description={resource.reason}
             likes={187}
             comments={64}
           >
@@ -396,8 +447,13 @@
             <img slot="icon" src="icon.png" alt="Resource icon" />
             <img slot="profile-icon" src="profile-icon.png" alt="User" />
           </Resources>
+            {/each}
 
-          <Resources
+          {:else}
+            <p>No resources</p>
+          {/if}
+
+          <!-- <Resources
           username="@username392"
           title="UX Case Study for an Internship App in Sierra Leone"
           description="A brief summary of what the resource is about."
@@ -407,9 +463,9 @@
           <span slot="header">My Resources</span>
           <img slot="icon" src="icon.png" alt="Resource icon" />
           <img slot="profile-icon" src="profile-icon.png" alt="User" />
-        </Resources>
+        </Resources> -->
         
-          {/if}
+       {/if}
         </section>
         
       </main>

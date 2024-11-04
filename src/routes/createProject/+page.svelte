@@ -10,6 +10,8 @@
   import UserNav from '../../lib/UserNav.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  
+  
 
   let loading = false;
   export let data;
@@ -40,6 +42,8 @@
       activeNavItem = navItems[currentIndex + 1].id;
     }
   }
+
+
 
   const saveProject = async (event) => {
     

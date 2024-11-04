@@ -4,7 +4,7 @@ import { json } from '@sveltejs/kit';
 export async function POST({ request, params }) {
   const cookies = request.headers.get('cookie');
   const id = params.id;
-
+  
   if (!cookies) {
     return json({ error: 'No cookies found' }, { status: 401 });
   }
@@ -29,26 +29,22 @@ export async function POST({ request, params }) {
   const user = userData.user;
 
   try {
-    const { name, email, interest, skills, workHours, question } = await request.json();
-
-    // Here you can handle the application logic, like saving the details to a database.
-    // Assuming this is a placeholder for now.
+    const { resourceType, resourceTitle, resourceLink, country, interest } = await request.json();
 
     const { data, error } = await supabase
-      .from('project_contributors')
+      .from('project_resource')
       .insert([
         {
           project_id: id,
           user_id: user.id,
-          name,
-          email,
-          interest_reason: interest,
-          skills,
-          work_hour: workHours,
-          question
+          type_resource: resourceType,
+          title: resourceTitle,
+          link: resourceLink,
+          country,
+          reason: interest,
         }
       ]).select()
-
+     
 
     if (error) {
       return json({ error: error.message }, { status: 500 });

@@ -4,6 +4,7 @@
   import Logo from './Logo.svelte';
   import { onMount } from 'svelte';
 
+
   let isResourcesOpen = false;
   let isMenuOpen = false;
 
@@ -30,8 +31,6 @@
       };
   });
 </script>
-
-
 
 <header class="flex items-center justify-between w-full pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
   <div class="flex flex-wrap gap-10 justify-between items-center self-stretch my-auto min-w-[240px] w-[1298px]">
