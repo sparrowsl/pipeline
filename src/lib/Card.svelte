@@ -176,6 +176,7 @@
       <!-- <p class="mb-2 text-xs text-black">
         {project.bio}
       </p> -->
+
       <div class="flex gap-2 ml-[-2px] mb-4">
         {#if project.tags.length > 0}
         {#each project.tags as tag}

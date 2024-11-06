@@ -20,45 +20,81 @@
 </nav> -->
 
 <script>
-  const categories = [
-    { name: 'All projects', active: true },
-    { name: 'Design', active: false },
-    { name: 'Engineering', active: false },
-    { name: 'Art', active: false },
-    { name: 'Development', active: false },
-    { name: 'Marketing', active: false },
-    { name: 'Sales', active: false },
-    { name: 'Research', active: false },
-  ];
+  import { onMount } from "svelte";
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+  
+  let loading = true;
+
+  let categories = [];
+
+  async function fetchAllCategories() {
+    try {
+      const response = await fetch('/api/categories', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+
+      categories = [
+        { id: 0, title: "All Projects", active: true },
+        ...data.categories.map(category => ({ ...category, active: false }))
+      ];
+
+      categories = data.categories;
+    } catch (error) {
+      
+    }
+  }
+
+  onMount(() => {
+    fetchAllCategories();
+  })
+
+  function setActiveCategory(selectedCategory) {
+    categories = categories.map(category => ({
+      ...category,
+      active: category.title === selectedCategory.title
+    }));
+
+    dispatch('categorySelected', selectedCategory);
+
+  }
+
+  function setAllProjects(){
+    categories = categories.map(category => ({ ...category, active: false }));
+    dispatch('categorySelected', '');
+  }
+
+
 </script>
 
-<!-- <nav
-  class="flex items-center max-w-full gap-4 mt-8 overflow-x-auto text-sm leading-none text-lime-800"
-  style="scroll-snap-type: x mandatory;"
-  aria-label="Project Categories"
->
-  {#each categories as category}
-    <button
-      class="px-10 py-3 text-xl my-auto whitespace-nowrap border-lime-800 border-solid border-2 rounded-full transition-colors duration-300 hover:bg-lime-200 {category.active ? 'bg-lime-300' : ''}"
-      aria-current={category.active ? 'page' : undefined}
-      style="scroll-snap-align: start;"
-    >
-      {category.name}
-    </button>
-  {/each}
-</nav> -->
 <nav
   class="flex items-center max-w-full gap-4 pb-4 mt-8 overflow-x-auto text-sm leading-none text-lime-800"
   style="scroll-snap-type: x mandatory;"
   aria-label="Project Categories"
 >
+  <button
+  class="px-10 py-3 text-xl my-auto whitespace-nowrap border-lime-800 border-solid border-2 rounded-full transition-colors duration-300 hover:bg-lime-200 "
+  style="scroll-snap-align: start;"
+  on:click={setAllProjects}
+   >All Projects
+  </button>
   {#each categories as category}
     <button
       class="px-10 py-3 text-xl my-auto whitespace-nowrap border-lime-800 border-solid border-2 rounded-full transition-colors duration-300 hover:bg-lime-200 {category.active ? 'bg-lime-300' : ''}"
       aria-current={category.active ? 'page' : undefined}
+      on:click={() => setActiveCategory(category)}
       style="scroll-snap-align: start;"
     >
-      {category.name}
+      {category.title}
     </button>
   {/each}
 </nav>
