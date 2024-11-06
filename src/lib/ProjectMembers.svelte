@@ -1,21 +1,49 @@
-<section class="flex flex-wrap gap-6 items-center mt-8 w-full max-w-[900px] max-md:mt-6 max-md:max-w-full">
+<script>
+  export let data;
+  export let projectTeam;
+
+</script>
+
+{#if projectTeam.length > 0}
+
+  {#each projectTeam as member}
+  <section class="flex flex-wrap gap-6 items-center mt-8 w-full max-w-[900px] max-md:mt-6 max-md:max-w-full">
     <img src="/" class="flex shrink-0 gap-2 self-stretch my-auto border-4 border-white border-solid bg-zinc-300 h-[80px] rounded-full w-[80px]" aria-label="Creator profile picture" alt="">
     <div class="flex flex-col self-stretch my-auto flex-grow max-w-[calc(100%-140px)]">
       <div class="flex items-center gap-3">
         <h1 class="text-2xl font-semibold leading-tight text-black">
-          Creator Name
+          {member.userProfile.name}
         </h1>
         <span class="px-3 py-1 text-sm leading-none border border-solid rounded-full text-lime-800 whitespace-nowrap bg-lime-200 border-lime-800">
-          Creator
+          {member.creator_id === data.user.id ? 'Creator' : 'Member'}
         </span>
       </div>
       <p class="mt-2 text-sm leading-snug text-stone-500 max-md:max-w-full">
-        This will appear on your project page and must include your name, photo, and biography.
+        {member.userProfile.bio}
       </p>
     </div>
+    {#if data.isAuthenticated && member.creator_id === data.user.id  }
+      {#if member.creator_id === data.user.id}
+      <button type="button" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-full hover:bg-red-500" disable>
+        Remove
+      </button>
+      {:else if member.creator_id != data.user.id}
+        <button type="button" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-full hover:bg-red-500">
+          Remove
+        </button>
+      {/if}
+    {/if}
   </section>
+  {/each}
 
-  <section class="flex flex-wrap items-center gap-6 mt-8 w-full max-w-[900px] max-md:mt-6 max-md:max-w-full justify-between">
+{:else}
+  <p>No team members</p>
+
+{/if}
+
+  
+
+  <!-- <section class="flex flex-wrap items-center gap-6 mt-8 w-full max-w-[900px] max-md:mt-6 max-md:max-w-full justify-between">
 
     <div class="flex items-center flex-grow gap-6">
       <div class="flex justify-around">
@@ -35,7 +63,7 @@
       Delete
     </button>
   </div>
-  </section>
+  </section> -->
   
 
   <form class="flex flex-col mt-8 w-[93%] max-w-[900px] max-md:max-w-full">

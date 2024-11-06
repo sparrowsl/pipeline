@@ -29,15 +29,11 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name,
-            email,
-            interest,
             resourceType,
             resourceTitle,
             resourceLink,
-            workHours,
-            question,
-            country
+            country,
+            interest
           }),
         });
   
@@ -45,6 +41,7 @@
   
         if (response.ok) {
           alert('Application submitted successfully!');
+          window.location.href = `/singleProject/${id}`;
         } else {
           alert(`Error: ${response.statusText}`);
         }
