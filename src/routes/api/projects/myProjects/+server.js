@@ -29,18 +29,66 @@ export async function GET({ request }) {
     let user = userData.user;
 
     try {
-        const { data, error } = await supabase
+        const { data: projects, error: projectsError } = await supabase
           .from('projects')
           .select('*')
           .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
 
-        return json({ projects: data }, { status: 200 });
+        if (projectsError) {
+            return json({ error: projectsError.message }, { status: 500 });
+        }
 
+        // If no projects found, return early
+        if (!projects || projects.length === 0) {
+            return json({ projects: [] }, { status: 200 });
+        }
+
+        const projectIds = projects.map(project => project.id);
+
+        // Fetch related categories using the pivot table
+        const { data: projectCategories, error: pivotError } = await supabase
+            .from('category_project')  
+            .select('project_id, category_id')
+            .in('project_id', projectIds);
+
+        if (pivotError) {
+            return json({ error: pivotError.message }, { status: 500 });
+        }
+
+        const categoryIds = [...new Set(projectCategories.map(pc => pc.category_id))];
+
+        // Fetch category details (tags) for the unique category IDs
+        const { data: categories, error: categoriesError } = await supabase
+            .from('categories') 
+            .select('*')
+            .in('id', categoryIds);
+
+        if (categoriesError) {
+            return json({ error: categoriesError.message }, { status: 500 });
+        }
+
+        const categoriesById = categories.reduce((acc, category) => {
+            acc[category.id] = category;
+            return acc;
+        }, {});
+
+        const projectsWithTags = projects.map(project => {
+          // Find the category IDs associated with this project
+            const tagsForProject = projectCategories
+                .filter(pc => pc.project_id === project.id)
+                .map(pc => categoriesById[pc.category_id]);
+
+            return {
+                ...project,
+                tags: tagsForProject.filter(Boolean) // Filter out any null values
+            };
+        });
+
+      return json({ projects: projectsWithTags }, { status: 200 });
 
     } catch (error) {
         return json({ error: error.message }, { status: 500 });
     }
-
-
 
 }

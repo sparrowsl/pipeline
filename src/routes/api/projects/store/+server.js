@@ -47,6 +47,7 @@ export async function POST({ request }) {
             funding_goal,
         } = await request.json();
 
+
         const { data, error } = await supabase
             .from('projects')
             .insert([
@@ -54,7 +55,6 @@ export async function POST({ request }) {
                     user_id: user.id,
                     title, 
                     bio, 
-                    tags, 
                     country, 
                     details, 
                     email, 
@@ -69,12 +69,47 @@ export async function POST({ request }) {
                     funding_goal,
                     
                 }
-            ]);
+            ])
+            .select();
+
 
         if (error) {
             return json({ error: error.message }, { status: 400 });
         }
 
+        //create team member
+        const { data: teamData, error: teamError } = await supabase
+            .from('project_members')
+            .insert([
+                {
+                    user_id: user.id,
+                    project_id: data[0].id,
+                    creator_id: user.id
+                }
+            ])
+            .select();
+
+        if (teamError) {
+            return json({ error: teamError.message }, { status: 400 });
+        }
+
+        //create project category
+        for(const tag of tags) {
+            const { data: categoryData, error: categoryError } = await supabase
+                .from('category_project')
+                .insert([
+                    {
+                        project_id: data[0].id,
+                        category_id: tag.id
+                    }
+                ])
+                .select();
+
+            if (categoryError) {
+                return json({ error: categoryError.message }, { status: 400 });
+            }
+        }
+        
         return json({ success: true }, { status: 200 });
 
     } catch (error) {

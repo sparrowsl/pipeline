@@ -1,39 +1,53 @@
 <script>
+	import DateTimeFormat from './DateTimeFormat.svelte';
      import UpdateDetail from '../lib/UpdateDetail.svelte';
      import { createEventDispatcher } from 'svelte';
+     
 
-const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher();
 
-function showDetail() {
-    dispatch('showDetail'); // Dispatch event to switch to UpdateDetail component
+    function showDetail() {
+        dispatch('showDetail', { update }); // Dispatch event to switch to UpdateDetail component
+    }
+
+    export let update;
+
+    const maxLength = 850;
+
+    function truncateContent(content) {
+    const strippedContent = content.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
+    return strippedContent.length > maxLength 
+      ? strippedContent.slice(0, maxLength) + '...' 
+      : strippedContent;
   }
+
+  const truncatedContent = truncateContent(update.body);
+
 </script>
 
 <div class="h-[567.35px] p-9 bg-white flex-col justify-start items-start inline-flex">
     <div class="self-stretch h-[495.35px] flex-col justify-start items-start gap-6 flex">
         <div class="h-[188.35px] pt-[1.75px] flex-col justify-start items-start gap-[13.30px] flex">
             <div class="text-[#282828]/50 text-[13px] font-normal font-['Inter'] uppercase leading-[18px]">Update #3</div>
-            <div class="self-stretch text-[#282828] text-[32px] font-bold font-['Inter'] leading-10">As the sun rises on Thunder Road a dice car<br/>appears on the horizon.</div>
+            <div class="self-stretch text-[#282828] text-[32px] font-bold font-['Inter'] leading-10">{update.title}</div>
             <div class="self-stretch h-[62px] pb-5 border-b border-[#dcdedd] flex-col justify-start items-start gap-1 flex">
                 <div class="inline-flex items-center justify-start gap-3">
                     <img class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]" src="https://via.placeholder.com/42x42" alt=""/>
                     <div class="w-[120.07px] flex-col justify-start items-start inline-flex">
                         <div class="inline-flex items-center self-stretch justify-start gap-2">
-                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">9thLevel</div>
+                            <div class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">{update.userProfile.name}</div>
                             <div class="px-[5px] py-[0.25px] bg-[#05ce78] rounded-[3px] flex-col justify-center items-start inline-flex">
-                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">Creator</div>
+                                <div class="text-white text-xs font-bold font-['Inter'] leading-[18px]">{update.user_id === update.userProfile.user_id ? 'Creator' : 'Member'}</div>
                             </div>
                         </div>
-                        <div class="self-stretch h-[18px] text-[#282828]/50 text-[13px] font-normal font-['Inter'] leading-[18px]">October 23, 2024</div>
+                        <div class="self-stretch h-[18px] text-[#282828]/50 text-[13px] font-normal font-['Inter'] leading-[18px]"><DateTimeFormat date={update.created_at}/></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="self-stretch h-[216px] flex-col justify-start items-start gap-1 flex">
             <div class="self-stretch h-[216px] pb-2 flex-col justify-start items-start gap-[30px] flex">
-                <div class="self-stretch text-[#282828] text-base font-normal font-['Inter'] leading-[29px]">At just 24 hours in, you all smashed through so many stretch goals already, we had to add more! A<br/>reminder that the Early Backer Bonus ends Thursday October 24th at 1pm Eastern Time so spread<br/>the word if you know anyone who would be interested. </div>
-                <div><span style="text-[#282828] text-base font-normal font-['Inter'] leading-[29px]">If you backed recently, take a look at </span><span style="text-[#028858] text-base font-normal font-['Inter'] underline leading-[29px]">BACKER ONLY UPDATE #1</span><span style="text-[#282828] text-base font-normal font-['Inter'] leading-[29px]"> for something special. </span></div>
-                <div class="text-[#282828] text-[28px] font-bold font-['Inter'] leading-loose">🎲🚗 Dice Car </div>
+                <div class="self-stretch text-[#282828] text-base font-normal font-['Inter'] leading-[29px]">{@html truncatedContent}</div>
             </div>
         </div>
         <div class="w-[744.66px] h-[120px] bg-gradient-to-b from-white to-white"></div>

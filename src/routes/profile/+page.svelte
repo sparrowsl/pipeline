@@ -8,6 +8,7 @@
     let userProjects = [];
     let loading = true;
     let error = null;
+    export let data;
 
     async function fetchMyProjects() {
       try {
@@ -43,7 +44,7 @@
     </script>
     
     <div class="flex flex-col items-center overflow-hidden bg-white">
-      <Nav />
+      <Nav {data}/>
       <ProfileInfo />
       {#if loading}
       <p>Loading projects...</p>

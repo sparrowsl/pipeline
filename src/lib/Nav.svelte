@@ -4,8 +4,11 @@
   import Logo from './Logo.svelte';
   import { onMount } from 'svelte';
 
+
   let isResourcesOpen = false;
   let isMenuOpen = false;
+
+  export let data;
 
   function toggleResources() {
       isResourcesOpen = !isResourcesOpen;
@@ -28,7 +31,6 @@
       };
   });
 </script>
-
 
 <header class="flex items-center justify-between w-full pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
   <div class="flex flex-wrap gap-10 justify-between items-center self-stretch my-auto min-w-[240px] w-[1298px]">
@@ -72,7 +74,9 @@
 
     <div class="hidden md:flex gap-3.5 items-center self-stretch my-auto z-40">
       <SearchBar />
-      <UserProfile /> 
+      {#if data.isAuthenticated}
+      <UserProfile {data}/> 
+      {/if}
     </div>
   </div>
 
