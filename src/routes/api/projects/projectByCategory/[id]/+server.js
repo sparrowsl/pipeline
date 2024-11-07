@@ -61,19 +61,34 @@ export async function GET({ url, params }) {
       return acc;
     }, {});
 
-    const projectsWithTags = projects.map((project) => {
-      // Find the category IDs associated with this project
-      const tagsForProject = projectCategories
-        .filter((pc) => pc.project_id === project.id)
-        .map((pc) => categoriesById[pc.category_id]);
+    //get the dpg status
+    const { data: projectDpgStatuses, error: dpgStatusError } = await supabase
+      .from("project_dpg_status")
+      .select("project_id")
+      .in("project_id", projectIds);
 
-      return {
-        ...project,
-        tags: tagsForProject.filter(Boolean),
-      };
+    if (dpgStatusError) {
+      return json({ error: dpgStatusError.message }, { status: 500 });
+    }
+
+    const dpgStatusCountByProject = projectDpgStatuses.reduce((acc, status) => {
+      acc[status.project_id] = (acc[status.project_id] || 0) + 1;
+      return acc;
+    }, {});
+
+    const projectsWithTagsAndStatusCount = projects.map(project => {
+        const tagsForProject = projectCategories
+            .filter(pc => pc.project_id === project.id)
+            .map(pc => categoriesById[pc.category_id]);
+
+        return {
+            ...project,
+            tags: tagsForProject.filter(Boolean), // Filter out any null values
+            dpgStatusCount: dpgStatusCountByProject[project.id] || '' // Default to 0 if no statuses found
+        };
     });
 
-    return json({ projects: projectsWithTags }, { status: 200 });
+    return json({ projects: projectsWithTagsAndStatusCount }, { status: 200 });
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
   }

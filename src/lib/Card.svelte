@@ -180,7 +180,7 @@
     <div class="flex items-center justify-between mb-2">
       <h2 class="text-xl font-semibold text-black">{project.title}</h2>
       <p class="text-xs text-neutral-400">
-        <DPGRating rating={5} />
+        <DPGRating rating={project.dpgStatusCount} />
       </p>
     </div>
     <!-- <p class="mb-2 text-xs text-black">
@@ -200,7 +200,6 @@
     <span class="text-sm font-semibold">${project.current_funding || 0}</span>
     raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
     <ProgressBar progress={project.current_funding} total={project.funding_goal} />
-
     <ContributeButton {project} />
   </div>
 </div>
