@@ -47,8 +47,6 @@
         { id: 0, title: "All Projects", active: true },
         ...data.categories.map(category => ({ ...category, active: false }))
       ];
-
-      categories = data.categories;
     } catch (error) {
       
     }
@@ -59,6 +57,12 @@
   })
 
   function setActiveCategory(selectedCategory) {
+
+    if (selectedCategory.id === 0) {
+      setAllProjects();
+      return;
+    }
+
     categories = categories.map(category => ({
       ...category,
       active: category.title === selectedCategory.title
@@ -81,12 +85,7 @@
   style="scroll-snap-type: x mandatory;"
   aria-label="Project Categories"
 >
-  <button
-  class="px-10 py-3 my-auto text-xl transition-colors duration-300 border-2 border-solid rounded-full whitespace-nowrap border-lime-800 hover:bg-lime-200 "
-  style="scroll-snap-align: start;"
-  on:click={setAllProjects}
-   >All Projects
-  </button>
+
   {#each categories as category}
     <button
       class="px-10 py-3 text-xl my-auto whitespace-nowrap border-lime-800 border-solid border-2 rounded-full transition-colors duration-300 hover:bg-lime-200 {category.active ? 'bg-lime-300' : ''}"
