@@ -77,12 +77,12 @@
 </script>
 
 <nav
-  class="flex items-center max-w-full gap-4 pb-4 mt-8 overflow-x-auto text-sm leading-none text-lime-800"
+  class="flex flex-wrap items-center max-w-full gap-4 pb-4 mt-8 overflow-x-auto text-sm leading-none text-lime-800"
   style="scroll-snap-type: x mandatory;"
   aria-label="Project Categories"
 >
   <button
-  class="px-10 py-3 text-xl my-auto whitespace-nowrap border-lime-800 border-solid border-2 rounded-full transition-colors duration-300 hover:bg-lime-200 "
+  class="px-10 py-3 my-auto text-xl transition-colors duration-300 border-2 border-solid rounded-full whitespace-nowrap border-lime-800 hover:bg-lime-200 "
   style="scroll-snap-align: start;"
   on:click={setAllProjects}
    >All Projects

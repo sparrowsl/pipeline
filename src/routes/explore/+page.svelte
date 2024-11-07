@@ -191,20 +191,16 @@
   </div>
 </div>
 
-<div class="flex justify-center w-full px-4">
-  <main
-    class="flex flex-col mt-18 text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full"
-  >
-    <section
-      class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full"
-    >
-      <Search on:search={handleSearch} />
-      <!-- <CategoryDropdown /> -->
-      <SortDropdown />
-    </section>
-    <ProjectCategory on:categorySelected={handleCategorySelected} />
-  </main>
-</div>
+  <div class="flex justify-center w-full px-4">
+    <main class="flex flex-col mt-18 text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
+      <section
+        class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full"
+      >
+        <Search on:search={handleSearch} />
+      </section>
+      <ProjectCategory on:categorySelected={handleCategorySelected} />
+    </main>
+  </div>
 
 {#if searchTerm && searchResults.length > 0}
   <div
