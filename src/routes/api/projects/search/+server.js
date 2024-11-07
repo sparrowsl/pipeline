@@ -1,5 +1,5 @@
-import { supabase } from '$lib/server/supabase.js';
-import { json } from '@sveltejs/kit';
+import { supabase } from "$lib/server/supabase.js";
+import { json } from "@sveltejs/kit";
 
 export async function GET({ url }) {
     const page = parseInt(url.searchParams.get('page') || '1', 10);
@@ -23,3 +23,4 @@ export async function GET({ url }) {
       return json({ error: error.message }, { status: 500 });
     }
   }
+

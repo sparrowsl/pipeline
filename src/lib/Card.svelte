@@ -199,8 +199,7 @@
 
     <span class="text-sm font-semibold">${project.current_funding || 0}</span>
     raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
-    <ProgressBar progress={206} total={289} />
-
+    <ProgressBar progress={project.current_funding} total={project.funding_goal} />
     <ContributeButton {project} />
   </div>
 </div>
