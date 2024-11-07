@@ -8,8 +8,6 @@
   import Footer from "../../lib/Footer.svelte";
   import { onMount } from "svelte";
 
-  export let data;
-
   let allProjects = [];
   let topProjects = [];
   let searchResults = [];
