@@ -308,3 +308,4 @@
 {:else}
   <p class="text-center">No search results found.</p>
 {/if}
+
