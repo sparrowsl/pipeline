@@ -176,17 +176,14 @@
     </div>
   </header>
 
-  <div class="p-4">
+  <div class="p-4 mt-auto">
     <div class="flex items-center justify-between mb-2">
       <h2 class="text-xl font-semibold text-black">{project.title}</h2>
       <p class="text-xs text-neutral-400">
         <DPGRating rating={project.dpgStatusCount} />
       </p>
     </div>
-    <!-- <p class="mb-2 text-xs text-black">
-        {project.bio}
-      </p> -->
-
+ 
     <div class="flex gap-2 ml-[-2px] mb-4">
       {#if project.tags.length > 0}
         {#each project.tags as tag}
@@ -197,8 +194,10 @@
       {/if}
     </div>
 
+   <div>
     <span class="text-sm font-semibold">${project.current_funding || 0}</span>
     raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
+   </div>
     <ProgressBar progress={project.current_funding} total={project.funding_goal} />
     <ContributeButton {project} />
   </div>
