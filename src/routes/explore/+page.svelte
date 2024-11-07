@@ -219,7 +219,7 @@
     <div class="flex items-center justify-center mt-8">
       <button
         on:click={loadMoreSearchResults}
-        class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal font-['Inter'] leading-snug"
+        class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal leading-snug"
         >Load more</button
       >
     </div>
@@ -245,7 +245,7 @@
       <div class="flex items-center justify-center mt-8">
         <button
           on:click={loadMoreCategoryResults}
-          class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal font-['Inter'] leading-snug"
+          class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal  leading-snug"
           >Load more</button
         >
       </div>
@@ -295,7 +295,7 @@
       >
         <button
           on:click={loadMoreProjects}
-          class="text-[#516027] text-xl font-normal font-['Inter'] leading-snug"
+          class="text-[#516027] text-xl font-normal  leading-snug"
           >Load more</button
         >
       </div>
