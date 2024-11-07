@@ -135,45 +135,6 @@
         />
       </div>
     </a>
-    <div class="absolute top-4 right-3">
-      <div class="relative inline-block text-left dropdown-container">
-        <div>
-          <button
-            type="button"
-            class="inline-flex justify-center items-center p-1.5 bg-lime-300 rounded-2xl border-2 border-solid border-teal-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500"
-            on:click={toggleDropdown}
-          >
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f382dca341e494eba1b7bf2d90e54aae478d3521243220b272d6824b92dc6874"
-              alt=""
-              class="object-contain w-4 h-4"
-            />
-          </button>
-        </div>
-
-        {#if isOpen}
-          <div
-            class="absolute right-0 mt-2 w-56 bg-[#0d909c] rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right"
-            role="menu"
-            aria-orientation="vertical"
-          >
-            <div class="py-1" role="none">
-              <a
-                href="/userProjects"
-                class="block px-4 py-2 text-sm text-white"
-                role="menuitem">Follow Project</a
-              >
-              <a
-                href="/profile"
-                class="block px-4 py-2 text-sm text-white"
-                role="menuitem">Creator's Name</a
-              >
-            </div>
-          </div>
-        {/if}
-      </div>
-    </div>
   </header>
 
   <div class="p-4 mt-auto">
