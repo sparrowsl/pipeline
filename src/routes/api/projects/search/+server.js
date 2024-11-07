@@ -7,8 +7,6 @@ export async function GET({ url }) {
     const term = url.searchParams.get('term') || '';
     const start = (page - 1) * limit;
     const end = start + limit - 1;
-
-    console.log('term:', term);
   
     try {
       const { data, error } = await supabase

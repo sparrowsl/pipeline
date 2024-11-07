@@ -1,6 +1,5 @@
 <script>
     export let rating;
-    export let total;
   </script>
   
   <div class="flex gap-3.5 items-center self-start text-2xl leading-none text-neutral-400">
