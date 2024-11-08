@@ -435,17 +435,6 @@
             <p>No resources</p>
           {/if}
 
-          <!-- <Resources
-          username="@username392"
-          title="UX Case Study for an Internship App in Sierra Leone"
-          description="A brief summary of what the resource is about."
-          likes={187}
-          comments={64}
-        >
-          <span slot="header">My Resources</span>
-          <img slot="icon" src="icon.png" alt="Resource icon" />
-          <img slot="profile-icon" src="profile-icon.png" alt="User" />
-        </Resources> -->
         {/if}
       </section>
     </main>
