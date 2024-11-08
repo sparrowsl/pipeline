@@ -65,7 +65,6 @@
             <p>No projects found.</p>
           {/if}
         </div>
-      {:else if currentSection === 'notifications'}
  
       {/if}
     </div>
