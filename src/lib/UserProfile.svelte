@@ -136,15 +136,6 @@
               />
               <a href="/createProject">Create Project</a>
             </li>
-            <li class="flex items-center gap-4 mt-6">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/b23edae5206ca39fb5807ad08388550dad0ae7d3ce7e4178192c5f0487952fea?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                class="w-[17px] aspect-[0.94] object-contain"
-                alt=""
-              />
-              <a href="#notifications">Notifications</a>
-            </li>
           </ul>
   
           <hr class="w-full mt-7 border-stone-300" />

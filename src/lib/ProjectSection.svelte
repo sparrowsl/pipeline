@@ -8,7 +8,6 @@
     { id: 'created', label: 'Projects created' },
     { id: 'contributed', label: 'Projects contributed' },
     { id: 'bookmarks', label: 'Bookmarks' },
-    { id: 'notifications', label: 'Notifications' }
   ];
 
 
@@ -66,7 +65,6 @@
             <p>No projects found.</p>
           {/if}
         </div>
-      {:else if currentSection === 'notifications'}
  
       {/if}
     </div>
