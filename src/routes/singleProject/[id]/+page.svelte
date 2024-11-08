@@ -13,6 +13,7 @@
   import Updates from "../../../lib/Updates.svelte";
   import UpdateDetail from "../../../lib/UpdateDetail.svelte";
   import Resources from "../../../lib/Resources.svelte";
+  import { amountFormat } from "$lib/utils/amountFormat.js";
 
   let id;
   $: id = $page.params.id;
@@ -300,8 +301,7 @@
 
     {#if user}
       <div class="flex items-center gap-3 mt-6">
-        <!-- {#if user.id === project.user_id} -->
-        {#if 1 > 2}
+        {#if user.id === project.user_id}
           <a
             href="/singleProject/{id}/edit"
             class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full"
@@ -398,9 +398,11 @@
       <div class="w-px h-[100px] bg-neutral-400"></div>
       <div class="flex flex-col items-center w-[120px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          ${project.funding_goal}
+          ${amountFormat(project.current_funding || 0)}
         </div>
-        <div class="text-sm">raised of ${project.current_funding || 0}</div>
+        <div class="text-sm">
+          raised of ${amountFormat(project.funding_goal || 0)}
+        </div>
       </div>
     </section>
 

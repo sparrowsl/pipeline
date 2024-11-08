@@ -97,6 +97,7 @@
   import ContributeButton from "./ContributeButton.svelte";
   import CategoryTag from "./CategoryTag.svelte";
   import DPGRating from "./DPGRating.svelte";
+  import { amountFormat } from "$lib/utils/amountFormat.js";
 
   import { onMount } from "svelte";
   let isOpen = false;
@@ -144,7 +145,7 @@
         <DPGRating rating={project.dpgStatusCount} />
       </p>
     </div>
- 
+
     <div class="flex gap-2 ml-[-2px] mb-4">
       {#if project.tags.length > 0}
         {#each project.tags as tag}
@@ -155,11 +156,19 @@
       {/if}
     </div>
 
-   <div>
-    <span class="text-sm font-semibold">${project.current_funding || 0}</span>
-    raised of <span class="text-sm font-semibold">${project.funding_goal}</span>
-   </div>
-    <ProgressBar progress={project.current_funding} total={project.funding_goal} />
+    <div>
+      <span class="text-sm font-semibold"
+        >${amountFormat(project.current_funding || 0)}</span
+      >
+      raised of
+      <span class="text-sm font-semibold"
+        >${amountFormat(project.funding_goal || 0)}</span
+      >
+    </div>
+    <ProgressBar
+      progress={project.current_funding}
+      total={project.funding_goal}
+    />
     <ContributeButton {project} />
   </div>
 </div>
