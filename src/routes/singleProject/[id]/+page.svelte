@@ -1,4 +1,5 @@
 <script>
+
   import ProjectMembers from "./../../../lib/ProjectMembers.svelte";
   import Contributors from "../../../lib/Contributors.svelte";
   import Nav from "../../../lib/Nav.svelte";
@@ -15,6 +16,7 @@
   import Resources from "../../../lib/Resources.svelte";
   import { amountFormat } from "$lib/utils/amountFormat.js";
 
+
   let id;
   $: id = $page.params.id;
 
@@ -28,7 +30,7 @@
   export let data;
 
   let imageUrl =
-    "https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   let isFollowing = false;
   let isAddingUpdate = false;
@@ -36,9 +38,9 @@
   async function getSingleProject() {
     try {
       const response = await fetch(`/api/projects/singleProject/${id}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -62,8 +64,8 @@
   }
 
   let showUpdatePopup = false;
-  let updateTitle = "";
-  let updateBody = "";
+  let updateTitle = '';
+  let updateBody = '';
 
   function openUpdatePopup() {
     showUpdatePopup = true;
@@ -71,23 +73,20 @@
 
   function closeUpdatePopup() {
     showUpdatePopup = false;
-    updateTitle = "";
-    updateBody = "";
+    updateTitle = '';
+    updateBody = '';
   }
 
   async function submitUpdate() {
     isAddingUpdate = true;
     try {
-      const response = await fetch(
-        `/api/projects/singleProject/${id}/projectUpdates/store`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ title: updateTitle, body: updateBody }),
-        }
-      );
+      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates/store`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: updateTitle, body: updateBody }),
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -97,7 +96,7 @@
 
       await getProjectUpdates();
 
-      alert("Update added successfully");
+      alert('Update added successfully');
     } catch (e) {
       alert(e.message);
     } finally {
@@ -107,15 +106,12 @@
 
   async function getProjectUpdates() {
     try {
-      const response = await fetch(
-        `/api/projects/singleProject/${id}/projectUpdates`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -133,15 +129,12 @@
 
   async function getProjectMembers() {
     try {
-      const response = await fetch(
-        `/api/projects/singleProject/${id}/projectMembers`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/projects/singleProject/${id}/projectMembers`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -159,15 +152,12 @@
 
   async function getProjectResources() {
     try {
-      const response = await fetch(
-        `/api/projects/singleProject/${id}/contribution/resources`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/projects/singleProject/${id}/contribution/resources`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -185,35 +175,32 @@
 
   async function bookmarkProject() {
     try {
-      const response = await fetch(
-        `/api/projects/singleProject/${id}/bookmark`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/projects/singleProject/${id}/bookmark`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
         throw new Error(response.statusText);
       }
 
-      alert("Project bookmarked successfully");
+      alert('Project bookmarked successfully');
     } catch (e) {
       alert(e.message);
     }
   }
 
-  let activeNavItem = "projectDetails";
+  let activeNavItem = 'projectDetails';
   let showUpdateDetail = false;
   let selectedUpdate = null;
 
   const navItems = [
-    { id: "projectDetails", label: "About", width: "70px" },
-    { id: "team", label: "Team", width: "65px" },
-    { id: "updates", label: "Updates", width: "95px" },
-    { id: "contributors", label: "Contributors", width: "150px" },
+    { id: 'projectDetails', label: 'About', width: '70px' },
+    { id: 'team', label: 'Team', width: '65px' },
+    { id: 'updates', label: 'Updates', width: '95px' },
+    { id: 'contributors', label: 'Contributors', width: '150px' },
   ];
 
   function handleNavChange(event) {
@@ -269,7 +256,7 @@
     <section class="flex flex-col w-full mt-3">
       <div class="flex justify-between">
         <h1 class="text-3xl font-semibold text-black max-md:text-2xl">
-          {project.title || "Project Title"}
+          {project.title || 'Project Title'}
         </h1>
         <div class="flex items-center gap-1 mt-2 text-base text-neutral-600">
           <img
@@ -281,7 +268,7 @@
         </div>
       </div>
       <p class="mt-3 text-xl font-light leading-8 text-black">
-        {project.bio || "Project bio"}
+        {project.bio || 'Project bio'}
       </p>
     </section>
 
@@ -289,9 +276,7 @@
       <div class="flex flex-wrap gap-2 text-lg text-lime-800">
         {#if project.tags && project.tags.length > 0}
           {#each project.tags as tag}
-            <span
-              class="px-2 py-0.5 text-base border-2 rounded-md border-[#0b383c] max-md:px-3"
-            >
+            <span class="px-2 py-0.5 text-base border-2 rounded-md border-[#0b383c] max-md:px-3">
               {tag.title}
             </span>
           {/each}
@@ -327,19 +312,15 @@
             class:bg-[#e9f5d3]={isFollowing}
             class:text-black={isFollowing}
           >
-            {isFollowing ? "UNFOLLOW" : "FOLLOW"}
+            {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
           </button>
         {/if}
       </div>
     {/if}
 
     {#if showUpdatePopup}
-      <div
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-      >
-        <div
-          class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full"
-        >
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
           <!-- Close Button -->
           <button
             on:click={closeUpdatePopup}
@@ -373,7 +354,7 @@
             class="w-full py-2 text-black rounded-lg bg-lime-300"
             disabled={isAddingUpdate}
           >
-            {isAddingUpdate ? "Adding Update..." : "Add Update"}
+            {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
           </button>
         </div>
       </div>
@@ -389,9 +370,7 @@
       <div class="w-px h-[100px] bg-neutral-400"></div>
       <div class="flex flex-col items-center w-[120px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          5<span class="text-3xl">/</span><span class="text-3xl text-teal-800"
-            >9</span
-          >
+          5<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
         </div>
         <div class="text-sm">DPG Status</div>
       </div>
@@ -420,14 +399,10 @@
         on:navChange={handleNavChange}
       />
 
-      <section
-        class="flex flex-col items-center w-full max-w-full mt-8 overflow-hidden"
-      >
-        {#if activeNavItem === "projectDetails"}
+      <section class="flex flex-col items-center w-full max-w-full mt-8 overflow-hidden">
+        {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
-        {:else if activeNavItem === "team"}
-          <ProjectMembers {data} {projectTeam} />
-        {:else if activeNavItem === "updates"}
+        {:else if activeNavItem === 'updates'}
           {#if showUpdateDetail}
             <UpdateDetail {selectedUpdate} on:goBack={handleGoBack} />
           {:else if projectUpdates.length > 0}
@@ -437,11 +412,9 @@
           {:else}
             <p>No updates</p>
           {/if}
-        {:else if activeNavItem === "contributors"}
+        {:else if activeNavItem === 'contributors'}
           <Contributors />
-          <div
-            class="inline-flex items-center self-stretch justify-start gap-1"
-          >
+          <div class="inline-flex items-center self-stretch justify-start gap-1">
             <div
               class="text-center text-black text-[32px] font-normal font-['Roboto'] leading-loose"
             >
@@ -482,12 +455,8 @@
     </main>
 
     <div class="flex flex-col w-full px-4 mt-6">
-      <h2 class="text-2xl font-semibold leading-none text-black">
-        Similar Projects
-      </h2>
+      <h2 class="text-2xl font-semibold leading-none text-black">Similar Projects</h2>
     </div>
-    <div
-      class="grid w-full grid-cols-1 gap-4 px-4 pt-4 pb-8 md:grid-cols-2 lg:grid-cols-3"
-    ></div>
+    <div class="grid w-full grid-cols-1 gap-4 px-4 pt-4 pb-8 md:grid-cols-2 lg:grid-cols-3"></div>
   </div>
 </div>
