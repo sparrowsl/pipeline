@@ -76,16 +76,16 @@ export async function GET({ url, params }) {
       return acc;
     }, {});
 
-    const projectsWithTagsAndStatusCount = projects.map(project => {
-        const tagsForProject = projectCategories
-            .filter(pc => pc.project_id === project.id)
-            .map(pc => categoriesById[pc.category_id]);
+    const projectsWithTagsAndStatusCount = projects.map((project) => {
+      const tagsForProject = projectCategories
+        .filter((pc) => pc.project_id === project.id)
+        .map((pc) => categoriesById[pc.category_id]);
 
-        return {
-            ...project,
-            tags: tagsForProject.filter(Boolean), // Filter out any null values
-            dpgStatusCount: dpgStatusCountByProject[project.id] || '' // Default to 0 if no statuses found
-        };
+      return {
+        ...project,
+        tags: tagsForProject.filter(Boolean), // Filter out any null values
+        dpgStatusCount: dpgStatusCountByProject[project.id] || "", // Default to 0 if no statuses found
+      };
     });
 
     return json({ projects: projectsWithTagsAndStatusCount }, { status: 200 });

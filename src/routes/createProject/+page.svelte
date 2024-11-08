@@ -151,13 +151,13 @@
           class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full"
         >
           <form>
-            <LinkInput label="Email" bind:value={email} />
-            <LinkInput label="Portfolio" bind:value={portfolio} />
-            <LinkInput label="Github" bind:value={github} />
-            <LinkInput label="LinkedIn" bind:value={linkedin} />
-            <LinkInput label="X" bind:value={twitter} />
-            <LinkInput label="Website" bind:value={website} />
-            <LinkInput label="Others" bind:value={other} />
+            <LinkInput label="Email" bind:value={email} on:change={updateStore} />
+            <LinkInput label="Portfolio" bind:value={portfolio} on:change={updateStore} />
+            <LinkInput label="Github" bind:value={github} on:change={updateStore} />
+            <LinkInput label="LinkedIn" bind:value={linkedin} on:change={updateStore} />
+            <LinkInput label="X" bind:value={twitter} on:change={updateStore} />
+            <LinkInput label="Website" bind:value={website} on:change={updateStore} />
+            <LinkInput label="Others" bind:value={other} on:change={updateStore} />
           </form>
         </section>
       {:else if activeNavItem === 'Funding'}
@@ -212,10 +212,6 @@
               />
             </div>
           </div>
-        
-        
-        
-    
           
         </section>
         
@@ -241,15 +237,19 @@
             Next
           </button>
         {:else}
+        <form method="POST" action="?/createProject">
+          <input type="hidden" name="projectData" value={JSON.stringify(get(projectStore))} />
           <button
             on:click={saveProject}
             class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
           >
             {loading ? 'Saving...' : 'Save'}
           </button>
+          </form>
         {/if}
       </div>
     </section>
+    
   </main>
 
   <Footer />
