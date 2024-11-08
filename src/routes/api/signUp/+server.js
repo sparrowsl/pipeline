@@ -15,16 +15,19 @@ export async function POST({ request }) {
     });
 
     if (signUpError) {
-      return json({ error: signUpError.message }, { status: 400 });
-    }
-
-    const { data: userData, error: profileError } = await supabase
-      .from('profiles')
-      .insert([{ user_id: signUpData.user.id, name: name }]);
-
-    if (profileError) {
-      return json({ error: profileError.message }, { status: 500 });
-    }
+        return json({ error: signUpError.message }, { status: 400 });
+      }
+  
+      
+      const { data: userData, error: profileError } = await supabase
+        .from('profile')
+        .insert([
+          { user_id: signUpData.user.id, name: name } 
+        ]);
+  
+      if (profileError) {
+        return json({ error: profileError.message }, { status: 500 });
+      } 
 
     throw redirect(303, '/waiting-confirmation');
   } catch (err) {
