@@ -24,8 +24,6 @@ export async function GET({ request }) {
   // Get user data from Supabase using the access token
   const { data, error } = await supabase.auth.getUser(accessToken);
 
-  //console.log('data:', data.user);
-
   // Get User Profile from Supabase
   const { data: profileData, error: profileError } = await supabase
     .from("profile")

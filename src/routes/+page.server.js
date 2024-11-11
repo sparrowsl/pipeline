@@ -1,6 +1,5 @@
-import { redirect } from '@sveltejs/kit';
-import { supabase } from '$lib/server/supabase.js';
+import { redirect } from "@sveltejs/kit";
 
 export function load() {
-    throw redirect(307, '/explore');
+  throw redirect(307, "/explore");
 }

@@ -17,11 +17,6 @@ onMount(() => {
 </script>
 
 
-<main>
-
-    <Nav />
-</main>
-
 <section class="relative min-h-[417px] flex flex-col justify-center items-center">
   {#if imageLoaded}
     <img
@@ -180,7 +175,6 @@ onMount(() => {
     <Journey />
   </div>
   
-  <Footer />
 
 
   
