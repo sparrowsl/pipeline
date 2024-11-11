@@ -7,7 +7,7 @@
     const dispatch = createEventDispatcher();
 
     function showDetail() {
-        dispatch('showDetail', { update }); // Dispatch event to switch to UpdateDetail component
+        dispatch('showDetail', { update }); 
     }
 
     export let update;
@@ -15,7 +15,7 @@
     const maxLength = 850;
 
     function truncateContent(content) {
-    const strippedContent = content.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
+    const strippedContent = content.replace(/<\/?[^>]+(>|$)/g, ""); 
     return strippedContent.length > maxLength 
       ? strippedContent.slice(0, maxLength) + '...' 
       : strippedContent;
@@ -28,7 +28,6 @@
 <div class="h-[567.35px] p-9 bg-white flex-col justify-start items-start inline-flex">
     <div class="self-stretch h-[495.35px] flex-col justify-start items-start gap-6 flex">
         <div class="h-[188.35px] pt-[1.75px] flex-col justify-start items-start gap-[13.30px] flex">
-            <div class="text-[#282828]/50 text-[13px] font-normal font-['Inter'] uppercase leading-[18px]">Update #3</div>
             <div class="self-stretch text-[#282828] text-[32px] font-bold font-['Inter'] leading-10">{update.title}</div>
             <div class="self-stretch h-[62px] pb-5 border-b border-[#dcdedd] flex-col justify-start items-start gap-1 flex">
                 <div class="inline-flex items-center justify-start gap-3">
