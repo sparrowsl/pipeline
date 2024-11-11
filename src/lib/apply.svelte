@@ -125,14 +125,14 @@
     <!-- Interest Section -->
     <div class="flex flex-wrap items-start justify-end mb-12">
       <label for="interest" class="w-full mb-4 text-xl md:w-1/3 md:mb-0 md:pr-8">
-        Why are you interested in contributing to this project?
+        Comment
       </label>
       <div class="w-full md:w-2/3">
         <textarea
           id="interest"
           bind:value={interest}
           class="w-full border-2 border-lime-800 rounded-[25px] px-6 py-4 text-lg min-h-[150px] focus:outline-none focus:border-[#0b383c] transition-colors duration-200"
-          aria-label="Describe your interest in contributing to this project"
+          placeholder="Comment"
         ></textarea>
       </div>
     </div>
