@@ -112,7 +112,7 @@
 <div class="w-full bg-[#d1ea9a]/90 py-16">
   <div class="max-w-4xl mx-auto text-center">
     <h1
-      class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]"
+      class="text-[#08292c] text-[45.43px] font-semibold font-['Inter'] leading-[54.51px]"
     >
       Let's Build The Future Together
     </h1>

@@ -1,7 +1,10 @@
   <script>
     let bannerImage = null;
     let profileImage = null;
+    import { countries } from 'countries-list';
   
+    const countryList = Object.values(countries);
+    
     function handleBannerUpload(event) {
       const file = event.target.files[0];
       if (file) {
@@ -17,7 +20,7 @@
     }
   </script>
   
-  <form class="flex flex-col w-[80%] text-[30.91px] font-normal font-['PP Mori'] leading-[34px]">
+  <form class="flex flex-col w-[80%] text-[30.91px] font-normal font-['Inter'] leading-[34px]">
     <div class="self-stretch h-[295.61px] relative mb-[141px]">
       <label for="banner-upload" class="cursor-pointer">
         <div class="w-full h-full bg-[#d9d9d9] rounded-[37.69px] flex justify-center items-center overflow-hidden">
@@ -42,34 +45,102 @@
       <input type="file" id="profile-upload" class="hidden" accept="image/*" on:change={handleProfileUpload} />
     </div>
   
-    <div class="flex flex-col gap-[47px]">
-      <div class="flex items-center justify-between">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+    <div class="flex flex-col justify-center w-full gap-6 mt-44 max-md:mt-10 max-md:max-w-full">
+      <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="firstName" class="text-xl font-semibold text-black">First Name</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <input
+            type="text"
+            id="firstName"
+
+            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            aria-required="true"
+          />
+        </div>
       </div>
-      <div class="flex items-center justify-between">
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+
+      <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="lastName" class="text-xl font-semibold text-black">Last Name</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <input
+            type="text"
+            id="lastName"
+            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            aria-required="true"
+          />
+        </div>
       </div>
-      <div class="flex items-center justify-between">
-        <label for="username">Username</label>
-        <input type="text" id="username" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+
+      <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="username" class="text-xl font-semibold text-black">Username</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <input
+            type="text"
+            id="username"
+            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            aria-required="true"
+          />
+        </div>
       </div>
-      <div class="flex items-center justify-between">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+
+      <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="email" class="text-xl font-semibold text-black">Email</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <input
+            type="email"
+            id="email"
+            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            aria-required="true"
+          />
+        </div>
       </div>
-      <div class="flex items-center justify-between">
-        <label for="country">Country</label>
-        <input type="text" id="country" class="w-[838.93px] h-[73.02px] rounded-[60.59px] border-2 border-[#516027] px-4" />
+
+      <div class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="projectCountry" class="text-xl font-semibold text-black">Country</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <div class="flex items-center py-6 pr-20 pl-6 border-2 border-lime-800 min-h-[70px] rounded-[75px]">
+            <select
+              id="country"
+              class="text-xl bg-transparent border-none outline-none "
+              aria-label="Select project country"
+            >
+              <option value="" class="">Select a country</option>
+              {#each countryList as countryOption}
+                <option value={countryOption.name}>{countryOption.name}</option>
+              {/each}
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="flex items-start justify-between">
-        <label for="bio">Bio</label>
-        <textarea id="bio" class="w-[838.93px] h-[368.20px] rounded-[37.29px] border-2 border-[#516027] p-4"></textarea>
+      
+
+      <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
+        <div class="flex flex-col mt-8">
+          <label for="bio" class="text-xl font-semibold text-black">Bio</label>
+        </div>
+        <div class="w-[70%] max-md:w-full">
+          <textarea
+            id="bio"
+
+            class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[100px]"
+            aria-required="true"
+          ></textarea>
+        </div>
       </div>
-    </div>
-  
-    <button type="submit" class="self-end mt-[47px] px-[59.89px] py-8 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-3xl font-medium font-['Inter'] leading-[32.91px]">
+
+      </div>
+    
+    <button type="submit" class="self-end mt-[47px] px-[29.89px] py-6 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-xl font-medium font-['Inter'] leading-[32.91px]">
       save & continue
     </button>
   </form>
