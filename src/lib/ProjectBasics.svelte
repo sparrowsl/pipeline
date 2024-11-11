@@ -66,7 +66,6 @@
     selectedTags = selectedTags.filter((t) => t.title !== tag.title);
     updateStore();
     dispatch("change", selectedTags);
-    console.log(selectedTags);
   }
 
   $: filteredTags = availableTags.filter(
@@ -82,22 +81,25 @@
 
   function handleBannerUpload(event) {
     const file = event.target.files[0];
-    console.log('Banner file selected:', file);
+    console.log("Banner file selected:", file);
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
       bannerImg = file;
       updateStore();
+      console.log("update the banner:", bannerImg);
     }
   }
 
-  function handleProfileUpload(event) {
+  async function handleProfileUpload(event) {
     const file = event.target.files[0];
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      profileImg = file;
-      updateStore();
+      await handleImageUpload(file);
+
+      // profileImg = file;
+      // updateStore();
     }
   }
 
@@ -117,6 +119,27 @@
       const data = await response.json();
       availableTags = data.categories;
     } catch (error) {}
+  }
+
+  async function handleImageUpload(file) {
+    // Upload the image to Supabase storage
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/file-upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const result = await response.json();
+      throw new Error(result.message || "Failed to upload image");
+    }
+
+    return response.json().then((data) => {
+      console.log("Image URL:", data.url);
+      return data.url;
+    });
   }
 
   onMount(async () => {

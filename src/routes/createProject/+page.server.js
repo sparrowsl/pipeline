@@ -12,11 +12,10 @@ export const actions = {
     console.log("bannerImg:", bannerImg);
 
     try {
-      //   if (bannerImg) {
-
-      //     const imageUrl = await uploadImageToCloud(imageFile);
-      //     projectData.imageUrl = imageUrl; // Store the image URL in project data
-      //   }
+        if (bannerImg) {
+          const imageUrl = await handleImageUpload(imageFile);
+          projectData.imageUrl = imageUrl; 
+        }
 
       projectStore.set(projectData);
 

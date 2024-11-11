@@ -3,6 +3,7 @@ import { json } from "@sveltejs/kit";
 
 export async function POST({ request }) {
   const formData = await request.formData();
+  
   const file = formData.get("file");
 
   if (!file) {
@@ -12,6 +13,8 @@ export async function POST({ request }) {
   const { data, error } = await supabase.storage
     .from("pipeline-images")
     .upload(`uploads/${file.name}`, file);
+
+    console.log('error:', error);
 
   if (error) {
     return json({ error: error.message }, { status: 500 });
