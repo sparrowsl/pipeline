@@ -2,12 +2,19 @@
   import "./app.css";
   import Nav from "$lib/Nav.svelte";
   import Footer from "$lib/Footer.svelte";
+  import { page } from "$app/stores"; // access the current page route
+
   export let data;
 </script>
 
 <div class="w-full min-h-screen bg-white">
-  <Nav {data} />
+  {#if $page.url.pathname !== "/signIn"}
+    <Nav {data} />
+  {/if}
+
   <slot />
 
-  <Footer />
+  {#if $page.url.pathname !== "/signIn"}
+    <Footer />
+  {/if}
 </div>
