@@ -6,16 +6,8 @@ export const actions = {
     const formData = await request.formData();
 
     const projectData = JSON.parse(formData.get("projectData"));
-    console.log("projectData:", projectData);
-    const bannerImg = formData.get("bannerImage");
-
-    console.log("bannerImg:", bannerImg);
 
     try {
-        if (bannerImg) {
-          const imageUrl = await handleImageUpload(imageFile);
-          projectData.imageUrl = imageUrl; 
-        }
 
       projectStore.set(projectData);
 

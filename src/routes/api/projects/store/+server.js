@@ -49,6 +49,8 @@ export async function POST({ request }) {
       bank_acct,
       wallet_address,
       funding_goal,
+      bannerImage,
+      profileImage,
     } = await request.json();
 
     const { data, error } = await supabase
@@ -70,6 +72,8 @@ export async function POST({ request }) {
           bank_acct,
           wallet_address,
           funding_goal,
+          image: profileImage,
+          banner_image: bannerImage,
         },
       ])
       .select();

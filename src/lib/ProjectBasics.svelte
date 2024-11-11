@@ -79,15 +79,16 @@
 
   const authorizedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
 
-  function handleBannerUpload(event) {
+  async function handleBannerUpload(event) {
     const file = event.target.files[0];
     console.log("Banner file selected:", file);
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
-      bannerImg = file;
+      let path = await handleImageUpload(file);
+
+      bannerImg = path;
       updateStore();
-      console.log("update the banner:", bannerImg);
     }
   }
 
@@ -96,10 +97,10 @@
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      await handleImageUpload(file);
+      let path = await handleImageUpload(file);
 
-      // profileImg = file;
-      // updateStore();
+      profileImg = path;
+      updateStore();
     }
   }
 
@@ -137,7 +138,6 @@
     }
 
     return response.json().then((data) => {
-      console.log("Image URL:", data.url);
       return data.url;
     });
   }

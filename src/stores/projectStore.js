@@ -16,6 +16,6 @@ export const projectStore = writable({
   funding_goal: "",
   bank_acct: "",
   wallet_address: "",
-  bannerImage: {},
-  profileImage: {},
+  bannerImage: "",
+  profileImage: "",
 });
