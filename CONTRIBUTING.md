@@ -4,9 +4,8 @@ Thank you for your interest in contributing to Pipeline! We welcome contribution
 
 ## Getting Started
 
-1. Fork the repository on GitHub.
-2. Clone your fork locally.
-3. Create a new branch for your contribution.
+1. Clone/Fork the repository on GitHub.
+2. Create a new branch for your contribution.
 
 ## Making Changes
 
