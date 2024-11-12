@@ -19,7 +19,7 @@ export async function POST({ request }) {
     }
 
     const { data: userData, error: profileError } = await supabase
-      .from('profiles')
+      .from('profile')
       .insert([{ user_id: signUpData.user.id, name: name }]);
 
     if (profileError) {

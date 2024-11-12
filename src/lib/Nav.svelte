@@ -37,7 +37,7 @@
     <Logo />  
 
     <button 
-      class="z-50 block md:hidden text-lime-300 focus:outline-none" 
+      class="z-50 block md:hidden text-[#d1ea9a] focus:outline-none" 
       on:click={toggleMenu} 
       aria-label="Toggle Menu"
     >
@@ -46,9 +46,8 @@
       </svg>
     </button>
 
-    <nav class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center md:flex text-lime-300">
+    <nav class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center md:flex text-[#d1ea9a]">
       <a href="/explore" class="gap-0.5 self-stretch my-auto text-base">Explore Projects</a>
-      <!-- <a href="/createProject" class="gap-2.5 self-stretch my-auto text-bas">Create Project</a> -->
       <div class="relative resources-dropdown">
         <button 
           on:click={toggleResources}
@@ -64,8 +63,8 @@
         </button>
         {#if isResourcesOpen}
           <div class="absolute z-10 w-48 py-2 mt-2 transform -translate-x-1/2 rounded-md shadow-lg top-full left-1/2 bg-cyan-900">
-            <a href="/about" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800 text-bas">About Pipeline</a>
-            <a href="/dpgs" class="block px-4 py-3 text-left text-lime-300 hover:bg-cyan-800 text-bas">About DPGs</a>
+            <a href="/about" class="block px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800 text-bas">About Pipeline</a>
+            <a href="/dpgs" class="block px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800 text-bas">About DPGs</a>
           </div>
         {/if}
       </div>
@@ -75,14 +74,16 @@
     <div class="hidden md:flex gap-3.5 items-center self-stretch my-auto z-40">
       <SearchBar />
       {#if data.isAuthenticated}
-      <UserProfile {data}/> 
+      <UserProfile {data}/>
+      {:else}
+      <a href="/signIn" class="px-4 py-4 bg-[#d1ea9a] rounded-3xl max-md:px-3 max-md:py-3">Sign up / Log in</a>
       {/if}
     </div>
   </div>
 
 
   {#if isMenuOpen}
-    <div class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-lime-300">
+    <div class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-[#d1ea9a]">
       <div class="w-full pt-4 mt-4 border-b border-cyan-800">
         <div class="ml-[15px] mb-2">
         <UserProfile />
@@ -91,7 +92,6 @@
       <nav class="flex flex-col items-center w-full gap-4 text-sm font-medium leading-none text-center">
         <a href="/explore" class="block w-full px-4 py-2 mr-3 border-b border-cyan-800">Explore Projects</a>
         
-        <!-- <a href="/createProject" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Create Project</a> -->
         <div class="relative w-full resources-dropdown">
           <button 
             on:click={toggleResources}
@@ -107,8 +107,8 @@
           </button>
           {#if isResourcesOpen}
             <div class="absolute left-0 z-50 w-full mt-2 rounded-md shadow-lg bg-cyan-900 top-full">
-              <a href="/about" class="block w-full px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About Pipeline</a>
-              <a href="/dpgs" class="block w-full px-4 py-3 text-left text-lime-300 hover:bg-cyan-800">About DPGs</a>
+              <a href="/about" class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800">About Pipeline</a>
+              <a href="/dpgs" class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800">About DPGs</a>
             </div>
           {/if}
         </div>

@@ -84,12 +84,12 @@
   <section
     class="flex flex-wrap gap-5 justify-between self-center mt-20 w-full max-w-[1080px] max-md:mt-10 max-md:max-w-full mb-10"
   >
-    <h1 class="text-6xl font-semibold leading-none text-black max-md:text-4xl">
+    <h1 class="font-semibold leading-none text-black text-4xl ml-[11%] max-md:text-4xl">
       Username
-    </h1>
+    </h1>       
     <a
       href="/profile"
-      class="flex gap-2.5 justify-center items-center self-start px-6 py-3.5 text-2xl leading-none text-lime-800 bg-lime-200 border-2 border-lime-800 border-solid rounded-[50px] max-md:px-5"
+      class="flex gap-2.5 justify-center items-center self-start px-6 py-3.5 text-xl leading-none text-lime-800 bg-lime-200 border-2 border-lime-800 border-solid rounded-[50px] max-md:px-5 mr-10"
     >
       <img
         loading="lazy"
@@ -102,18 +102,18 @@
   </section>
 
   <section class="w-full mb-12">
-    <div class="flex justify-center mx-auto space-x-28">
+    <div class="flex justify-center items-center px-10 py-5 mt-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10 space-x-24 ">
       {#each navItems as navItem}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-          class="flex items-center self-center pb-2 mx-2 space-x-2 transition-all duration-300 ease-in-out cursor-pointer"
+          class="flex items-center self-center justify-center mx-2 transition-all duration-300 ease-in-out cursor-pointer pb-02 "
           class:selected={activeNavItem === navItem.id}
           class:border-b-4={activeNavItem === navItem.id}
           on:click={() => (activeNavItem = navItem.id)}
-          style="min-width: 184px; border-color: #516027"
+          style="min-width: 134px; border-color: #d1ea9a"
         >
-          <img src={navItem.icon} alt={navItem.label} class="w-12 h-12" />
+          <img src={navItem.icon} alt={navItem.label} class="w-6 h-6" />
           <span class="text-2xl text-center">
             {navItem.label}
           </span>
@@ -162,7 +162,7 @@
       </div>
       <button
         type="submit"
-        class="self-start mt-8 px-[59.89px] py-8 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-3xl font-medium font-['Inter'] leading-[32.91px] ml-[10%]"
+        class="self-end mt-8 px-[29.89px] py-6 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-xl font-medium font-['Inter'] leading-[32.91px] ml-[10%]"
       >
         save & continue
       </button>
@@ -174,7 +174,7 @@
 
 <style>
   div.selected {
-    transform: scale(1.2); /* Enlarge the selected item */
-    font-weight: bold; /* Optional: make text bold for the selected item */
+    transform: scale(1.1);
+    font-weight: bold; 
   }
 </style>

@@ -78,7 +78,7 @@
   </script>
 
 
-<div class=" h-[3815px] px-[18px] flex-col justify-start items-start inline-flex">
+<div class=" h-full px-[18px] flex-col justify-start items-start inline-flex font-['Inter']">
     <div class="self-stretch h-[89px] pb-12 flex-col justify-start items-start flex">
         <div class="px-[19px] py-[11.50px] bg-white border border-[#d1d1d1] justify-center items-center inline-flex">
             <div class="flex items-center justify-start">
@@ -101,12 +101,9 @@
             </div>
         </div>
     </div>
-    <div class="self-stretch h-[3135px] flex-col justify-start items-start gap-6 flex">
-        <div class="self-stretch h-[187px] flex-col justify-start items-start gap-3 flex">
+    <div class="flex flex-col items-start self-stretch justify-start gap-6">
+        <div class="flex flex-col items-start self-stretch justify-start gap-3">
             <div class="inline-flex items-start self-stretch justify-start">
-                <div class="self-stretch pt-[1.75px] pb-[1.25px] flex-col justify-start items-start inline-flex">
-                    <div class="text-[#282828]/50 text-[13px] font-normal font-['Inter'] uppercase leading-[18px]">Update #1</div>
-                </div>
             </div>
             <div class="self-stretch text-[#282828] text-[32px] font-bold font-['Inter'] leading-10">{selectedUpdate.title}</div>
             <div class="self-stretch h-[62px] pb-5 border-b border-[#dcdedd] flex-col justify-start items-start gap-1 flex">
@@ -124,16 +121,35 @@
                 </div>
             </div>
         </div>
-        <div class="self-stretch h-[2924px] pb-2 flex-col justify-start items-start gap-[30px] flex">
+        <div class="self-stretch pb-2 flex-col justify-start items-start gap-[30px] flex">
             <div class="self-stretch text-[#282828] text-base font-normal font-['Inter'] leading-[29px]">{@html selectedUpdate.body} </div>
            
         </div>
     </div>
-    <div class="self-stretch h-[591px] pt-[42px] pb-[60px] flex-col justify-start items-start gap-[18px] flex">
+    
+    <div class="self-stretch pt-[42px] flex-col justify-start items-start gap-[18px] flex">
         {#if comments.length > 0}
         <div class="flex flex-col items-start self-stretch justify-start h-5">
             <div class="self-stretch text-[#282828] text-base font-bold font-['Inter'] leading-tight">Comments ({comments.length})</div>
         </div>
+
+        <div class="flex justify-between w-[97%] gap-4 pt-4 pb-8 pl-4">
+            <input
+                type="text"
+                bind:value={newComment}
+                placeholder="Add a comment..."
+                class="w-full border-2 border-[#dcdedd] rounded-lg px-4 py-2 text-base text-[#0b383c] focus:outline-none focus:border-[#0b383c] transition-colors duration-200"
+            />
+            <button
+                on:click={addUpdateComment}
+                class="w-full md:w-1/4 px-4 py-2 bg-[#0b383c] text-white text-base rounded-lg transition-colors duration-300 focus:outline-none focus:border-[#0b383c]"
+                disabled={loading}
+            >
+               {loading ? 'Submitting...' : 'Comment'}
+            </button>
+        </div>
+
+        
         <div class="self-stretch h-[385px] px-[13px] pt-[15px] pb-[13px] bg-[#fbfbfa] border border-[#e8e8e8] flex-col justify-start items-start gap-3 flex">
             {#each comments as comment}
             <div class="self-stretch h-[113px] px-[19px] pt-[19px] pb-[13px] bg-white border border-[#e8e8e8] flex-col justify-start items-start gap-[18px] flex">
@@ -168,20 +184,4 @@
     </div>
 
     
-</div>
-
-<div class="flex flex-col items-start self-stretch justify-start gap-4 pt-4 pb-8 w-[90%] pl-10">
-    <input
-        type="text"
-        bind:value={newComment}
-        placeholder="Add a comment..."
-        class="w-full border-2 border-[#dcdedd] rounded-lg px-4 py-2 text-base text-[#0b383c] focus:outline-none focus:border-[#0b383c] transition-colors duration-200"
-    />
-    <button
-        on:click={addUpdateComment}
-        class="w-full md:w-1/4 px-4 py-2 bg-[#0b383c] text-white text-base rounded-lg transition-colors duration-300 focus:outline-none focus:border-[#0b383c]"
-        disabled={loading}
-    >
-       {loading ? 'Submitting...' : 'Comment'}
-    </button>
 </div>
