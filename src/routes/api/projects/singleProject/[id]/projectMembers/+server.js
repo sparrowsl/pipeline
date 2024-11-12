@@ -1,15 +1,15 @@
-import { supabase } from "$lib/server/supabase.js";
-import { json } from "@sveltejs/kit";
+import { supabase } from '$lib/server/supabase.js';
+import { json } from '@sveltejs/kit';
 
 export async function GET({ params }) {
   const { id } = params;
 
   try {
     const { data: members, error: membersError } = await supabase
-      .from("project_members")
-      .select("*")
-      .eq("project_id", id)
-      .order("created_at", { ascending: false });
+      .from('project_members')
+      .select('*')
+      .eq('project_id', id)
+      .order('created_at', { ascending: false });
 
     if (membersError) {
       return json({ error: membersError.message }, { status: 500 });
@@ -25,9 +25,9 @@ export async function GET({ params }) {
 
     // Fetch profiles that match the user_ids
     const { data: profiles, error: profilesError } = await supabase
-      .from("profile")
-      .select("*")
-      .in("user_id", userIds);
+      .from('profile')
+      .select('*')
+      .in('user_id', userIds);
 
     if (profilesError) {
       return json({ error: profilesError.message }, { status: 500 });

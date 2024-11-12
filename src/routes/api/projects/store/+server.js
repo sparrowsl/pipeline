@@ -1,30 +1,29 @@
-import { supabase } from "$lib/server/supabase.js";
-import { json } from "@sveltejs/kit";
+import { supabase } from '$lib/server/supabase.js';
+import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
-  const cookies = request.headers.get("cookie");
+  const cookies = request.headers.get('cookie');
 
   if (!cookies) {
-    return new Response(JSON.stringify({ error: "No cookies found" }), {
+    return new Response(JSON.stringify({ error: 'No cookies found' }), {
       status: 401,
     });
   }
 
   // Parse cookies to extract the access token
   const accessToken = cookies
-    .split(";")
-    .find((cookie) => cookie.trim().startsWith("access_token="))
-    ?.split("=")[1];
+    .split(';')
+    .find((cookie) => cookie.trim().startsWith('access_token='))
+    ?.split('=')[1];
 
   if (!accessToken) {
-    return new Response(JSON.stringify({ error: "No access token found" }), {
+    return new Response(JSON.stringify({ error: 'No access token found' }), {
       status: 401,
     });
   }
 
   // Get user data from Supabase using the access token
-  const { data: userData, error: userError } =
-    await supabase.auth.getUser(accessToken);
+  const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
 
   if (userError) {
     return json({ error: userError.message }, { status: 401 });
@@ -54,7 +53,7 @@ export async function POST({ request }) {
     } = await request.json();
 
     const { data, error } = await supabase
-      .from("projects")
+      .from('projects')
       .insert([
         {
           user_id: user.id,
@@ -84,7 +83,7 @@ export async function POST({ request }) {
 
     //create team member
     const { data: teamData, error: teamError } = await supabase
-      .from("project_members")
+      .from('project_members')
       .insert([
         {
           user_id: user.id,
@@ -101,7 +100,7 @@ export async function POST({ request }) {
     //create project category
     for (const tag of tags) {
       const { data: categoryData, error: categoryError } = await supabase
-        .from("category_project")
+        .from('category_project')
         .insert([
           {
             project_id: data[0].id,

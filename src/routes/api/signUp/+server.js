@@ -28,7 +28,7 @@ export async function POST({ request }) {
 
     throw redirect(303, '/waiting-confirmation');
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Failed to sign up" }), {
+    return new Response(JSON.stringify({ error: 'Failed to sign up' }), {
       status: 500,
     });
   }

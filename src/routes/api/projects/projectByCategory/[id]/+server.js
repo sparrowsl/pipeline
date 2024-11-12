@@ -1,18 +1,18 @@
-import { supabase } from "$lib/server/supabase.js";
-import { json } from "@sveltejs/kit";
+import { supabase } from '$lib/server/supabase.js';
+import { json } from '@sveltejs/kit';
 
 export async function GET({ url, params }) {
-  const page = parseInt(url.searchParams.get("page") || "1", 10);
-  const limit = parseInt(url.searchParams.get("limit") || "6", 10);
+  const page = parseInt(url.searchParams.get('page') || '1', 10);
+  const limit = parseInt(url.searchParams.get('limit') || '6', 10);
   const categoryId = params.id;
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
   try {
     const { data: categoryProjects, error: categoryError } = await supabase
-      .from("category_project")
-      .select("project_id")
-      .eq("category_id", categoryId)
+      .from('category_project')
+      .select('project_id')
+      .eq('category_id', categoryId)
       .range(start, end);
 
     if (categoryError) {
@@ -26,31 +26,29 @@ export async function GET({ url, params }) {
     }
 
     const { data: projects, error: projectError } = await supabase
-      .from("projects")
-      .select("*")
-      .in("id", projectIds)
-      .order("created_at", { ascending: false });
+      .from('projects')
+      .select('*')
+      .in('id', projectIds)
+      .order('created_at', { ascending: false });
 
     if (projectError) {
       throw projectError;
     }
 
     const { data: projectCategories, error: pivotError } = await supabase
-      .from("category_project")
-      .select("project_id, category_id")
-      .in("project_id", projectIds);
+      .from('category_project')
+      .select('project_id, category_id')
+      .in('project_id', projectIds);
 
     if (pivotError) {
       throw pivotError;
     }
 
-    const categoryIds = [
-      ...new Set(projectCategories.map((pc) => pc.category_id)),
-    ];
+    const categoryIds = [...new Set(projectCategories.map((pc) => pc.category_id))];
     const { data: categories, error: categoryDetailsError } = await supabase
-      .from("categories")
-      .select("*")
-      .in("id", categoryIds);
+      .from('categories')
+      .select('*')
+      .in('id', categoryIds);
 
     if (categoryDetailsError) {
       throw categoryDetailsError;
@@ -63,9 +61,9 @@ export async function GET({ url, params }) {
 
     //get the dpg status
     const { data: projectDpgStatuses, error: dpgStatusError } = await supabase
-      .from("project_dpg_status")
-      .select("project_id")
-      .in("project_id", projectIds);
+      .from('project_dpg_status')
+      .select('project_id')
+      .in('project_id', projectIds);
 
     if (dpgStatusError) {
       return json({ error: dpgStatusError.message }, { status: 500 });
@@ -84,7 +82,7 @@ export async function GET({ url, params }) {
       return {
         ...project,
         tags: tagsForProject.filter(Boolean), // Filter out any null values
-        dpgStatusCount: dpgStatusCountByProject[project.id] || "", // Default to 0 if no statuses found
+        dpgStatusCount: dpgStatusCountByProject[project.id] || '', // Default to 0 if no statuses found
       };
     });
 
