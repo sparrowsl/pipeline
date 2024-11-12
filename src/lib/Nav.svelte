@@ -82,12 +82,12 @@
             class="absolute z-10 w-48 py-2 mt-2 transform -translate-x-1/2 rounded-md shadow-lg top-full left-1/2 bg-cyan-900"
           >
             <a
-              href="/about"
+              href="/resources/pipeline"
               class="block px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800 text-bas"
               >About Pipeline</a
             >
             <a
-              href="/dpgs"
+              href="/resources/digital-public-good"
               class="block px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800 text-bas"
               >About DPGs</a
             >
@@ -143,12 +143,12 @@
           {#if isResourcesOpen}
             <div class="absolute left-0 z-50 w-full mt-2 rounded-md shadow-lg bg-cyan-900 top-full">
               <a
-                href="/about"
+                href="/resources/pipeline"
                 class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
                 >About Pipeline</a
               >
               <a
-                href="/dpgs"
+                href="/resources/digital-public-good"
                 class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
                 >About DPGs</a
               >
