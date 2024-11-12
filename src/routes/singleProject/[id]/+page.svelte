@@ -198,7 +198,7 @@
 
   const navItems = [
     { id: 'projectDetails', label: 'About', width: '70px' },
-    { id: 'team', label: 'Team', width: '65px' },
+    { id: 'dpgStatus', label: 'DPG Status', width: '90px' },
     { id: 'updates', label: 'Updates', width: '95px' },
     { id: 'contributors', label: 'Contributors', width: '150px' },
   ];
@@ -385,7 +385,6 @@
       </div>
     </section>
 
-    <DpgStatus />
   </div>
 
   <div class="flex flex-col w-[80%] max-w-[60%] bg-white pl-4 overflow-y-auto">
@@ -402,6 +401,8 @@
       <section class="flex flex-col items-center w-full max-w-full mt-8 overflow-hidden">
         {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
+          {:else if activeNavItem === 'dpgStatus'}
+          <DpgStatus /> 
         {:else if activeNavItem === 'updates'}
           {#if showUpdateDetail}
             <UpdateDetail {selectedUpdate} on:goBack={handleGoBack} />
