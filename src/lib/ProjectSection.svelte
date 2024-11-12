@@ -7,7 +7,7 @@
   let navSections = [
     { id: 'created', label: 'Projects created' },
     { id: 'contributed', label: 'Projects contributed' },
-    { id: 'bookmarks', label: 'Bookmarks' },
+    { id: 'follow', label: 'Follow' },
   ];
 
 
