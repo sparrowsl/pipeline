@@ -156,7 +156,7 @@
           <input type="file" id="profile-upload" class="hidden" accept={authorizedExtensions.join(',')} on:change={handleProfileUpload}  />
         </div>
       </div>
-
+   
       
       <div class="flex flex-col justify-center w-full mt-44 max-md:mt-10 max-md:max-w-full">
         <div class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start">
