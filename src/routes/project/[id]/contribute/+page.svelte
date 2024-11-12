@@ -1,6 +1,6 @@
 <script>
   import Contribute from '$lib/Contribute.svelte';
-  import Apply from '../../../../lib/apply.svelte';
+  import Apply from '$lib/apply.svelte';
   import { page } from '$app/stores';
 
   let id;

@@ -25,7 +25,7 @@
   const handleApplySubmit = async () => {
     try {
       loading = true;
-      const response = await fetch(`/api/projects/contribute/${id}/apply`, {
+      const response = await fetch(`/api/projects/${id}/contribute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
