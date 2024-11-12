@@ -1,12 +1,18 @@
 //@ts-check
 
 import { supabase } from '$lib/server/supabase.js';
+import {
+  fetchProjectCategories,
+  fetchCategories,
+  fetchDpgStatuses,
+  mapProjectsWithTagsAndStatus,
+} from '$lib/server/utils/projects.js';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ url }) {
-  // Retrieve page and limit from the query parameters, with defaults if not provided
   const page = parseInt(url.searchParams.get('page') || '1', 10);
   const limit = parseInt(url.searchParams.get('limit') || '6', 10);
+  const term = url.searchParams.get('term') || '';
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
@@ -14,8 +20,8 @@ export async function GET({ url }) {
     const { data: projects, error: projectsError } = await supabase
       .from('projects')
       .select('*')
-      .range(start, end)
-      .order('created_at', { ascending: false });
+      .ilike('title', `%${term}%`)
+      .range(start, end);
 
     if (projectsError) {
       return json({ error: projectsError.message }, { status: 500 });
@@ -25,144 +31,22 @@ export async function GET({ url }) {
       return json({ projects: [] }, { status: 200 });
     }
 
-    // Extract unique project_ids from projects
     const projectIds = projects.map((project) => project.id);
 
-    const { data: projectCategories, error: pivotError } = await supabase
-      .from('category_project')
-      .select('project_id, category_id')
-      .in('project_id', projectIds);
-
-    if (pivotError) {
-      return json({ error: pivotError.message }, { status: 500 });
-    }
-
-    //get the categories for each project
+    const projectCategories = await fetchProjectCategories(projectIds);
     const categoryIds = [...new Set(projectCategories.map((pc) => pc.category_id))];
-    const { data: categories, error: categoriesError } = await supabase
-      .from('categories')
-      .select('*')
-      .in('id', categoryIds);
+    const categories = await fetchCategories(categoryIds);
+    const dpgStatuses = await fetchDpgStatuses(projectIds);
 
-    if (categoriesError) {
-      return json({ error: categoriesError.message }, { status: 500 });
-    }
-
-    const categoriesById = categories.reduce((acc, category) => {
-      acc[category.id] = category;
-      return acc;
-    }, {});
-
-    //get the dpg status
-    const { data: projectDpgStatuses, error: dpgStatusError } = await supabase
-      .from('project_dpg_status')
-      .select('project_id')
-      .in('project_id', projectIds);
-
-    if (dpgStatusError) {
-      return json({ error: dpgStatusError.message }, { status: 500 });
-    }
-
-    const dpgStatusCountByProject = projectDpgStatuses.reduce((acc, status) => {
-      acc[status.project_id] = (acc[status.project_id] || 0) + 1;
-      return acc;
-    }, {});
-
-    //Attach categories to each project
-    const projectsWithTagsAndStatusCount = projects.map((project) => {
-      const tagsForProject = projectCategories
-        .filter((pc) => pc.project_id === project.id)
-        .map((pc) => categoriesById[pc.category_id]);
-
-      return {
-        ...project,
-        tags: tagsForProject.filter(Boolean), // Filter out any null values
-        dpgStatusCount: dpgStatusCountByProject[project.id] || '', // Default to 0 if no statuses found
-      };
-    });
+    const projectsWithTagsAndStatusCount = mapProjectsWithTagsAndStatus(
+      projects,
+      projectCategories,
+      categories,
+      dpgStatuses,
+    );
 
     return json({ projects: projectsWithTagsAndStatusCount }, { status: 200 });
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
-  }
-}
-
-export async function POST({ request }) {
-  const cookies = request.headers.get('cookie');
-
-  if (!cookies) {
-    return new Response(JSON.stringify({ error: 'No cookies found' }), {
-      status: 401,
-    });
-  }
-
-  // Parse cookies to extract the access token
-  const accessToken = cookies
-    .split(';')
-    .find((cookie) => cookie.trim().startsWith('access_token='))
-    ?.split('=')[1];
-
-  if (!accessToken) {
-    return new Response(JSON.stringify({ error: 'No access token found' }), {
-      status: 401,
-    });
-  }
-
-  // Get user data from Supabase using the access token
-  const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
-
-  if (userError) {
-    return json({ error: userError.message }, { status: 401 });
-  }
-
-  let user = userData.user;
-
-  try {
-    const {
-      title,
-      bio,
-      tags,
-      country,
-      details,
-      email,
-      portfolio,
-      github,
-      linkedin,
-      twitter,
-      website,
-      other,
-      bank_acct,
-      wallet_address,
-      funding_goal,
-    } = await request.json();
-
-    const { data, error } = await supabase.from('projects').insert([
-      {
-        user_id: user.id,
-        title,
-        bio,
-        tags,
-        country,
-        details,
-        email,
-        portfolio,
-        github_repo: github,
-        linkedin,
-        twitter,
-        website,
-        other,
-        bank_acct,
-        wallet_address,
-        funding_goal,
-      },
-    ]);
-
-    if (error) {
-      return json({ error: error.message }, { status: 400 });
-    }
-
-    return json({ success: true }, { status: 200 });
-  } catch (error) {
-    return json({ erorr: error }, { status: 500 });
   }
 }
