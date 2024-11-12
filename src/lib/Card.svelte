@@ -93,13 +93,13 @@
   </div> -->
 
 <script>
-  import ProgressBar from "./ProgressBar.svelte";
-  import ContributeButton from "./ContributeButton.svelte";
-  import CategoryTag from "./CategoryTag.svelte";
-  import DPGRating from "./DPGRating.svelte";
-  import { amountFormat } from "$lib/utils/amountFormat.js";
+  import ProgressBar from './ProgressBar.svelte';
+  import ContributeButton from './ContributeButton.svelte';
+  import CategoryTag from './CategoryTag.svelte';
+  import DPGRating from './DPGRating.svelte';
+  import { amountFormat } from '$lib/utils/amountFormat.js';
 
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
   let isOpen = false;
 
   function toggleDropdown() {
@@ -107,26 +107,23 @@
   }
 
   function closeDropdown(event) {
-    if (event.target.closest(".dropdown-container")) return;
+    if (event.target.closest('.dropdown-container')) return;
     isOpen = false;
   }
 
   export let project;
 
   onMount(() => {
-    document.addEventListener("click", closeDropdown);
+    document.addEventListener('click', closeDropdown);
     return () => {
-      document.removeEventListener("click", closeDropdown);
+      document.removeEventListener('click', closeDropdown);
     };
   });
 </script>
 
 <div class="flex flex-col overflow-hidden bg-gray-200 rounded-3xl">
   <header class="relative pt-[75%]">
-    <a
-      href="/singleProject/{project.id}"
-      class="absolute inset-0 flex items-center justify-center"
-    >
+    <a href="/project/{project.id}" class="absolute inset-0 flex items-center justify-center">
       <div class="w-[95%] h-[90%] overflow-hidden rounded-3xl">
         <img
           loading="lazy"
@@ -157,18 +154,11 @@
     </div>
 
     <div>
-      <span class="text-sm font-semibold"
-        >${amountFormat(project.current_funding || 0)}</span
-      >
+      <span class="text-sm font-semibold">${amountFormat(project.current_funding || 0)}</span>
       raised of
-      <span class="text-sm font-semibold"
-        >${amountFormat(project.funding_goal || 0)}</span
-      >
+      <span class="text-sm font-semibold">${amountFormat(project.funding_goal || 0)}</span>
     </div>
-    <ProgressBar
-      progress={project.current_funding}
-      total={project.funding_goal}
-    />
+    <ProgressBar progress={project.current_funding} total={project.funding_goal} />
     <ContributeButton {project} />
   </div>
 </div>
