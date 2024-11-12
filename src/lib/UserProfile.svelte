@@ -128,7 +128,7 @@
               class="w-[17px] aspect-square object-contain"
               alt=""
             />
-            <a href="/createProject">Create Project</a>
+            <a href="/project/create">Create Project</a>
           </li>
         </ul>
 
