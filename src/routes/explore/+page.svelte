@@ -1,12 +1,12 @@
 <script>
-  import Search from "./../../lib/Search.svelte";
-  import ProjectCategory from "../../lib/ProjectCategory.svelte";
-  import Nav from "../../lib/Nav.svelte";
-  import CategoryDropdown from "../../lib/CategoryDropdown.svelte";
-  import SortDropdown from "../../lib/SortDropdown.svelte";
-  import Card from "../../lib/Card.svelte";
-  import Footer from "../../lib/Footer.svelte";
-  import { onMount } from "svelte";
+  import Search from './../../lib/Search.svelte';
+  import ProjectCategory from '../../lib/ProjectCategory.svelte';
+  import Nav from '../../lib/Nav.svelte';
+  import CategoryDropdown from '../../lib/CategoryDropdown.svelte';
+  import SortDropdown from '../../lib/SortDropdown.svelte';
+  import Card from '../../lib/Card.svelte';
+  import Footer from '../../lib/Footer.svelte';
+  import { invalidateAll } from '$app/navigation';
 
   let allProjects = [];
   let topProjects = [];
@@ -14,8 +14,8 @@
   let categoryResult = [];
   let loading = true;
   let error = null;
-  let searchTerm = "";
-  let selectedTag = "";
+  let searchTerm = '';
+  let selectedTag = '';
 
   // Pagination state
   let currentPage = 1;
@@ -28,69 +28,14 @@
   let searchResultsLoaded = false;
   let categoryResultLoaded = false;
 
-  async function fetchAllProjects() {
-    try {
-      const response = await fetch(
-        `/api/projects/allprojects?page=${currentPage}&limit=${itemsPerPage}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      if (data.projects.length < itemsPerPage) {
-        allProjectsLoaded = true;
-      }
-
-      allProjects = [...allProjects, ...data.projects];
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function fetchTopProjects() {
-    try {
-      const response = await fetch("/api/projects/allprojects", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      topProjects = data.projects.slice(0, 3);
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
   async function searchProjects(term) {
     try {
       const response = await fetch(
         `/api/projects/search?term=${term}&page=${searchPage}&limit=${itemsPerPage}`,
         {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        },
       );
 
       if (!response.ok) throw new Error(response.statusText);
@@ -116,9 +61,9 @@
       const response = await fetch(
         `/api/projects/projectByCategory/${tag}?&page=${categoryPage}&limit=${itemsPerPage}`,
         {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        },
       );
 
       if (!response.ok) throw new Error(response.statusText);
@@ -136,11 +81,6 @@
     } finally {
       categoryResultLoaded = false;
     }
-  }
-
-  function loadMoreProjects() {
-    currentPage += 1;
-    fetchAllProjects();
   }
 
   function loadMoreSearchResults() {
@@ -170,37 +110,31 @@
       selectedTag = selectedCategory.title;
       projectByCategory(selectedCategory.id);
     } else {
-      selectedTag = "";
+      selectedTag = '';
     }
   }
 
-  onMount(() => {
-    fetchAllProjects();
-    fetchTopProjects();
-  });
+  export let data;
 </script>
 
 <div class="w-full bg-[#d1ea9a]/90 py-16 mb-16">
   <div class="max-w-4xl mx-auto text-center">
-    <h1
-      class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]"
-    >
-      Discover impact projects, donate directly,<br />& participate in funding
-      rounds.
+    <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
+      Discover impact projects, donate directly,<br />& participate in funding rounds.
     </h1>
   </div>
 </div>
 
-  <div class="flex justify-center w-full px-4">
-    <main class="flex flex-col mt-18 text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
-      <section
-        class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full"
-      >
-        <Search on:search={handleSearch} />
-      </section>
-      <ProjectCategory on:categorySelected={handleCategorySelected} />
-    </main>
-  </div>
+<div class="flex justify-center w-full px-4">
+  <main class="flex flex-col mt-18 text-2xl max-w-[965px] max-md:mt-10 max-md:max-w-full">
+    <section
+      class="flex flex-wrap items-center justify-between w-full font-thin leading-none text-center text-lime-100 max-md:max-w-full"
+    >
+      <Search on:search={handleSearch} />
+    </section>
+    <ProjectCategory on:categorySelected={handleCategorySelected} />
+  </main>
+</div>
 
 {#if searchTerm && searchResults.length > 0}
   <div
@@ -220,8 +154,9 @@
       <button
         on:click={loadMoreSearchResults}
         class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal leading-snug"
-        >Load more</button
       >
+        Load more
+      </button>
     </div>
   {/if}
 
@@ -245,7 +180,7 @@
       <div class="flex items-center justify-center mt-8">
         <button
           on:click={loadMoreCategoryResults}
-          class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal  leading-snug"
+          class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal leading-snug"
           >Load more</button
         >
       </div>
@@ -262,13 +197,11 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]"
   >
-    {#if topProjects.length > 0}
-      {#each topProjects as project}
-        <Card {project} />
-      {/each}
+    {#each data.topProjects as project}
+      <Card {project} />
     {:else}
       <p>No projects found.</p>
-    {/if}
+    {/each}
   </div>
 
   <div
@@ -279,13 +212,11 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]"
   >
-    {#if allProjects.length > 0}
-      {#each allProjects as project}
-        <Card {project} />
-      {/each}
+    {#each data.allProjects as project}
+      <Card {project} />
     {:else}
       <p>No projects found.</p>
-    {/if}
+    {/each}
   </div>
 
   {#if !allProjectsLoaded}
@@ -294,9 +225,11 @@
         class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center"
       >
         <button
-          on:click={loadMoreProjects}
-          class="text-[#516027] text-xl font-normal  leading-snug"
-          >Load more</button
+          on:click={() => {
+            currentPage += 1;
+            invalidateAll();
+          }}
+          class="text-[#516027] text-xl font-normal leading-snug">Load more</button
         >
       </div>
     </div>
@@ -304,4 +237,3 @@
 {:else}
   <p class="text-center">No search results found.</p>
 {/if}
-
