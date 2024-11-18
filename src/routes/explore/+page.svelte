@@ -31,7 +31,7 @@
   async function searchProjects(term) {
     try {
       const response = await fetch(
-        `/api/projects/search?term=${term}&page=${searchPage}&limit=${itemsPerPage}`,
+        `/api/projects?term=${term}&page=${searchPage}&limit=${itemsPerPage}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
