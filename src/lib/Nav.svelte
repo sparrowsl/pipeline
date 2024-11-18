@@ -31,14 +31,13 @@
   });
 </script>
 
-<header class="flex items-center justify-between w-full pb-6 px-60 pt-11 bg-cyan-950 max-md:px-5">
-  <div
-    class="flex flex-wrap gap-10 justify-between items-center self-stretch my-auto min-w-[240px] w-[1298px]"
-  >
+<header class="flex items-center justify-between w-full px-6 py-4 bg-cyan-950 lg:px-16">
+  <div class="flex items-center justify-between w-full mt-2">
     <Logo />
 
+
     <button
-      class="z-50 block md:hidden text-[#d1ea9a] focus:outline-none"
+      class="z-50 block lg:hidden text-[#d1ea9a] focus:outline-none"
       on:click={toggleMenu}
       aria-label="Toggle Menu"
     >
@@ -59,7 +58,7 @@
     </button>
 
     <nav
-      class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center md:flex text-[#d1ea9a]"
+      class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center lg:flex text-[#d1ea9a]"
     >
       <a href="/explore" class="gap-0.5 self-stretch my-auto text-base">Explore Projects</a>
       <div class="relative resources-dropdown">
@@ -97,7 +96,8 @@
       <a href="/" class="gap-0.5 self-stretch my-auto text-base">Contact Us</a>
     </nav>
 
-    <div class="hidden md:flex gap-3.5 items-center self-stretch my-auto z-40">
+
+    <div class="hidden lg:flex gap-3.5 items-center self-stretch my-auto z-40">
       <SearchBar />
       {#if data.isAuthenticated}
         <UserProfile {data} />
@@ -109,9 +109,10 @@
     </div>
   </div>
 
+  
   {#if isMenuOpen}
     <div
-      class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-[#d1ea9a]"
+      class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-[#d1ea9a] lg:hidden"
     >
       <div class="w-full pt-4 mt-4 border-b border-cyan-800">
         <div class="ml-[15px] mb-2">
@@ -160,3 +161,6 @@
     </div>
   {/if}
 </header>
+
+
+
