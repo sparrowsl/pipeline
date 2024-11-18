@@ -30,8 +30,6 @@
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/vite": "^4.0.0-alpha.34",
-		"autoprefixer": "^10.4.20",
-		"postcss": "^8.4.47",
 		"publint": "^0.2.0",
 		"sass": "^1.79.4",
 		"svelte": "^4.2.7",
