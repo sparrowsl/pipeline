@@ -1,10 +1,23 @@
 <script>
   import { enhance } from '$app/forms';
+
   let loading = false;
 </script>
 
 <section class="basis-full flex items-center justify-center">
-  <form use:enhance class="text-lg">
+  <form
+    action=""
+    method="POST"
+    use:enhance={() => {
+      return async ({ formElement }) => {
+        loading = true;
+        // mimic sending the login data
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        loading = false;
+        formElement.reset();
+      };
+    }}
+  >
     <h2 class="mb-2 text-4xl font-semibold">Sign in</h2>
     <p class="mb-8 opacity-50">Enter your info to sign up</p>
     <div class="flex flex-col gap-2 font-medium">
