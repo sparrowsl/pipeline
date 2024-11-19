@@ -122,10 +122,12 @@
 </div>
 
 <main
-  class="flex flex-col justify-center items-center px-10 py-5 mt-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10"
+  class="flex flex-col justify-center items-center px-10 py-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10 mt-[-40px]"
 >
   <UserNav {navItems} bind:activeItem={activeNavItem} on:navChange={handleNavChange} />
 
+  <form on:submit|preventDefault={saveProject} class="flex flex-col items-center mt-5 max-w-full w-[80%] max-md:mt-10">
+    
   <section class="flex overflow-hidden flex-col items-center mt-5 max-w-full w-[80%] max-md:mt-10">
     {#if activeNavItem === 'Basics'}
       <ProjectBasics />
@@ -133,7 +135,6 @@
       <section
         class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full"
       >
-        <form>
           <LinkInput label="Email" bind:value={email} on:change={updateStore} />
           <LinkInput label="Portfolio" bind:value={portfolio} on:change={updateStore} />
           <LinkInput label="Github" bind:value={github} on:change={updateStore} />
@@ -141,7 +142,6 @@
           <LinkInput label="X" bind:value={twitter} on:change={updateStore} />
           <LinkInput label="Website" bind:value={website} on:change={updateStore} />
           <LinkInput label="Others" bind:value={other} on:change={updateStore} />
-        </form>
       </section>
     {:else if activeNavItem === 'Funding'}
       <section class="w-full max-w-[1038px] mx-auto mt-10 text-black">
@@ -221,16 +221,8 @@
         >
           {loading ? 'Saving...' : 'Save'}
         </button>
-    <form method="POST" action="?/createProject">
-          <input type="hidden" name="projectData" value={JSON.stringify(get(projectStore))} />
-          <button
-            on:click={saveProject}
-            class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
-          >
-            {loading ? 'Saving...' : 'Save'}
-          </button>
-          </form> 
       {/if}
     </div>
   </section>
+  </form>
 </main>
