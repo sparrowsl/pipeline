@@ -2,10 +2,11 @@
   import SearchBar from './SearchBar.svelte';
   import UserProfile from './UserProfile.svelte';
   import Logo from './Logo.svelte';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
   let isResourcesOpen = false;
   let isMenuOpen = false;
+  let dropdown;
 
   export let data;
 
@@ -23,21 +24,40 @@
     }
   }
 
+  function handleScroll() {
+    if (isMenuOpen) {
+      isMenuOpen = false;
+    }
+  }
+
+  function handleClickOutside(event) {
+    const dropdown = document.querySelector('.dropdown-menu');
+    if (isMenuOpen && dropdown && !dropdown.contains(event.target)) {
+      isMenuOpen = false;
+    }
+  }
+
   onMount(() => {
-    document.addEventListener('click', closeResources);
+    window.addEventListener('scroll', handleScroll);
+    document.addEventListener('click', handleClickOutside);
+
     return () => {
-      document.removeEventListener('click', closeResources);
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
     };
   });
+
 </script>
+
 
 <header class="flex items-center justify-between w-full px-6 py-4 bg-cyan-950 lg:px-16">
   <div class="flex items-center justify-between w-full mt-2">
+
     <Logo />
 
 
     <button
-      class="z-50 block lg:hidden text-[#d1ea9a] focus:outline-none"
+      class="z-50 lg:hidden text-[#d1ea9a] focus:outline-none"
       on:click={toggleMenu}
       aria-label="Toggle Menu"
     >
@@ -57,10 +77,13 @@
       </svg>
     </button>
 
+
     <nav
       class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center lg:flex text-[#d1ea9a]"
     >
       <a href="/explore" class="gap-0.5 self-stretch my-auto text-base">Explore Projects</a>
+      
+
       <div class="relative resources-dropdown">
         <button
           on:click={toggleResources}
@@ -98,6 +121,7 @@
 
 
     <div class="hidden lg:flex gap-3.5 items-center self-stretch my-auto z-40">
+
       <SearchBar />
       {#if data.isAuthenticated}
         <UserProfile {data} />
@@ -109,22 +133,25 @@
     </div>
   </div>
 
-  
   {#if isMenuOpen}
-    <div
-      class="fixed right-0 z-40 flex flex-col items-center w-1/2 p-5 rounded-l-lg shadow-lg top-12 h-1/2 bg-cyan-950 text-[#d1ea9a] lg:hidden"
+    <div bind:this={dropdown}
+      class="fixed top-0 right-0 z-40 flex flex-col items-start w-1/2 p-5 h-96 bg-cyan-950 text-[#d1ea9a] shadow-lg lg:hidden overflow-y-auto"
     >
+
       <div class="w-full pt-4 mt-4 border-b border-cyan-800">
-        <div class="ml-[15px] mb-2">
+        <div class="mb-2 ml-4">
           <UserProfile />
         </div>
       </div>
+      
+
       <nav
-        class="flex flex-col items-center w-full gap-4 text-sm font-medium leading-none text-center"
+        class="flex flex-col items-start w-full gap-4 mt-4 text-sm font-medium leading-none text-left"
       >
-        <a href="/explore" class="block w-full px-4 py-2 mr-3 border-b border-cyan-800"
+        <a href="/explore" class="block w-full px-4 py-2 border-b border-cyan-800"
           >Explore Projects</a
         >
+
 
         <div class="relative w-full resources-dropdown">
           <button
@@ -142,7 +169,7 @@
             />
           </button>
           {#if isResourcesOpen}
-            <div class="absolute left-0 z-50 w-full mt-2 rounded-md shadow-lg bg-cyan-900 top-full">
+            <div class="absolute left-0 z-50 w-full mt-2 rounded-md shadow-lg bg-cyan-900">
               <a
                 href="/resources/pipeline"
                 class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
@@ -156,11 +183,8 @@
             </div>
           {/if}
         </div>
-        <a href="/" class="block w-full px-4 py-2 mr-5 border-b border-cyan-800">Contact Us</a>
+        <a href="/" class="block w-full px-4 py-2 border-b border-cyan-800">Contact Us</a>
       </nav>
     </div>
   {/if}
 </header>
-
-
-

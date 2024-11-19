@@ -221,7 +221,7 @@
         >
           {loading ? 'Saving...' : 'Save'}
         </button>
-        <!-- <form method="POST" action="?/createProject">
+    <form method="POST" action="?/createProject">
           <input type="hidden" name="projectData" value={JSON.stringify(get(projectStore))} />
           <button
             on:click={saveProject}
@@ -229,7 +229,7 @@
           >
             {loading ? 'Saving...' : 'Save'}
           </button>
-          </form> -->
+          </form> 
       {/if}
     </div>
   </section>
