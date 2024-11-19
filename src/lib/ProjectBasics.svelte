@@ -150,10 +150,10 @@
 </script>
 
 <section
-  class="flex flex-col self-center p-10 mt-5 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full"
+  class="flex flex-col self-center p-10 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full"
 >
-  <form class="flex flex-col w-full mt-14 max-md:mt-10">
-    <div class="flex flex-col w-full max-md:max-w-full">
+  <div class="flex flex-col w-full mt-10 max-md:mt-10">
+    <div class="flex flex-col w-full max-md:max-w-full ">
       <div
         class="flex flex-col items-start w-full leading-none max-md:max-w-full"
       >
@@ -217,7 +217,7 @@
     </div>
 
     <div
-      class="flex flex-col justify-center w-full mt-44 max-md:mt-10 max-md:max-w-full"
+      class="flex flex-col justify-center w-full mt-10 max-md:mt-10 max-md:max-w-full"
     >
       <div
         class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start"
@@ -375,13 +375,6 @@
           </p>
         </div>
         <div class="w-[50%] max-md:w-full">
-          <!-- {#if Editor}
-              <Editor
-              bind:value={details}
-              on:change={updateStore}
-                class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[100px]"
-              />
-            {/if} -->
           <textarea
             id="projectDetails"
             bind:value={details}
@@ -392,5 +385,5 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </section>
