@@ -4,9 +4,9 @@
 </script>
 
 <div
-  class="flex items-center justify-between w-full mt-9 whitespace-nowrap max-md:flex-col max-md:items-start max-md:gap-2"
+  class="flex items-center justify-between w-full mt-4 whitespace-nowrap max-md:flex-col max-md:items-start max-md:gap-2"
 >
-  <label for={label.toLowerCase()} class="w-1/3 text-lg font-semibold"
+  <label for={label.toLowerCase()} class="w-1/3 text-base font-semibold"
     >{label}</label
   >
 
