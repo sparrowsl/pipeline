@@ -51,6 +51,8 @@
 
       const result = await response.json();
 
+      console.log(result);
+
       if (response.ok) {
         alert('Project created successfully!');
         goto('/profile');
@@ -71,7 +73,7 @@
   let wallet_address = get(projectStore).wallet_address;
   let email = get(projectStore).email;
   let portfolio = get(projectStore).portfolio;
-  let github = get(projectStore).github;
+  let github = get(projectStore).github_repo;
   let linkedin = get(projectStore).linkedin;
   let twitter = get(projectStore).twitter;
   let website = get(projectStore).website;
@@ -81,7 +83,7 @@
     projectStore.update((data) => {
       data.email = email;
       data.portfolio = portfolio;
-      data.github = github;
+      data.github_repo = github;
       data.linkedin = linkedin;
       data.twitter = twitter;
       data.website = website;

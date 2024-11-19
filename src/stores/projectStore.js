@@ -8,7 +8,7 @@ export const projectStore = writable({
   details: "",
   email: "",
   portfolio: "",
-  github: "",
+  github_repo: "",
   linkedin: "",
   twitter: "",
   website: "",
@@ -16,6 +16,6 @@ export const projectStore = writable({
   funding_goal: "",
   bank_acct: "",
   wallet_address: "",
-  bannerImage: "",
-  profileImage: "",
+  banner_image: "",
+  image: "",
 });
