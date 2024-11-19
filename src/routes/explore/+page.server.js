@@ -32,7 +32,7 @@ export async function load({ fetch, url }) {
 	}
 
 	// TODO: could be changed to `Promise.allSettled` in case one of the functions failed
-	const [allProjects, topProjects] = await Promise.all([
+	const [allProjects, topProjects] = await Promise.allSettled([
 		fetchAllProjects(),
 		fetchTopProjects(),
 	]);
