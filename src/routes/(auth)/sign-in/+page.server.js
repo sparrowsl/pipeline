@@ -1,26 +1,42 @@
-import { fail } from "@sveltejs/kit";
-import { z } from "zod";
+//@ts-check
 
-const loginSchema = z.object({
-	email: z.string({ required_error: "email is required" }).email(),
-	password: z
-		.string({ required_error: "password is required" })
-		.min(4, { message: "password too short" }),
-});
+import { fail, redirect } from '@sveltejs/kit';
+import { loginSchema } from '$lib/server/validator/authSchema.js';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async ({ request }) => {
-		const form = Object.fromEntries(await request.formData());
+  default: async ({ request, fetch }) => {
+    const form = Object.fromEntries(await request.formData());
+    const { data, error: validationError, success } = loginSchema.safeParse(form);
 
-		const { data, error, success } = loginSchema.safeParse(form);
-		if (!success) {
-			const errors = error.flatten().fieldErrors;
-			const firstError = Object.values(errors).flat().at(0);
-			fail(400, { error: firstError });
-		}
+    if (!success) {
+      const errors = validationError.flatten().fieldErrors;
+      const firstError = Object.values(errors).flat().at(0);
+      return fail(400, { error: firstError });
+    }
 
-		// TODO: do something with data
-		console.log(data);
-	},
+    try {
+      const { email, password } = data;
+
+      const response = await fetch('/api/signIn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const result = await response.json();
+        return fail(400, { error: result.message || 'Failed to sign in' });
+      }
+
+      redirect(307, '/profile');
+    } catch (error) {
+      if (error.status === 307) {
+        redirect(307, '/profile');
+      }
+      return fail(500, { error: error.message || 'Something went wrong' });
+    }
+  },
 };

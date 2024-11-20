@@ -5,13 +5,12 @@ export async function POST({ request }) {
   try {
     const { email, password } = await request.json();
 
-    console.log('email:', email, 'password:', password);
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    console.log('sign in')
     if (error) {
       return json({ error: error.message }, { status: 400 });
     }

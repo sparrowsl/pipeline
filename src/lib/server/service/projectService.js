@@ -1,10 +1,13 @@
 import {
-  getProjects,
   getProject,
+  getProjects,
   createProject,
   updateProject,
   getProjectExistingCategories,
   getProjectsByUserId,
+  getProjectsByCategoryId,
+  getProjectsByIds,
+  getProjectDpgStatuses,
 } from '$lib/server/repo/projectRepo';
 import { createTeamMember } from '$lib/server/repo/memberRepo';
 import {
@@ -14,8 +17,8 @@ import {
   addTags,
   removeTags,
 } from '$lib/server/repo/categoryRepo';
-import { projectSchema } from '../validator/projectSchema.js';
-import { getDpgStatuses } from '../repo/dpgStatusRepo.js';
+import { getDpgStatuses, getAllDpgStatuses } from '../repo/dpgStatusRepo.js';
+import { mapProjectsWithTagsAndStatus } from './helpers/projectHelpers.js';
 
 export async function getProjectsWithDetails(term, page, limit) {
   const start = (page - 1) * limit;
@@ -31,6 +34,7 @@ export async function getProjectsWithDetails(term, page, limit) {
 
   //additional data
   const projectCategories = await getProjectCategories(projectIds);
+
   const categories = await getCategories(projectCategories.map((pc) => pc.category_id));
   const dpgStatuses = await getDpgStatuses(projectIds);
 
@@ -57,7 +61,64 @@ export async function getUserProjects(userId, page, limit) {
   return mapProjectsWithTagsAndStatus(projects, projectCategories, categoriesIds, dpgStatuses);
 }
 
-export async function getProjectWithDetails(id) {}
+export async function getProjectsByCategory(categoryId, page, limit) {
+  const start = (page - 1) * limit;
+  const end = start + limit - 1;
+
+  const categoryProjects = await getProjectsByCategoryId(categoryId, start, end);
+
+  const projectIds = categoryProjects.map((cp) => cp.project_id);
+
+  if (projectIds.length === 0) {
+    return [];
+  }
+
+  const projects = await getProjectsByIds(projectIds);
+
+  const projectCategories = await getProjectCategories(projectIds);
+
+  const categories = await getCategories(projectCategories.map((pc) => pc.category_id));
+  const dpgStatuses = await getDpgStatuses(projectIds);
+
+  return mapProjectsWithTagsAndStatus(projects, projectCategories, categories, dpgStatuses);
+}
+
+export async function getProjectById(id) {
+  const project = await getProject(id);
+
+  if (!project) {
+    return null;
+  }
+
+  const projectCategories = await getProjectCategories([project.id]);
+  const categoryIds = projectCategories.map((pc) => pc.category_id);
+  const categories = await getCategories(categoryIds);
+
+
+  // Fetch all DPG statuses and the project's specific statuses
+  const [allDpgStatuses, projectDpgStatuses] = await Promise.all([
+    getAllDpgStatuses(),
+    getProjectDpgStatuses(project.id),
+  ]);
+
+  const dpgStatusMap = projectDpgStatuses.reduce((acc, status) => {
+    acc[status.status_id] = true;
+    return acc;
+  }, {});
+
+  const dpgStatuses = allDpgStatuses.map((status) => ({
+    name: status.name,
+    status: !!dpgStatusMap[status.id], // Set to true if found, otherwise false
+  }));
+
+  return {
+    ...project,
+    tags: categories,
+    dpgCount: projectDpgStatuses.length,
+    dpgStatuses,
+  };
+
+}
 
 export async function storeProject(user, projectData) {
   //const validatedData = projectSchema.parse(projectData);
@@ -100,30 +161,3 @@ export async function updateProject(userId, projectId, projectData, tags) {
 }
 
 export async function deleteProject(id) {}
-
-//helpers
-function mapProjectsWithTagsAndStatus(projects, projectCategories, categories, dpgStatuses) {
-  const categoriesById = categories.reduce((acc, category) => {
-    acc[category.id] = category;
-    return acc;
-  }, {});
-
-  const dpgStatusCountByProject = dpgStatuses.reduce((acc, status) => {
-    acc[status.project_id] = (acc[status.project_id] || 0) + 1;
-    return acc;
-  }, {});
-
-  return projects.map((project) => {
-    const tagsForProject = projectCategories
-      .filter((pc) => pc.project_id === project.id)
-      .map((pc) => categoriesById[pc.category_id]);
-
-    return {
-      ...project,
-      tags: tagsForProject.filter(Boolean),
-      dpgStatusCount: dpgStatusCountByProject[project.id] || '',
-    };
-  });
-}
-
-//on more function
