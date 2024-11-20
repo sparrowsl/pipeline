@@ -1,7 +1,7 @@
 //@ts-check
 import { supabase } from '$lib/server/supabase.js';
 
-export async function getTeamMembers(projectId) {
+export async function teamMembers(projectId) {
   const { data, error } = await supabase
     .from('project_members')
     .select('*')

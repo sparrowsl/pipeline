@@ -9,7 +9,7 @@ import {
   getProjectsByIds,
   getProjectDpgStatuses,
 } from '$lib/server/repo/projectRepo';
-import { createTeamMember, getTeamMembers } from '$lib/server/repo/memberRepo';
+import { createTeamMember, teamMembers } from '$lib/server/repo/memberRepo';
 import {
   assignCategory,
   getCategories,
@@ -122,7 +122,7 @@ export async function getProjectById(id) {
 }
 
 export async function getTeamMembers(projectId) {
-  const members = await getTeamMembers(projectId);
+  const members = await teamMembers(projectId);
 
   const userIds = members.map((member) => member.user_id);
 
