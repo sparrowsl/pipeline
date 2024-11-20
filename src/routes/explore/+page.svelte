@@ -219,7 +219,6 @@
     </div>
   {/if}
 
-  <!-- Category Results -->
 {:else if selectedTag}
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px] text-5xl font-semibold mt-12"
