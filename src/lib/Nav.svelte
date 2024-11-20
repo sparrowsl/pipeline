@@ -3,6 +3,7 @@
   import UserProfile from './UserProfile.svelte';
   import Logo from './Logo.svelte';
   import { onMount, onDestroy } from 'svelte';
+  import { afterNavigate } from '$app/navigation';
 
   let isResourcesOpen = false;
   let isMenuOpen = false;
@@ -47,14 +48,13 @@
     };
   });
 
+  // close the resources dropdown on every navigation
+  afterNavigate(() => (isResourcesOpen = false));
 </script>
-
 
 <header class="flex items-center justify-between w-full px-6 py-4 bg-cyan-950 lg:px-16">
   <div class="flex items-center justify-between w-full mt-2">
-
     <Logo />
-
 
     <button
       class="z-50 lg:hidden text-[#d1ea9a] focus:outline-none"
@@ -77,12 +77,10 @@
       </svg>
     </button>
 
-
     <nav
       class="items-center self-stretch hidden gap-10 my-auto text-sm font-medium leading-none text-center lg:flex text-[#d1ea9a]"
     >
       <a href="/explore" class="gap-0.5 self-stretch my-auto text-base">Explore Projects</a>
-      
 
       <div class="relative resources-dropdown">
         <button
@@ -119,9 +117,7 @@
       <a href="/" class="gap-0.5 self-stretch my-auto text-base">Contact Us</a>
     </nav>
 
-
     <div class="hidden lg:flex gap-3.5 items-center self-stretch my-auto z-40">
-
       <SearchBar />
       {#if data.isAuthenticated}
         <UserProfile {data} />
@@ -134,16 +130,15 @@
   </div>
 
   {#if isMenuOpen}
-    <div bind:this={dropdown}
+    <div
+      bind:this={dropdown}
       class="fixed top-0 right-0 z-40 flex flex-col items-start w-1/2 p-5 h-96 bg-cyan-950 text-[#d1ea9a] shadow-lg lg:hidden overflow-y-auto"
     >
-
       <div class="w-full pt-4 mt-4 border-b border-cyan-800">
         <div class="mb-2 ml-4">
           <UserProfile />
         </div>
       </div>
-      
 
       <nav
         class="flex flex-col items-start w-full gap-4 mt-4 text-sm font-medium leading-none text-left"
@@ -151,7 +146,6 @@
         <a href="/explore" class="block w-full px-4 py-2 border-b border-cyan-800"
           >Explore Projects</a
         >
-
 
         <div class="relative w-full resources-dropdown">
           <button
