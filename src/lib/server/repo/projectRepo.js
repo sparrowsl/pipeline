@@ -69,7 +69,7 @@ export async function createProject(projectData) {
   return data[0];
 }
 
-export async function updateProject(projectData) {
+export async function updateDetails(projectData) {
   const { data, error } = await supabase
     .from('projects')
     .update(projectData)

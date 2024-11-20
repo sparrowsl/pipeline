@@ -2,7 +2,7 @@ import {
   getProject,
   getProjects,
   createProject,
-  updateProject,
+  updateDetails,
   getProjectExistingCategories,
   getProjectsByUserId,
   getProjectsByCategoryId,
@@ -95,7 +95,6 @@ export async function getProjectById(id) {
   const categoryIds = projectCategories.map((pc) => pc.category_id);
   const categories = await getCategories(categoryIds);
 
-
   // Fetch all DPG statuses and the project's specific statuses
   const [allDpgStatuses, projectDpgStatuses] = await Promise.all([
     getAllDpgStatuses(),
@@ -118,7 +117,6 @@ export async function getProjectById(id) {
     dpgCount: projectDpgStatuses.length,
     dpgStatuses,
   };
-
 }
 
 export async function getTeamMembers(projectId) {
@@ -140,7 +138,6 @@ export async function getTeamMembers(projectId) {
   }));
 
   return membersWithProfiles;
-
 }
 
 export async function storeProject(user, projectData) {
@@ -160,7 +157,7 @@ export async function storeProject(user, projectData) {
 }
 
 export async function updateProject(userId, projectId, projectData, tags) {
-  await updateProject(projectId, { ...projectData, user_id: userId });
+  await updateDetails(projectId, { ...projectData, user_id: userId });
 
   const existingTags = await getProjectExistingCategories(projectId);
   const existingTagIds = existingTags.map((tag) => tag.category_id);
