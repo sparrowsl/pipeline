@@ -21,10 +21,10 @@
   export let project;
 
   onMount(() => {
-    project.image
-      ? (imageUrl = project.image)
+    project.banner_image
+      ? (imageUrl = banner_image)
       : (imageUrl =
-          'https://images.unsplash.com/photo-1697281576292-3c37d5b5ffdf?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+          'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/banner.png?t=2024-11-20T15%3A45%3A51.937Z');
     document.addEventListener('click', closeDropdown);
     return () => {
       document.removeEventListener('click', closeDropdown);
@@ -36,14 +36,16 @@
   <header class="relative pt-[75%]">
     <a href="/project/{project.id}" class="absolute inset-0 flex items-center justify-center">
       <div class="w-[95%] h-[90%] overflow-hidden rounded-3xl">
-        <img loading="lazy" src={imageUrl} alt="" class="object-cover w-full h-full" />
+        <img loading="lazy" src={imageUrl} alt="" class="object-fit w-full h-full rounded-3xl" />
       </div>
     </a>
   </header>
 
   <div class="p-4 mt-auto">
     <div class="flex items-center justify-between mb-2">
-      <h2 class="text-xl font-semibold text-black">{project.title}</h2>
+      <a href="/project/{project.id}">
+        <h2 class="text-xl font-semibold text-black">{project.title}</h2>
+      </a>
       <p class="text-xs text-neutral-400">
         <DPGRating rating={project.dpgStatusCount} />
       </p>
