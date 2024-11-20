@@ -34,6 +34,7 @@ export async function PUT({ request, params }) {
   let user = userData.user;
 
   try {
+    //leaving this comment here to mark this update function as incomplete
     // const {
     //   title,
     //   bio,

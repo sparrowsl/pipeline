@@ -9,7 +9,7 @@ import {
   getProjectsByIds,
   getProjectDpgStatuses,
 } from '$lib/server/repo/projectRepo';
-import { createTeamMember } from '$lib/server/repo/memberRepo';
+import { createTeamMember, getTeamMembers } from '$lib/server/repo/memberRepo';
 import {
   assignCategory,
   getCategories,
@@ -18,6 +18,7 @@ import {
   removeTags,
 } from '$lib/server/repo/categoryRepo';
 import { getDpgStatuses, getAllDpgStatuses } from '../repo/dpgStatusRepo.js';
+import { getMultipleProfiles } from '$lib/server/repo/userProfileRepo.js';
 import { mapProjectsWithTagsAndStatus } from './helpers/projectHelpers.js';
 
 export async function getProjectsWithDetails(term, page, limit) {
@@ -118,6 +119,32 @@ export async function getProjectById(id) {
     dpgStatuses,
   };
 
+}
+
+export async function getTeamMembers(projectId) {
+  const members = await getTeamMembers(projectId);
+
+  const userIds = members.map((member) => member.user_id);
+
+  const profiles = await getMultipleProfiles(userIds);
+
+  const profilesByUserId = profiles.reduce((acc, profile) => {
+    acc[profile.user_id] = profile;
+    return acc;
+  }, {});
+
+  // Attach the corresponding profile to each member
+  const membersWithProfiles = members.map((member) => ({
+    ...member,
+    userProfile: profilesByUserId[member.user_id] || null,
+  }));
+
+  return membersWithProfiles;
+
+}
+
+export async function getProjectUpdates(projectId) {
+  
 }
 
 export async function storeProject(user, projectData) {

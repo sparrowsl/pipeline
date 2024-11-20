@@ -38,6 +38,7 @@ export async function getProjectsByUserId(userId, start, end) {
   return data || [];
 }
 
+
 export async function getProjectsByCategoryId(categoryId, start, end) {
   const { data, error } = await supabase
     .from('category_project')

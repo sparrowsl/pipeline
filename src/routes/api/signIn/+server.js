@@ -10,7 +10,6 @@ export async function POST({ request }) {
       password,
     });
 
-    console.log('sign in')
     if (error) {
       return json({ error: error.message }, { status: 400 });
     }

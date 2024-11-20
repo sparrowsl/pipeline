@@ -1,6 +1,17 @@
 //@ts-check
 import { supabase } from '$lib/server/supabase.js';
 
+export async function getTeamMembers(projectId) {
+  const { data, error } = await supabase
+    .from('project_members')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
 export async function createTeamMember(userId, projectId) {
   const { data, error } = await supabase
     .from('project_members')
