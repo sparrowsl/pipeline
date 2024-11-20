@@ -1,7 +1,7 @@
 //@ts-check
 import { supabase } from '$lib/server/supabase.js';
 
-export async function getProjectUpdates(projectId) {
+export async function getUpdates(projectId) {
     const { data, error } = await supabase
     .from("project_updates")
       .select("*")
@@ -12,7 +12,7 @@ export async function getProjectUpdates(projectId) {
     return data || [];
 }
 
-export async function createProjectUpdate(projectUpdateData) {
+export async function storeProjectUpdate(projectUpdateData) {
     const { data, error } = await supabase.from('project_updates').insert(projectUpdateData).select();
     if (error) throw new Error(error.message);
     return data[0];

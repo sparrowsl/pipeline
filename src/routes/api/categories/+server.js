@@ -1,11 +1,12 @@
-import { supabase } from "$lib/server/supabase.js";
-import { json } from "@sveltejs/kit";
+//@ts-check
+import { allCategories } from '$lib/server/service/categoryService.js';
+import { json } from '@sveltejs/kit';
 
 export async function GET({ request }) {
   try {
-    const { data, error } = await supabase.from("categories").select("*");
+    const categories = await allCategories();
 
-    return json({ categories: data }, { status: 200 });
+    return json({ categories: categories }, { status: 200 });
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
   }

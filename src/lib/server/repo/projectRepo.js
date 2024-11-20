@@ -6,7 +6,8 @@ export async function getProjects(term, start, end) {
     .from('projects')
     .select('*')
     .ilike('title', `%${term}%`)
-    .range(start, end);
+    .range(start, end)
+    .order('created_at', { ascending: false });
 
   if (error) throw new Error(error.message);
   return data || [];

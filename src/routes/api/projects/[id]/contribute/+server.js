@@ -1,4 +1,5 @@
 import { supabase } from '$lib/server/supabase.js';
+import { storeProjectResource } from '$lib/server/service/projectContributionsService.js';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request, params }) {
@@ -31,24 +32,15 @@ export async function POST({ request, params }) {
   try {
     const { resourceType, resourceTitle, resourceLink, country, interest } = await request.json();
 
-    const { data, error } = await supabase
-      .from('project_resource')
-      .insert([
-        {
-          project_id: id,
-          user_id: user.id,
-          type_resource: resourceType,
-          title: resourceTitle,
-          link: resourceLink,
-          country,
-          reason: interest,
-        },
-      ])
-      .select();
-
-    if (error) {
-      return json({ error: error.message }, { status: 500 });
-    }
+    await storeProjectResource({
+      project_id: id,
+      user_id: user.id,
+      type_resource: resourceType,
+      title: resourceTitle,
+      link: resourceLink,
+      country,
+      reason: interest,
+    });
 
     return json({ success: true, message: 'Application submitted successfully' }, { status: 200 });
   } catch (error) {

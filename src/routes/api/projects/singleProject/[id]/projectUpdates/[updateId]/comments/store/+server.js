@@ -1,5 +1,6 @@
 import { supabase } from '$lib/server/supabase.js';
 import { json } from '@sveltejs/kit';
+import { storeProjectUpdateComment } from '$lib/server/service/projectUpdateCommentService.js';
 
 export async function POST({ params, request }) {
   const { id, updateId } = params;
@@ -35,21 +36,12 @@ export async function POST({ params, request }) {
   let user = userData.user;
 
   try {
-    const { data, error } = await supabase
-      .from('project_update_comment')
-      .insert([
-        {
-          project_id: id,
-          update_id: updateId,
-          body,
-          user_id: user.id,
-        },
-      ])
-      .select();
-
-    if (error) {
-      return json({ error: error.message }, { status: 400 });
-    }
+    await storeProjectUpdateComment({
+      project_id: id,
+      update_id: updateId,
+      body,
+      user_id: user.id,
+    });
 
     return json({ success: true }, { status: 200 });
   } catch (error) {

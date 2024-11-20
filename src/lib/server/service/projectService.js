@@ -143,10 +143,6 @@ export async function getTeamMembers(projectId) {
 
 }
 
-export async function getProjectUpdates(projectId) {
-  
-}
-
 export async function storeProject(user, projectData) {
   //const validatedData = projectSchema.parse(projectData);
 
