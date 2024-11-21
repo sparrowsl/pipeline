@@ -14,19 +14,20 @@ export async function POST({ request }) {
       },
     });
 
+
     if (signUpError) {
       return json({ error: signUpError.message }, { status: 400 });
     }
 
     const { data: userData, error: profileError } = await supabase
       .from('profile')
-      .insert([{ user_id: signUpData.user.id, name: name }]);
+      .insert([{ user_id: signUpData.user.id, name: name }])
 
     if (profileError) {
       return json({ error: profileError.message }, { status: 500 });
     }
 
-    throw redirect(303, '/waiting-confirmation');
+    return json({ success: true, redirectTo: '/explore' }, { status: 200, headers });
   } catch (err) {
     return new Response(JSON.stringify({ error: 'Failed to sign up' }), {
       status: 500,
