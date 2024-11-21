@@ -9,12 +9,6 @@
     method="POST"
     class="flex flex-col max-w-md mx-auto"
     use:enhance={() => {
-      // return async ({ formElement }) => {
-      //   loading = true;
-        
-      //   loading = false;
-      //   formElement.reset();
-      // };
     }}
   >
     <h2 class="text-4xl font-semibold">Register</h2>
