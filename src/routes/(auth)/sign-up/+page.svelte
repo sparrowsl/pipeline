@@ -6,17 +6,9 @@
 
 <section class="basis-full py-5">
   <form
-    action=""
     method="POST"
     class="flex flex-col max-w-md mx-auto"
     use:enhance={() => {
-      return async ({ formElement }) => {
-        loading = true;
-        // mimic sending the signup data
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        loading = false;
-        formElement.reset();
-      };
     }}
   >
     <h2 class="text-4xl font-semibold">Register</h2>
@@ -37,7 +29,7 @@
       <input
         type="email"
         id="email"
-        name="name"
+        name="email"
         class="w-full border border-black py-3 rounded-full px-4"
         required
       />

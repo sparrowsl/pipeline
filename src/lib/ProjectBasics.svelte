@@ -14,8 +14,8 @@
   let country = get(projectStore).country;
   let details = get(projectStore).details;
 
-  let bannerImg = get(projectStore).bannerImage;
-  let profileImg = get(projectStore).profileImage;
+  let bannerImg = get(projectStore).banner_image;
+  let profileImg = get(projectStore).image;
 
   let selectedTags = [...get(projectStore).tags];
 
@@ -31,8 +31,8 @@
       data.tags = selectedTags;
       data.country = country;
       data.details = details;
-      if (bannerImg) data.bannerImage = bannerImg;
-      if (profileImg) data.profileImage = profileImg;
+      if (bannerImg) data.banner_image = bannerImg;
+      if (profileImg) data.image = profileImg;
       return data;
     });
   }

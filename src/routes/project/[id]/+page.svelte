@@ -408,7 +408,7 @@
           <DpgStatus />
         {:else if activeNavItem === 'updates'}
           {#if showUpdateDetail}
-            <UpdateDetail {selectedUpdate} on:goBack={handleGoBack} />
+            <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
           {:else if projectUpdates.length > 0}
             {#each projectUpdates as update}
               <Updates on:showDetail={handleShowDetail} {update} />
