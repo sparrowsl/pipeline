@@ -6,7 +6,7 @@
   import SortDropdown from '../../lib/SortDropdown.svelte';
   import Card from '../../lib/Card.svelte';
   import Footer from '../../lib/Footer.svelte';
-  import { onMount } from 'svelte';
+  import { invalidateAll } from '$app/navigation';
 
   let allProjects = [];
   let topProjects = [];
@@ -27,58 +27,6 @@
   let allCategoryLoaded = false;
   let searchResultsLoaded = false;
   let categoryResultLoaded = false;
-
-  async function fetchAllProjects() {
-    try {
-      const response = await fetch(`/api/projects?page=${currentPage}&limit=${itemsPerPage}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      if (data.projects.length < itemsPerPage) {
-        allProjectsLoaded = true;
-      }
-
-      allProjects = [...allProjects, ...data.projects];
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function fetchTopProjects() {
-    try {
-      const response = await fetch('/api/projects', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      topProjects = data.projects.slice(0, 3);
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
 
   async function searchProjects(term) {
     try {
@@ -135,11 +83,6 @@
     }
   }
 
-  function loadMoreProjects() {
-    currentPage += 1;
-    fetchAllProjects();
-  }
-
   function loadMoreSearchResults() {
     searchPage += 1;
     searchProjects(searchTerm);
@@ -171,10 +114,7 @@
     }
   }
 
-  onMount(() => {
-    fetchAllProjects();
-    fetchTopProjects();
-  });
+  export let data;
 </script>
 
 <div class="w-full bg-[#d1ea9a]/90 py-16 mb-16">
@@ -214,8 +154,9 @@
       <button
         on:click={loadMoreSearchResults}
         class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] text-[#516027] text-xl font-normal leading-snug"
-        >Load more</button
       >
+        Load more
+      </button>
     </div>
   {/if}
 
@@ -256,13 +197,11 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]"
   >
-    {#if topProjects.length > 0}
-      {#each topProjects as project}
-        <Card {project} />
-      {/each}
+    {#each data.topProjects as project}
+      <Card {project} />
     {:else}
       <p>No projects found.</p>
-    {/if}
+    {/each}
   </div>
 
   <div
@@ -273,13 +212,11 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1156px] mx-auto px-[13.70px] pt-[13.70px] pb-[20.55px]"
   >
-    {#if allProjects.length > 0}
-      {#each allProjects as project}
-        <Card {project} />
-      {/each}
+    {#each data.allProjects as project}
+      <Card {project} />
     {:else}
       <p>No projects found.</p>
-    {/if}
+    {/each}
   </div>
 
   {#if !allProjectsLoaded}
@@ -287,8 +224,12 @@
       <div
         class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center"
       >
-        <button on:click={loadMoreProjects} class="text-[#516027] text-xl font-normal leading-snug"
-          >Load more</button
+        <button
+          on:click={() => {
+            currentPage += 1;
+            invalidateAll();
+          }}
+          class="text-[#516027] text-xl font-normal leading-snug">Load more</button
         >
       </div>
     </div>
