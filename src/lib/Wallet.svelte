@@ -10,7 +10,7 @@
     }
   </script>
   
-  <main class="flex overflow-hidden flex-col items-center px-20 pt-14 leading-none text-center bg-white pb-[500px] rounded-[100px] max-md:px-5 max-md:py-24">
+  <main class="flex overflow-hidden flex-col items-center px-20 pt-14 leading-none text-center bg-white pb-[20px] rounded-[100px] max-md:px-5 max-md:py-24">
     <section class="flex flex-col items-center w-full max-w-[1034px] max-md:max-w-full">
      
       <div class="flex flex-col self-stretch w-full mt-20 max-md:mt-10 max-md:max-w-full">
@@ -29,7 +29,7 @@
           />
         </div>
 
-        <button on:click={openWalletPopup} class="gap-1.5 self-end px-2 py-4 w-[20%] text-xl font-semibold mt-6 text-white bg-lime-800 rounded-[53px] max-md:px-5 max-md:max-w-full">
+        <button on:click={openWalletPopup} class="hidden gap-1.5 self-center px-2 py-4 w-[20%] text-xl font-semibold mt-6 text-white bg-lime-800 rounded-[53px] max-md:px-5 max-md:max-w-full">
           Send
         </button>
       </div>
