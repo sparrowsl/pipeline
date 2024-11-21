@@ -6,7 +6,7 @@ import { getProjectsWithDetails } from '$lib/server/service/projectService.js';
 
 import { json } from '@sveltejs/kit';
 
-export async function GET({ url, locals }) {
+export async function GET({ url }) {
   const page = parseInt(url.searchParams.get('page') || '1', 10);
   const limit = parseInt(url.searchParams.get('limit') || '6', 10);
   const term = url.searchParams.get('term') || '';
@@ -20,35 +20,8 @@ export async function GET({ url, locals }) {
   }
 }
 
-export async function POST({ request }) {
-  const cookies = request.headers.get('cookie');
-
-  if (!cookies) {
-    return new Response(JSON.stringify({ error: 'No cookies found' }), {
-      status: 401,
-    });
-  }
-
-  // Parse cookies to extract the access token
-  const accessToken = cookies
-    .split(';')
-    .find((cookie) => cookie.trim().startsWith('access_token='))
-    ?.split('=')[1];
-
-  if (!accessToken) {
-    return new Response(JSON.stringify({ error: 'No access token found' }), {
-      status: 401,
-    });
-  }
-
-  // Get user data from Supabase using the access token
-  const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
-
-  if (userError) {
-    return json({ error: userError.message }, { status: 401 });
-  }
-
-  let user = userData.user;
+export async function POST({ request, locals }) {
+  let user = locals.authUser;
 
   try {
     const {

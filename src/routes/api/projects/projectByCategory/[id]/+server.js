@@ -6,8 +6,6 @@ export async function GET({ url, params }) {
   const page = parseInt(url.searchParams.get('page') || '1', 10);
   const limit = parseInt(url.searchParams.get('limit') || '6', 10);
   const categoryId = params.id;
-  const start = (page - 1) * limit;
-  const end = start + limit - 1;
 
   try {
     const projects = await getProjectsByCategory(categoryId, page, limit);

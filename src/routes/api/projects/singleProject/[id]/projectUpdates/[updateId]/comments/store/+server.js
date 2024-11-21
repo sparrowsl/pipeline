@@ -2,38 +2,11 @@ import { supabase } from '$lib/server/supabase.js';
 import { json } from '@sveltejs/kit';
 import { storeProjectUpdateComment } from '$lib/server/service/projectUpdateCommentService.js';
 
-export async function POST({ params, request }) {
+export async function POST({ params, request, locals }) {
   const { id, updateId } = params;
   const { body } = await request.json();
 
-  const cookies = request.headers.get('cookie');
-
-  if (!cookies) {
-    return new Response(JSON.stringify({ error: 'No cookies found' }), {
-      status: 401,
-    });
-  }
-
-  // Parse cookies to extract the access token
-  const accessToken = cookies
-    .split(';')
-    .find((cookie) => cookie.trim().startsWith('access_token='))
-    ?.split('=')[1];
-
-  if (!accessToken) {
-    return new Response(JSON.stringify({ error: 'No access token found' }), {
-      status: 401,
-    });
-  }
-
-  // Get user data from Supabase using the access token
-  const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
-
-  if (userError) {
-    return json({ error: userError.message }, { status: 401 });
-  }
-
-  let user = userData.user;
+  let user = locals.authUser;
 
   try {
     await storeProjectUpdateComment({
