@@ -283,16 +283,22 @@
   </div>
 
   {#if !allProjectsLoaded}
-    <div class="flex items-center justify-center">
-      <div
-        class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center"
-      >
-        <button on:click={loadMoreProjects} class="text-[#516027] text-xl font-normal leading-snug"
-          >Load more</button
-        >
-      </div>
+  <div 
+    class="flex items-center justify-center cursor-pointer"
+    on:click={loadMoreProjects}
+    on:keydown={(e) => e.key === 'Enter' && loadMoreProjects()}
+    role="button"
+    tabindex="0"
+  >
+    <div
+      class="px-[30px] py-[12px] bg-[#d1ea9a] rounded-full border-2 border-[#516027] inline-flex items-center hover:bg-[#c1da8a] transition-colors duration-300"
+    >
+      <span class="text-[#516027] text-xl font-normal leading-snug">
+        Load more
+      </span>
     </div>
-  {/if}
+  </div>
+{/if}
 {:else}
   <p class="text-center">No search results found.</p>
 {/if}
