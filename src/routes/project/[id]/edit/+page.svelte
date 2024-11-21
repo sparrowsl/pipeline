@@ -17,6 +17,7 @@
 
   let loading = false;
   let project = {};
+  let title = "";
 
   let activeNavItem = "Basics";
   export let data;
@@ -69,6 +70,8 @@
       const { project: fetchedProject } = await response.json();
       console.log(fetchedProject);
       projectStore.set(fetchedProject); // Initialize projectStore with data
+
+      title = fetchedProject.title || "Loading!!"; 
 
       // Destructure to set local variables for form bindings
       ({
@@ -160,13 +163,13 @@
   </div>
 </div>
 
-<div
+<div 
   class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[290px]"
 >
   <h1
     class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]"
   >
-    Edit Project -
+    Edit Project - {title}
   </h1>
 </div>
 
