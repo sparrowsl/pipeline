@@ -2,7 +2,7 @@ import { supabase } from '$lib/server/supabase.js';
 import { json } from '@sveltejs/kit';
 import { storeProject } from '$lib/server/service/projectService.js';
 
-export async function POST({ request }) {
+export async function POST({ request, locals }) {
   const cookies = request.headers.get('cookie');
 
   if (!cookies) {

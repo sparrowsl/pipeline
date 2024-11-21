@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-const PROTECTED_ROUTES = ['/profile', '/project/create', '']; // Add your protected routes here
+const PROTECTED_ROUTES = ['/profile', '/project/create', ''];
 
 export async function handle({ event, resolve }) {
   const cookies = event.request.headers.get('cookie');

@@ -14,3 +14,13 @@ export async function getDpgStatuses(projectIds) {
   if (error) throw new Error(error.message);
   return data || [];
 }
+
+export async function getProjectDpgStatuses(projectId) {
+  const { data, error } = await supabase
+    .from('project_dpg_status')
+    .select('status_id')
+    .eq('project_id', projectId);
+
+  if (error) throw new Error(error.message);
+  return data;
+}

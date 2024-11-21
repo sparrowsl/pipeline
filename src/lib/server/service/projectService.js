@@ -3,21 +3,23 @@ import {
   getProjects,
   createProject,
   updateDetails,
-  getProjectExistingCategories,
+  
   getProjectsByUserId,
-  getProjectsByCategoryId,
+  
   getProjectsByIds,
-  getProjectDpgStatuses,
+  
 } from '$lib/server/repo/projectRepo';
 import { createTeamMember, teamMembers } from '$lib/server/repo/memberRepo';
 import {
   assignCategory,
   getCategories,
   getProjectCategories,
+  getProjectsByCategoryId,
   addTags,
+  getProjectExistingCategories,
   removeTags,
 } from '$lib/server/repo/categoryRepo';
-import { getDpgStatuses, getAllDpgStatuses } from '../repo/dpgStatusRepo.js';
+import { getDpgStatuses, getAllDpgStatuses, getProjectDpgStatuses } from '../repo/dpgStatusRepo.js';
 import { getMultipleProfiles } from '$lib/server/repo/userProfileRepo.js';
 import { mapProjectsWithTagsAndStatus } from './helpers/projectHelpers.js';
 

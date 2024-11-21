@@ -16,11 +16,29 @@ export async function getProjectCategories(projectIds) {
   return data || [];
 }
 
-export async function getCategories(categoryIds) {
+export async function getProjectsByCategoryId(categoryId, start, end) {
   const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .in('id', categoryIds);
+    .from('category_project')
+    .select('project_id')
+    .eq('category_id', categoryId)
+    .range(start, end);
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function getProjectExistingCategories(projectId) {
+  const { data, error } = await supabase
+    .from('category_project')
+    .select('category_id')
+    .eq('project_id', projectId);
+
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
+export async function getCategories(categoryIds) {
+  const { data, error } = await supabase.from('categories').select('*').in('id', categoryIds);
 
   if (error) throw new Error(error.message);
   return data || [];

@@ -40,28 +40,6 @@ export async function getProjectsByUserId(userId, start, end) {
 }
 
 
-export async function getProjectsByCategoryId(categoryId, start, end) {
-  const { data, error } = await supabase
-    .from('category_project')
-    .select('project_id')
-    .eq('category_id', categoryId)
-    .range(start, end);
-
-  if (error) throw new Error(error.message);
-  return data;
-}
-
-export async function getProjectDpgStatuses(projectId) {
-  const { data, error } = await supabase
-    .from('project_dpg_status')
-    .select('status_id')
-    .eq('project_id', projectId);
-
-  if (error) throw new Error(error.message);
-  return data;
-}
-
-
 
 export async function createProject(projectData) {
   const { data, error } = await supabase.from('projects').insert(projectData).select();
@@ -85,12 +63,4 @@ export async function deleteProject(id) {
   return data[0];
 }
 
-export async function getProjectExistingCategories(projectId) {
-  const { data, error } = await supabase
-    .from('category_project')
-    .select('category_id')
-    .eq('project_id', projectId);
 
-  if (error) throw new Error(error.message);
-  return data || [];
-}
