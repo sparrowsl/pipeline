@@ -15,14 +15,14 @@ export const actions = {
     }
 
     try {
-      const { email, password, name } = data;
+      
 
       const response = await fetch('/api/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {

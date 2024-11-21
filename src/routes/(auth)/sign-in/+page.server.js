@@ -16,14 +16,12 @@ export const actions = {
     }
 
     try {
-      const { email, password } = data;
-
       const response = await fetch('/api/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {

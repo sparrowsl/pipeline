@@ -3,12 +3,10 @@ import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
   try {
-    const { email, password } = await request.json();
+    
+    const body = await request.json();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword(body);
 
     if (error) {
       return json({ error: error.message }, { status: 400 });
