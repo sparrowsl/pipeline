@@ -8,13 +8,14 @@
 </script>
 
 <div class="w-full min-h-screen bg-white">
-  {#if $page.url.pathname !== '/sign-in'}
+  <!-- temporary fix for the Nav & Footer component showing in the sign-in and sign-up pages -->
+  {#if $page.url.pathname !== '/sign-in' && $page.url.pathname !== '/sign-up'}
     <Nav {data} />
   {/if}
 
   <slot />
 
-  {#if $page.url.pathname !== '/sign-in'}
+  {#if $page.url.pathname !== '/sign-in' && $page.url.pathname !== '/sign-up'}
     <Footer />
   {/if}
 </div>

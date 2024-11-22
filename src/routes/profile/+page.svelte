@@ -24,6 +24,7 @@
 
       userProjects = data.projects;
     } catch (error) {
+      console.log(error);
       error = e.message;
       alert(error);
     } finally {
