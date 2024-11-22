@@ -4,6 +4,7 @@
   import CategoryTag from './CategoryTag.svelte';
   import DPGRating from './DPGRating.svelte';
   import { amountFormat } from '$lib/utils/amountFormat.js';
+  
 
   import { onMount } from 'svelte';
   let isOpen = false;
@@ -20,6 +21,8 @@
 
   export let project;
 
+  
+
   onMount(() => {
     project.banner_image
       ? (imageUrl = banner_image)
@@ -31,6 +34,7 @@
     };
   });
 </script>
+
 
 <div class="flex flex-col overflow-hidden bg-gray-200 rounded-3xl">
   <header class="relative pt-[75%]">
