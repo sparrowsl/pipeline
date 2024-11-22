@@ -1,54 +1,24 @@
 import { supabase } from '$lib/server/supabase.js';
+import { storeProjectResource } from '$lib/server/service/projectContributionsService.js';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request, params }) {
-  const cookies = request.headers.get('cookie');
+export async function POST({ request, params, locals }) {
   const id = params.id;
 
-  if (!cookies) {
-    return json({ error: 'No cookies found' }, { status: 401 });
-  }
-
-  // Parse cookies to extract the access token
-  const accessToken = cookies
-    .split(';')
-    .find((cookie) => cookie.trim().startsWith('access_token='))
-    ?.split('=')[1];
-
-  if (!accessToken) {
-    return json({ error: 'No access token found' }, { status: 401 });
-  }
-
-  // Get user data from Supabase using the access token
-  const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
-
-  if (userError) {
-    return json({ error: userError.message }, { status: 401 });
-  }
-
-  const user = userData.user;
+  let user = locals.authUser;
 
   try {
     const { resourceType, resourceTitle, resourceLink, country, interest } = await request.json();
 
-    const { data, error } = await supabase
-      .from('project_resource')
-      .insert([
-        {
-          project_id: id,
-          user_id: user.id,
-          type_resource: resourceType,
-          title: resourceTitle,
-          link: resourceLink,
-          country,
-          reason: interest,
-        },
-      ])
-      .select();
-
-    if (error) {
-      return json({ error: error.message }, { status: 500 });
-    }
+    await storeProjectResource({
+      project_id: id,
+      user_id: user.id,
+      type_resource: resourceType,
+      title: resourceTitle,
+      link: resourceLink,
+      country,
+      reason: interest,
+    });
 
     return json({ success: true, message: 'Application submitted successfully' }, { status: 200 });
   } catch (error) {
