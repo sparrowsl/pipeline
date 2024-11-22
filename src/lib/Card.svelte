@@ -49,8 +49,8 @@
               </div>
           </div>
       </div>
-      <div class="self-stretch text-[#305661] text-[13px] font-normal font-['Inter'] leading-tight tracking-tight">
-          Lorem ipsum dolor sit amet consectetur. Quis viverra egestas pulvinar volutpat at mauris tincidunt mi. Nunc volutpat netus tristique donec lectus.
+      <div class="self-stretch text-[#305661] text-base font-normal font-['Inter'] leading-tight tracking-tight">
+         {project.bio}
       </div>
   </div>
 
