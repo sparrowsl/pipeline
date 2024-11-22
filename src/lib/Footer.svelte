@@ -40,7 +40,7 @@
 
     <hr class="my-8 border-opacity-50 border-lime-300 sm:my-10" />
 
-    <div class="flex flex-col items-center justify-between text-sm sm:flex-row sm:text-base">
+    <div class="flex flex-col items-center justify-between text-sm sm:flex-row sm:text-base max-md:flex-col">
       <p class="mb-4 sm:mb-0">© 2024 Pipeline Copyright and rights reserved</p>
       <div class="flex items-center">
         <a href="/terms" class="transition-colors duration-300 hover:text-lime-400"
