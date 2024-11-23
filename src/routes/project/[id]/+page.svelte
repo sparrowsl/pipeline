@@ -226,7 +226,7 @@
           'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/projectProf.png?t=2024-11-20T16%3A05%3A41.191Z');
     await getSingleProject();
     await getProjectUpdates();
-    await getProjectMembers();
+    //await getProjectMembers();
     await getProjectResources();
     if (data.isAuthenticated) {
       user = data.user;
@@ -305,7 +305,7 @@
           </button>
         {:else}
           <a
-            href="/contribute"
+            href="/project/{id}/contribute"
             class="bg-[#0b383c] text-[#e9f5d3] text-center text-base font-semibold py-4 rounded-full w-[50%]"
           >
             <button>CONTRIBUTE</button>
