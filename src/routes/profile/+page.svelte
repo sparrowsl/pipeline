@@ -42,7 +42,7 @@
 <div class="flex w-full items-start justify-center">
   <div class="w-[90%] mx-auto grid justify-center md:flex md:flex-row space-y-4 md:space-y-0 md:space-x-4">
     
-    <div class="px-5 md:px-0 md:w-1/3 bg-yellow-50 md:sticky h-max">
+    <div class="px-5 md:px-0 md:w-1/3  md:sticky h-max">
       <ProfileInfo />
     </div>
 
