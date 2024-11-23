@@ -8,7 +8,20 @@ export async function getExistingBookmarks(projectId, userId) {
     .eq('user_id', userId)
     .eq('project_id', projectId)
     .single();
-    
+
+  return data;
+}
+
+export async function getExistingBookmarksByUserId(userId, start, end) {
+  const { data, error } = await supabase
+    .from('bookmark_project')
+    .select('*')
+    .eq('user_id', userId)
+    .range(start, end)
+    .order('created_at', { ascending: false })
+
+  if (error) throw new Error(error.message);
+
   return data;
 }
 

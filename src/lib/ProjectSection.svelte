@@ -1,15 +1,14 @@
 <script>
- import Card from '../lib/Card.svelte';
+  import Card from '../lib/Card.svelte';
 
-
-  export let projects = []; 
+  export let projects = [];
+  export let bookmarkProjects;
 
   let navSections = [
     { id: 'created', label: 'Projects created' },
     { id: 'contributed', label: 'Projects contributed' },
-    { id: 'follow', label: 'Follow' },
+    { id: 'following', label: 'Following' },
   ];
-
 
   let currentSection = 'created';
 
@@ -20,11 +19,10 @@
 
 <section class="flex flex-col items-center p-7 max-w-[1235px] mx-auto max-md:px-5 max-md:mt-10">
   <div class="w-full max-w-[1156px]">
-  
     <nav class="flex mb-4 space-x-6">
       {#each navSections as section}
         <button
-          class="px-4 py-3 text-base font-semibold transition-all duration-200 border-b-4 
+          class="px-4 py-3 text-base font-semibold transition-all duration-200 border-b-4
                   {section.id === currentSection ? 'border-b-[#bde25b] opacity-100' : 'opacity-50'}"
           on:click={() => handleNavigation(section.id)}
         >
@@ -38,7 +36,7 @@
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {#if projects.length > 0}
             {#each projects as project}
-              <Card {project}/>
+              <Card {project} />
             {/each}
           {:else}
             <p>No projects found.</p>
@@ -48,20 +46,20 @@
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
           {#if projects.length > 0}
             {#each projects as project}
-              <Card {project}/>
+              <Card {project} />
             {/each}
           {:else}
             <p>No projects found.</p>
           {/if}
         </div>
-      {:else if currentSection === 'bookmarks'}
+      {:else if currentSection === 'following'}
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {#if projects.length > 0}
-            {#each projects as project}
-              <Card {project}/>
+          {#if bookmarkProjects.length > 0}
+            {#each bookmarkProjects as project}
+              <Card {project} />
             {/each}
           {:else}
-            <p>No projects found.</p>
+            <p>No bookmarked projects found.</p>
           {/if}
         </div>
       {/if}
