@@ -34,33 +34,27 @@
     <div class="mt-8">
       {#if currentSection === 'created'}
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {#if projects.length > 0}
-            {#each projects as project}
-              <Card {project} />
-            {/each}
+          {#each projects as project}
+            <Card {project} />
           {:else}
             <p>No projects found.</p>
-          {/if}
+          {/each}
         </div>
       {:else if currentSection === 'contributed'}
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {#if projects.length > 0}
-            {#each projects as project}
-              <Card {project} />
-            {/each}
+          {#each projects as project}
+            <Card {project} />
           {:else}
-            <p>No projects found.</p>
-          {/if}
+            <p>No contributed projects found.</p>
+          {/each}
         </div>
       {:else if currentSection === 'following'}
         <div class="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
-          {#if bookmarkProjects.length > 0}
-            {#each bookmarkProjects as project}
-              <Card {project} />
-            {/each}
+          {#each bookmarkProjects as project}
+            <Card {project} />
           {:else}
             <p>No bookmarked projects found.</p>
-          {/if}
+          {/each}
         </div>
       {/if}
     </div>
