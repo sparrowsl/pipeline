@@ -99,7 +99,7 @@
 
 
 
-<header class=" top-0 left-0 right-0 z-[99999] h-[84px] px-4 md:px-8 py-5 bg-[#0b383c] backdrop-blur-[15px] flex justify-between items-center">
+<header class=" top-0 left-0 right-0 z-[99999] h-[84px] px-4 md:px-8 py-5 bg-[#0b383c] backdrop-blur-[15px] flex justify-between items-center relative">
 
   <div class="flex items-center h-6 gap-4 md:gap-12 grow-0">
     <Logo />
@@ -181,6 +181,7 @@
               class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
             >About DPGs</a>
           </div>
+          
         {/if}
       </div>
     </div>
