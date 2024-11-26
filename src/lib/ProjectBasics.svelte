@@ -152,7 +152,7 @@
 <section
   class="flex flex-col self-center p-10 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full"
 >
-  <div class="flex flex-col w-full mt-10 max-md:mt-10">
+  <div class="flex flex-col w-full mt-55 max-md:mt-10">
     <div class="flex flex-col w-full max-md:max-w-full ">
       <div
         class="flex flex-col items-start w-full leading-none max-md:max-w-full"
@@ -245,15 +245,15 @@
       <div
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
-        <div class="flex flex-col w-[45%]">
+        <div class="flex flex-col w-[45%] max-md:w-[100%]">
           <label for="projectBio" class="text-black font-basesemibold text-"
             >Project bio</label
           >
-          <p class="mt-2.5 text-sm text-stone-400">
+          <p class="mt-2.5 text-sm text-stone-400 ">
             Give a short description of your project
           </p>
         </div>
-        <div class="w-[50%] max-md:w-full">
+        <div class="w-[50%] max-md:w-[100%]">
           <textarea
             id="projectBio"
             bind:value={bio}
@@ -267,7 +267,7 @@
       <div
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
-        <div class="flex flex-col w-[45%]">
+        <div class="flex flex-col w-[45%] max-md:w-[100%]">
           <label for="projectTags" class="text-base font-semibold text-black"
             >Project tags</label
           >
@@ -361,8 +361,8 @@
         </div>
       </div> -->
 
-      <div class="flex flex-row items-start justify-between w-full mt-12 max-md:flex-col max-md:items-start">
-        <div class="flex flex-col w-[40%]">
+      <div class="flex flex-row items-start justify-between w-full mt-12 max-md:flex-col max-md:items-start ">
+        <div class="flex flex-col w-[40%] max-md:w-[100%]">
           <label for="projectCountry" class="text-base font-semibold text-black">
             Country
           </label>
@@ -406,7 +406,7 @@
       <div
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
-        <div class="flex flex-col w-[45%]">
+        <div class="flex flex-col w-[45%] max-md:w-[100%]">
           <label for="projectDetails" class="text-base font-semibold text-black"
             >Project details</label
           >
