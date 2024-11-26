@@ -109,6 +109,104 @@ CREATE TABLE public.project_updates (
     title text NULL,
     body text NULL,
     user_id uuid NULL,
-    created_at timestamp with time zone NOT NULL DEFAULT now(),
+        created_at timestamp with time zone NOT NULL DEFAULT now(),
     project_id uuid NULL,
-    CONSTRAINT project_updates
+    CONSTRAINT project_updates_pkey PRIMARY KEY (id),
+    CONSTRAINT project_updates_project_id_fkey FOREIGN KEY (project_id) REFERENCES projects(id),
+    CONSTRAINT project_updates_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id)
+) TABLESPACE pg_default;
+
+CREATE TABLE public.projects (
+    id uuid NOT NULL DEFAULT gen_random_uuid(),
+    user_id uuid NULL,
+    title text NULL,
+    bio text NULL,
+    github_repo text NULL,
+    funding_goal double precision NULL,
+    current_funding double precision NULL,
+    status text NULL,
+    updated_at timestamp with time zone NULL,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    country text NULL,
+    details text NULL,
+    email text NULL,
+    portfolio text NULL,
+    linkedin text NULL,
+    twitter text NULL,
+    website text NULL,
+    other text NULL,
+    bank_acct text NULL,
+    wallet_address text NULL,
+    image text NULL,
+    banner_image text NULL,
+    CONSTRAINT projects_pkey PRIMARY KEY (id),
+    CONSTRAINT projects_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id)
+) TABLESPACE pg_default;
+
+INSERT INTO
+  public.categories (title, description, created_at, sdg_id, image)
+VALUES
+  (
+    'Education',
+    'Promoting quality education for all.',
+    NOW(),
+    4,
+    'education.png'
+  ),
+  (
+    'Health',
+    'Ensuring healthy lives and promoting well-being for all.',
+    NOW(),
+    3,
+    'health.png'
+  ),
+  (
+    'Gender Equality',
+    'Achieving gender equality and empowering all women and girls.',
+    NOW(),
+    5,
+    'gender_equality.png'
+  ),
+  (
+    'Clean Water',
+    'Ensuring availability and sustainable management of water and sanitation for all.',
+    NOW(),
+    6,
+    'clean_water.png'
+  ),
+  (
+    'Affordable and Clean Energy',
+    'Ensuring access to affordable, reliable, sustainable, and modern energy for all.',
+    NOW(),
+    7,
+    'clean_energy.png'
+  );
+
+INSERT INTO
+  public.dpg_status (NAME, criteria, created_at)
+VALUES
+  (
+    'Not Started',
+    'The project has not yet begun.',
+    NOW()
+  ),
+  (
+    'In Progress',
+    'The project is currently underway.',
+    NOW()
+  ),
+  (
+    'Completed',
+    'The project has been completed successfully.',
+    NOW()
+  ),
+  (
+    'On Hold',
+    'The project is temporarily paused.',
+    NOW()
+  ),
+  (
+    'Cancelled',
+    'The project has been cancelled.',
+    NOW()
+  );
