@@ -1,12 +1,7 @@
 <script>
-  import ProjectMembers from './../../../lib/ProjectMembers.svelte';
   import Contributors from '../../../lib/Contributors.svelte';
-  import Nav from '../../../lib/Nav.svelte';
-  import ProfileInfo from '../../../lib/ProfileInfo.svelte';
-  import Footer from '../../../lib/Footer.svelte';
   import ProjectNav from '../../../lib/ProjectNav.svelte';
   import ProjectAbout from '../../../lib/ProjectAbout.svelte';
-  import Card from '../../../lib/Card.svelte';
   import DpgStatus from '../../../lib/dpgStatus.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -20,15 +15,13 @@
 
   let project = {};
   let projectUpdates = [];
-  let projectTeam = [];
   let projectResource = [];
   let loading = true;
   let user = null;
   let error = null;
+  let image;
+  let banner;
   export let data;
-
-  let imageUrl =
-    'https://images.unsplash.com/photo-1471771450139-6bfdb4b2609a?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   let isFollowing = false;
   let isAddingUpdate = false;
@@ -125,29 +118,6 @@
     }
   }
 
-  async function getProjectMembers() {
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}/projectMembers`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      projectTeam = data.members;
-    } catch (error) {
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
   async function getProjectResources() {
     try {
       const response = await fetch(`/api/projects/singleProject/${id}/contribution/resources`, {
@@ -216,13 +186,17 @@
     selectedUpdate = null;
   }
 
-  let ProjectBannerImage = null;
-  let ProjectProfileImage = null;
+  $: banner = project.banner_image
+    ? project.banner_image
+    : 'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/banner.png?t=2024-11-20T15%3A45%3A51.937Z';
+
+  $: image = project.image
+    ? project.image
+    : 'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/projectProf.png?t=2024-11-20T16%3A05%3A41.191Z';
 
   onMount(async () => {
     await getSingleProject();
     await getProjectUpdates();
-    await getProjectMembers();
     await getProjectResources();
     if (data.isAuthenticated) {
       user = data.user;
@@ -236,7 +210,8 @@
       <!-- svelte-ignore a11y-no-redundant-roles -->
       <!-- svelte-ignore a11y-img-redundant-alt -->
       <img
-        src={imageUrl}
+        loading="lazy"
+        src={banner}
         class="flex z-0 w-full bg-stone-300 h-[250px] rounded-[24px] max-md:max-w-full"
         role="img"
         aria-label="Project hero image"
@@ -244,16 +219,17 @@
       />
       <!-- svelte-ignore a11y-img-redundant-alt -->
       <img
+        loading="lazy"
         class="absolute z-10 w-[120px] h-[120px] rounded-full outline outline-4 outline-white"
         style="top: 97%; left: 50px; transform: translateY(-50%);"
-        src="https://via.placeholder.com/211x211"
+        src={image}
         alt="Project overlay image"
       />
     </section>
 
     <section class="flex flex-col w-full mt-3">
       <div class="flex justify-between">
-        <h1 class="text-3xl font-semibold text-black max-md:text-2xl">
+        <h1 class="text-3xl font-semibold text-black max-md:text-2xl break-all">
           {project.title || 'Project Title'}
         </h1>
         <div class="flex items-center gap-1 mt-2 text-base text-neutral-600">
@@ -299,7 +275,7 @@
           </button>
         {:else}
           <a
-            href="/contribute"
+            href="/project/{id}/contribute"
             class="bg-[#0b383c] text-[#e9f5d3] text-center text-base font-semibold py-4 rounded-full w-[50%]"
           >
             <button>CONTRIBUTE</button>
@@ -399,10 +375,10 @@
         {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
         {:else if activeNavItem === 'dpgStatus'}
-          <DpgStatus />
+          <DpgStatus {project} />
         {:else if activeNavItem === 'updates'}
           {#if showUpdateDetail}
-            <UpdateDetail {selectedUpdate} on:goBack={handleGoBack} />
+            <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
           {:else if projectUpdates.length > 0}
             {#each projectUpdates as update}
               <Updates on:showDetail={handleShowDetail} {update} />

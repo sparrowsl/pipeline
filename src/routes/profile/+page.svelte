@@ -1,18 +1,19 @@
 <script>
-  import ProfileInfo from "../../lib/ProfileInfo.svelte";
-  import ProjectSection from "../../lib/ProjectSection.svelte";
-  import { onMount } from "svelte";
+  import ProfileInfo from '../../lib/ProfileInfo.svelte';
+  import ProjectSection from '../../lib/ProjectSection.svelte';
+  import { onMount } from 'svelte';
 
-  let userProjects = [];
+  let projects = [];
+  let bookmarkProjects = [];
   let loading = true;
   let error = null;
 
   async function fetchMyProjects() {
     try {
-      const response = await fetch("/api/projects/myProjects", {
-        method: "GET",
+      const response = await fetch('/api/projects/user/projects', {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -22,9 +23,34 @@
 
       const data = await response.json();
 
-      userProjects = data.projects;
+      projects = data.projects;
     } catch (error) {
+      console.log(error);
       error = e.message;
+      alert(error);
+    } finally {
+      loading = false;
+    }
+  }
+
+  async function fetchBookmarkedProjects() {
+    try {
+      const response = await fetch('/api/projects/user/bookmarks', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+
+      bookmarkProjects = data.projects;
+    } catch (error) {
+      console.log(error);
       alert(error);
     } finally {
       loading = false;
@@ -33,23 +59,28 @@
 
   onMount(() => {
     fetchMyProjects();
+    fetchBookmarkedProjects();
   });
 </script>
 
-<div class="flex flex-col md:flex-row w-[90%] mx-auto space-y-4 md:space-y-0 md:space-x-4 mt-[-25px]">
+<!-- new code -->
+<!-- container below to center the inner container -->
+<div class="flex w-full items-start justify-center">
+  <div
+    class="w-[90%] mx-auto grid justify-center md:flex md:flex-row space-y-4 md:space-y-0 md:space-x-4"
+  >
+    <div class="px-5 md:px-0 md:w-1/3 md:sticky h-max">
+      <ProfileInfo />
+    </div>
 
-  <div class="flex-none w-full md:w-1/3 md:sticky md:top-4 h-max">
-    <ProfileInfo />
-  </div>
-
-  <div class="flex-1">
-    {#if loading}
-      <p>Loading projects...</p>
-    {:else if error}
-      <p>Error: {error}</p>
-    {:else}
-      <ProjectSection projects={userProjects} />
-    {/if}
+    <div class="md:w-2/3">
+      {#if loading}
+        <p>Loading projects...</p>
+      {:else if error}
+        <p>Error: {error}</p>
+      {:else}
+        <ProjectSection {projects} {bookmarkProjects} />
+      {/if}
+    </div>
   </div>
 </div>
-
