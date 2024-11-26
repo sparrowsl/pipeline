@@ -17,6 +17,7 @@
 
   let loading = false;
   let project = {};
+  let title = "";
 
   let activeNavItem = "Basics";
   export let data;
@@ -69,6 +70,8 @@
       const { project: fetchedProject } = await response.json();
       console.log(fetchedProject);
       projectStore.set(fetchedProject); // Initialize projectStore with data
+
+      title = fetchedProject.title || "Loading!!"; 
 
       // Destructure to set local variables for form bindings
       ({
@@ -160,17 +163,17 @@
   </div>
 </div>
 
-<div
+<div 
   class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[290px]"
 >
   <h1
     class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]"
   >
-    Edit Project -
+    Edit Project - {title}
   </h1>
 </div>
 
-<main
+<!-- <main
   class="flex flex-col justify-center items-center px-10 py-5 mt-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10"
 >
   <UserNav
@@ -285,4 +288,101 @@
       {/if}
     </div>
   </section>
+</main> -->
+
+
+<main
+  class="flex flex-row justify-center items-start gap-10 px-10 py-5 bg-white rounded-[37px] max-md:flex-col max-md:gap-5 max-md:px-5 max-md:mt-10"
+>
+    <!-- Left Column: Basics -->
+    <aside class="lex flex-col flex-1 w-full max-w-[600px]">
+      <h2 class="mb-4 text-2xl font-semibold ">Basics</h2>
+      <ProjectBasics />
+    </aside>
+
+    <!-- Right Column: Links and Funding -->
+    <section class="flex flex-col flex-1 w-full max-w-[600px] gap-10 space-y-28">
+      <!-- Links Section -->
+      <div class="flex flex-col">
+        <h2 class="mb-5 text-2xl font-semibold">Links</h2>
+        <div class="flex flex-col gap-4">
+          <LinkInput label="Email" bind:value={email} />
+          <LinkInput label="Portfolio" bind:value={portfolio} />
+          <LinkInput label="Github" bind:value={github} />
+          <LinkInput label="LinkedIn" bind:value={linkedin} />
+          <LinkInput label="X" bind:value={twitter} />
+          <LinkInput label="Website" bind:value={website} />
+          <LinkInput label="Others" bind:value={other} />
+        </div>
+      </div>
+
+      <!-- Funding Section -->
+      <div class="flex flex-col">
+        <h2 class="mb-5 text-2xl font-semibold">Funding</h2>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center w-full">
+            <label for="fundingGoal" class="w-1/3 text-lg font-semibold">Funding Goal</label>
+            <input
+              id="fundingGoal"
+              bind:value={funding_goal}
+              on:change={updateStore}
+              type="number"
+              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+              aria-label="Funding Goal"
+            />
+          </div>
+
+          <hr class="my-8 border-neutral-300" />
+
+          <div class="flex items-center mt-10 mb-6">
+            <label for="bankAccount" class="w-1/3 text-lg font-medium">Bank Account</label>
+            <input
+              id="bankAccount"
+              bind:value={bank_acct}
+              on:change={updateStore}
+              type="text"
+              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+              aria-label="Bank Account"
+            />
+          </div>
+
+          <div class="flex items-center justify-center my-4 text-neutral-400">
+            <hr class="flex-grow border-t-2 border-neutral-300" />
+            <span class="px-4 text-lg font-medium">or</span>
+            <hr class="flex-grow border-t-2 border-neutral-300" />
+          </div>
+
+          <div class="flex items-center mt-6">
+            <label for="walletAddress" class="w-1/3 text-lg font-medium">Wallet Address</label>
+            <input
+              id="walletAddress"
+              bind:value={wallet_address}
+              on:change={updateStore}
+              type="text"
+              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+              aria-label="Wallet Address"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Action Buttons -->
+
 </main>
+
+<div class="flex justify-between w-full max-w-[1200px] mx-auto mt-10">
+  <button
+    on:click={navigateToPrevious}
+    class="px-[112px] py-4 text-xl font-medium text-lime-800 bg-white border-2 border-lime-800 rounded-[82px] max-md:px-5"
+  >
+    Previous
+  </button>
+
+  <button
+    on:click={updateProject}
+    class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
+  >
+    {loading ? "Updating..." : "Update"}
+  </button>
+</div>
