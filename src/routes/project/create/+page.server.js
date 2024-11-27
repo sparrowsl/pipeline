@@ -1,9 +1,13 @@
 import { error, redirect } from '@sveltejs/kit';
 import { projectStore } from '$stores/projectStore.js';
 
+/** @type {import('./$types').Actions} */
 export const actions = {
-  createProject: async ({ request, fetch }) => {
-    const formData = await request.formData();
+  default: async ({ request, fetch }) => {
+    const formData = Object.fromEntries(await request.formData());
+    console.log(formData);
+
+    return;
 
     const projectData = JSON.parse(formData.get('projectData'));
 
