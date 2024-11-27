@@ -15,12 +15,13 @@
 </div>
 {/if}
 
-<!-- if the status code is "404" and the error message is "not found" -->
+<!-- if the status code is "404" and the error message is "Error: 404" -->
 {#if $page.status === 404 && $page.error.message === "Error: 404"}
 <div class="flex flex-col items-center justify-center mt-16">
   <h1 class="text-9xl font-bold text-gray-800">{$page.status}</h1>
   <p class="text-2xl font-medium text-gray-600 mt-4">Oops! Something is not loading.</p>
 </div>
 {/if}
+
 <!-- other error codes implementation below here -->
 
