@@ -1,16 +1,23 @@
+import { createProjectSchema } from '$lib/server/validator/projectSchema.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
   default: async ({ request, fetch }) => {
     const { image, banner_image, ...form } = Object.fromEntries(await request.formData());
-    console.log(form);
+    const { data, error: validationError, success } = createProjectSchema.safeParse(form);
+
+    if (!success) {
+      const errors = validationError.flatten().fieldErrors;
+      const firstError = Object.values(errors).flat().at(0);
+      fail(400, { error: firstError });
+    }
 
     try {
       const response = await fetch(`/api/projects/store`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {

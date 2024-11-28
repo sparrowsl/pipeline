@@ -275,6 +275,7 @@
               {/each}
               <input
                 type="text"
+                name="tags"
                 bind:value={inputValue}
                 placeholder="Type to add tags"
                 class="flex-grow bg-transparent border-none outline-none"

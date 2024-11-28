@@ -1,52 +1,8 @@
 <script>
   import ProjectBasics from '../ProjectBasics.svelte';
-  import { projectStore } from '$stores/projectStore.js';
-  import { get } from 'svelte/store';
-  import LinkInput from '../LinkInput.svelte';
-  import UserNav from '$lib/UserNav.svelte';
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
   import { enhance } from '$app/forms';
 
   let loading = false;
-
-  let funding_goal = get(projectStore).funding_goal;
-  let bank_acct = get(projectStore).bank_acct;
-  let wallet_address = get(projectStore).wallet_address;
-  let email = get(projectStore).email;
-  let portfolio = get(projectStore).portfolio;
-  let github = get(projectStore).github_repo;
-  let linkedin = get(projectStore).linkedin;
-  let twitter = get(projectStore).twitter;
-  let website = get(projectStore).website;
-  let other = get(projectStore).other;
-
-  function updateStore() {
-    projectStore.update((data) => {
-      data.email = email;
-      data.portfolio = portfolio;
-      data.github_repo = github;
-      data.linkedin = linkedin;
-      data.twitter = twitter;
-      data.website = website;
-      data.other = other;
-      data.funding_goal = funding_goal;
-      data.bank_acct = bank_acct;
-      data.wallet_address = wallet_address;
-      return data;
-    });
-  }
-
-  let imageLoaded = false;
-
-  onMount(() => {
-    const img = new Image();
-    img.src =
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/e31ab375db047d220f54398e16c4cc0f0001d612779f0974e0d8c39c0fea9107?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8';
-    img.onload = () => {
-      imageLoaded = true;
-    };
-  });
 </script>
 
 <div class="w-full bg-[#d1ea9a]/90 py-16 mb-10">
