@@ -17,7 +17,7 @@ export async function handle({ event, resolve }) {
   event.locals.authUser = user;
 
   if (PROTECTED_ROUTES.includes(path) && !accessToken) {
-    throw redirect(302, '/sign-in');
+    redirect(307, '/sign-in');
   }
 
   return resolve(event);
