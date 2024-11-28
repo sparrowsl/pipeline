@@ -1,9 +1,10 @@
 <script>
+	import { searchBarOpen } from './utils.js';
   import { createEventDispatcher, onMount } from 'svelte';
   import { fade } from 'svelte/transition';
 
   // Props
-  export let isOpen = false;
+  // export let searchBarOpen = $searchBarOpen;
   export let searchTerm = '';
 
   // State management
@@ -12,7 +13,7 @@
   let error = null;
 
   // Event dispatcher
-  const dispatch = createEventDispatcher();
+  // const dispatch = createEventDispatcher();
 
   // Search function (async to simulate API call)
   async function searchProjects(term) {
@@ -53,7 +54,7 @@
 
   // Close modal
   function closeModal() {
-    isOpen = false;
+    $searchBarOpen = false;
     searchTerm = '';
     searchResults = [];
   }
@@ -80,14 +81,14 @@
   });
 </script>
 
-{#if isOpen}
+{#if $searchBarOpen}
   <div 
     transition:fade={{ duration: 200 }}
-    class="fixed inset-0 z-[100000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+    class="fixed inset-0 z-[100000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 "
     on:click|self={closeModal}
   >
     <div 
-      class="w-full max-w-2xl bg-[#0b383c] rounded-xl shadow-2xl overflow-hidden mt-[30vh]"
+      class="w-full max-w-2xl bg-[#0b383c] rounded-xl shadow-2xl overflow-hidden mb-[30vh]"
       on:click|stopPropagation
     >
       <!-- Search Input -->
@@ -111,6 +112,7 @@
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
+          
         </div>
       </div>
 
