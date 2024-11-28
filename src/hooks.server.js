@@ -3,9 +3,6 @@ import { getUser } from '$lib/server/service/authUserService.js';
 
 const PROTECTED_ROUTES = ['/profile', '/profile/edit', '/project/create'];
 
-
-
-
 export async function handle({ event, resolve }) {
   const cookies = event.request.headers.get('cookie');
   const accessToken = cookies
