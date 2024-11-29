@@ -273,7 +273,7 @@ VALUES
 
   ('Adherence to Standards & Best Practices', 
    'The solution follows recognized standards and best practices to ensure quality and reliability.', 
-   NOW())
+   NOW()),
 
   ('Use of Approved Open Licenses', 
    'The solution is released under an approved open-source license.', 
