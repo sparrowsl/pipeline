@@ -1,11 +1,11 @@
 <script>
-  import { projectStore } from "./../stores/projectStore.js";
-  import { get } from "svelte/store";
-  import { createEventDispatcher } from "svelte";
+  import { projectStore } from '../../stores/projectStore.js';
+  import { get } from 'svelte/store';
+  import { createEventDispatcher } from 'svelte';
 
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
   let Editor;
-  import { countries } from "countries-list";
+  import { countries } from 'countries-list';
 
   const countryList = Object.values(countries);
 
@@ -38,13 +38,13 @@
   }
 
   let isOpen = false;
-  let inputValue = "";
+  let inputValue = '';
 
   const dispatch = createEventDispatcher();
 
   let availableTags = [];
 
-  let currentSection = "basics";
+  let currentSection = 'basics';
 
   function toggleDropdown(event) {
     event.preventDefault();
@@ -55,33 +55,33 @@
     if (!selectedTags.some((selected) => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
       updateStore();
-      dispatch("change", selectedTags);
+      dispatch('change', selectedTags);
     }
 
-    inputValue = "";
+    inputValue = '';
     isOpen = false;
   }
 
   function removeTag(tag) {
     selectedTags = selectedTags.filter((t) => t.title !== tag.title);
     updateStore();
-    dispatch("change", selectedTags);
+    dispatch('change', selectedTags);
   }
 
   $: filteredTags = availableTags.filter(
     (tag) =>
       tag.title.toLowerCase().includes(inputValue.toLowerCase()) &&
-      !selectedTags.some((selected) => selected.title === tag.title)
+      !selectedTags.some((selected) => selected.title === tag.title),
   );
 
   let ProjectBannerImage = null;
   let ProjectProfileImage = null;
 
-  const authorizedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+  const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 
   async function handleBannerUpload(event) {
     const file = event.target.files[0];
-    console.log("Banner file selected:", file);
+    console.log('Banner file selected:', file);
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
@@ -106,10 +106,10 @@
 
   async function fetchAllCategories() {
     try {
-      const response = await fetch("/api/categories", {
-        method: "GET",
+      const response = await fetch('/api/categories', {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -125,16 +125,16 @@
   async function handleImageUpload(file) {
     // Upload the image to Supabase storage
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
 
-    const response = await fetch("/api/file-upload", {
-      method: "POST",
+    const response = await fetch('/api/file-upload', {
+      method: 'POST',
       body: formData,
     });
 
     if (!response.ok) {
       const result = await response.json();
-      throw new Error(result.message || "Failed to upload image");
+      throw new Error(result.message || 'Failed to upload image');
     }
 
     return response.json().then((data) => {
@@ -144,7 +144,7 @@
 
   onMount(async () => {
     fetchAllCategories();
-    const module = await import("novel-svelte");
+    const module = await import('novel-svelte');
     Editor = module.Editor;
   });
 </script>
@@ -153,10 +153,8 @@
   class="flex flex-col self-center p-10 w-full bg-white max-w-[1235px] max-md:px-5 max-md:mt-10 max-md:max-w-full"
 >
   <div class="flex flex-col w-full mt-55 max-md:mt-10">
-    <div class="flex flex-col w-full max-md:max-w-full ">
-      <div
-        class="flex flex-col items-start w-full leading-none max-md:max-w-full"
-      >
+    <div class="flex flex-col w-full max-md:max-w-full">
+      <div class="flex flex-col items-start w-full leading-none max-md:max-w-full">
         <div class="flex flex-col max-w-full w-[409px]">
           <h2 class="text-xl font-semibold text-black">Project Images</h2>
           <p class="mt-2.5 text-sm text-stone-300">
@@ -171,11 +169,7 @@
             class="w-full h-full bg-[#d9d9d9] rounded-[37.69px] flex justify-center items-center overflow-hidden"
           >
             {#if ProjectBannerImage}
-              <img
-                src={ProjectBannerImage}
-                alt="Banner"
-                class="object-cover w-full h-full"
-              />
+              <img src={ProjectBannerImage} alt="Banner" class="object-cover w-full h-full" />
             {:else}
               <div class="text-center">Click to upload banner image</div>
             {/if}
@@ -184,8 +178,9 @@
         <input
           type="file"
           id="banner-upload"
+          name="banner_image"
           class="hidden"
-          accept={authorizedExtensions.join(",")}
+          accept={authorizedExtensions.join(',')}
           on:change={handleBannerUpload}
         />
 
@@ -200,9 +195,7 @@
                 class="object-cover w-full h-full rounded-full"
               />
             {:else}
-              <div class="text-sm text-center">
-                Click to upload profile picture
-              </div>
+              <div class="text-sm text-center">Click to upload profile picture</div>
             {/if}
           </div>
         </label>
@@ -210,34 +203,30 @@
           type="file"
           id="profile-upload"
           class="hidden"
-          accept={authorizedExtensions.join(",")}
+          name="image"
+          accept={authorizedExtensions.join(',')}
           on:change={handleProfileUpload}
         />
       </div>
     </div>
 
-    <div
-      class="flex flex-col justify-center w-full mt-10 max-md:mt-10 max-md:max-w-full"
-    >
+    <div class="flex flex-col justify-center w-full mt-10 max-md:mt-10 max-md:max-w-full">
       <div
         class="flex flex-row items-start justify-between w-full max-md:flex-col max-md:items-start"
       >
         <div class="flex flex-col">
-          <label for="projectTitle" class="text-base font-semibold text-black"
-            >Project title</label
-          >
-          <p class="mt-2.5 text-sm text-stone-400">
-            What is the title of your project
-          </p>
+          <label for="projectTitle" class="text-base font-semibold text-black">Project title</label>
+          <p class="mt-2.5 text-sm text-stone-400">What is the title of your project</p>
         </div>
         <div class="w-[50%] max-md:w-full">
           <input
             type="text"
             id="projectTitle"
+            name="title"
             bind:value={title}
             on:change={updateStore}
             class="w-full border-2 border-lime-800 min-h-[50px] rounded-[75px] mt-2.5 px-4"
-            aria-required="true"
+            required
           />
         </div>
       </div>
@@ -246,20 +235,17 @@
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
         <div class="flex flex-col w-[45%] max-md:w-[100%]">
-          <label for="projectBio" class="text-black font-basesemibold text-"
-            >Project bio</label
-          >
-          <p class="mt-2.5 text-sm text-stone-400 ">
-            Give a short description of your project
-          </p>
+          <label for="projectBio" class="text-black font-basesemibold text-">Project bio</label>
+          <p class="mt-2.5 text-sm text-stone-400">Give a short description of your project</p>
         </div>
         <div class="w-[50%] max-md:w-[100%]">
           <textarea
             id="projectBio"
+            name="bio"
             bind:value={bio}
             on:change={updateStore}
             class="w-full border-2 border-lime-800 min-h-[120px] rounded-[31px] mt-2.5 p-4"
-            aria-required="true"
+            required
           ></textarea>
         </div>
       </div>
@@ -268,9 +254,7 @@
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
         <div class="flex flex-col w-[45%] max-md:w-[100%]">
-          <label for="projectTags" class="text-base font-semibold text-black"
-            >Project tags</label
-          >
+          <label for="projectTags" class="text-base font-semibold text-black">Project tags</label>
           <p class="mt-2.5 text-sm text-stone-400">
             Select the keywords that best describe your project.
           </p>
@@ -281,9 +265,7 @@
           >
             <div class="flex flex-wrap items-center flex-grow gap-2 pr-8">
               {#each selectedTags as tag}
-                <span
-                  class="flex items-center px-3 py-1 rounded-full text-lime-800 bg-lime-200"
-                >
+                <span class="flex items-center px-3 py-1 rounded-full text-lime-800 bg-lime-200">
                   {tag.title}
                   <button
                     on:click={() => removeTag(tag)}
@@ -293,6 +275,7 @@
               {/each}
               <input
                 type="text"
+                name="tags"
                 bind:value={inputValue}
                 placeholder="Type to add tags"
                 class="flex-grow bg-transparent border-none outline-none"
@@ -330,42 +313,11 @@
         </div>
       </div>
 
-      <!-- <div
-        class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
+      <div
+        class="flex flex-row items-start justify-between w-full mt-12 max-md:flex-col max-md:items-start"
       >
-        <div class="flex flex-col">
-          <label for="projectCountry" class="text-base font-semibold text-black"
-            >Country</label
-          >
-          <p class="mt-2.5 text-sm text-stone-400">
-            Choose the location where you are running the project.
-          </p>
-        </div>
-        <div class="w-[50%] max-md:w-full">
-          <div
-            class="flex items-center py-6 pr-20 pl-6 border-2 border-lime-800 h-[50px] rounded-[75px]"
-          >
-            <select
-              id="projectCountry"
-              bind:value={country}
-              on:change={updateStore}
-              class="bg-transparent border-none outline-none "
-              aria-label="Select project country"
-            >
-              <option value="" class="w-[50%]">Select a country</option>
-              {#each countryList as countryOption}
-                <option value={countryOption.name}>{countryOption.name}</option>
-              {/each}
-            </select>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="flex flex-row items-start justify-between w-full mt-12 max-md:flex-col max-md:items-start ">
         <div class="flex flex-col w-[40%] max-md:w-[100%]">
-          <label for="projectCountry" class="text-base font-semibold text-black">
-            Country
-          </label>
+          <label for="projectCountry" class="text-base font-semibold text-black"> Country </label>
           <p class="mt-2.5 text-sm text-stone-400">
             Choose the location where you are running the project.
           </p>
@@ -374,13 +326,14 @@
           <div class="relative flex items-center border-2 border-lime-800 h-[50px] rounded-[75px]">
             <select
               id="projectCountry"
+              name="country"
               bind:value={country}
               on:change={updateStore}
               class="w-full h-full pl-4 pr-10 bg-transparent border-none outline-none appearance-none"
-              aria-label="Select project country"
+              required
             >
-              <option value="">Select a country</option>
-              {#each countryList as countryOption}
+              <option selected disabled>--- Select a country ---</option>
+              {#each countryList as countryOption (countryOption.name)}
                 <option value={countryOption.name}>{countryOption.name}</option>
               {/each}
             </select>
@@ -401,28 +354,28 @@
           </div>
         </div>
       </div>
-      
-      
+
       <div
         class="flex flex-row items-start justify-between w-full mt-9 max-md:flex-col max-md:items-start"
       >
         <div class="flex flex-col w-[45%] max-md:w-[100%]">
-          <label for="projectDetails" class="text-base font-semibold text-black"
-            >Project details</label
-          >
+          <label for="projectDetails" class="text-base font-semibold text-black">
+            Project details
+          </label>
           <p class="mt-2.5 text-sm text-stone-400">
-            Tell potential contributors more about your project. <br /> Provide
-            details that will motivate people to contribute.
+            Tell potential contributors more about your project. <br /> Provide details that will
+            motivate people to contribute.
             <br /> A good pitch is compelling, informative, and easy to digest.
           </p>
         </div>
         <div class="w-[50%] max-md:w-full">
           <textarea
             id="projectDetails"
+            name="details"
             bind:value={details}
             on:change={updateStore}
             class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[140px]"
-            aria-required="true"
+            required
           ></textarea>
         </div>
       </div>
