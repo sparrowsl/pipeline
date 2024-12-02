@@ -4,7 +4,8 @@ import { error, fail, redirect } from '@sveltejs/kit';
 /** @type {import('./$types').Actions} */
 export const actions = {
   default: async ({ request, fetch }) => {
-    const { image, banner_image, ...form } = Object.fromEntries(await request.formData());
+    const { tags, ...form } = Object.fromEntries(await request.formData());
+    console.log('Form:', form);
     const { data, error: validationError, success } = createProjectSchema.safeParse(form);
 
     if (!success) {
@@ -13,19 +14,19 @@ export const actions = {
       fail(400, { error: firstError });
     }
 
-    try {
-      const response = await fetch(`/api/projects/store`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+    // try {
+    //   const response = await fetch(`/api/projects/store`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(data),
+    //   });
 
-      if (!response.ok) {
-        fail(400, 'Failed to save project');
-      }
-    } catch (_) {
-      fail(500, 'Failed to save project. Please try again later.');
-    }
+    //   if (!response.ok) {
+    //     fail(400, 'Failed to save project');
+    //   }
+    // } catch (_) {
+    //   fail(500, 'Failed to save project. Please try again later.');
+    // }
 
     // TODO: redirect to the new project instead of profile
     redirect(307, '/profile');
@@ -33,11 +34,20 @@ export const actions = {
 };
 
 async function handleImageUpload(file) {
+
+  const timestamp = Date.now();
+  const originalFileName = file.name;
+  const fileExtension = originalFileName.split('.').pop();
+  const fileNameWithoutExtension = originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
+  const newFileName = `${fileNameWithoutExtension}-${timestamp}.${fileExtension}`;
+
   // Upload the image to Supabase storage
   const response = await fetch('/api/file-upload', {
     method: 'POST',
     body: file,
   });
+
+  
 
   if (!response.ok) {
     const result = await response.json();

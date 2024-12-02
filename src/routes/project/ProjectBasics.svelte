@@ -81,14 +81,14 @@
 
   async function handleBannerUpload(event) {
     const file = event.target.files[0];
-    console.log('Banner file selected:', file);
+    // console.log('Banner file selected:', file);
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
+      // let path = await handleImageUpload(file);
 
-      bannerImg = path;
-      updateStore();
+      // bannerImg = path;
+      // updateStore();
     }
   }
 
@@ -97,10 +97,10 @@
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
+      // let path = await handleImageUpload(file);
 
-      profileImg = path;
-      updateStore();
+      // profileImg = path;
+      // updateStore();
     }
   }
 
@@ -223,8 +223,6 @@
             type="text"
             id="projectTitle"
             name="title"
-            bind:value={title}
-            on:change={updateStore}
             class="w-full border-2 border-lime-800 min-h-[50px] rounded-[75px] mt-2.5 px-4"
             required
           />
