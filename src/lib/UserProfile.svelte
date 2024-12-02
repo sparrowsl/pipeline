@@ -1,8 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { invalidateAll } from '$app/navigation';
-  import { browser } from '$app/environment';
+  import { enhance } from '$app/forms';
 
   let isOpen = false;
   let dropdownNode;
@@ -40,37 +38,6 @@
       document.removeEventListener('click', handleGlobalClick);
     };
   });
-
-  async function handleLogout() {
-    try {
-      const response = await fetch('/api/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success) {
-          if (browser) {
-            localStorage.clear();
-            sessionStorage.clear();
-          }
-
-          await invalidateAll();
-
-          goto('/sign-in');
-        } else {
-          console.error('Logout was not successful');
-        }
-      } else {
-        console.error('Logout request failed');
-      }
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
-  }
 </script>
 
 <div class="relative flex items-center">
@@ -88,16 +55,16 @@
         alt="User avatar"
         class="w-[25px] aspect-square object-contain"
       />
-      <span class="ml-4 text-white md:hidden whitespace-nowrap text-ellipsis">{user.display_name}</span>
+      <span class="ml-4 text-white md:hidden whitespace-nowrap text-ellipsis"
+        >{user.display_name}</span
+      >
     {/if}
-    
   </button>
-
 
   {#if isOpen}
     <div
       bind:this={dropdownNode}
-      class="absolute right-0 top-full z-[9999] mt-2 bg-teal-600 rounded-2xl shadow-lg w-[280px]  max-md:-translate-x-[60px]"
+      class="absolute right-0 top-full z-[9999] mt-2 bg-teal-600 rounded-2xl shadow-lg w-[280px] max-md:-translate-x-[60px]"
     >
       <nav class="flex flex-col py-6">
         <div class="flex items-center gap-3 ml-6 max-md:hidden">
@@ -135,9 +102,9 @@
           </li>
         </ul>
 
-        <hr class="w-full mt-7 border-stone-300 " />
+        <hr class="w-full mt-7 border-stone-300" />
 
-        <ul class="flex flex-col px-6 mt-6 text-sm text-white ">
+        <ul class="flex flex-col px-6 mt-6 text-sm text-white">
           <li class="flex items-center gap-4">
             <img
               loading="lazy"
@@ -154,12 +121,12 @@
               class="w-[18px] aspect-square object-contain"
               alt=""
             />
-            <button on:click={handleLogout} class="text-left">Logout</button>
+            <form action="/profile/?/logout" method="post" use:enhance>
+              <button type="submit" class="text-left">Logout</button>
+            </form>
           </li>
         </ul>
       </nav>
     </div>
   {/if}
-  
 </div>
-
