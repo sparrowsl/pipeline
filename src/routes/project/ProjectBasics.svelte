@@ -9,38 +9,33 @@
 
   const countryList = Object.values(countries);
 
-  let title = get(projectStore).title;
-  let bio = get(projectStore).bio;
-  let country = get(projectStore).country;
-  let details = get(projectStore).details;
+  // let title = get(projectStore).title;
+  // let bio = get(projectStore).bio;
+  // let country = get(projectStore).country;
+  // let details = get(projectStore).details;
 
-  let bannerImg = get(projectStore).banner_image;
-  let profileImg = get(projectStore).image;
+  // let bannerImg = get(projectStore).banner_image;
+  // let profileImg = get(projectStore).image;
 
-  let selectedTags = [...get(projectStore).tags];
+  let selectedTags = [];
 
-  //validation
-  export function validateFields() {
-    return title && bio && country && details && selectedTags.length > 0;
-  }
 
-  function updateStore() {
-    projectStore.update((data) => {
-      data.title = title;
-      data.bio = bio;
-      data.tags = selectedTags;
-      data.country = country;
-      data.details = details;
-      if (bannerImg) data.banner_image = bannerImg;
-      if (profileImg) data.image = profileImg;
-      return data;
-    });
-  }
+
+  // function updateStore() {
+  //   projectStore.update((data) => {
+  //     data.title = title;
+  //     data.bio = bio;
+  //     data.tags = selectedTags;
+  //     data.country = country;
+  //     data.details = details;
+  //     if (bannerImg) data.banner_image = bannerImg;
+  //     if (profileImg) data.image = profileImg;
+  //     return data;
+  //   });
+  // }
 
   let isOpen = false;
   let inputValue = '';
-
-  const dispatch = createEventDispatcher();
 
   let availableTags = [];
 
@@ -54,8 +49,6 @@
   function addTag(tag) {
     if (!selectedTags.some((selected) => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
-      updateStore();
-      dispatch('change', selectedTags);
     }
 
     inputValue = '';
@@ -64,8 +57,6 @@
 
   function removeTag(tag) {
     selectedTags = selectedTags.filter((t) => t.title !== tag.title);
-    updateStore();
-    dispatch('change', selectedTags);
   }
 
   $: filteredTags = availableTags.filter(
@@ -81,14 +72,10 @@
 
   async function handleBannerUpload(event) {
     const file = event.target.files[0];
-    // console.log('Banner file selected:', file);
+
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
-      // let path = await handleImageUpload(file);
-
-      // bannerImg = path;
-      // updateStore();
     }
   }
 
@@ -97,10 +84,6 @@
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      // let path = await handleImageUpload(file);
-
-      // profileImg = path;
-      // updateStore();
     }
   }
 
@@ -240,8 +223,6 @@
           <textarea
             id="projectBio"
             name="bio"
-            bind:value={bio}
-            on:change={updateStore}
             class="w-full border-2 border-lime-800 min-h-[120px] rounded-[31px] mt-2.5 p-4"
             required
           ></textarea>
@@ -273,11 +254,11 @@
               {/each}
               <input
                 type="text"
-                name="tags"
                 bind:value={inputValue}
                 placeholder="Type to add tags"
                 class="flex-grow bg-transparent border-none outline-none"
               />
+              <input type="hidden" name="tags" value={JSON.stringify(selectedTags)} />
             </div>
             <button
               on:click={toggleDropdown}
@@ -325,8 +306,6 @@
             <select
               id="projectCountry"
               name="country"
-              bind:value={country}
-              on:change={updateStore}
               class="w-full h-full pl-4 pr-10 bg-transparent border-none outline-none appearance-none"
               required
             >
@@ -370,8 +349,6 @@
           <textarea
             id="projectDetails"
             name="details"
-            bind:value={details}
-            on:change={updateStore}
             class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[140px]"
             required
           ></textarea>

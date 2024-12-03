@@ -1,11 +1,12 @@
 import { createProjectSchema } from '$lib/server/validator/projectSchema.js';
+import { uploadImageAndReturnUrl } from '$lib/server/service/imageUploadService.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
   default: async ({ request, fetch }) => {
-    const { tags, ...form } = Object.fromEntries(await request.formData());
-    console.log('Form:', form);
+    const { tags, banner_image, image, ...form } = Object.fromEntries(await request.formData());
+
     const { data, error: validationError, success } = createProjectSchema.safeParse(form);
 
     if (!success) {
@@ -13,6 +14,16 @@ export const actions = {
       const firstError = Object.values(errors).flat().at(0);
       fail(400, { error: firstError });
     }
+
+    if (banner_image) {
+      data.banner_image = await uploadImageAndReturnUrl(banner_image);
+    }
+
+    if (image) {
+      data.image = await uploadImageAndReturnUrl(image);
+    }
+
+    console.log('Data:', data);
 
     // try {
     //   const response = await fetch(`/api/projects/store`, {
@@ -29,16 +40,16 @@ export const actions = {
     // }
 
     // TODO: redirect to the new project instead of profile
-    redirect(307, '/profile');
+    //redirect(307, '/profile');
   },
 };
 
 async function handleImageUpload(file) {
-
   const timestamp = Date.now();
   const originalFileName = file.name;
   const fileExtension = originalFileName.split('.').pop();
-  const fileNameWithoutExtension = originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
+  const fileNameWithoutExtension =
+    originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
   const newFileName = `${fileNameWithoutExtension}-${timestamp}.${fileExtension}`;
 
   // Upload the image to Supabase storage
@@ -46,8 +57,6 @@ async function handleImageUpload(file) {
     method: 'POST',
     body: file,
   });
-
-  
 
   if (!response.ok) {
     const result = await response.json();

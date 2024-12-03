@@ -1,5 +1,5 @@
 import { supabase } from '$lib/server/supabase.js';
-
+import { json } from '@sveltejs/kit';
 export async function uploadImage(file) {
     const timestamp = Date.now();
   const originalFileName = file.name;
@@ -10,16 +10,24 @@ export async function uploadImage(file) {
   const { data, error } = await supabase.storage
     .from('pipeline-images')
     .upload(`uploads/${newFileName}`, file);
+    console.log(data);
+    console.log(error);
 
   if (error) {
     return json({ error: error.message }, { status: 500 });
   }
 
+  const { data: imgData } = await supabase.storage
+    .from('pipeline-images')
+    .getPublicUrl(`uploads/${newFileName}`);
+    console.log(imgData.publicUrl);
+  return imgData.publicUrl;
+
 }
 
-export async function getImageUrl(fileName) {
-  const { data, error } = await supabase.storage
-    .from('pipeline-images')
-    .getPublicUrl(`uploads/${fileName}`);
-  return data.publicUrl;
-}
+// export async function getImageUrl(fileName) {
+//   const { data, error } = await supabase.storage
+//     .from('pipeline-images')
+//     .getPublicUrl(`uploads/${fileName}`);
+//   return data.publicUrl;
+// }
