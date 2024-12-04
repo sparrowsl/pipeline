@@ -212,8 +212,51 @@
     <div class="absolute left-0 right-0 top-[84px] bg-[#0b383c] md:hidden">
       <div class="flex flex-col space-y-4 p-4">
         <!-- Mobile Search -->
-        <SearchDropdown />
+        <div class="mb-2 w-full max-w-[480px] items-center justify-center">
+          <div
+            class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] py-2 pl-4 pr-3"
+          >
+            <button
+              type="button"
+              class="mt-2 flex w-full justify-between"
+              on:click={() => ($searchBarOpen = !$searchBarOpen)}
+            >
+              <div class="font-['Inter'] text-sm text-white">Search for a project...</div>
+              <span aria-label="Search" class="relative h-7 w-7">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="MagnifyingGlass">
+                    <path
+                      id="Vector"
+                      d="M8.75 15.001C12.2018 15.001 15 12.2028 15 8.75098C15 5.2992 12.2018 2.50098 8.75 2.50098C5.29822 2.50098 2.5 5.2992 2.5 8.75098C2.5 12.2028 5.29822 15.001 8.75 15.001Z"
+                      fill="#0D909C"
+                      fill-opacity="0.3"
+                      stroke="#A0A0A0"
+                      stroke-width="1.00699"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      id="Vector_2"
+                      d="M13.1697 13.1699L17.5001 17.5004"
+                      stroke="#A0A0A0"
+                      stroke-width="1.00699"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
 
+        <!-- Other Menu Items -->
         <a href="/" class="font-['Inter'] text-base font-semibold text-white"> Tasks </a>
 
         <!-- Mobile Resources Dropdown -->
@@ -222,9 +265,9 @@
             on:click={toggleResources}
             class="flex w-full items-center justify-between border-b border-cyan-800 px-4 py-4 focus:outline-none"
           >
-            <span class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white"
-              >Resources</span
-            >
+            <span class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white">
+              Resources
+            </span>
             <svg
               width="13"
               height="12"
