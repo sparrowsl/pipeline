@@ -14,11 +14,23 @@
     <h2 class="text-[#08292c] text-[30.43px] font-semibold font-['Inter'] leading-[54.51px]">
       Edit Project - {project.title}
     </h2>
-    
   </div>
 </div>
 
 <form action="" method="post" enctype="multipart/form-data" use:enhance>
+  <input
+    type="hidden"
+   
+    name="old_image"
+    bind:value={project.image}
+    class="border border-lime-800 border-solid rounded-full px-6 py-2 w-2/3 max-w-lg min-h-[48px] focus:outline-none focus:border-[#0b383c] transition-colors duration-200 max-md:w-[100%]"
+  />
+  <input
+    type="hidden"
+    name="old_banner"
+    bind:value={project.banner_image}
+    class="border border-lime-800 border-solid rounded-full px-6 py-2 w-2/3 max-w-lg min-h-[48px] focus:outline-none focus:border-[#0b383c] transition-colors duration-200 max-md:w-[100%]"
+  />
   <div
     class="flex flex-row justify-center items-start gap-10 px-10 py-5 rounded-[37px] max-md:flex-col max-md:gap-5 max-md:px-5 max-md:mt-10 flex-wrap"
   >

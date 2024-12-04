@@ -23,9 +23,10 @@ export async function uploadImage(file, supabase) {
   return imgData.publicUrl;
 }
 
-// export async function getImageUrl(fileName) {
-//   const { data, error } = await supabase.storage
-//     .from('pipeline-images')
-//     .getPublicUrl(`uploads/${fileName}`);
-//   return data.publicUrl;
-// }
+export async function deleteImage(fileName, supabase) {
+  const { data, error } = await supabase.storage
+    .from('pipeline-images')
+    .remove([`uploads/${fileName}`]);
+  if (error) throw new Error(error.message);
+  return data;
+}

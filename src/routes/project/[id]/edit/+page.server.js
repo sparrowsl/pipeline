@@ -1,6 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { createProjectSchema } from '$lib/server/validator/projectSchema.js';
-import { uploadImageAndReturnUrl } from '$lib/server/service/imageUploadService.js';
+import { uploadImageAndReturnUrl, removeImage } from '$lib/server/service/imageUploadService.js';
 
 export async function load({ locals, params, fetch }) {
   let user = locals.authUser;
@@ -18,22 +18,20 @@ export async function load({ locals, params, fetch }) {
 
     const project = data.project;
 
-    return { project }; 
+    return { project };
   } catch (error) {
     console.error('Failed to fetch project:', error);
     throw new Error('Failed to load project');
   }
 }
 
-
 export const actions = {
   default: async ({ request, locals, params, fetch }) => {
-    let user = locals.authUser;
-    let supabase = locals.supabase;
     let id = params.id;
-    
 
-    const { tags, banner_image, image, ...form } = Object.fromEntries(await request.formData());
+    const { tags, old_image, old_banner, banner_image, image, ...form } = Object.fromEntries(
+      await request.formData(),
+    );
 
     const { data, error: validationError, success } = createProjectSchema.safeParse(form);
 
@@ -45,14 +43,23 @@ export const actions = {
 
     data.tags = tags;
 
-    // if (banner_image.name) {
-    //   data.banner_image = await uploadImageAndReturnUrl(banner_image, supabase);
-    // }
+    if (banner_image?.size > 0) {
+      if (old_banner) {
+        await removeImage(old_banner, locals.supabase);
+      }
+      data.banner_image = await uploadImageAndReturnUrl(banner_image, locals.supabase);
+    } else {
+      data.banner_image = old_banner;
+    }
 
-    // if (image.name) {
-    //   data.image = await uploadImageAndReturnUrl(image, supabase);
-    // }
-
+    if (image?.size > 0) {
+      if (old_image) {
+        await removeImage(old_image, locals.supabase);
+      }
+      data.image = await uploadImageAndReturnUrl(image, locals.supabase);
+    } else {
+      data.image = old_image;
+    }
 
     try {
       const response = await fetch(`/api/projects/${id}`, {
@@ -68,9 +75,6 @@ export const actions = {
       fail(500, 'Failed to save project. Please try again later.');
     }
 
-    //redirect to the project
-    //redirect(307, '/profile');
-
-
-  }
+    redirect(307, `/project/${id}`);
+  },
 };
