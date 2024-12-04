@@ -1,48 +1,17 @@
 <script>
-  import { projectStore } from '../../stores/projectStore.js';
-  import { get } from 'svelte/store';
-  import { createEventDispatcher } from 'svelte';
-
   import { onMount } from 'svelte';
-  let Editor;
   import { countries } from 'countries-list';
 
-  // const countryList = Object.values(countries);
-  const countryList = Object.values(countries).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  export let project = {};
 
-  // let title = get(projectStore).title;
-  // let bio = get(projectStore).bio;
-  // let country = get(projectStore).country;
-  // let details = get(projectStore).details;
+  const countryList = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
 
-  // let bannerImg = get(projectStore).banner_image;
-  // let profileImg = get(projectStore).image;
-
-  let selectedTags = [];
-
-
-
-  // function updateStore() {
-  //   projectStore.update((data) => {
-  //     data.title = title;
-  //     data.bio = bio;
-  //     data.tags = selectedTags;
-  //     data.country = country;
-  //     data.details = details;
-  //     if (bannerImg) data.banner_image = bannerImg;
-  //     if (profileImg) data.image = profileImg;
-  //     return data;
-  //   });
-  // }
+  let selectedTags = project.tags ? [...project.tags] : [];
 
   let isOpen = false;
   let inputValue = '';
 
   let availableTags = [];
-
-  let currentSection = 'basics';
 
   function toggleDropdown(event) {
     event.preventDefault();
@@ -68,8 +37,8 @@
       !selectedTags.some((selected) => selected.title === tag.title),
   );
 
-  let ProjectBannerImage = null;
-  let ProjectProfileImage = null;
+  let ProjectBannerImage = project.banner_image || null;
+  let ProjectProfileImage = project.image || null;
 
   const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 
@@ -108,30 +77,8 @@
     } catch (error) {}
   }
 
-  // async function handleImageUpload(file) {
-  //   // Upload the image to Supabase storage
-  //   const formData = new FormData();
-  //   formData.append('file', file);
-
-  //   const response = await fetch('/api/file-upload', {
-  //     method: 'POST',
-  //     body: formData,
-  //   });
-
-  //   if (!response.ok) {
-  //     const result = await response.json();
-  //     throw new Error(result.message || 'Failed to upload image');
-  //   }
-
-  //   return response.json().then((data) => {
-  //     return data.url;
-  //   });
-  // }
-
   onMount(async () => {
     fetchAllCategories();
-    const module = await import('novel-svelte');
-    Editor = module.Editor;
   });
 </script>
 
@@ -209,6 +156,7 @@
             type="text"
             id="projectTitle"
             name="title"
+            bind:value={project.title}
             class="w-full border-2 border-lime-800 min-h-[50px] rounded-[75px] mt-2.5 px-4"
             required
           />
@@ -226,6 +174,7 @@
           <textarea
             id="projectBio"
             name="bio"
+            bind:value={project.bio}
             class="w-full border-2 border-lime-800 min-h-[120px] rounded-[31px] mt-2.5 p-4"
             required
           ></textarea>
@@ -309,10 +258,11 @@
             <select
               id="projectCountry"
               name="country"
+              bind:value={project.country}
               class="w-full h-full pl-4 pr-10 bg-transparent border-none outline-none appearance-none"
               required
             >
-            <option value="" disabled selected hidden>--- Select a country ---</option>
+              <option value="" disabled selected hidden>--- Select a country ---</option>
               {#each countryList as countryOption (countryOption.name)}
                 <option value={countryOption.name}>{countryOption.name}</option>
               {/each}
@@ -352,6 +302,7 @@
           <textarea
             id="projectDetails"
             name="details"
+            bind:value={project.details}
             class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[140px]"
             required
           ></textarea>
