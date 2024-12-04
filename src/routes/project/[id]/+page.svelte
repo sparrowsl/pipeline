@@ -23,7 +23,8 @@
   let banner;
   export let data;
 
-  const defaultImageUrl = 'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
+  const defaultImageUrl =
+    'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
 
   let isFollowing = false;
   let isAddingUpdate = false;
@@ -134,7 +135,7 @@
       }
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
 
       projectResource = data.resources;
     } catch (error) {
@@ -207,15 +208,15 @@
   });
 </script>
 
-<div class="flex items-start max-w-[1500px] mx-auto px-4">
-  <div class="flex flex-col w-full max-w-[40%] pr-4 sticky top-0">
-    <section class="flex relative flex-col mt-6 w-full mb-[64px]">
+<div class="mx-auto flex max-w-[1500px] items-start px-4">
+  <div class="sticky top-0 flex w-full max-w-[40%] flex-col pr-4">
+    <section class="relative mb-[64px] mt-6 flex w-full flex-col">
       <!-- svelte-ignore a11y-no-redundant-roles -->
       <!-- svelte-ignore a11y-img-redundant-alt -->
       <img
         loading="lazy"
         src={banner}
-        class="flex z-0 w-full bg-stone-300 h-[250px] rounded-[24px] max-md:max-w-full"
+        class="z-0 flex h-[250px] w-full rounded-[24px] bg-stone-300 max-md:max-w-full"
         role="img"
         aria-label="Project hero image"
         alt="Project image"
@@ -223,23 +224,23 @@
       <!-- svelte-ignore a11y-img-redundant-alt -->
       <img
         loading="lazy"
-        class="absolute z-10 w-[120px] h-[120px] rounded-full outline outline-4 outline-white"
+        class="absolute z-10 h-[120px] w-[120px] rounded-full outline outline-4 outline-white"
         style="top: 97%; left: 50px; transform: translateY(-50%);"
         src={image}
         alt="Project overlay image"
       />
     </section>
 
-    <section class="flex flex-col w-full mt-3">
+    <section class="mt-3 flex w-full flex-col">
       <div class="flex justify-between">
-        <h1 class="text-3xl font-semibold text-black break-all max-md:text-2xl">
+        <h1 class="break-all text-3xl font-semibold text-black max-md:text-2xl">
           {project.title || 'Project Title'}
         </h1>
-        <div class="flex items-center gap-1 mt-2 text-base text-neutral-600">
+        <div class="mt-2 flex items-center gap-1 text-base text-neutral-600">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/edd6d143a10aa89a67f0101c84563e276eb2ea6bc943000847a62b3bcaeb9863?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
             alt="Date icon"
-            class="object-contain w-[24px] h-[24px]"
+            class="h-[24px] w-[24px] object-contain"
           />
           <time datetime="2024-10">Created: October 2024</time>
         </div>
@@ -249,11 +250,11 @@
       </p>
     </section>
 
-    <section class="flex flex-wrap items-center gap-3 mt-2">
+    <section class="mt-2 flex flex-wrap items-center gap-3">
       <div class="flex flex-wrap gap-2 text-lg text-lime-800">
         {#if project.tags && project.tags.length > 0}
           {#each project.tags as tag}
-            <span class="px-2 py-0.5 text-base border-2 rounded-md border-[#0b383c] max-md:px-3">
+            <span class="rounded-md border-2 border-[#0b383c] px-2 py-0.5 text-base max-md:px-3">
               {tag.title}
             </span>
           {/each}
@@ -262,30 +263,30 @@
     </section>
 
     {#if user}
-      <div class="flex items-center gap-3 mt-6">
+      <div class="mt-6 flex items-center gap-3">
         {#if user.id === project.user_id}
           <a
             href="/project/{id}/edit"
-            class="w-full py-4 text-base font-semibold text-center text-white bg-[#0b383c] rounded-full"
+            class="w-full rounded-full bg-[#0b383c] py-4 text-center text-base font-semibold text-white"
           >
             <button>EDIT PROJECT</button>
           </a>
           <button
             on:click={openUpdatePopup}
-            class="w-full py-4 text-base font-semibold text-center text-black rounded-full bg-lime-300"
+            class="w-full rounded-full bg-lime-300 py-4 text-center text-base font-semibold text-black"
           >
             ADD UPDATE
           </button>
         {:else}
           <a
             href="/project/{id}/contribute"
-            class="bg-[#0b383c] text-[#e9f5d3] text-center text-base font-semibold py-4 rounded-full w-[50%]"
+            class="w-[50%] rounded-full bg-[#0b383c] py-4 text-center text-base font-semibold text-[#e9f5d3]"
           >
             <button>CONTRIBUTE</button>
           </a>
           <button
             on:click={toggleFollow}
-            class="border-2 text-center text-base font-semibold py-4 rounded-full w-[50%]"
+            class="w-[50%] rounded-full border-2 py-4 text-center text-base font-semibold"
             class:bg-[#e9f5d3]={isFollowing}
             class:text-black={isFollowing}
           >
@@ -297,38 +298,38 @@
 
     {#if showUpdatePopup}
       <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
+        <div class="relative w-[400px] max-w-full rounded-lg bg-white p-8 shadow-lg">
           <!-- Close Button -->
           <button
             on:click={closeUpdatePopup}
-            class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-gray-700"
+            class="absolute right-2 top-2 text-2xl font-bold text-gray-500 hover:text-gray-700"
             style="z-index: 1000;"
           >
             &times;
           </button>
 
           <h2 class="mb-4 text-xl font-bold">Add Update</h2>
-          <label class="block mb-2 text-sm font-medium text-gray-700">
+          <label class="mb-2 block text-sm font-medium text-gray-700">
             Title
             <input
               type="text"
               bind:value={updateTitle}
-              class="w-full p-2 mt-1 border rounded-lg"
+              class="mt-1 w-full rounded-lg border p-2"
               require
             />
           </label>
-          <label class="block mb-4 text-sm font-medium text-gray-700">
+          <label class="mb-4 block text-sm font-medium text-gray-700">
             Body
             <textarea
               bind:value={updateBody}
               rows="4"
-              class="w-full p-2 mt-1 border rounded-lg resize-none"
+              class="mt-1 w-full resize-none rounded-lg border p-2"
               require
             ></textarea>
           </label>
           <button
             on:click={submitUpdate}
-            class="w-full py-2 text-black rounded-lg bg-lime-300"
+            class="w-full rounded-lg bg-lime-300 py-2 text-black"
             disabled={isAddingUpdate}
           >
             {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
@@ -338,21 +339,21 @@
     {/if}
 
     <section
-      class="flex flex-wrap gap-6 justify-between items-center p-6 mt-8 w-full bg-lime-300 rounded-[20px] text-teal-950 max-md:mt-6"
+      class="mt-8 flex w-full flex-wrap items-center justify-between gap-6 rounded-[20px] bg-lime-300 p-6 text-teal-950 max-md:mt-6"
     >
-      <div class="flex flex-col items-center w-[120px]">
+      <div class="flex w-[120px] flex-col items-center">
         <div class="text-5xl font-semibold max-md:text-3xl">6</div>
         <div class="text-sm">Contributors</div>
       </div>
-      <div class="w-px h-[100px] bg-neutral-400"></div>
-      <div class="flex flex-col items-center w-[120px]">
+      <div class="h-[100px] w-px bg-neutral-400"></div>
+      <div class="flex w-[120px] flex-col items-center">
         <div class="text-5xl font-semibold max-md:text-3xl">
           5<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
         </div>
         <div class="text-sm">DPG Status</div>
       </div>
-      <div class="w-px h-[100px] bg-neutral-400"></div>
-      <div class="flex flex-col items-center w-[120px]">
+      <div class="h-[100px] w-px bg-neutral-400"></div>
+      <div class="flex w-[120px] flex-col items-center">
         <div class="text-5xl font-semibold max-md:text-3xl">
           ${amountFormat(project.current_funding || 0)}
         </div>
@@ -363,18 +364,18 @@
     </section>
   </div>
 
-  <div class="flex flex-col w-[80%] max-w-[60%] bg-white pl-4 overflow-y-auto">
+  <div class="flex w-[80%] max-w-[60%] flex-col overflow-y-auto bg-white pl-4">
     <main
-      class="flex flex-col items-start px-4 py-8 bg-white rounded-[20px] max-md:px-4 max-md:mt-6"
+      class="flex flex-col items-start rounded-[20px] bg-white px-4 py-8 max-md:mt-6 max-md:px-4"
     >
       <ProjectNav
-        class="flex items-start w-full overflow-x-auto text-sm flex-nowrap whitespace-nowrap"
+        class="flex w-full flex-nowrap items-start overflow-x-auto whitespace-nowrap text-sm"
         {navItems}
         bind:activeItem={activeNavItem}
         on:navChange={handleNavChange}
       />
 
-      <section class="flex flex-col items-center w-full max-w-full mt-8 overflow-hidden">
+      <section class="mt-8 flex w-full max-w-full flex-col items-center overflow-hidden">
         {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
         {:else if activeNavItem === 'dpgStatus'}
@@ -392,47 +393,64 @@
         {:else if activeNavItem === 'contributors'}
           <Contributors />
 
-          <div class="inline-flex items-center self-stretch justify-start gap-1">
-            <div class="text-center text-black text-[32px] font-normal font-['Roboto'] leading-loose">
+          <div class="inline-flex items-center justify-start gap-1 self-stretch">
+            <div
+              class="text-center font-['Roboto'] text-[32px] font-normal leading-loose text-black"
+            >
               <slot name="header">Resources</slot>
             </div>
           </div>
-          
 
-         {#if projectResource.length > 0}
-         {#each projectResource as resource}
-           <div class="flex items-start justify-start w-full px-10 py-5 mb-4 bg-white border border-gray-100 rounded-lg shadow-md">
-             <!-- svelte-ignore a11y-missing-attribute -->
-             <img class="w-[120px] h-[120px] p-[15px] rounded-full border-green -mt-4" src={resource.user_profile.photo || defaultImageUrl} />
-               
-             <div class="flex flex-col items-start justify-start w-full ml-6">
-               <div class="flex items-center justify-between w-full">
-                 <div class="flex items-center">
-                   <div class="text-black text-[19px] font-semibold font-['Inter']">
-                     {resource.user_profile.name}
-                   </div>
-                   <div class="px-[9.65px] py-[6.44px] bg-[#e9f5d3] rounded-md justify-center items-center gap-[6.44px] flex ml-2">
-                     <div class="text-[#516027] text-[10.46px] font-semibold font-['Inter'] leading-[10.46px]">
-                       {resource.type_resource.charAt(0).toUpperCase() + resource.type_resource.slice(1)}
-                     </div>
-                   </div>
-                 </div>
-                 <a href="/">
-                 <button class="px-[9.06px] py-[5.12px] rounded-[39.71px] border-2 border-[#516027] justify-center items-center gap-[7.94px] flex">
-                   <div class="text-[#516027] text-[10px] font-normal font-['Inter'] leading-tight">View  {resource.type_resource.charAt(0).toUpperCase() + resource.type_resource.slice(1)}</div>
-                 </button>
-               </a>
-               </div>
-               <div class="text-[#c4c4c4] text-[17px] font-normal font-['Inter'] mt-4">
-                 {resource.reason}
-               </div>
-             </div>
-           </div>
-         {/each}
-       {:else}
-         <p>No resources</p>
-       {/if}
-          
+          {#if projectResource.length > 0}
+            {#each projectResource as resource}
+              <div
+                class="mb-4 flex w-full items-start justify-start rounded-lg border border-gray-100 bg-white px-10 py-5 shadow-md"
+              >
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <img
+                  class="border-green -mt-4 h-[120px] w-[120px] rounded-full p-[15px]"
+                  src={resource.user_profile.photo || defaultImageUrl}
+                />
+
+                <div class="ml-6 flex w-full flex-col items-start justify-start">
+                  <div class="flex w-full items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="font-['Inter'] text-[19px] font-semibold text-black">
+                        {resource.user_profile.name}
+                      </div>
+                      <div
+                        class="ml-2 flex items-center justify-center gap-[6.44px] rounded-md bg-[#e9f5d3] px-[9.65px] py-[6.44px]"
+                      >
+                        <div
+                          class="font-['Inter'] text-[10.46px] font-semibold leading-[10.46px] text-[#516027]"
+                        >
+                          {resource.type_resource.charAt(0).toUpperCase() +
+                            resource.type_resource.slice(1)}
+                        </div>
+                      </div>
+                    </div>
+                    <a href="/">
+                      <button
+                        class="flex items-center justify-center gap-[7.94px] rounded-[39.71px] border-2 border-[#516027] px-[9.06px] py-[5.12px]"
+                      >
+                        <div
+                          class="font-['Inter'] text-[10px] font-normal leading-tight text-[#516027]"
+                        >
+                          View {resource.type_resource.charAt(0).toUpperCase() +
+                            resource.type_resource.slice(1)}
+                        </div>
+                      </button>
+                    </a>
+                  </div>
+                  <div class="mt-4 font-['Inter'] text-[17px] font-normal text-[#c4c4c4]">
+                    {resource.reason}
+                  </div>
+                </div>
+              </div>
+            {/each}
+          {:else}
+            <p>No resources</p>
+          {/if}
         {/if}
       </section>
     </main>

@@ -150,15 +150,15 @@
 </script>
 
 <div class="w-full bg-[#d1ea9a]/90 py-16">
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-[#08292c] text-[45.43px] font-semibold font-['PP Mori'] leading-[54.51px]">
+  <div class="mx-auto max-w-4xl text-center">
+    <h1 class="font-['PP Mori'] text-[45.43px] font-semibold leading-[54.51px] text-[#08292c]">
       Let's Build The Future Together
     </h1>
   </div>
 </div>
 
 <div
-  class="relative flex flex-col items-left justify-left gap-2 p-4 text-left text-black min-h-[217px] ml-[290px]"
+  class="items-left justify-left relative ml-[290px] flex min-h-[217px] flex-col gap-2 p-4 text-left text-black"
 >
   <h1 class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
     Edit Project - {title}
@@ -283,16 +283,16 @@
 </main> -->
 
 <main
-  class="flex flex-row justify-center items-start gap-10 px-10 py-5 bg-white rounded-[37px] max-md:flex-col max-md:gap-5 max-md:px-5 max-md:mt-10"
+  class="flex flex-row items-start justify-center gap-10 rounded-[37px] bg-white px-10 py-5 max-md:mt-10 max-md:flex-col max-md:gap-5 max-md:px-5"
 >
   <!-- Left Column: Basics -->
-  <aside class="lex flex-col flex-1 w-full max-w-[600px]">
+  <aside class="lex w-full max-w-[600px] flex-1 flex-col">
     <h2 class="mb-4 text-2xl font-semibold">Basics</h2>
     <ProjectBasics />
   </aside>
 
   <!-- Right Column: Links and Funding -->
-  <section class="flex flex-col flex-1 w-full max-w-[600px] gap-10 space-y-28">
+  <section class="flex w-full max-w-[600px] flex-1 flex-col gap-10 space-y-28">
     <!-- Links Section -->
     <div class="flex flex-col">
       <h2 class="mb-5 text-2xl font-semibold">Links</h2>
@@ -311,46 +311,46 @@
     <div class="flex flex-col">
       <h2 class="mb-5 text-2xl font-semibold">Funding</h2>
       <div class="flex flex-col gap-6">
-        <div class="flex items-center w-full">
+        <div class="flex w-full items-center">
           <label for="fundingGoal" class="w-1/3 text-lg font-semibold">Funding Goal</label>
           <input
             id="fundingGoal"
             bind:value={funding_goal}
             on:change={updateStore}
             type="number"
-            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
             aria-label="Funding Goal"
           />
         </div>
 
         <hr class="my-8 border-neutral-300" />
 
-        <div class="flex items-center mt-10 mb-6">
+        <div class="mb-6 mt-10 flex items-center">
           <label for="bankAccount" class="w-1/3 text-lg font-medium">Bank Account</label>
           <input
             id="bankAccount"
             bind:value={bank_acct}
             on:change={updateStore}
             type="text"
-            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
             aria-label="Bank Account"
           />
         </div>
 
-        <div class="flex items-center justify-center my-4 text-neutral-400">
+        <div class="my-4 flex items-center justify-center text-neutral-400">
           <hr class="flex-grow border-t-2 border-neutral-300" />
           <span class="px-4 text-lg font-medium">or</span>
           <hr class="flex-grow border-t-2 border-neutral-300" />
         </div>
 
-        <div class="flex items-center mt-6">
+        <div class="mt-6 flex items-center">
           <label for="walletAddress" class="w-1/3 text-lg font-medium">Wallet Address</label>
           <input
             id="walletAddress"
             bind:value={wallet_address}
             on:change={updateStore}
             type="text"
-            class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
             aria-label="Wallet Address"
           />
         </div>
@@ -361,17 +361,17 @@
   <!-- Action Buttons -->
 </main>
 
-<div class="flex justify-between w-full max-w-[1200px] mx-auto mt-10">
+<div class="mx-auto mt-10 flex w-full max-w-[1200px] justify-between">
   <button
     on:click={navigateToPrevious}
-    class="px-[112px] py-4 text-xl font-medium text-lime-800 bg-white border-2 border-lime-800 rounded-[82px] max-md:px-5"
+    class="rounded-[82px] border-2 border-lime-800 bg-white px-[112px] py-4 text-xl font-medium text-lime-800 max-md:px-5"
   >
     Previous
   </button>
 
   <button
     on:click={updateProject}
-    class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
+    class="rounded-[82px] bg-lime-800 px-[112px] py-4 text-xl font-medium text-lime-100 max-md:px-5"
   >
     {loading ? 'Updating...' : 'Update'}
   </button>
