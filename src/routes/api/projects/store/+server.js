@@ -3,12 +3,12 @@ import { json } from '@sveltejs/kit';
 import { storeProject } from '$lib/server/service/projectService.js';
 
 export async function POST({ request, locals }) {
+  console.log('store project');
   let user = locals.authUser;
   let supabase = locals.supabase;
 
   try {
     const projectData = await request.json();
-    console.log(projectData);
 
     await storeProject(user, projectData, supabase);
 

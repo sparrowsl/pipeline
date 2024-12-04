@@ -108,25 +108,25 @@
     } catch (error) {}
   }
 
-  async function handleImageUpload(file) {
-    // Upload the image to Supabase storage
-    const formData = new FormData();
-    formData.append('file', file);
+  // async function handleImageUpload(file) {
+  //   // Upload the image to Supabase storage
+  //   const formData = new FormData();
+  //   formData.append('file', file);
 
-    const response = await fetch('/api/file-upload', {
-      method: 'POST',
-      body: formData,
-    });
+  //   const response = await fetch('/api/file-upload', {
+  //     method: 'POST',
+  //     body: formData,
+  //   });
 
-    if (!response.ok) {
-      const result = await response.json();
-      throw new Error(result.message || 'Failed to upload image');
-    }
+  //   if (!response.ok) {
+  //     const result = await response.json();
+  //     throw new Error(result.message || 'Failed to upload image');
+  //   }
 
-    return response.json().then((data) => {
-      return data.url;
-    });
-  }
+  //   return response.json().then((data) => {
+  //     return data.url;
+  //   });
+  // }
 
   onMount(async () => {
     fetchAllCategories();

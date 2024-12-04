@@ -1,17 +1,16 @@
-import { supabase } from '$lib/server/supabase.js';
+// import { supabase } from '$lib/server/supabase.js';
 import { json } from '@sveltejs/kit';
-export async function uploadImage(file) {
-    const timestamp = Date.now();
+export async function uploadImage(file, supabase) {
+  const timestamp = Date.now();
   const originalFileName = file.name;
   const fileExtension = originalFileName.split('.').pop();
-  const fileNameWithoutExtension = originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
+  const fileNameWithoutExtension =
+    originalFileName.substring(0, originalFileName.lastIndexOf('.')) || originalFileName;
   const newFileName = `${fileNameWithoutExtension}-${timestamp}.${fileExtension}`;
 
   const { data, error } = await supabase.storage
     .from('pipeline-images')
     .upload(`uploads/${newFileName}`, file);
-    console.log(data);
-    console.log(error);
 
   if (error) {
     return json({ error: error.message }, { status: 500 });
@@ -20,9 +19,8 @@ export async function uploadImage(file) {
   const { data: imgData } = await supabase.storage
     .from('pipeline-images')
     .getPublicUrl(`uploads/${newFileName}`);
-    console.log(imgData.publicUrl);
-  return imgData.publicUrl;
 
+  return imgData.publicUrl;
 }
 
 // export async function getImageUrl(fileName) {

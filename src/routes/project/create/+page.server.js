@@ -4,7 +4,8 @@ import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-  default: async ({ request, fetch }) => {
+  default: async ({ request, locals, fetch }) => {
+    let supabase = locals.supabase;
     const { tags, banner_image, image, ...form } = Object.fromEntries(await request.formData());
 
     const { data, error: validationError, success } = createProjectSchema.safeParse(form);
@@ -15,32 +16,32 @@ export const actions = {
       fail(400, { error: firstError });
     }
 
-    if (banner_image) {
-      data.banner_image = await uploadImageAndReturnUrl(banner_image);
+    data.tags = tags;
+
+    if (banner_image.name) {
+      data.banner_image = await uploadImageAndReturnUrl(banner_image, supabase);
     }
 
-    if (image) {
-      data.image = await uploadImageAndReturnUrl(image);
+    if (image.name) {
+      data.image = await uploadImageAndReturnUrl(image, supabase);
     }
 
-    console.log('Data:', data);
+    try {
+      const response = await fetch(`/api/projects/store`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data }),
+      });
 
-    // try {
-    //   const response = await fetch(`/api/projects/store`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(data),
-    //   });
+      if (!response.ok) {
+        fail(400, 'Failed to save project');
+      }
+    } catch (_) {
+      fail(500, 'Failed to save project. Please try again later.');
+    }
 
-    //   if (!response.ok) {
-    //     fail(400, 'Failed to save project');
-    //   }
-    // } catch (_) {
-    //   fail(500, 'Failed to save project. Please try again later.');
-    // }
-
-    // TODO: redirect to the new project instead of profile
-    //redirect(307, '/profile');
+    //TODO: redirect to the new project instead of profile
+    redirect(307, '/profile');
   },
 };
 

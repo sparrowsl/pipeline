@@ -177,9 +177,18 @@ export async function getUserBookmarkedProjects(userId, page, limit, supabase) {
 }
 
 export async function storeProject(user, projectData, supabase) {
-  //const validatedData = projectSchema.parse(projectData);
+  let { tags, ...projectFields } = projectData.data;
 
-  const { tags, ...projectFields } = projectData;
+  if (typeof tags === 'string') {
+    try {
+      tags = JSON.parse(tags);
+    } catch (error) {
+      console.error('Failed to parse tags string:', error);
+      tags = [];
+    }
+  } else if (!Array.isArray(tags)) {
+    tags = tags ? [tags] : [];
+  }
 
   const project = await createProject({ ...projectFields, user_id: user.id }, supabase);
 
