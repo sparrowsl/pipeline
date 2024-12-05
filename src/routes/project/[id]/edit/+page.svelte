@@ -1,378 +1,228 @@
 <script>
-  import Nav from '../../../../lib/Nav.svelte';
-  import Footer from '../../../../lib/Footer.svelte';
   import ProjectBasics from '../../ProjectBasics.svelte';
-  import TeamForm from '../../../../lib/TeamForm.svelte';
-  import { projectStore } from '../../../../stores/projectStore.js';
-  import CreatorProfile from '../../../../lib/CreatorProfile.svelte';
-  import { get } from 'svelte/store';
-  import { page } from '$app/stores';
-  import LinkInput from '../../LinkInput.svelte';
-  import UserNav from '../../../../lib/UserNav.svelte';
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
 
-  let id;
-  $: id = $page.params.id;
+  import { enhance } from '$app/forms';
+
+  export let data;
+  const { project } = data;
 
   let loading = false;
-  let project = {};
-  let title = '';
-
-  let activeNavItem = 'Basics';
-  export let data;
-
-  const navItems = [
-    { id: 'Basics', label: 'Basics', width: '184px' },
-    { id: 'Links', label: 'Links', width: '184px' },
-    { id: 'Funding', label: 'Funding', width: '184px' },
-  ];
-
-  let funding_goal,
-    bank_acct,
-    wallet_address,
-    email,
-    portfolio,
-    github,
-    linkedin,
-    twitter,
-    website,
-    other;
-
-  function handleNavChange(event) {
-    activeNavItem = event.detail;
-  }
-
-  function navigateToPrevious() {
-    const currentIndex = navItems.findIndex((item) => item.id === activeNavItem);
-    if (currentIndex > 0) {
-      activeNavItem = navItems[currentIndex - 1].id;
-    }
-  }
-
-  function navigateToNext() {
-    const currentIndex = navItems.findIndex((item) => item.id === activeNavItem);
-    if (currentIndex < navItems.length - 1) {
-      activeNavItem = navItems[currentIndex + 1].id;
-    }
-  }
-
-  async function getSingleProject() {
-    try {
-      loading = true;
-      const response = await fetch(`/api/projects/singleProject/${id}`);
-      if (!response.ok) throw new Error(response.statusText);
-
-      const { project: fetchedProject } = await response.json();
-      console.log(fetchedProject);
-      projectStore.set(fetchedProject); // Initialize projectStore with data
-
-      title = fetchedProject.title || 'Loading!!';
-
-      // Destructure to set local variables for form bindings
-      ({
-        funding_goal,
-        bank_acct,
-        wallet_address,
-        email,
-        portfolio,
-        github,
-        linkedin,
-        twitter,
-        website,
-        other,
-      } = fetchedProject);
-    } catch (error) {
-      alert(`Error loading project: ${error.message}`);
-    } finally {
-      loading = false;
-    }
-  }
-
-  function updateStore() {
-    projectStore.update((project) => ({
-      ...project,
-      funding_goal,
-      bank_acct,
-      wallet_address,
-      email,
-      portfolio,
-      github,
-      linkedin,
-      twitter,
-      website,
-      other,
-    }));
-  }
-
-  const updateProject = async (event) => {
-    try {
-      loading = true;
-
-      const projectData = get(projectStore);
-
-      const response = await fetch('/api/projects/store', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(projectData),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert('Project updated successfully!');
-        goto('/profile');
-      } else {
-        alert(`Project creation error: ${result.error}`);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      loading = false;
-    }
-  };
-
-  let imageLoaded = false;
-
-  onMount(async () => {
-    getSingleProject();
-    const img = new Image();
-    img.src =
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/e31ab375db047d220f54398e16c4cc0f0001d612779f0974e0d8c39c0fea9107?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8';
-    img.onload = () => {
-      imageLoaded = true;
-    };
-  });
 </script>
 
-<div class="w-full bg-[#d1ea9a]/90 py-16">
+<div class="mb-10 w-full bg-[#d1ea9a]/90 py-16">
   <div class="mx-auto max-w-4xl text-center">
-    <h1 class="font-['PP Mori'] text-[45.43px] font-semibold leading-[54.51px] text-[#08292c]">
-      Let's Build The Future Together
-    </h1>
+    <h2 class="font-['Inter'] text-[30.43px] font-semibold leading-[54.51px] text-[#08292c]">
+      Edit Project - {project.title}
+    </h2>
   </div>
 </div>
 
-<div
-  class="items-left justify-left relative ml-[290px] flex min-h-[217px] flex-col gap-2 p-4 text-left text-black"
->
-  <h1 class="text-4xl font-semibold leading-[99px] max-md:text-4xl max-md:leading-[49px]">
-    Edit Project - {title}
-  </h1>
-</div>
-
-<!-- <main
-  class="flex flex-col justify-center items-center px-10 py-5 mt-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10"
->
-  <UserNav
-    {navItems}
-    bind:activeItem={activeNavItem}
-    on:navChange={handleNavChange}
+<form action="" method="post" enctype="multipart/form-data" use:enhance>
+  <input
+    type="hidden"
+    name="old_image"
+    bind:value={project.image}
+    class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
   />
-
-  <section
-    class="flex overflow-hidden flex-col items-center mt-5 max-w-full w-[80%] max-md:mt-10"
+  <input
+    type="hidden"
+    name="old_banner"
+    bind:value={project.banner_image}
+    class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+  />
+  <div
+    class="flex flex-row flex-wrap items-start justify-center gap-10 rounded-[37px] px-10 py-5 max-md:mt-10 max-md:flex-col max-md:gap-5 max-md:px-5"
   >
-    {#if activeNavItem === "Basics"}
-      <ProjectBasics />
-    {:else if activeNavItem === "Links"}
-      <section
-        class="flex flex-col justify-center mt-14 w-full text-3xl font-semibold max-w-[1038px] max-md:mt-10 max-md:max-w-full"
-      >
-        <form>
-          <LinkInput label="Email" bind:value={email} />
-          <LinkInput label="Portfolio" bind:value={portfolio} />
-          <LinkInput label="Github" bind:value={github} />
-          <LinkInput label="LinkedIn" bind:value={linkedin} />
-          <LinkInput label="X" bind:value={twitter} />
-          <LinkInput label="Website" bind:value={website} />
-          <LinkInput label="Others" bind:value={other} />
-        </form>
-      </section>
-    {:else if activeNavItem === "Funding"}
-      <section class="w-full max-w-[1038px] mx-auto mt-10 text-black">
-        <div class="flex flex-col mb-10">
-          <h2 class="mb-6 text-2xl font-semibold">Payout Method</h2>
+    <!-- Left Section: Project Basics -->
+    <section class="flex w-full max-w-[600px] flex-1 flex-col">
+      <div class="rounded-xl border border-neutral-100 bg-neutral-50 p-4 shadow-md">
+        <h2 class="mb-4 text-2xl font-semibold text-black">Project Basics</h2>
+        <ProjectBasics {project} />
+      </div>
+    </section>
 
-          <div class="flex items-center">
-            <label for="fundingGoal" class="w-1/3 text-lg font-semibold"
-              >Funding Goal</label
+    <!-- Right Section: Links and Funding -->
+    <section class="flex w-full max-w-[600px] flex-1 flex-col gap-10">
+      <!-- Links Section -->
+      <div class="rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md">
+        <h2 class="mb-4 text-2xl font-semibold text-black">Links</h2>
+        <div class="flex flex-col gap-4 bg-white p-2">
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="email"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
             >
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              bind:value={project.email}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="github"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
+            >
+              Github
+            </label>
+
+            <input
+              type="url"
+              id="github"
+              name="github"
+              bind:value={project.github}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="linkedin"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
+            >
+              LinkedIn
+            </label>
+
+            <input
+              type="url"
+              id="linkedin"
+              name="linkedin"
+              bind:value={project.linkedin}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="twitter"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
+            >
+              X
+            </label>
+
+            <input
+              type="url"
+              id="twitter"
+              name="twitter"
+              bind:value={project.twitter}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="website"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
+            >
+              Website
+            </label>
+
+            <input
+              type="url"
+              id="website"
+              name="website"
+              bind:value={project.website}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between max-md:flex-col">
+            <label
+              for="other"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full"
+            >
+              Other
+            </label>
+
+            <input
+              type="url"
+              id="other"
+              name="other"
+              bind:value={project.other}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Funding Section -->
+      <div class="rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md">
+        <h2 class="mb-4 text-2xl font-semibold text-black">Funding</h2>
+        <div class="flex flex-col gap-6 bg-white p-2">
+          <div class="flex w-full items-center max-md:flex-col">
+            <label
+              for="fundingGoal"
+              class="max-md:items-left w-1/3 text-base font-semibold max-md:w-full max-md:py-2"
+            >
+              Funding Goal
+            </label>
             <input
               id="fundingGoal"
-              bind:value={funding_goal}
-              on:change={updateStore}
               type="number"
-              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
-              aria-label="Funding Goal"
+              name="funding_goal"
+              bind:value={project.funding_goal}
+              min="0"
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
             />
           </div>
 
-          <hr class="my-8 border-neutral-300" />
+          <hr class="my-4 border-neutral-300" />
 
-          <div class="flex items-center mt-10 mb-6">
-            <label for="bankAccount" class="w-1/3 text-lg font-medium"
-              >Bank Account</label
+          <div class="flex items-center max-md:flex-col">
+            <label
+              for="bankAccount"
+              class="max-md:items-left w-1/3 text-lg font-medium max-md:w-full max-md:py-2"
             >
+              Bank Account
+            </label>
             <input
               id="bankAccount"
-              bind:value={bank_acct}
-              on:change={updateStore}
-              type="text"
-              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
-              aria-label="Bank Account"
+              name="bank_acct"
+              type="number"
+              bind:value={project.bank_acct}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
             />
           </div>
 
-          <div class="flex items-center justify-center my-4 text-neutral-400">
+          <div class="flex items-center justify-center text-neutral-400">
             <hr class="flex-grow border-t-2 border-neutral-300" />
             <span class="px-4 text-lg font-medium">or</span>
             <hr class="flex-grow border-t-2 border-neutral-300" />
           </div>
 
-          <div class="flex items-center mt-6">
-            <label for="walletAddress" class="w-1/3 text-lg font-medium"
-              >Wallet Address</label
+          <div class="flex items-center max-md:flex-col">
+            <label
+              for="walletAddress"
+              class="max-md:items-left w-1/3 text-lg font-medium max-md:w-full max-md:py-2"
             >
+              Wallet Address
+            </label>
             <input
               id="walletAddress"
-              bind:value={wallet_address}
-              on:change={updateStore}
+              name="wallet_address"
               type="text"
-              class="w-full border-2 border-lime-800 min-h-[70px] rounded-[75px] mt-2.5 px-4"
+              bind:value={project.wallet_address}
+              class="min-h-[48px] w-2/3 max-w-lg rounded-full border border-solid border-lime-800 px-6 py-2 transition-colors duration-200 focus:border-[#0b383c] focus:outline-none max-md:w-[100%]"
               aria-label="Wallet Address"
             />
           </div>
         </div>
-      </section>
-    {/if}
-
-    <div class="flex justify-between w-full max-w-[1038px] mt-10">
-      {#if activeNavItem !== "Basics"}
-        <button
-          on:click={navigateToPrevious}
-          class="px-[112px] py-4 text-xl font-medium text-lime-800 bg-white border-2 border-lime-800 rounded-[82px] max-md:px-5"
-        >
-          Previous
-        </button>
-      {:else}
-        <div></div>
-      {/if}
-
-      {#if activeNavItem !== "Funding"}
-        <button
-          on:click={navigateToNext}
-          class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
-        >
-          Next
-        </button>
-      {:else}
-        <button
-          on:click={updateProject}
-          class="px-[112px] py-4 text-xl font-medium text-lime-100 bg-lime-800 rounded-[82px] max-md:px-5"
-        >
-          {loading ? "Updating..." : "Update"}
-        </button>
-      {/if}
-    </div>
-  </section>
-</main> -->
-
-<main
-  class="flex flex-row items-start justify-center gap-10 rounded-[37px] bg-white px-10 py-5 max-md:mt-10 max-md:flex-col max-md:gap-5 max-md:px-5"
->
-  <!-- Left Column: Basics -->
-  <aside class="lex w-full max-w-[600px] flex-1 flex-col">
-    <h2 class="mb-4 text-2xl font-semibold">Basics</h2>
-    <ProjectBasics />
-  </aside>
-
-  <!-- Right Column: Links and Funding -->
-  <section class="flex w-full max-w-[600px] flex-1 flex-col gap-10 space-y-28">
-    <!-- Links Section -->
-    <div class="flex flex-col">
-      <h2 class="mb-5 text-2xl font-semibold">Links</h2>
-      <div class="flex flex-col gap-4">
-        <LinkInput label="Email" bind:value={email} />
-        <LinkInput label="Portfolio" bind:value={portfolio} />
-        <LinkInput label="Github" bind:value={github} />
-        <LinkInput label="LinkedIn" bind:value={linkedin} />
-        <LinkInput label="X" bind:value={twitter} />
-        <LinkInput label="Website" bind:value={website} />
-        <LinkInput label="Others" bind:value={other} />
       </div>
+    </section>
+
+    <div class="mt-10 flex w-[83%] justify-end max-md:ml-8 max-md:justify-center">
+      <button
+        type="submit"
+        class="rounded-full !bg-lime-800 px-12 py-4 text-lg font-medium text-white max-md:px-8 max-md:py-3"
+      >
+        {loading ? 'Updating...' : 'Update Project'}
+      </button>
     </div>
-
-    <!-- Funding Section -->
-    <div class="flex flex-col">
-      <h2 class="mb-5 text-2xl font-semibold">Funding</h2>
-      <div class="flex flex-col gap-6">
-        <div class="flex w-full items-center">
-          <label for="fundingGoal" class="w-1/3 text-lg font-semibold">Funding Goal</label>
-          <input
-            id="fundingGoal"
-            bind:value={funding_goal}
-            on:change={updateStore}
-            type="number"
-            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
-            aria-label="Funding Goal"
-          />
-        </div>
-
-        <hr class="my-8 border-neutral-300" />
-
-        <div class="mb-6 mt-10 flex items-center">
-          <label for="bankAccount" class="w-1/3 text-lg font-medium">Bank Account</label>
-          <input
-            id="bankAccount"
-            bind:value={bank_acct}
-            on:change={updateStore}
-            type="text"
-            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
-            aria-label="Bank Account"
-          />
-        </div>
-
-        <div class="my-4 flex items-center justify-center text-neutral-400">
-          <hr class="flex-grow border-t-2 border-neutral-300" />
-          <span class="px-4 text-lg font-medium">or</span>
-          <hr class="flex-grow border-t-2 border-neutral-300" />
-        </div>
-
-        <div class="mt-6 flex items-center">
-          <label for="walletAddress" class="w-1/3 text-lg font-medium">Wallet Address</label>
-          <input
-            id="walletAddress"
-            bind:value={wallet_address}
-            on:change={updateStore}
-            type="text"
-            class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4"
-            aria-label="Wallet Address"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Action Buttons -->
-</main>
-
-<div class="mx-auto mt-10 flex w-full max-w-[1200px] justify-between">
-  <button
-    on:click={navigateToPrevious}
-    class="rounded-[82px] border-2 border-lime-800 bg-white px-[112px] py-4 text-xl font-medium text-lime-800 max-md:px-5"
-  >
-    Previous
-  </button>
-
-  <button
-    on:click={updateProject}
-    class="rounded-[82px] bg-lime-800 px-[112px] py-4 text-xl font-medium text-lime-100 max-md:px-5"
-  >
-    {loading ? 'Updating...' : 'Update'}
-  </button>
-</div>
+  </div>
+</form>

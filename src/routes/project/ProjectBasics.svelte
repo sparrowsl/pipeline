@@ -1,51 +1,17 @@
 <script>
-  import { projectStore } from '../../stores/projectStore.js';
-  import { get } from 'svelte/store';
-  import { createEventDispatcher } from 'svelte';
-
   import { onMount } from 'svelte';
-  let Editor;
   import { countries } from 'countries-list';
 
-  // const countryList = Object.values(countries);
+  export let project = {};
+
   const countryList = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
 
-  let title = get(projectStore).title;
-  let bio = get(projectStore).bio;
-  let country = get(projectStore).country;
-  let details = get(projectStore).details;
-
-  let bannerImg = get(projectStore).banner_image;
-  let profileImg = get(projectStore).image;
-
-  let selectedTags = [...get(projectStore).tags];
-
-  //validation
-  export function validateFields() {
-    return title && bio && country && details && selectedTags.length > 0;
-  }
-
-  function updateStore() {
-    projectStore.update((data) => {
-      data.title = title;
-      data.bio = bio;
-      data.tags = selectedTags;
-      data.country = country;
-      data.details = details;
-      if (bannerImg) data.banner_image = bannerImg;
-      if (profileImg) data.image = profileImg;
-      return data;
-    });
-  }
+  let selectedTags = project.tags ? [...project.tags] : [];
 
   let isOpen = false;
   let inputValue = '';
 
-  const dispatch = createEventDispatcher();
-
   let availableTags = [];
-
-  let currentSection = 'basics';
 
   function toggleDropdown(event) {
     event.preventDefault();
@@ -55,8 +21,6 @@
   function addTag(tag) {
     if (!selectedTags.some((selected) => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
-      updateStore();
-      dispatch('change', selectedTags);
     }
 
     inputValue = '';
@@ -65,8 +29,6 @@
 
   function removeTag(tag) {
     selectedTags = selectedTags.filter((t) => t.title !== tag.title);
-    updateStore();
-    dispatch('change', selectedTags);
   }
 
   $: filteredTags = availableTags.filter(
@@ -75,21 +37,17 @@
       !selectedTags.some((selected) => selected.title === tag.title),
   );
 
-  let ProjectBannerImage = null;
-  let ProjectProfileImage = null;
+  let ProjectBannerImage = project.banner_image || null;
+  let ProjectProfileImage = project.image || null;
 
   const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 
   async function handleBannerUpload(event) {
     const file = event.target.files[0];
-    console.log('Banner file selected:', file);
+
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
-
-      bannerImg = path;
-      updateStore();
     }
   }
 
@@ -98,10 +56,6 @@
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
-
-      profileImg = path;
-      updateStore();
     }
   }
 
@@ -123,30 +77,8 @@
     } catch (error) {}
   }
 
-  async function handleImageUpload(file) {
-    // Upload the image to Supabase storage
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch('/api/file-upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const result = await response.json();
-      throw new Error(result.message || 'Failed to upload image');
-    }
-
-    return response.json().then((data) => {
-      return data.url;
-    });
-  }
-
   onMount(async () => {
     fetchAllCategories();
-    const module = await import('novel-svelte');
-    Editor = module.Editor;
   });
 </script>
 
@@ -224,8 +156,7 @@
             type="text"
             id="projectTitle"
             name="title"
-            bind:value={title}
-            on:change={updateStore}
+            bind:value={project.title}
             class="mt-2.5 min-h-[50px] w-full rounded-[75px] border-2 border-lime-800 px-4"
             required
           />
@@ -243,8 +174,7 @@
           <textarea
             id="projectBio"
             name="bio"
-            bind:value={bio}
-            on:change={updateStore}
+            bind:value={project.bio}
             class="mt-2.5 min-h-[120px] w-full rounded-[31px] border-2 border-lime-800 p-4"
             required
           ></textarea>
@@ -281,11 +211,11 @@
               {/each}
               <input
                 type="text"
-                name="tags"
                 bind:value={inputValue}
                 placeholder="Type to add tags"
                 class="flex-grow rounded-[31px] border-none bg-transparent outline-none"
               />
+              <input type="hidden" name="tags" value={JSON.stringify(selectedTags)} />
             </div>
             <button
               on:click={toggleDropdown}
@@ -333,8 +263,7 @@
             <select
               id="projectCountry"
               name="country"
-              bind:value={country}
-              on:change={updateStore}
+              bind:value={project.country}
               class="h-full w-full appearance-none border-none bg-transparent pl-4 pr-10 outline-none"
               required
             >
@@ -378,8 +307,7 @@
           <textarea
             id="projectDetails"
             name="details"
-            bind:value={details}
-            on:change={updateStore}
+            bind:value={project.details}
             class="mt-2.5 h-[140px] w-full rounded-[31px] border-2 border-lime-800 p-4"
             required
           ></textarea>
