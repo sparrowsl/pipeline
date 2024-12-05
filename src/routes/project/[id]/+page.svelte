@@ -390,7 +390,7 @@
             <p>No updates</p>
           {/if}
         {:else if activeNavItem === 'contributors'}
-          <Contributors />
+          <!-- <Contributors /> -->
 
           <div class="inline-flex items-center self-stretch justify-start gap-1">
             <div class="text-center text-black text-[32px] font-normal font-['Roboto'] leading-loose">

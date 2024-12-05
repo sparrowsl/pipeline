@@ -76,6 +76,10 @@
   onMount(async () => {
     await getUpdateComments();
   });
+
+  const defaultImageUrl =
+    'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
+
 </script>
 
 <div class=" h-full px-[18px] flex-col justify-start items-start inline-flex font-['Inter']">
@@ -125,15 +129,18 @@
         class="self-stretch h-[62px] pb-5 border-b border-[#dcdedd] flex-col justify-start items-start gap-1 flex"
       >
         <div class="inline-flex items-center justify-start gap-3">
-          <img
-            class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]"
-            src="https://via.placeholder.com/42x42"
-            alt=""
-          />
-          <div class="w-[120.07px] flex-col justify-start items-start inline-flex">
-            <div class="inline-flex items-center self-stretch justify-start gap-2">
+            
+      <img
+      loading="lazy"
+      src={selectedUpdate.userProfile.image && selectedUpdate.userProfile.image !== '' ? selectedUpdate.userProfile.image : defaultImageUrl}
+      alt="User Profile"
+      class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]"
+    />
+
+          <div class="inline-flex flex-col items-start justify-start ">
+            <div class="inline-flex items-center self-stretch justify-between gap-2 ">
               <div
-                class="w-[57.07px] h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal"
+                class=" h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal"
               >
                 {selectedUpdate.userProfile.name}
               </div>
@@ -188,7 +195,7 @@
         <span class="text-sm text-gray-700">
           <a
             href="/sign-in"
-            class="text-teal-600 font-semibold hover:text-teal-800 transition-colors duration-200"
+            class="font-semibold text-teal-600 transition-colors duration-200 hover:text-teal-800"
             >Login</a
           > to comment
         </span>
@@ -207,7 +214,7 @@
                 <div class="inline-flex flex-col items-start justify-start h-9">
                   <img
                     class="w-9 h-9 relative rounded-[36px] border border-[#dcdedd]"
-                    src="https://via.placeholder.com/36x36"
+                    src={comment.userProfile.image && comment.userProfile.image !== '' ? comment.userProfile.image : defaultImageUrl}
                     alt=""
                   />
                 </div>
