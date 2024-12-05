@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
-  import DateTimeFormat from './DateTimeFormat.svelte';
+  import { dateTimeFormat } from './utils/dateTimeFormat.js';
 
   const dispatch = createEventDispatcher();
 
@@ -15,6 +15,11 @@
   let newComment = '';
   let comments = [];
   let loading = false;
+  let updateDate;
+  let commentDate;
+
+  $: updateDate = dateTimeFormat(selectedUpdate.created_at);
+  //$: commentDate = dateTimeFormat(comments.created_at);
 
   async function getUpdateComments() {
     try {
@@ -157,7 +162,7 @@
             <div
               class="self-stretch h-[18px] text-[#282828]/50 text-[13px] font-normal font-['Inter'] leading-[18px]"
             >
-              <DateTimeFormat date={selectedUpdate.created_at} />
+              {updateDate}
             </div>
           </div>
         </div>
@@ -228,7 +233,7 @@
                   </div>
                   <div class="self-stretch h-[18px] flex-col justify-start items-start flex">
                     <div class="text-[#9b9e9e] text-xs font-normal font-['Inter'] leading-[18px]">
-                      <DateTimeFormat date={comment.created_at} />
+                      {comment.created_at}
                     </div>
                   </div>
                 </div>
