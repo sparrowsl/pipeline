@@ -429,7 +429,7 @@
                         </div>
                       </div>
                     </div>
-                    <a href="/">
+                    <a target="_blank" href={resource.link}>
                       <button
                         class="flex items-center justify-center gap-[7.94px] rounded-[39.71px] border-2 border-[#516027] px-[9.06px] py-[5.12px]"
                       >
