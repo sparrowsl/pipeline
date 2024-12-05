@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
-  import DateTimeFormat from './DateTimeFormat.svelte';
+  import { dateTimeFormat } from './utils/dateTimeFormat.js';
 
   const dispatch = createEventDispatcher();
 
@@ -15,6 +15,11 @@
   let newComment = '';
   let comments = [];
   let loading = false;
+  let updateDate;
+  let commentDate;
+
+  $: updateDate = dateTimeFormat(selectedUpdate.created_at);
+  //$: commentDate = dateTimeFormat(comments.created_at);
 
   async function getUpdateComments() {
     try {
@@ -76,6 +81,9 @@
   onMount(async () => {
     await getUpdateComments();
   });
+
+  const defaultImageUrl =
+    'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
 </script>
 
 <div class=" inline-flex h-full flex-col items-start justify-start px-[18px] font-['Inter']">
@@ -126,15 +134,17 @@
       >
         <div class="inline-flex items-center justify-start gap-3">
           <img
-            class="relative h-[42px] w-[42px] rounded-[42px] border border-[#dcdedd]"
-            src="https://via.placeholder.com/42x42"
-            alt=""
+            loading="lazy"
+            src={selectedUpdate.userProfile.image && selectedUpdate.userProfile.image !== ''
+              ? selectedUpdate.userProfile.image
+              : defaultImageUrl}
+            alt="User Profile"
+            class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]"
           />
-          <div class="inline-flex w-[120.07px] flex-col items-start justify-start">
-            <div class="inline-flex items-center justify-start gap-2 self-stretch">
-              <div
-                class="h-6 w-[57.07px] font-['Inter'] text-sm font-normal leading-normal text-[#282828]"
-              >
+
+          <div class="inline-flex flex-col items-start justify-start">
+            <div class="inline-flex items-center self-stretch justify-between gap-2">
+              <div class=" h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">
                 {selectedUpdate.userProfile.name}
               </div>
               <div
@@ -150,7 +160,7 @@
             <div
               class="h-[18px] self-stretch font-['Inter'] text-[13px] font-normal leading-[18px] text-[#282828]/50"
             >
-              <DateTimeFormat date={selectedUpdate.created_at} />
+              {updateDate}
             </div>
           </div>
         </div>
@@ -206,8 +216,10 @@
               <div class="flex items-start justify-start gap-3 self-stretch">
                 <div class="inline-flex h-9 flex-col items-start justify-start">
                   <img
-                    class="relative h-9 w-9 rounded-[36px] border border-[#dcdedd]"
-                    src="https://via.placeholder.com/36x36"
+                    class="w-9 h-9 relative rounded-[36px] border border-[#dcdedd]"
+                    src={comment.userProfile.image && comment.userProfile.image !== ''
+                      ? comment.userProfile.image
+                      : defaultImageUrl}
                     alt=""
                   />
                 </div>
@@ -219,9 +231,9 @@
                       {comment.userProfile.name}
                     </div>
                   </div>
-                  <div class="flex h-[18px] flex-col items-start justify-start self-stretch">
-                    <div class="font-['Inter'] text-xs font-normal leading-[18px] text-[#9b9e9e]">
-                      <DateTimeFormat date={comment.created_at} />
+                  <div class="self-stretch h-[18px] flex-col justify-start items-start flex">
+                    <div class="text-[#9b9e9e] text-xs font-normal font-['Inter'] leading-[18px]">
+                      {comment.created_at}
                     </div>
                   </div>
                 </div>

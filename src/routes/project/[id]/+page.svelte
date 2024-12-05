@@ -9,6 +9,7 @@
   import UpdateDetail from '../../../lib/UpdateDetail.svelte';
   import Resources from '../../../lib/Resources.svelte';
   import { amountFormat } from '$lib/utils/amountFormat.js';
+  import { dateFormat } from '$lib/utils/dateTimeFormat.js';
 
   let id;
   $: id = $page.params.id;
@@ -21,6 +22,7 @@
   let error = null;
   let image;
   let banner;
+  let date;
   export let data;
 
   const defaultImageUrl =
@@ -189,6 +191,7 @@
     showUpdateDetail = false;
     selectedUpdate = null;
   }
+  $: date = dateFormat(project.created_at);
 
   $: banner = project.banner_image
     ? project.banner_image
@@ -242,7 +245,7 @@
             alt="Date icon"
             class="h-[24px] w-[24px] object-contain"
           />
-          <time datetime="2024-10">Created: October 2024</time>
+          <time datetime="2024-10">Created: {date}</time>
         </div>
       </div>
       <p class="mt-3 text-xl font-light leading-8 text-black">
@@ -391,11 +394,11 @@
             <p>No updates</p>
           {/if}
         {:else if activeNavItem === 'contributors'}
-          <Contributors />
+          <!-- <Contributors /> -->
 
-          <div class="inline-flex items-center justify-start gap-1 self-stretch">
+          <div class="inline-flex items-center self-stretch justify-start gap-1">
             <div
-              class="text-center font-['Roboto'] text-[32px] font-normal leading-loose text-black"
+              class="text-center text-black text-[32px] font-normal font-['Roboto'] leading-loose"
             >
               <slot name="header">Resources</slot>
             </div>
@@ -404,25 +407,25 @@
           {#if projectResource.length > 0}
             {#each projectResource as resource}
               <div
-                class="mb-4 flex w-full items-start justify-start rounded-lg border border-gray-100 bg-white px-10 py-5 shadow-md"
+                class="flex items-start justify-start w-full px-10 py-5 mb-4 bg-white border border-gray-100 rounded-lg shadow-md"
               >
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <img
-                  class="border-green -mt-4 h-[120px] w-[120px] rounded-full p-[15px]"
+                  class="w-[120px] h-[120px] p-[15px] rounded-full border-green -mt-4"
                   src={resource.user_profile.photo || defaultImageUrl}
                 />
 
-                <div class="ml-6 flex w-full flex-col items-start justify-start">
-                  <div class="flex w-full items-center justify-between">
+                <div class="flex flex-col items-start justify-start w-full ml-6">
+                  <div class="flex items-center justify-between w-full">
                     <div class="flex items-center">
-                      <div class="font-['Inter'] text-[19px] font-semibold text-black">
+                      <div class="text-black text-[19px] font-semibold font-['Inter']">
                         {resource.user_profile.name}
                       </div>
                       <div
-                        class="ml-2 flex items-center justify-center gap-[6.44px] rounded-md bg-[#e9f5d3] px-[9.65px] py-[6.44px]"
+                        class="px-[9.65px] py-[6.44px] bg-[#e9f5d3] rounded-md justify-center items-center gap-[6.44px] flex ml-2"
                       >
                         <div
-                          class="font-['Inter'] text-[10.46px] font-semibold leading-[10.46px] text-[#516027]"
+                          class="text-[#516027] text-[10.46px] font-semibold font-['Inter'] leading-[10.46px]"
                         >
                           {resource.type_resource.charAt(0).toUpperCase() +
                             resource.type_resource.slice(1)}
@@ -431,10 +434,10 @@
                     </div>
                     <a target="_blank" href={resource.link}>
                       <button
-                        class="flex items-center justify-center gap-[7.94px] rounded-[39.71px] border-2 border-[#516027] px-[9.06px] py-[5.12px]"
+                        class="px-[9.06px] py-[5.12px] rounded-[39.71px] border-2 border-[#516027] justify-center items-center gap-[7.94px] flex"
                       >
                         <div
-                          class="font-['Inter'] text-[10px] font-normal leading-tight text-[#516027]"
+                          class="text-[#516027] text-[10px] font-normal font-['Inter'] leading-tight"
                         >
                           View {resource.type_resource.charAt(0).toUpperCase() +
                             resource.type_resource.slice(1)}
@@ -442,7 +445,7 @@
                       </button>
                     </a>
                   </div>
-                  <div class="mt-4 font-['Inter'] text-[17px] font-normal text-[#c4c4c4]">
+                  <div class="text-[#c4c4c4] text-[17px] font-normal font-['Inter'] mt-4">
                     {resource.reason}
                   </div>
                 </div>
