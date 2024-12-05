@@ -394,7 +394,7 @@
             <p>No updates</p>
           {/if}
         {:else if activeNavItem === 'contributors'}
-          <Contributors />
+          <!-- <Contributors /> -->
 
           <div class="inline-flex items-center self-stretch justify-start gap-1">
             <div
