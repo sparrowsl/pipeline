@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { enhance } from '$app/forms';
+  import Icon from '@iconify/svelte';
 
   let isOpen = false;
   let dropdownNode;
@@ -84,21 +85,11 @@
 
         <ul class="mt-6 flex flex-col px-6 text-sm text-white">
           <li class="flex items-center gap-4">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/b980984f37b77a34bf192f73bc2b8864dfe052a2488e8d5b5aa5b9d9bb6dcfae?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-              class="aspect-square w-[17px] object-contain"
-              alt=""
-            />
+            <Icon icon="et:profile-male" class="text-lg" />
             <a href="/profile">Profile</a>
           </li>
-          <li class="mt-6 flex items-center gap-4">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/36ac60f5b7c31186fbac22d462a0e906fbc7bd63ae9a9caa9b8e5265e025d2d7?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-              class="aspect-square w-[17px] object-contain"
-              alt=""
-            />
+          <li class="flex items-center gap-4 mt-6">
+            <Icon icon="stash:save-ribbon-light" class="text-lg" />
             <a href="/project/create">Create Project</a>
           </li>
         </ul>
@@ -107,21 +98,11 @@
 
         <ul class="mt-6 flex flex-col px-6 text-sm text-white">
           <li class="flex items-center gap-4">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/134e2d421c52a6152b3b292772dd18c712e3b18e2360f2645b515c9ce5caf201?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-              class="aspect-[1.06] w-[18px] object-contain"
-              alt=""
-            />
+            <Icon icon="stash:cog-light" class="text-xl" />
             <a href="/profile/edit">Settings</a>
           </li>
-          <li class="mt-4 flex items-center gap-4">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/a013c299c4e7d625b1100bfc8771c9e388f0dbf7c706bec63957c90cf739fe2b?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-              class="aspect-square w-[18px] object-contain"
-              alt=""
-            />
+          <li class="flex items-center gap-4 mt-4">
+            <Icon icon="humbleicons:logout" class="text-lg" />
             <form action="/profile/?/logout" method="post" use:enhance>
               <button type="submit" class="text-left">Logout</button>
             </form>
