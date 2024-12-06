@@ -125,12 +125,12 @@
               ? selectedUpdate.userProfile.image
               : defaultImageUrl}
             alt="User Profile"
-            class="w-[42px] h-[42px] relative rounded-[42px] border border-[#dcdedd]"
+            class="relative h-[42px] w-[42px] rounded-[42px] border border-[#dcdedd]"
           />
 
           <div class="inline-flex flex-col items-start justify-start">
-            <div class="inline-flex items-center self-stretch justify-between gap-2">
-              <div class=" h-6 text-[#282828] text-sm font-normal font-['Inter'] leading-normal">
+            <div class="inline-flex items-center justify-between gap-2 self-stretch">
+              <div class=" h-6 font-['Inter'] text-sm font-normal leading-normal text-[#282828]">
                 {selectedUpdate.userProfile.name}
               </div>
               <div
@@ -202,7 +202,7 @@
               <div class="flex items-start justify-start gap-3 self-stretch">
                 <div class="inline-flex h-9 flex-col items-start justify-start">
                   <img
-                    class="w-9 h-9 relative rounded-[36px] border border-[#dcdedd]"
+                    class="relative h-9 w-9 rounded-[36px] border border-[#dcdedd]"
                     src={comment.userProfile.image && comment.userProfile.image !== ''
                       ? comment.userProfile.image
                       : defaultImageUrl}
@@ -217,8 +217,8 @@
                       {comment.userProfile.name}
                     </div>
                   </div>
-                  <div class="self-stretch h-[18px] flex-col justify-start items-start flex">
-                    <div class="text-[#9b9e9e] text-xs font-normal font-['Inter'] leading-[18px]">
+                  <div class="flex h-[18px] flex-col items-start justify-start self-stretch">
+                    <div class="font-['Inter'] text-xs font-normal leading-[18px] text-[#9b9e9e]">
                       {comment.created_at}
                     </div>
                   </div>

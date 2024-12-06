@@ -13,7 +13,7 @@
         class="mb-3 flex w-full items-center rounded-3xl border-2 border-solid border-stone-300 px-6 py-4"
       >
         <Icon icon="tabler:checkbox" class="text-2xl" />
-        <label for="sdg" class="flex-grow ml-2">{dpg.name}</label>
+        <label for="sdg" class="ml-2 flex-grow">{dpg.name}</label>
       </li>
     {/each}
   </ul>

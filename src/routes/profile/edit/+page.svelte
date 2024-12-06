@@ -94,25 +94,25 @@
       class="mr-10 flex items-center justify-center gap-2.5 self-start rounded-[50px] border-2 border-solid border-lime-800 bg-lime-200 px-6 py-3.5 text-xl leading-none text-lime-800 max-md:px-5"
     >
       <Icon icon="mdi:person-outline" class="text-2xl" />
-      <span class="self-stretch my-auto">View Profile</span>
+      <span class="my-auto self-stretch">View Profile</span>
     </a>
   </section>
 
-  <section class="w-full mb-12">
+  <section class="mb-12 w-full">
     <div
-      class="flex justify-center items-center px-10 py-5 mt-5 bg-white rounded-[37px] max-md:px-5 max-md:mt-10 space-x-24"
+      class="mt-5 flex items-center justify-center space-x-24 rounded-[37px] bg-white px-10 py-5 max-md:mt-10 max-md:px-5"
     >
       {#each navItems as navItem}
         <button
           type="button"
-          class="flex items-center self-center justify-center mx-2 transition-all duration-300 ease-in-out cursor-pointer pb-02"
+          class="pb-02 mx-2 flex cursor-pointer items-center justify-center self-center transition-all duration-300 ease-in-out"
           class:selected={activeNavItem === navItem.id}
           class:border-b-4={activeNavItem === navItem.id}
           on:click={() => (activeNavItem = navItem.id)}
           style="min-width: 134px; border-color: #d1ea9a"
         >
           <Icon icon={navItem.icon} class="text-2xl" />
-          <span class="text-2xl text-center">
+          <span class="text-center text-2xl">
             {navItem.label}
           </span>
         </button>
@@ -120,7 +120,7 @@
     </div>
   </section>
 
-  <section class="flex overflow-hidden flex-col items-center mt-5 max-w-full w-[82%] max-md:mt-10">
+  <section class="mt-5 flex w-[82%] max-w-full flex-col items-center overflow-hidden max-md:mt-10">
     {#if activeNavItem === 'Profile'}
       <ProfileForm />
     {:else if activeNavItem === 'Links'}

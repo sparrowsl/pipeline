@@ -33,13 +33,13 @@
         </ul>
       </nav>
 
-      <Icon icon="prime:twitter" class="text-4xl text-lime-300 block mt-8" />
+      <Icon icon="prime:twitter" class="mt-8 block text-4xl text-lime-300" />
     </div>
 
     <hr class="my-8 border-lime-300 border-opacity-50 sm:my-10" />
 
     <div
-      class="flex flex-col items-center justify-between text-sm sm:flex-row sm:text-base max-md:flex-col"
+      class="flex flex-col items-center justify-between text-sm max-md:flex-col sm:flex-row sm:text-base"
     >
       <p class="mb-4 sm:mb-0">© 2024 Pipeline Copyright and rights reserved</p>
       <div class="flex items-center">

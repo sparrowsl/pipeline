@@ -88,7 +88,7 @@
             <Icon icon="et:profile-male" class="text-lg" />
             <a href="/profile">Profile</a>
           </li>
-          <li class="flex items-center gap-4 mt-6">
+          <li class="mt-6 flex items-center gap-4">
             <Icon icon="stash:save-ribbon-light" class="text-lg" />
             <a href="/project/create">Create Project</a>
           </li>
@@ -101,7 +101,7 @@
             <Icon icon="stash:cog-light" class="text-xl" />
             <a href="/profile/edit">Settings</a>
           </li>
-          <li class="flex items-center gap-4 mt-4">
+          <li class="mt-4 flex items-center gap-4">
             <Icon icon="humbleicons:logout" class="text-lg" />
             <form action="/profile/?/logout" method="post" use:enhance>
               <button type="submit" class="text-left">Logout</button>
