@@ -4,7 +4,24 @@
 
   let user = {};
   let error = null;
-  const defaultImageUrl = 'https://i.pinimg.com/474x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg';
+  let image;
+  let banner;
+  const defaultImageUrl =
+    'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png?t=2024-12-06T11%3A37%3A26.554Z';
+  const defaultBannerUrl =
+    'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/banner.png?t=2024-12-06T11%3A37%3A50.969Z';
+
+  const socialLinks = [
+    { key: 'github', icon: 'mingcute:github-fill', prefix: '' },
+    { key: 'discord', icon: 'ph:discord-logo-fill', prefix: '' },
+    { key: 'twitter', icon: 'prime:twitter', prefix: '' },
+    { key: 'website', icon: 'material-symbols-light:globe', prefix: '' },
+    { key: 'email', icon: 'material-symbols-light:mail', prefix: 'mailto:' },
+  ];
+
+  $: image = user.image_url ? user.image_url : defaultImageUrl;
+
+  $: banner = user.banner_url ? user.banner_url : defaultBannerUrl;
 
   onMount(async () => {
     try {
@@ -18,6 +35,7 @@
       if (response.ok) {
         const result = await response.json();
         user = result.user;
+        console.log(user);
       } else {
         const result = await response.json();
         error = result.error;
@@ -34,19 +52,17 @@
       <div class="relative flex w-full flex-col max-md:max-w-full">
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/8030ec6426e85620456b5636b4a5396ca24f43b5e55a6739527e90baef3c9203?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
+          src={banner}
           alt="Profile background"
           class="z-0 aspect-[3.33] h-[250px] w-full rounded-[43px] object-cover max-md:max-w-full"
         />
 
-        {#if user && user.id}
-          <img
-            loading="lazy"
-            src={user.image_url && user.image_url !== '' ? user.image_url : defaultImageUrl}
-            alt="Profile picture"
-            class="absolute bottom-[-65px] left-[30px] z-0 aspect-[1.01] h-[120px] w-[120px] max-w-full items-center gap-2.5 rounded-[106px] object-contain"
-          />
-        {/if}
+        <img
+          loading="lazy"
+          src={image}
+          alt="User's profile picture"
+          class="absolute bottom-[-65px] left-[30px] z-0 aspect-[1.01] h-[120px] w-[120px] max-w-full items-center gap-2.5 rounded-[106px] object-contain"
+        />
       </div>
     </div>
   </div>
@@ -60,21 +76,13 @@
       {user?.display_name || ''}
     </h1>
     <div class="mt-20 flex flex-wrap items-center gap-2 self-stretch">
-      <a href="/">
-        <Icon icon="mingcute:github-fill" class="text-2xl" />
-      </a>
-      <a href="/">
-        <Icon icon="ph:discord-logo-fill" class="text-2xl" />
-      </a>
-      <a href="/">
-        <Icon icon="prime:twitter" class="text-2xl" />
-      </a>
-      <a href="/">
-        <Icon icon="material-symbols-light:globe" class="text-2xl" />
-      </a>
-      <a href="/">
-        <Icon icon="material-symbols-light:mail" class="text-2xl" />
-      </a>
+      {#each socialLinks as { key, icon, prefix }}
+        {#if user[key]}
+          <a href="{prefix}{user[key]}" target="_blank" rel="noopener noreferrer" aria-label={key}>
+            <Icon {icon} class="text-2xl" />
+          </a>
+        {/if}
+      {/each}
     </div>
   </div>
   <p class="mt-11 text-2xl font-light leading-9 text-black max-md:mt-10 max-md:max-w-full">
@@ -83,8 +91,8 @@
   <div
     class="mt-11 flex w-full flex-wrap items-center justify-between gap-4 max-md:mt-10 max-md:max-w-full"
   >
-    <div
-      class="my-auto flex min-w-[240px] flex-wrap items-center gap-4 self-stretch whitespace-nowrap max-md:max-w-full"
+    <!-- <div
+      class="flex flex-wrap gap-4 items-center self-stretch my-auto whitespace-nowrap min-w-[240px] max-md:max-w-full"
     >
       <h2 class="my-auto self-stretch text-center text-lg leading-none text-black">Interests</h2>
       <div
@@ -106,7 +114,7 @@
           </span>
         {/if}
       </div>
-    </div>
+    </div> -->
   </div>
   <div
     class="mt-11 flex w-full flex-wrap items-center justify-around gap-2 text-2xl font-medium leading-none max-md:mt-10 max-md:max-w-full"
