@@ -113,7 +113,7 @@
 
           <Icon icon={navItem.icon} class="text-2xl" />
           <span class="text-2xl text-center max-md:text-base">{navItem.label}</span>
-        </button>
+        </div>
       {/each}
     </div>
   </section>
