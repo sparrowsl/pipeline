@@ -39,6 +39,7 @@
         />
 
         {#if user && user.id}
+          <!-- svelte-ignore a11y-img-redundant-alt -->
           <img
             loading="lazy"
             src={user.image_url && user.image_url !== '' ? user.image_url : defaultImageUrl}
