@@ -87,7 +87,7 @@
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
 </script>
 
-<div class=" h-full px-[18px] flex-col justify-start items-start inline-flex font-['Inter']">
+<div class="h-full px-[18px] flex-col justify-start items-start inline-flex font-['Inter'] w-full">
   <div class="self-stretch h-[89px] pb-12 flex-col justify-start items-start flex">
     <div
       class="px-[19px] py-[11.50px] bg-white border border-[#d1d1d1] justify-center items-center inline-flex"
@@ -225,9 +225,9 @@
                 </div>
               </div>
             </div>
-            <div class="inline-flex items-start self-stretch justify-center">
+            <div class="items-start self-stretch justify-center ">
               <div
-                class="inline-flex flex-col items-start self-stretch justify-start grow shrink basis-0"
+                class="flex-col items-start self-stretch justify-start grow shrink basis-0"
               >
                 <div class="flex flex-col items-start self-stretch justify-start">
                   <div
