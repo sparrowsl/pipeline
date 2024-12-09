@@ -1,76 +1,66 @@
 <script>
-  import ProfileForm from "../../../lib/ProfileForm.svelte";
-  import ProfileLinks from "../../../lib/ProfileLinks.svelte";
-  import Settings from "../../../lib/Settings.svelte";
-  import Interests from "../../../lib/Interests.svelte";
+  import ProfileForm from '../../../lib/ProfileForm.svelte';
+  import ProfileLinks from '../../../lib/ProfileLinks.svelte';
+  import Settings from '../../../lib/Settings.svelte';
+  import Interests from '../../../lib/Interests.svelte';
+  import Icon from '@iconify/svelte';
+
   let selectedTechInterests = [];
   let selectedCreativeInterests = [];
   let selectedCommunityProjects = [];
 
-  let activeNavItem = "Profile";
+  let activeNavItem = 'Profile';
   const navItems = [
     {
-      id: "Profile",
-      label: "Profile",
-      width: "184px",
-      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/00eacd2e9203d40d579eb83c6c31b8c06134308627c218c88c9580bed4d5d7ef",
+      id: 'Profile',
+      label: 'Profile',
+      width: '184px',
+      icon: 'proicons:person-2',
     },
-    // {
-    //   id: "Links",
-    //   label: "Links",
-    //   width: "184px",
-    //   icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/ff10f4c0c448ee5208fc4e0b90f38cc53d69a7eda9bd7dc84eb1e7c779e81c4b",
-    // },
-    // {
-    //   id: "Interests",
-    //   label: "Interests",
-    //   width: "184px",
-    //   icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/09ba2f33466a78bf2d1e32dc9330bb0cc72747f64701080ac91f542e8459d18f",
-    // },
     {
-      id: "Settings",
-      label: "Settings",
-      width: "184px",
-      icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/2ecfa6fbb29ac713eea63adc3b16821ea9f1a98b868badda74b6497e863f76db",
+      id: 'Settings',
+      label: 'Settings',
+      width: '184px',
+      icon: 'mdi:cog-outline',
     },
   ];
 
   let techInterests = [
-    "Education",
-    "Food & Beverages",
-    "Energy / Green tech",
-    "Health / Fitness",
-    "Tech Startups",
-    "Artificial Intelligence & Machine Learning",
-    "Robotics",
-    "Blockchain & Cryptocurrencies",
-    "Cybersecurity",
-    "Augmented Reality (AR) & Virtual Reality (VR)",
+    'Education',
+    'Food & Beverages',
+    'Energy / Green tech',
+    'Health / Fitness',
+    'Tech Startups',
+    'Artificial Intelligence & Machine Learning',
+    'Robotics',
+    'Blockchain & Cryptocurrencies',
+    'Cybersecurity',
+    'Augmented Reality (AR) & Virtual Reality (VR)',
   ];
 
   let creativeInterests = [
-    "Graphic Design",
-    "Photography",
-    "Video Production",
-    "Music Production",
-    "Writing & Storytelling",
-    "Digital Art",
-    "Fashion Design",
-    "Creative Coding",
-    "Animation",
-    "User Experience (UX) Design",
+    'Graphic Design',
+    'Photography',
+    'Video Production',
+    'Music Production',
+    'Writing & Storytelling',
+    'Digital Art',
+    'Fashion Design',
+    'Creative Coding',
+    'Animation',
+    'User Experience (UX) Design',
   ];
 
   let communityProjects = [
-    "Social Impact Initiatives",
-    "Environmental Sustainability",
-    "Education",
-    "Local Development",
-    "Health and Wellness",
-    "Public Art Projects",
-    "Crisis Response",
-    "Civic Engagement",
-    "Cultural Events",
+    'Social Impact Initiatives',
+    'Environmental Sustainability',
+    'Education',
+    'Local Development',
+    'Health and Wellness',
+    'Public Art Projects',
+    'Crisis Response',
+    'Civic Engagement',
+    'Cultural Events',
   ];
 
   function handleNavChange(event) {
@@ -120,14 +110,14 @@
           on:click={() => (activeNavItem = navItem.id)}
           style="min-width: 134px; border-color: #d1ea9a"
         >
-          <img src={navItem.icon} alt={navItem.label} class="w-6 h-6" />
+
+          <Icon icon={navItem.icon} class="text-2xl" />
           <span class="text-2xl text-center max-md:text-base">{navItem.label}</span>
-        </div>
+        </button>
       {/each}
     </div>
   </section>
   
-
   <section
   class="flex overflow-hidden flex-col items-center mt-5 max-w-full w-[82%] max-md:mt-10 max-lg:w-full"
 >
@@ -150,8 +140,8 @@
 </main>
 
 <style>
-  div.selected {
+  button.selected {
     transform: scale(1.1);
-    font-weight: bold; 
+    font-weight: bold;
   }
 </style>
