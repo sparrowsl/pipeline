@@ -196,7 +196,7 @@
       >
         {#each comments as comment}
           <div
-            class="self-stretch h-[113px] px-[19px] pt-[19px] pb-[13px] bg-white border border-[#e8e8e8] flex-col justify-start items-start gap-[18px] flex"
+            class="self-stretch px-[19px] pt-[19px] pb-[13px] bg-white border border-[#e8e8e8] flex-col justify-start items-start gap-[18px] flex"
           >
             <div class="inline-flex items-start self-stretch justify-start">
               <div class="flex items-start self-stretch justify-start gap-3">
@@ -209,10 +209,10 @@
                     alt=""
                   />
                 </div>
-                <div class="w-[195.45px] flex-col justify-start items-start inline-flex">
-                  <div class="inline-flex items-center self-stretch justify-start gap-3">
+                <div class="flex-col items-start justify-start w-full">
+                  <div class="items-center self-stretch justify-start gap-3 ">
                     <div
-                      class="w-[92.93px] h-[21px] text-[#282828] text-sm font-normal font-['Inter'] leading-[21px]"
+                      class="w-full h-[21px] text-[#282828] text-sm font-normal font-['Inter'] leading-[21px]"
                     >
                       {comment.userProfile.name}
                     </div>
@@ -229,7 +229,7 @@
               <div
                 class="inline-flex flex-col items-start self-stretch justify-start grow shrink basis-0"
               >
-                <div class="flex flex-col items-start self-stretch justify-start h-6">
+                <div class="flex flex-col items-start self-stretch justify-start">
                   <div
                     class="self-stretch text-[#282828] text-sm font-normal font-['Inter'] leading-normal"
                   >
