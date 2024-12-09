@@ -1,12 +1,33 @@
 <script>
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
   import Logo from '$lib/Logo.svelte';
+  import { toast } from 'svelte-sonner';
 
   let loading = false;
+  export let form;
+
+  $: if (form?.error) {
+    toast.error(form.error);
+  }
 </script>
 
 <section class="flex basis-full items-center justify-center">
-  <form method="POST" use:enhance class="w-[60%] max-md:w-[80%]">
+  <form
+    method="POST"
+    class="w-[60%] max-md:w-[80%]"
+    use:enhance={() => {
+      loading = true;
+
+      return async ({ result }) => {
+        if (result.type === 'redirect') {
+          toast.success('login successful');
+        }
+
+        await applyAction(result);
+        loading = false;
+      };
+    }}
+  >
     <div class="mb-10 hidden max-md:block">
       <Logo />
     </div>
@@ -41,7 +62,7 @@
 
     <button
       type="submit"
-      class="mt-8 w-full rounded-full bg-teal-900 py-3 font-light text-white"
+      class="mt-8 w-full rounded-full bg-teal-900 py-3 font-light text-white disabled:bg-gray-500"
       disabled={loading}
     >
       {loading ? 'Signing in...' : 'Sign in'}

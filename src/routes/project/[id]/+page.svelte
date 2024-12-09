@@ -11,6 +11,7 @@
   import { amountFormat } from '$lib/utils/amountFormat.js';
   import Icon from '@iconify/svelte';
   import { dateFormat } from '$lib/utils/dateTimeFormat.js';
+  import { toast } from 'svelte-sonner';
 
   let id;
   $: id = $page.params.id;
@@ -86,6 +87,7 @@
       });
 
       if (!response.ok) {
+        toast.error('could not add new updates');
         throw new Error(response.statusText);
       }
 
@@ -93,9 +95,9 @@
 
       await getProjectUpdates();
 
-      alert('Update added successfully');
+      toast.success('Update added successfully');
     } catch (e) {
-      alert(e.message);
+      toast.error(e.message);
     } finally {
       isAddingUpdate = false;
     }
@@ -329,7 +331,7 @@ svelte-ignore a11y-no-redundant-roles -->
           </label>
           <button
             on:click={submitUpdate}
-            class="w-full rounded-lg bg-lime-300 py-2 text-black"
+            class="w-full py-2 text-black rounded-lg bg-lime-300 disabled:bg-gray-500"
             disabled={isAddingUpdate}
           >
             {isAddingUpdate ? 'Adding Update...' : 'Add Update'}

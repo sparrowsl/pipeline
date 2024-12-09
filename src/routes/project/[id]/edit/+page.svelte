@@ -1,12 +1,18 @@
 <script>
   import ProjectBasics from '../../ProjectBasics.svelte';
-
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
+  import { toast } from 'svelte-sonner';
 
   export let data;
   const { project } = data;
 
   let loading = false;
+
+  export let form;
+
+  $: if (form?.error) {
+    toast.error(form?.error);
+  }
 </script>
 
 <div class="mb-10 w-full bg-[#d1ea9a]/90 py-16">
@@ -17,7 +23,26 @@
   </div>
 </div>
 
-<form action="" method="post" enctype="multipart/form-data" use:enhance>
+<form
+  action=""
+  method="post"
+  enctype="multipart/form-data"
+  use:enhance={() => {
+    return async ({ result }) => {
+      loading = true;
+
+      if (result.type === 'failure') {
+        toast.warn(result?.data?.error || 'failed to edit project');
+      } else if (result.type === 'error') {
+        toast.error('could not update project');
+      }
+
+      toast.success('Project updated successfully');
+      loading = false;
+      await applyAction(result);
+    };
+  }}
+>
   <input
     type="hidden"
     name="old_image"
@@ -219,7 +244,8 @@
     <div class="mt-10 flex w-[83%] justify-end max-md:ml-8 max-md:justify-center">
       <button
         type="submit"
-        class="rounded-full !bg-lime-800 px-12 py-4 text-lg font-medium text-white max-md:px-8 max-md:py-3"
+        class="rounded-full bg-lime-800 px-12 py-4 text-lg font-medium text-white disabled:bg-gray-500 max-md:px-8 max-md:py-3"
+        disabled={loading}
       >
         {loading ? 'Updating...' : 'Update Project'}
       </button>

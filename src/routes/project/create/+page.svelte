@@ -1,6 +1,7 @@
 <script>
   import ProjectBasics from '../ProjectBasics.svelte';
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
+  import { toast } from 'svelte-sonner';
 
   let loading = false;
 </script>
@@ -13,7 +14,26 @@
   </div>
 </div>
 
-<form action="" method="post" enctype="multipart/form-data" use:enhance>
+<form
+  action=""
+  method="post"
+  enctype="multipart/form-data"
+  use:enhance={() => {
+    return async ({ result }) => {
+      loading = true;
+
+      if (result.type === 'failure') {
+        toast.warn(result?.data?.error || 'could not create project');
+      } else if (result.type === 'error') {
+        toast.error('could not create a project');
+      }
+
+      toast.success('project has been created successfully');
+      loading = false;
+      await applyAction(result);
+    };
+  }}
+>
   <div
     class="flex flex-row flex-wrap items-start justify-center gap-10 rounded-[37px] px-10 py-5 max-md:mt-10 max-md:flex-col max-md:gap-5 max-md:px-5"
   >
@@ -194,7 +214,8 @@
     <div class="mt-10 flex w-[83%] justify-end max-md:ml-8 max-md:justify-center">
       <button
         type="submit"
-        class="rounded-full !bg-lime-800 px-12 py-4 text-lg font-medium text-white max-md:px-8 max-md:py-3"
+        class="rounded-full !bg-lime-800 px-12 py-4 text-lg font-medium text-white disabled:bg-gray-500 max-md:px-8 max-md:py-3"
+        disabled={loading}
       >
         {loading ? 'Saving...' : 'Save Project'}
       </button>
