@@ -1,13 +1,12 @@
 <script>
-  import Contributors from '../../../lib/Contributors.svelte';
-  import ProjectNav from '../../../lib/ProjectNav.svelte';
-  import ProjectAbout from '../../../lib/ProjectAbout.svelte';
-  import DpgStatus from '../../../lib/dpgStatus.svelte';
+  import { enhance } from '$app/forms';
+  import ProjectNav from '$lib/ProjectNav.svelte';
+  import ProjectAbout from '$lib/ProjectAbout.svelte';
+  import DpgStatus from '$lib/dpgStatus.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import Updates from '../../../lib/Updates.svelte';
-  import UpdateDetail from '../../../lib/UpdateDetail.svelte';
-  import Resources from '../../../lib/Resources.svelte';
+  import Updates from '$lib/Updates.svelte';
+  import UpdateDetail from '$lib/UpdateDetail.svelte';
   import { amountFormat } from '$lib/utils/amountFormat.js';
   import Icon from '@iconify/svelte';
   import { dateFormat } from '$lib/utils/dateTimeFormat.js';
@@ -15,16 +14,14 @@
   let id;
   $: id = $page.params.id;
 
-  let project = {};
-  let projectUpdates = [];
-  let projectResource = [];
-  let loading = true;
   let user = null;
-  let error = null;
   let image;
   let banner;
   let date;
   export let data;
+  let project = data.project;
+  let projectUpdates = data.updates;
+  let projectResource = data.resources;
 
   const defaultImageUrl =
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
@@ -32,37 +29,12 @@
   let isFollowing = false;
   let isAddingUpdate = false;
 
-  async function getSingleProject() {
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-      project = data.project;
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function toggleFollow() {
-    isFollowing = !isFollowing;
-    await bookmarkProject();
-  }
+  // async function toggleFollow() {
+  //   isFollowing = !isFollowing;
+  //   await bookmarkProject();
+  // }
 
   let showUpdatePopup = false;
-  let updateTitle = '';
-  let updateBody = '';
 
   function openUpdatePopup() {
     showUpdatePopup = true;
@@ -70,101 +42,6 @@
 
   function closeUpdatePopup() {
     showUpdatePopup = false;
-    updateTitle = '';
-    updateBody = '';
-  }
-
-  async function submitUpdate() {
-    isAddingUpdate = true;
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates/store`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: updateTitle, body: updateBody }),
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      closeUpdatePopup();
-
-      await getProjectUpdates();
-
-      alert('Update added successfully');
-    } catch (e) {
-      alert(e.message);
-    } finally {
-      isAddingUpdate = false;
-    }
-  }
-
-  async function getProjectUpdates() {
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}/projectUpdates`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      projectUpdates = data.projectUpdates;
-    } catch (error) {
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function getProjectResources() {
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}/contribution/resources`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-      console.log(data);
-
-      projectResource = data.resources;
-    } catch (error) {
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function bookmarkProject() {
-    try {
-      const response = await fetch(`/api/projects/singleProject/${id}/bookmark`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      alert('Project bookmarked successfully');
-    } catch (e) {
-      alert(e.message);
-    }
   }
 
   let activeNavItem = 'projectDetails';
@@ -192,6 +69,7 @@
     showUpdateDetail = false;
     selectedUpdate = null;
   }
+
   $: date = dateFormat(project.created_at);
 
   $: banner = project.banner_image
@@ -203,9 +81,6 @@
     : 'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/projectProf.png?t=2024-11-20T16%3A05%3A41.191Z';
 
   onMount(async () => {
-    await getSingleProject();
-    await getProjectUpdates();
-    await getProjectResources();
     if (data.isAuthenticated) {
       user = data.user;
     }
@@ -284,58 +159,78 @@
           >
             <button>CONTRIBUTE</button>
           </a>
-          <button
-            on:click={toggleFollow}
-            class="border-2 text-center text-base font-semibold py-4 rounded-full w-[50%]"
-            class:bg-[#e9f5d3]={isFollowing}
-            class:text-black={isFollowing}
+          <form
+            class="w-[50%]"
+            action="?/bookmark"
+            method="POST"
+            use:enhance={() => {
+              return async ({ result }) => {
+                if (result.type === 'success') {
+                  alert('Project bookmarked successfully');
+                }
+              };
+            }}
           >
-            {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
-          </button>
+            <button
+              type="submit"
+              class="border-2 text-center text-base font-semibold py-4 rounded-full w-full"
+              class:bg-[#e9f5d3]={isFollowing}
+              class:text-black={isFollowing}
+            >
+              {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+            </button>
+          </form>
         {/if}
       </div>
     {/if}
 
     {#if showUpdatePopup}
-      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
-          <!-- Close Button -->
-          <button
-            on:click={closeUpdatePopup}
-            class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-gray-700"
-            style="z-index: 1000;"
-          >
-            &times;
-          </button>
+      <form
+        action="?/addUpdate"
+        method="POST"
+        use:enhance={() => {
+          return async ({ result }) => {
+            if (result.type === 'success') {
+              closeUpdatePopup();
+            }
+          };
+        }}
+      >
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div class="relative bg-white p-8 rounded-lg shadow-lg w-[400px] max-w-full">
+            <!-- Close Button -->
+            <button
+              on:click={closeUpdatePopup}
+              class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-gray-700"
+              style="z-index: 1000;"
+            >
+              &times;
+            </button>
 
-          <h2 class="mb-4 text-xl font-bold">Add Update</h2>
-          <label class="block mb-2 text-sm font-medium text-gray-700">
-            Title
-            <input
-              type="text"
-              bind:value={updateTitle}
-              class="w-full p-2 mt-1 border rounded-lg"
-              require
-            />
-          </label>
-          <label class="block mb-4 text-sm font-medium text-gray-700">
-            Body
-            <textarea
-              bind:value={updateBody}
-              rows="4"
-              class="w-full p-2 mt-1 border rounded-lg resize-none"
-              require
-            ></textarea>
-          </label>
-          <button
-            on:click={submitUpdate}
-            class="w-full py-2 text-black rounded-lg bg-lime-300"
-            disabled={isAddingUpdate}
-          >
-            {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
-          </button>
+            <h2 class="mb-4 text-xl font-bold">Add Update</h2>
+            <label class="block mb-2 text-sm font-medium text-gray-700">
+              Title
+              <input type="text" name="title" class="w-full p-2 mt-1 border rounded-lg" require />
+            </label>
+            <label class="block mb-4 text-sm font-medium text-gray-700">
+              Body
+              <textarea
+                rows="4"
+                name="body"
+                class="w-full p-2 mt-1 border rounded-lg resize-none"
+                require
+              ></textarea>
+            </label>
+            <button
+              type="submit"
+              class="w-full py-2 text-black rounded-lg bg-lime-300"
+              disabled={isAddingUpdate}
+            >
+              {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     {/if}
 
     <section
