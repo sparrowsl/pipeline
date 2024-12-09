@@ -1,12 +1,18 @@
 <script>
   import ProjectBasics from '../../ProjectBasics.svelte';
-
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
+  import { toast } from 'svelte-sonner';
 
   export let data;
   const { project } = data;
 
   let loading = false;
+
+  export let form;
+
+  $: if (form?.error) {
+    toast.error(form?.error);
+  }
 </script>
 
 <div class="w-full bg-[#d1ea9a]/90 py-16 mb-10">
@@ -17,10 +23,28 @@
   </div>
 </div>
 
-<form action="" method="post" enctype="multipart/form-data" use:enhance>
+<form
+  action=""
+  method="post"
+  enctype="multipart/form-data"
+  use:enhance={() => {
+    return async ({ result }) => {
+      loading = true;
+
+      if (result.type === 'failure') {
+        toast.warn(result?.data?.error || 'failed to edit project');
+      } else if (result.type === 'error') {
+        toast.error('could not update project');
+      }
+
+      toast.success('Project updated successfully');
+      loading = false;
+      await applyAction(result);
+    };
+  }}
+>
   <input
     type="hidden"
-   
     name="old_image"
     bind:value={project.image}
     class="border border-lime-800 border-solid rounded-full px-6 py-2 w-2/3 max-w-lg min-h-[48px] focus:outline-none focus:border-[#0b383c] transition-colors duration-200 max-md:w-[100%]"
@@ -220,7 +244,8 @@
     <div class="flex justify-end mt-10 w-[83%] max-md:justify-center max-md:ml-8">
       <button
         type="submit"
-        class="px-12 py-4 text-lg font-medium !bg-lime-800 text-white rounded-full max-md:px-8 max-md:py-3"
+        class="px-12 py-4 text-lg font-medium bg-lime-800 text-white rounded-full max-md:px-8 max-md:py-3 disabled:bg-gray-500"
+        disabled={loading}
       >
         {loading ? 'Updating...' : 'Update Project'}
       </button>
