@@ -76,7 +76,7 @@
             bind:value={term}
             on:input={searchProjects}
             placeholder="Search projects, resources, and more..."
-            class="w-full rounded-md border border-cyan-800 bg-white/10 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-600"
+            class="w-full rounded-md border border-cyan-800 bg-white/10 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-600 max-lg:text-sm"
           />
 
           <!-- Close button -->

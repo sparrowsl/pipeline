@@ -87,7 +87,7 @@
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
 </script>
 
-<div class=" inline-flex h-full flex-col items-start justify-start px-[18px] font-['Inter']">
+<div class="inline-flex h-full w-full flex-col items-start justify-start px-[18px] font-['Inter']">
   <div class="flex h-[89px] flex-col items-start justify-start self-stretch pb-12">
     <div
       class="inline-flex items-center justify-center border border-[#d1d1d1] bg-white px-[19px] py-[11.50px]"
@@ -159,9 +159,9 @@
     </div>
   </div>
 
-  <div class="flex flex-col items-start justify-start gap-[18px] self-stretch pt-[42px]">
-    <div class="flex h-5 flex-col items-start justify-start self-stretch">
-      <div class="self-stretch font-['Inter'] text-base font-bold leading-tight text-[#282828]">
+  <!-- <div class="self-stretch pt-[42px] flex-col justify-start items-start gap-[18px] flex">
+    <div class="flex flex-col items-start self-stretch justify-start h-5">
+      <div class="self-stretch text-[#282828] text-base font-bold font-['Inter'] leading-tight">
         Comments ({comments.length})
       </div>
     </div>
@@ -196,7 +196,7 @@
       >
         {#each comments as comment}
           <div
-            class="flex h-[113px] flex-col items-start justify-start gap-[18px] self-stretch border border-[#e8e8e8] bg-white px-[19px] pb-[13px] pt-[19px]"
+            class="self-stretch px-[19px] pt-[19px] pb-[13px] bg-white border border-[#e8e8e8] flex-col justify-start items-start gap-[18px] flex"
           >
             <div class="inline-flex items-start justify-start self-stretch">
               <div class="flex items-start justify-start gap-3 self-stretch">
@@ -209,10 +209,10 @@
                     alt=""
                   />
                 </div>
-                <div class="inline-flex w-[195.45px] flex-col items-start justify-start">
-                  <div class="inline-flex items-center justify-start gap-3 self-stretch">
+                <div class="flex-col items-start justify-start w-full">
+                  <div class="items-center self-stretch justify-start gap-3 ">
                     <div
-                      class="h-[21px] w-[92.93px] font-['Inter'] text-sm font-normal leading-[21px] text-[#282828]"
+                      class="w-full h-[21px] text-[#282828] text-sm font-normal font-['Inter'] leading-[21px]"
                     >
                       {comment.userProfile.name}
                     </div>
@@ -225,11 +225,11 @@
                 </div>
               </div>
             </div>
-            <div class="inline-flex items-start justify-center self-stretch">
+            <div class="items-start self-stretch justify-center ">
               <div
-                class="inline-flex shrink grow basis-0 flex-col items-start justify-start self-stretch"
+                class="flex-col items-start self-stretch justify-start grow shrink basis-0"
               >
-                <div class="flex h-6 flex-col items-start justify-start self-stretch">
+                <div class="flex flex-col items-start self-stretch justify-start">
                   <div
                     class="self-stretch font-['Inter'] text-sm font-normal leading-normal text-[#282828]"
                   >
@@ -243,6 +243,97 @@
       </div>
     {:else}
       <p>No comments</p>
+    {/if}
+  </div> -->
+
+  <div class="flex flex-col items-start justify-start gap-[18px] self-stretch pt-[42px]">
+    <div class="flex h-5 flex-col items-start justify-start self-stretch">
+      <div class="self-stretch font-['Inter'] text-base font-bold leading-tight text-[#282828]">
+        Comments ({comments.length})
+      </div>
+    </div>
+
+    <div
+      class="flex w-full flex-col gap-4 pb-8 pt-4 md:flex-row md:items-center md:justify-between"
+    >
+      {#if data.isAuthenticated}
+        <div class="flex w-full flex-col gap-4 md:flex-row">
+          <input
+            type="text"
+            bind:value={newComment}
+            placeholder="Add a comment..."
+            class="w-full rounded-lg border-2 border-[#dcdedd] px-4 py-2 text-base text-[#0b383c] transition-colors duration-200 focus:border-[#0b383c] focus:outline-none
+                   md:w-3/4"
+          />
+          <button
+            on:click={addUpdateComment}
+            class="mt-2 self-end rounded-lg bg-[#0b383c] px-4 py-2 text-base text-white transition-colors duration-300 focus:border-[#0b383c]
+                   focus:outline-none md:mt-0 md:w-1/4"
+            disabled={loading}
+          >
+            {loading ? 'Submitting...' : 'Comment'}
+          </button>
+        </div>
+      {:else}
+        <span class="text-sm text-gray-700">
+          <a
+            href="/sign-in"
+            class="font-semibold text-teal-600 transition-colors duration-200 hover:text-teal-800"
+            >Login</a
+          > to comment
+        </span>
+      {/if}
+    </div>
+
+    {#if comments.length > 0}
+      <div
+        class="flex max-h-[385px] flex-col items-start justify-start gap-3 self-stretch overflow-y-auto border border-[#e8e8e8] bg-[#fbfbfa] px-[13px] pb-[13px] pt-[15px]"
+      >
+        {#each comments as comment}
+          <div
+            class="flex flex-col items-start justify-start gap-[18px] self-stretch border border-[#e8e8e8] bg-white p-4"
+          >
+            <div class="inline-flex items-start justify-start self-stretch">
+              <div class="flex items-start justify-start gap-3 self-stretch">
+                <div class="inline-flex flex-col items-start justify-start">
+                  <img
+                    class="h-9 w-9 rounded-full border border-[#dcdedd]"
+                    src={comment.userProfile.image && comment.userProfile.image !== ''
+                      ? comment.userProfile.image
+                      : defaultImageUrl}
+                    alt=""
+                  />
+                </div>
+                <div class="inline-flex flex-grow flex-col items-start justify-start">
+                  <div class="inline-flex items-center justify-start gap-3 self-stretch">
+                    <div class="font-['Inter'] text-sm font-normal leading-[21px] text-[#282828]">
+                      {comment.userProfile.name}
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-start justify-start self-stretch">
+                    <div class="font-['Inter'] text-xs font-normal leading-[18px] text-[#9b9e9e]">
+                      {comment.created_at}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inline-flex items-start justify-center self-stretch">
+              <div class="flex w-full flex-col items-start justify-start self-stretch">
+                <div class="flex flex-col items-start justify-start self-stretch">
+                  <div
+                    class="self-stretch font-['Inter'] text-sm font-normal leading-normal text-[#282828]"
+                  >
+                    {comment.body}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {:else}
+      <p class="italic text-gray-500">No comments yet</p>
     {/if}
   </div>
 </div>

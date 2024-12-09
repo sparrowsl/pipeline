@@ -33,28 +33,32 @@
   date = dateTimeFormat(update.created_at);
 </script>
 
-<div class="inline-flex flex-col items-start justify-start bg-white p-9">
+<div class="inline-flex w-full flex-col items-start justify-start bg-white p-4 md:p-9">
   <div class="flex flex-col items-start justify-start gap-2 self-stretch">
-    <div class=" flex flex-col items-start justify-start gap-[13.30px] pt-[1.75px]">
-      <div class="self-stretch font-['Inter'] text-[32px] font-bold leading-10 text-[#282828]">
+    <div class="flex w-full flex-col items-start justify-start gap-[13.30px] pt-[1.75px]">
+      <div
+        class="self-stretch font-['Inter'] text-2xl font-bold leading-tight text-[#282828] md:text-[32px] md:leading-10"
+      >
         {update.title}
       </div>
       <div
-        class="flex h-[62px] flex-col items-start justify-start gap-1 self-stretch border-b border-[#dcdedd] pb-5"
+        class="flex flex-col items-start justify-start gap-1 self-stretch border-b border-[#dcdedd] pb-5"
       >
-        <div class="inline-flex items-center justify-start gap-3">
+        <div class="inline-flex w-full items-center justify-start gap-3">
           <img
             loading="lazy"
             src={update.userProfile.image && update.userProfile.image !== ''
               ? update.userProfile.image
               : defaultImageUrl}
             alt="User Profile"
-            class="relative h-[42px] w-[42px] rounded-[42px] border border-[#dcdedd]"
+            class="h-10 w-10 rounded-full border border-[#dcdedd] md:h-[42px] md:w-[42px]"
           />
 
           <div class="inline-flex w-full flex-col justify-between">
-            <div class="inline-flex items-center justify-between gap-2 self-stretch">
-              <div class=" h-6 font-['Inter'] text-sm font-normal leading-normal text-[#282828]">
+            <div class="inline-flex items-center gap-2 self-stretch">
+              <div
+                class="max-w-[200px] truncate font-['Inter'] text-sm font-normal leading-normal text-[#282828] md:max-w-none"
+              >
                 {update.userProfile.name}
               </div>
               <div
@@ -66,7 +70,7 @@
               </div>
             </div>
             <div
-              class="h-[18px] self-stretch font-['Inter'] text-[13px] font-normal leading-[18px] text-[#282828]/50"
+              class="self-stretch font-['Inter'] text-[13px] font-normal leading-[18px] text-[#282828]/50"
             >
               {date}
             </div>
@@ -77,27 +81,22 @@
     <div class="flex flex-col items-start justify-start gap-1 self-stretch">
       <div class="flex flex-col items-start justify-start gap-[30px] self-stretch pb-2">
         <div
-          class="self-stretch font-['Inter'] text-base font-normal leading-[29px] text-[#282828]"
+          class="self-stretch font-['Inter'] text-base font-normal leading-relaxed text-[#282828]"
         >
           {@html truncatedContent}
         </div>
       </div>
     </div>
-    <div class="w-[744.66px] bg-gradient-to-b from-white to-white"></div>
-    <div class="inline-flex w-[744.66px] items-center justify-between">
+    <div class="inline-flex w-full items-center justify-between">
       <div class="flex items-center justify-start gap-6">
         <div class="flex items-center justify-start gap-2">
-          <Icon icon="mdi:chat-outline" class="text-2xl" />
-          <div
-            class="h-6 w-[15.25px] font-['Inter'] text-sm font-normal leading-normal text-[#9b9e9e]"
-          >
-            16
-          </div>
+          <Icon icon="mdi:chat-outline" class="text-2xl text-[#8C8C8C]" />
+          <div class="font-['Inter'] text-sm font-normal leading-normal text-[#9b9e9e]">16</div>
         </div>
       </div>
       <button
         on:click={showDetail}
-        class="flex items-center justify-center gap-1.5 border border-[#d1d1d1] bg-white px-[19px] py-[11.50px]"
+        class="flex items-center justify-center gap-1.5 border border-[#d1d1d1] bg-white px-4 py-2 md:px-[19px] md:py-[11.50px]"
       >
         <div class="text-center text-sm font-normal text-[#222222]">Read more</div>
         <Icon icon="mdi:chevron-right" class="text-2xl" />

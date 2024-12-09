@@ -52,10 +52,10 @@
     <Logo />
   </div>
 
-  <div class="flex items-center md:hidden">
+  <div class="flex items-center md:flex lg:flex">
     <button
       on:click={toggleMobileMenu}
-      class="text-white focus:outline-none md:hidden"
+      class="text-white focus:outline-none lg:hidden"
       aria-label="Toggle mobile menu"
     >
       {#if isMobileMenuOpen}
@@ -66,7 +66,7 @@
     </button>
   </div>
 
-  <div class="hidden w-full max-w-[480px] items-center justify-center md:flex">
+  <div class="hidden w-full max-w-[480px] items-center justify-center lg:flex">
     <div
       class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] pl-4 pr-3"
     >
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="hidden h-[42.67px] grow-0 items-center justify-end gap-4 md:flex">
+  <div class="hidden h-[42.67px] grow-0 items-center justify-end gap-4 lg:flex">
     <div class="flex items-center gap-4">
       <a href="/" class="font-['Inter'] text-base font-semibold leading-none text-white"> Tasks </a>
 
@@ -133,12 +133,12 @@
 
   <!-- Mobile Menu -->
   {#if isMobileMenuOpen}
-    <div class="absolute left-0 right-0 top-[84px] bg-[#0b383c] md:hidden">
-      <div class="flex flex-col space-y-4 p-4">
+    <div class="absolute left-0 right-0 top-[84px] w-[100%] bg-[#0b383c] lg:hidden">
+      <div class="flex w-full flex-col space-y-4 px-8 py-4">
         <!-- Mobile Search -->
         <div class="mb-2 w-full max-w-[480px] items-center justify-center">
           <div
-            class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] py-2 pl-4 pr-3"
+            class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] py-2 pl-4 pr-3 max-lg:w-full"
           >
             <button
               type="button"
@@ -146,14 +146,14 @@
               on:click={() => ($searchBarOpen = !$searchBarOpen)}
             >
               <span
-                class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white"
-                >Resources</span
+                class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white max-lg:px-8"
+                >Search for a project...</span
               >
-              <Icon
+              <!-- <Icon
                 icon="radix-icons:caret-down"
                 class="transform text-2xl text-white transition-transform duration-200 {isResourcesOpen &&
                   'rotate-180'}"
-              />
+              /> -->
             </button>
           </div>
         </div>

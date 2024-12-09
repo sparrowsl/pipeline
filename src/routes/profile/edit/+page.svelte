@@ -18,18 +18,6 @@
       icon: 'proicons:person-2',
     },
     {
-      id: 'Links',
-      label: 'Links',
-      width: '184px',
-      icon: 'ci:link',
-    },
-    {
-      id: 'Interests',
-      label: 'Interests',
-      width: '184px',
-      icon: 'uit:bag',
-    },
-    {
       id: 'Settings',
       label: 'Settings',
       width: '184px',
@@ -81,84 +69,59 @@
 </script>
 
 <main
-  class="mb-5 flex flex-col items-center justify-center rounded-[37px] bg-white px-10 py-5 max-md:mt-10 max-md:px-5"
+  class="mb-5 flex flex-col items-center justify-center rounded-[37px] px-10 py-5 max-md:mt-10 max-md:px-5"
 >
   <section
-    class="mb-10 mt-20 flex w-full max-w-[1080px] flex-wrap justify-between gap-5 self-center max-md:mt-10 max-md:max-w-full"
+    class="mb-10 mt-12 flex w-full max-w-[1080px] items-center justify-between gap-5 px-5 max-lg:mt-4 max-lg:gap-2 max-md:mt-[-15px]"
   >
-    <h1 class="ml-[11%] text-4xl font-semibold leading-none text-black max-md:text-4xl">
-      Username
-    </h1>
+    <h1 class="text-4xl font-semibold text-black max-md:text-2xl">Username</h1>
     <a
       href="/profile"
-      class="mr-10 flex items-center justify-center gap-2.5 self-start rounded-[50px] border-2 border-solid border-lime-800 bg-lime-200 px-6 py-3.5 text-xl leading-none text-lime-800 max-md:px-5"
+      class="flex items-center gap-2 rounded-full border-2 border-lime-800 bg-lime-200 px-4 py-2 text-lg text-lime-800 max-md:px-3 max-md:py-1 max-md:text-sm"
     >
-      <Icon icon="mdi:person-outline" class="text-2xl" />
-      <span class="my-auto self-stretch">View Profile</span>
+      <img
+        loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/64135a94b56ce48af9a1c4223db4ad995409393478b6a070980d63978b32c01e"
+        alt=""
+        class="h-6 w-6 shrink-0 max-md:h-4 max-md:w-4"
+      />
+      <span>View Profile</span>
     </a>
   </section>
 
-  <section class="mb-12 w-full">
+  <section class="mb-12 w-full max-lg:mb-2">
     <div
-      class="mt-5 flex items-center justify-center space-x-24 rounded-[37px] bg-white px-10 py-5 max-md:mt-10 max-md:px-5"
+      class="mx-auto mt-5 flex max-w-[1080px] items-center justify-center gap-6 space-x-28 rounded-[37px] bg-white px-10 py-5
+      max-md:w-[90%] max-md:space-x-0 max-md:space-y-4"
     >
       {#each navItems as navItem}
-        <button
-          type="button"
-          class="pb-02 mx-2 flex cursor-pointer items-center justify-center self-center transition-all duration-300 ease-in-out"
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          class="pb-02 mx-2 flex cursor-pointer items-center justify-center self-center border-b-4 transition-all duration-300 ease-in-out"
           class:selected={activeNavItem === navItem.id}
           class:border-b-4={activeNavItem === navItem.id}
           on:click={() => (activeNavItem = navItem.id)}
           style="min-width: 134px; border-color: #d1ea9a"
         >
           <Icon icon={navItem.icon} class="text-2xl" />
-          <span class="text-center text-2xl">
-            {navItem.label}
-          </span>
-        </button>
+          <span class="text-center text-2xl max-md:text-base">{navItem.label}</span>
+        </div>
       {/each}
     </div>
   </section>
 
-  <section class="mt-5 flex w-[82%] max-w-full flex-col items-center overflow-hidden max-md:mt-10">
+  <section
+    class="mt-5 flex w-[82%] max-w-full flex-col items-center overflow-hidden max-lg:w-full max-md:mt-10"
+  >
     {#if activeNavItem === 'Profile'}
-      <ProfileForm />
-    {:else if activeNavItem === 'Links'}
-      <ProfileLinks />
-    {:else if activeNavItem === 'Interests'}
-      <div class="w-[80%]">
-        <h2 class="mb-4 text-xl text-black">Select 3 or more to continue</h2>
-
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-1">
-          <div class="interests-section">
-            <Interests
-              title="Tech & Innovation"
-              interests={techInterests}
-              bind:selectedInterests={selectedTechInterests}
-            />
-          </div>
-
-          <div class="interests-section">
-            <Interests
-              title="Creative Works"
-              interests={creativeInterests}
-              bind:selectedInterests={selectedCreativeInterests}
-            />
-          </div>
-
-          <div class="interests-section">
-            <Interests
-              title="Community Projects"
-              interests={communityProjects}
-              bind:selectedInterests={selectedCommunityProjects}
-              layout="grid"
-            />
-          </div>
-        </div>
+      <div class="flex w-full flex-row gap-5 max-lg:flex-col">
+        <ProfileForm />
+        <ProfileLinks />
       </div>
       <button
         type="submit"
-        class="ml-[10%] mt-8 self-end rounded-[127.56px] bg-[#516027] px-[29.89px] py-6 font-['Inter'] text-xl font-medium leading-[32.91px] text-[#ebebeb]"
+        class="mt-[47px] self-end rounded-[127.56px] bg-[#516027] px-[29.89px] py-6 font-['Inter'] text-xl font-medium leading-[32.91px] text-[#ebebeb] max-lg:w-[30%] max-lg:self-end max-lg:text-sm max-md:w-[50%]"
       >
         save & continue
       </button>
