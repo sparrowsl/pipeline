@@ -203,6 +203,7 @@ export async function storeProject(user, projectData, supabase) {
 
 export async function updateProject(userId, projectId, projectData, supabase) {
   let { tags, ...projectFields } = projectData.data;
+  let updatedTimestamp = new Date().toISOString();
 
   if (typeof tags === 'string') {
     try {
@@ -215,7 +216,11 @@ export async function updateProject(userId, projectId, projectData, supabase) {
     tags = tags ? [tags] : [];
   }
 
-  await updateDetails(projectId, { ...projectFields, user_id: userId }, supabase);
+  await updateDetails(
+    projectId,
+    { ...projectFields, user_id: userId, updated_at: updatedTimestamp },
+    supabase,
+  );
 
   const existingTags = await getProjectExistingCategories(projectId, supabase);
   const existingTagIds = existingTags.map((tag) => tag.category_id);
