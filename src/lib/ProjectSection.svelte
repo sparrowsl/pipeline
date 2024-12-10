@@ -2,7 +2,7 @@
   import Card from '../lib/Card.svelte';
 
   export let projects = [];
-  export let bookmarkProjects;
+  export let bookmarkProjects = [];
 
   let navSections = [
     { id: 'created', label: 'Projects created' },

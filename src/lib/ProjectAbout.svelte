@@ -3,8 +3,6 @@
   import { timeAgo } from '$lib/utils/dateTimeFormat.js';
   let date;
 
-  console.log(project.updated_at);
-
   $: date = timeAgo(project.updated_at);
 </script>
 
