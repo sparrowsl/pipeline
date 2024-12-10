@@ -1,5 +1,5 @@
 <script>
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
   import ProjectNav from '$lib/ProjectNav.svelte';
   import ProjectAbout from '$lib/ProjectAbout.svelte';
   import DpgStatus from '$lib/dpgStatus.svelte';
@@ -11,6 +11,7 @@
   import Icon from '@iconify/svelte';
   import { dateFormat } from '$lib/utils/dateTimeFormat.js';
   import { toast } from 'svelte-sonner';
+  import { invalidateAll } from '$app/navigation';
 
   let id;
   $: id = $page.params.id;
@@ -195,6 +196,9 @@
             if (result.type === 'success') {
               closeUpdatePopup();
             }
+
+            await applyAction(result);
+            await invalidateAll();
           };
         }}
       >
