@@ -1,14 +1,13 @@
 <script>
   import ProjectCategory from '$lib/ProjectCategory.svelte';
   import Card from '$lib/Card.svelte';
-  import { onMount } from 'svelte';
 
-  let allProjects = [];
-  let topProjects = [];
+  export let data;
+  let loadedProjects = data.allProjects;
+
   let searchResults = [];
   let categoryResult = [];
   let loading = true;
-  let error = null;
   let searchTerm = '';
   let selectedTag = '';
 
@@ -23,6 +22,7 @@
   let searchResultsLoaded = false;
   let categoryResultLoaded = false;
 
+  // TODO: we would find a way around it later
   async function fetchAllProjects() {
     try {
       const response = await fetch(`/api/projects?page=${currentPage}&limit=${itemsPerPage}`, {
@@ -42,64 +42,9 @@
         allProjectsLoaded = true;
       }
 
-      allProjects = [...allProjects, ...data.projects];
+      loadedProjects = [...loadedProjects, ...data.projects];
     } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function fetchTopProjects() {
-    try {
-      const response = await fetch('/api/projects', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-
-      //taking random 3 projects for now
-      const shuffledProjects = data.projects.sort(() => Math.random() - 0.5);
-
-      topProjects = shuffledProjects.slice(0, 3);
-    } catch (error) {
-      error = e.message;
-      alert(error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  async function searchProjects(term) {
-    try {
-      const response = await fetch(
-        `/api/projects?term=${term}&page=${searchPage}&limit=${itemsPerPage}`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-
-      if (!response.ok) throw new Error(response.statusText);
-
-      const data = await response.json();
-
-      if (data.projects.length < itemsPerPage) {
-        allSearchLoaded = true;
-      }
-
-      searchResults = data.projects;
-    } catch (e) {
-      error = e.message;
-      alert(error);
+      alert(error.message);
     } finally {
       loading = false;
     }
@@ -126,14 +71,13 @@
 
       categoryResult = data.projects;
     } catch (e) {
-      error = e.message;
-      alert(error);
+      alert(e.message);
     } finally {
       categoryResultLoaded = false;
     }
   }
 
-  function loadMoreProjects() {
+  async function loadMoreProjects() {
     currentPage += 1;
     fetchAllProjects();
   }
@@ -148,17 +92,6 @@
     projectByCategory(selectedTag);
   }
 
-  function handleSearch(event) {
-    searchTerm = event.detail.searchTerm;
-    searchPage = 1; // set page to 1 when searching on new term
-    searchResults = [];
-    searchResultsLoaded = false;
-
-    if (searchTerm) {
-      searchProjects(searchTerm);
-    }
-  }
-
   function handleCategorySelected(event) {
     const selectedCategory = event.detail;
     if (selectedCategory) {
@@ -168,11 +101,6 @@
       selectedTag = '';
     }
   }
-
-  onMount(() => {
-    fetchAllProjects();
-    fetchTopProjects();
-  });
 </script>
 
 <div class="flex flex-col justify-center w-full max-w-[1470px] mx-auto gap-6 px-6 mt-8 md:flex-row">
@@ -232,17 +160,15 @@
       {/if}
     {:else if !searchTerm}
       <div class="text-xl font-semibold text-gray-700 col-span-full">Top Projects</div>
-      {#if topProjects.length > 0}
-        {#each topProjects as project}
-          <Card {project} />
-        {/each}
+      {#each data.topProjects as project}
+        <Card {project} />
       {:else}
         <p class="text-center text-gray-600 col-span-full">No projects found.</p>
-      {/if}
+      {/each}
 
       <div class="mt-8 text-xl font-semibold text-gray-700 col-span-full">All Projects</div>
-      {#if allProjects.length > 0}
-        {#each allProjects as project}
+      {#if data.allProjects.length > 0}
+        {#each data.allProjects as project}
           <Card {project} />
         {/each}
         {#if !allProjectsLoaded}
