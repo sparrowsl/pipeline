@@ -1,15 +1,20 @@
 <script>
-  import ProfileForm from '../../../lib/ProfileForm.svelte';
-  import ProfileLinks from '../../../lib/ProfileLinks.svelte';
-  import Settings from '../../../lib/Settings.svelte';
-  import Interests from '../../../lib/Interests.svelte';
+  import ProfileForm from '$lib/ProfileForm.svelte';
+  import ProfileLinks from '$lib/ProfileLinks.svelte';
+  import Settings from '$lib/Settings.svelte';
+  import Interests from '$lib/Interests.svelte';
   import Icon from '@iconify/svelte';
+  import { applyAction, enhance } from '$app/forms';
+  import { toast } from 'svelte-sonner';
 
   let selectedTechInterests = [];
   let selectedCreativeInterests = [];
   let selectedCommunityProjects = [];
 
   let activeNavItem = 'Profile';
+  let loading = false;
+  export let data;
+  let user = data.user;
   const navItems = [
     {
       id: 'Profile',
@@ -115,16 +120,36 @@
     class="mt-5 flex w-[82%] max-w-full flex-col items-center overflow-hidden max-lg:w-full max-md:mt-10"
   >
     {#if activeNavItem === 'Profile'}
-      <div class="flex w-full flex-row gap-5 max-lg:flex-col">
-        <ProfileForm />
-        <ProfileLinks />
-      </div>
-      <button
-        type="submit"
-        class="mt-[47px] self-end rounded-[127.56px] bg-[#516027] px-[29.89px] py-6 font-['Inter'] text-xl font-medium leading-[32.91px] text-[#ebebeb] max-lg:w-[30%] max-lg:self-end max-lg:text-sm max-md:w-[50%]"
+      <form
+        action="?/updateProfile"
+        method="POST"
+        class="mt-5 flex w-[82%] max-w-full flex-col items-center overflow-hidden max-lg:w-full max-md:mt-10"
+        enctype="multipart/form-data"
+        use:enhance={() => {
+          return async ({ result }) => {
+            loading = true;
+            if (result.type === 'failure') {
+              toast.warn(result?.data?.error || 'failed to edit profile');
+            } else if (result.type === 'error') {
+              toast.error('could not update profile');
+            }
+            toast.success('Profile updated successfully');
+            loading = false;
+            await applyAction(result);
+          };
+        }}
       >
-        save & continue
-      </button>
+        <div class="flex w-full flex-row gap-5 max-lg:flex-col">
+          <ProfileForm {user} />
+          <ProfileLinks {user} />
+        </div>
+        <button
+          type="submit"
+          class="mt-[47px] flex justify-end self-end rounded-[127.56px] bg-[#516027] px-[29.89px] py-6 font-['Inter'] text-xl font-medium leading-[32.91px] text-[#ebebeb] max-lg:w-[30%] max-lg:self-end max-lg:text-sm max-md:w-[50%]"
+        >
+          {loading ? 'Updating...' : 'Update Profile'}
+        </button>
+      </form>
     {:else if activeNavItem === 'Settings'}
       <Settings />
     {/if}

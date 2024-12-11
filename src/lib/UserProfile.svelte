@@ -45,7 +45,7 @@
 <div class="relative flex items-center">
   <button
     on:click={toggleDropdown}
-    class="flex h-[43px] w-[43px] items-center justify-between rounded-[51px] bg-lime-100 p-2.5 px-2"
+    class="flex h-[43px] w-full items-center justify-between rounded-[51px] p-2.5 px-2"
     aria-label="User profile"
     aria-expanded={isOpen}
     aria-haspopup="true"
@@ -55,7 +55,7 @@
         loading="lazy"
         src={user.image_url && user.image_url !== '' ? user.image_url : defaultImageUrl}
         alt="User avatar"
-        class="aspect-square w-[25px] object-contain"
+        class="aspect-square w-[43px] rounded-[51px] object-contain"
       />
       <span class="ml-4 text-ellipsis whitespace-nowrap text-white lg:hidden"
         >{user.display_name}</span
@@ -70,11 +70,11 @@
     >
       <nav class="flex flex-col py-6">
         <div class="ml-6 flex items-center gap-3 max-lg:hidden">
-          <div class="flex rounded-3xl border-2 border-white bg-zinc-300 p-3">
+          <div class="flex rounded-3xl p-3">
             <img
               loading="lazy"
               src={user.image_url && user.image_url !== '' ? user.image_url : defaultImageUrl}
-              class="aspect-square w-[22px] object-contain"
+              class="aspect-square w-[42px] rounded-[51px] object-contain"
               alt="User avatar"
             />
           </div>

@@ -11,7 +11,7 @@
       <input
         type="text"
         id="currentPassword"
-        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 max-lg:min-h-[55px]"
+        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 text-base max-lg:min-h-[55px]"
         aria-required="true"
       />
     </div>
@@ -26,7 +26,7 @@
       <input
         type="text"
         id="newPassword"
-        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 max-lg:min-h-[55px]"
+        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 text-base max-lg:min-h-[55px]"
         aria-required="true"
       />
     </div>
@@ -40,7 +40,7 @@
       <input
         type="text"
         id="confirmPassword"
-        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 max-lg:min-h-[55px]"
+        class="mt-2.5 min-h-[70px] w-full rounded-[75px] border-2 border-lime-800 px-4 text-base max-lg:min-h-[55px]"
         aria-required="true"
       />
     </div>
