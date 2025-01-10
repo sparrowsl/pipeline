@@ -76,13 +76,12 @@
 <main
   class="flex flex-col justify-center items-center px-10 py-5 mb-5 rounded-[37px] max-md:px-5 max-md:mt-10"
 >
-  <section
-    class="flex items-center justify-between gap-5 w-full max-w-[1080px] mt-12 mb-10 px-5 max-lg:mt-4 max-lg:gap-2 max-md:mt-[-15px]"
+  <!-- <section
+    class="flex justify-end gap-5 w-full max-w-[1080px] mt-12 mb-10 px-5 max-lg:mt-4 max-lg:gap-2 max-md:mt-[-15px]"
   >
-    <h1 class="text-4xl font-semibold text-black max-md:text-2xl">Username</h1>
     <a
       href="/profile"
-      class="flex items-center gap-2 px-4 py-2 text-lg border-2 rounded-full text-lime-800 bg-lime-200 border-lime-800 max-md:text-sm max-md:py-1 max-md:px-3"
+      class="flex items-end justify-end gap-2 px-4 py-2 text-lg border-2 rounded-full text-lime-800 bg-lime-200 border-lime-800 max-md:text-sm max-md:py-1 max-md:px-3"
     >
       <img
         loading="lazy"
@@ -92,7 +91,8 @@
       />
       <span>View Profile</span>
     </a>
-  </section>
+  </section> -->
+
 
   <section class="w-full mb-12 max-lg:mb-2">
     <div
@@ -143,18 +143,41 @@
           <ProfileForm {user} />
           <ProfileLinks {user} />
         </div>
+
+        <div class="flex justify-between w-full mt-10">
+
+          <section 
+          class="flex items-center px-5 mt-10 max-lg:gap-2"
+        >
+          <a
+            href="/profile"
+            class="flex items-center justify-center gap-2 px-4 py-2 text-lg border-2 rounded-3xl text-lime-800 bg-lime-200 border-lime-800 max-md:text-sm max-md:py-1 max-md:px-3 h-[50px]"
+          >
+            <Icon icon="mdi-light:chevron-left" class="text-2xl" />
+            <span>Back</span>
+          </a>
+        </section>
+        
         <button
           type="submit"
-          class="self-end flex justify-end mt-[47px] px-[29.89px] py-6 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-xl font-medium font-['Inter'] leading-[32.91px] max-lg:self-end max-lg:w-[30%] max-lg:text-sm max-md:w-[50%]"
+          class="self-end flex mt-[47px] px-[29.89px] justify-center py-6 bg-[#516027] rounded-[127.56px] text-[#ebebeb] text-xl font-medium font-['Inter'] leading-[32.91px] max-lg:self-end max-lg:w-[30%] max-lg:text-sm max-md:w-[50%]"
         >
           {loading ? 'Updating...' : 'Update Profile'}
         </button>
+
+        
+      </div>
+        
       </form>
     {:else if activeNavItem === 'Settings'}
       <Settings />
     {/if}
   </section>
+
+
 </main>
+
+
 
 <style>
   button.selected {
