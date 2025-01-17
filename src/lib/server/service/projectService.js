@@ -6,6 +6,7 @@ import {
   updateDetails,
   getProjectsByUserId,
   getProjectsByIds,
+  getProjectByGithub,
 } from '$lib/server/repo/projectRepo.js';
 import { createTeamMember, teamMembers } from '$lib/server/repo/memberRepo.js';
 import {
@@ -128,6 +129,14 @@ export async function getProjectById(id, supabase) {
     dpgCount: projectDpgStatuses.length,
     dpgStatuses,
   };
+}
+
+export async function getProjectByGithubUrl(githubUrl, supabase) {
+  const project = await getProjectByGithub(githubUrl, supabase);
+  if (!project) {
+    return null;
+  }
+  return project;
 }
 
 export async function getTeamMembers(projectId, supabase) {
