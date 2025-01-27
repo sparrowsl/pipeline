@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/forms"
+
 @theme {
   /* any extra config */
 }

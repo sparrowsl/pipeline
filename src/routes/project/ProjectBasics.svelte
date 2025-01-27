@@ -1,53 +1,18 @@
 <script>
-  import { projectStore } from '../../stores/projectStore.js';
-  import { get } from 'svelte/store';
-  import { createEventDispatcher } from 'svelte';
-
   import { onMount } from 'svelte';
-  let Editor;
   import { countries } from 'countries-list';
+  import Icon from '@iconify/svelte';
 
-  // const countryList = Object.values(countries);
-  const countryList = Object.values(countries).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  export let project = {};
 
-  let title = get(projectStore).title;
-  let bio = get(projectStore).bio;
-  let country = get(projectStore).country;
-  let details = get(projectStore).details;
+  const countryList = Object.values(countries).sort((a, b) => a.name.localeCompare(b.name));
 
-  let bannerImg = get(projectStore).banner_image;
-  let profileImg = get(projectStore).image;
-
-  let selectedTags = [...get(projectStore).tags];
-
-  //validation
-  export function validateFields() {
-    return title && bio && country && details && selectedTags.length > 0;
-  }
-
-  function updateStore() {
-    projectStore.update((data) => {
-      data.title = title;
-      data.bio = bio;
-      data.tags = selectedTags;
-      data.country = country;
-      data.details = details;
-      if (bannerImg) data.banner_image = bannerImg;
-      if (profileImg) data.image = profileImg;
-      return data;
-    });
-  }
+  let selectedTags = project.tags ? [...project.tags] : [];
 
   let isOpen = false;
   let inputValue = '';
 
-  const dispatch = createEventDispatcher();
-
   let availableTags = [];
-
-  let currentSection = 'basics';
 
   function toggleDropdown(event) {
     event.preventDefault();
@@ -57,8 +22,6 @@
   function addTag(tag) {
     if (!selectedTags.some((selected) => selected.title === tag.title)) {
       selectedTags = [...selectedTags, tag];
-      updateStore();
-      dispatch('change', selectedTags);
     }
 
     inputValue = '';
@@ -67,8 +30,6 @@
 
   function removeTag(tag) {
     selectedTags = selectedTags.filter((t) => t.title !== tag.title);
-    updateStore();
-    dispatch('change', selectedTags);
   }
 
   $: filteredTags = availableTags.filter(
@@ -77,21 +38,17 @@
       !selectedTags.some((selected) => selected.title === tag.title),
   );
 
-  let ProjectBannerImage = null;
-  let ProjectProfileImage = null;
+  let ProjectBannerImage = project.banner_image || null;
+  let ProjectProfileImage = project.image || null;
 
   const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 
   async function handleBannerUpload(event) {
     const file = event.target.files[0];
-    console.log('Banner file selected:', file);
+
     if (file) {
       if (ProjectBannerImage) URL.revokeObjectURL(ProjectBannerImage);
       ProjectBannerImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
-
-      bannerImg = path;
-      updateStore();
     }
   }
 
@@ -100,10 +57,6 @@
     if (file) {
       if (ProjectProfileImage) URL.revokeObjectURL(ProjectProfileImage);
       ProjectProfileImage = URL.createObjectURL(file);
-      let path = await handleImageUpload(file);
-
-      profileImg = path;
-      updateStore();
     }
   }
 
@@ -125,30 +78,8 @@
     } catch (error) {}
   }
 
-  async function handleImageUpload(file) {
-    // Upload the image to Supabase storage
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch('/api/file-upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const result = await response.json();
-      throw new Error(result.message || 'Failed to upload image');
-    }
-
-    return response.json().then((data) => {
-      return data.url;
-    });
-  }
-
   onMount(async () => {
     fetchAllCategories();
-    const module = await import('novel-svelte');
-    Editor = module.Editor;
   });
 </script>
 
@@ -226,8 +157,7 @@
             type="text"
             id="projectTitle"
             name="title"
-            bind:value={title}
-            on:change={updateStore}
+            bind:value={project.title}
             class="w-full border-2 border-lime-800 min-h-[50px] rounded-[75px] mt-2.5 px-4"
             required
           />
@@ -245,8 +175,7 @@
           <textarea
             id="projectBio"
             name="bio"
-            bind:value={bio}
-            on:change={updateStore}
+            bind:value={project.bio}
             class="w-full border-2 border-lime-800 min-h-[120px] rounded-[31px] mt-2.5 p-4"
             required
           ></textarea>
@@ -283,11 +212,11 @@
               {/each}
               <input
                 type="text"
-                name="tags"
                 bind:value={inputValue}
                 placeholder="Type to add tags"
                 class="flex-grow bg-transparent border-none outline-none rounded-[31px]"
               />
+              <input type="hidden" name="tags" value={JSON.stringify(selectedTags)} />
             </div>
             <button
               on:click={toggleDropdown}
@@ -335,30 +264,17 @@
             <select
               id="projectCountry"
               name="country"
-              bind:value={country}
-              on:change={updateStore}
+              bind:value={project.country}
               class="w-full h-full pl-4 pr-10 bg-transparent border-none outline-none appearance-none"
               required
             >
-            <option value="" disabled selected hidden>--- Select a country ---</option>
+              <option value="" disabled selected hidden>--- Select a country ---</option>
               {#each countryList as countryOption (countryOption.name)}
                 <option value={countryOption.name}>{countryOption.name}</option>
               {/each}
             </select>
             <!-- Custom Arrow Icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="absolute w-5 h-5 text-gray-600 pointer-events-none right-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.23 7.23a1 1 0 011.414 0L10 10.586l3.354-3.354a1 1 0 111.415 1.414l-4 4a1 1 0 01-1.415 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
+            <Icon icon="radix-icons:caret-down" class="text-2xl" />
           </div>
         </div>
       </div>
@@ -380,8 +296,7 @@
           <textarea
             id="projectDetails"
             name="details"
-            bind:value={details}
-            on:change={updateStore}
+            bind:value={project.details}
             class="w-full border-2 border-lime-800 rounded-[31px] mt-2.5 p-4 h-[140px]"
             required
           ></textarea>
