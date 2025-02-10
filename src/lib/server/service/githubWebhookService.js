@@ -1,10 +1,15 @@
 import { json } from '@sveltejs/kit';
 import { getProjectByGithubUrl } from '$lib/server/service/projectService.js';
 import { createProjectUpdate } from '$lib/server/service/projectUpdatesService.js';
+import { checkDPGStatus } from '$lib/server/service/aiService.js';
+import { saveDPGStstatus } from '$lib/server/service/dpgStatusService.js';
 
 export async function githubWebhook(data, supabase) {
   //get the project that matches the data.url
   const url = data.repository.html_url;
+  const githubOwner = data.repository.owner.login;
+  const repo = data.repository.name;
+  //console.log('Evaluating:', data);
 
   const project = await getProjectByGithubUrl(url, supabase);
 
@@ -28,5 +33,11 @@ export async function githubWebhook(data, supabase) {
     },
     supabase,
   );
-  
+
+  //check DPG status
+  const dpgStatus = await checkDPGStatus(githubOwner, repo, supabase);
+
+  await saveDPGStstatus(project.id, dpgStatus, supabase);
+
+  return json({ success: true, status: 200 });
 }
