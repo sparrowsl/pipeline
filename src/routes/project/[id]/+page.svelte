@@ -17,6 +17,7 @@
   import { createEventDispatcher } from 'svelte';
   import GitContributorsViewAll from '$lib/GitContributorsViewAll.svelte';
   import ResourcesViewAll from '$lib/ResourcesViewAll.svelte';
+  import GitUpdate from '$lib/GitUpdate.svelte';
 
 
   
@@ -27,6 +28,7 @@
   let image;
   let banner;
   let date;
+  
   export let data;
   let project = data.project;
   let projectUpdates = data.updates;
@@ -178,6 +180,8 @@
         'https://cdn.builder.io/api/v1/image/assets/TEMP/3108468c-54ac-442b-a540-6bc12e0ded13?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
     },
   ];
+
+
 </script>
 
 <div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8">
@@ -372,12 +376,32 @@
         {:else if activeNavItem === 'dpgStatus'}
           <DpgStatus {project} />
         {:else if activeNavItem === 'updates'}
+        
           {#if showUpdateDetail}
             <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
           {:else if projectUpdates.length > 0}
+          <div
+          class="self-stretch font-['Inter'] text-2xl font-bold leading-tight text-[#282828] md:text-[32px] md:leading-10"
+        >  Updates
+       
+        </div>
+          <!-- <div class="flex flex-col items-start w-full gap-4 mt-5 max-md:max-w-full">
+          {#each gitUpdates as gitUpdates}
+            <GitUpdate {...gitUpdates}  />
+          {/each}
+        </div> -->
+
+
             {#each projectUpdates as update}
+
+              {#if update.code}
+                <GitUpdate {update} />
+                {:else}
               <Updates on:showDetail={handleShowDetail} {update} />
+              {/if}
+              
             {/each}
+           
           {:else}
             <p>No updates</p>
           {/if}
@@ -436,8 +460,8 @@
                   </button>
                 </div>
                 <div class="flex flex-wrap items-start w-full gap-5 mt-5 max-md:max-w-full">
-                  {#each resources as resource (resource.id)}
-                    <ResourceCard {...resource} />
+                  {#each projectResource as resource}
+                    <ResourceCard {resource} />
                   {/each}
                 </div>
               </div>

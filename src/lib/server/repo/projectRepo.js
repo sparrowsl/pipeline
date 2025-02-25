@@ -39,6 +39,12 @@ export async function getProjectsByUserId(userId, start, end, supabase) {
   return data;
 }
 
+export async function getProjectByGithub(url, supabase) {
+  const { data, error } = await supabase.from('projects').select('*').eq('github', url).single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+
 export async function createProject(projectData, supabase) {
   const { data, error } = await supabase.from('projects').insert(projectData).select();
   if (error) throw new Error(error.message);
