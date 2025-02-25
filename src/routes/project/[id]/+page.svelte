@@ -181,29 +181,6 @@
     },
   ];
 
-  const gitUpdates = [
-    {
-    name: "Hawa Kallon",
-    githubLink: "https://github.com/hawakallon", 
-    description: "Fixed UI bugs and improved accessibility", 
-    avatarUrl: "https://github.com/hawakallon.png", 
-    prLink: "https://github.com/hawakallon/project/pull/42" 
-  },
-  {
-    name: "Hawa Kallon",
-    githubLink: "https://github.com/hawakallon", 
-    description: "Fixed UI bugs and improved accessibility", 
-    avatarUrl: "https://github.com/hawakallon.png", 
-    prLink: "https://github.com/hawakallon/project/pull/42" 
-  },
-  {
-    name: "Hawa Kallon",
-    githubLink: "https://github.com/hawakallon", 
-    description: "Fixed UI bugs and improved accessibility", 
-    avatarUrl: "https://github.com/hawakallon.png", 
-    prLink: "https://github.com/hawakallon/project/pull/42" 
-  }
-]
 
 </script>
 
@@ -408,15 +385,20 @@
         >  Updates
        
         </div>
-          <div class="flex flex-col items-start w-full gap-4 mt-5 max-md:max-w-full">
+          <!-- <div class="flex flex-col items-start w-full gap-4 mt-5 max-md:max-w-full">
           {#each gitUpdates as gitUpdates}
             <GitUpdate {...gitUpdates}  />
           {/each}
-        </div>
+        </div> -->
 
 
             {#each projectUpdates as update}
+
+              {#if update.code}
+                <GitUpdate {update} />
+                {:else}
               <Updates on:showDetail={handleShowDetail} {update} />
+              {/if}
               
             {/each}
            
@@ -478,8 +460,8 @@
                   </button>
                 </div>
                 <div class="flex flex-wrap items-start w-full gap-5 mt-5 max-md:max-w-full">
-                  {#each resources as resource (resource.id)}
-                    <ResourceCard {...resource} />
+                  {#each projectResource as resource}
+                    <ResourceCard {resource} />
                   {/each}
                 </div>
               </div>

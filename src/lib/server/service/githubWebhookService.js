@@ -28,5 +28,4 @@ export async function githubWebhook(data, supabase) {
     },
     supabase,
   );
-  
 }
