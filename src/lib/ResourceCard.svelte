@@ -1,30 +1,37 @@
 <script>
-    export let title;
-    export let author;
-    export let category;
-    export let description;
-    export let imageUrl;
+  export let resource;
+  //use this link  - resource.link
+</script>
 
-    
-    </script>
-    
-    <div class="flex overflow-hidden flex-col grow shrink items-center p-4 bg-white rounded-xl border border-gray-100 border-solid shadow-md min-w-[240px] w-[315px]">
-      <div class="flex items-start w-full gap-4">
-        <div class="flex items-start gap-6 w-14">
-          <img loading="lazy" src={imageUrl} alt="" class="object-contain rounded-full w-14 h-14 bg-amber-200 aspect-square" />
+<div
+  class="flex w-[315px] min-w-[240px] shrink grow flex-col items-center overflow-hidden rounded-xl border border-solid border-gray-100 bg-white p-4 shadow-md"
+>
+  <div class="flex w-full items-start gap-4">
+    <div class="flex w-14 items-start gap-6">
+      <img
+        loading="lazy"
+        src={resource.user_profile.image}
+        alt=""
+        class="aspect-square h-14 w-14 rounded-full bg-amber-200 object-contain"
+      />
+    </div>
+    <div class="flex min-w-[240px] flex-1 shrink basis-0 flex-col">
+      <div class="flex w-full items-start justify-between gap-10">
+        <div class="flex flex-col justify-center">
+          <h3 class="text-sm font-semibold leading-none text-black">{resource.title}</h3>
+          <p class="mt-1 text-xs leading-tight text-neutral-400">{resource.user_profile.name}</p>
         </div>
-        <div class="flex flex-col flex-1 shrink basis-0 min-w-[240px]">
-          <div class="flex items-start justify-between w-full gap-10">
-            <div class="flex flex-col justify-center">
-              <h3 class="text-sm font-semibold leading-none text-black">{title}</h3>
-              <p class="mt-1 text-xs leading-tight text-neutral-400">{author}</p>
-            </div>
-            <div class="h-5 px-2 py-1 bg-[#e9f5d3] rounded-md border border-[#d5e1bf] justify-center items-center inline-flex">
-                <div class="text-[#516027] text-xs font-normal font-['Jost'] leading-3">{category}</div>
-            </div>
+        <div
+          class="inline-flex h-5 items-center justify-center rounded-md border border-[#d5e1bf] bg-[#e9f5d3] px-2 py-1"
+        >
+          <div class="font-['Jost'] text-xs font-normal leading-3 text-[#516027]">
+            {resource.type_resource}
           </div>
-          <p class="pb-4 mt-3 text-xs leading-5 text-slate-600 font-['Inter'] text-['305661']">{description}</p>
-          
         </div>
       </div>
+      <p class="mt-3 pb-4 font-['Inter'] text-xs leading-5 text-['305661'] text-slate-600">
+        {resource.reason}
+      </p>
     </div>
+  </div>
+</div>

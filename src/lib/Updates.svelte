@@ -22,7 +22,7 @@
       : strippedContent;
   }
 
-  const truncatedContent = truncateContent(update.body);
+  const truncatedContent = truncateContent(update.body || '');
 
   const defaultImageUrl =
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
