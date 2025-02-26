@@ -40,4 +40,5 @@ export async function githubWebhook(data, supabase) {
   await saveDPGStstatus(project.id, dpgStatus, supabase);
 
   return json({ success: true, status: 200 });
+  
 }
