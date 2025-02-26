@@ -37,8 +37,9 @@
       }
 
       const data = await response.json();
+      console.log({ data });
 
-      if (data.projects.length < itemsPerPage) {
+      if (loadedProjects?.length < itemsPerPage) {
         allProjectsLoaded = true;
       }
 
@@ -65,11 +66,11 @@
 
       const data = await response.json();
 
-      if (data.projects.length < itemsPerPage) {
+      if (data.allProjects.length < itemsPerPage) {
         allCategoryLoaded = true;
       }
 
-      categoryResult = data.projects;
+      categoryResult = data.allProjects;
     } catch (e) {
       alert(e.message);
     } finally {
