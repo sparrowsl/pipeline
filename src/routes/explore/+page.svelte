@@ -38,11 +38,12 @@
 
       const data = await response.json();
 
-      if (data.projects.length < itemsPerPage) {
+      if (loadedProjects?.length < itemsPerPage) {
         allProjectsLoaded = true;
       }
 
       loadedProjects = [...loadedProjects, ...data.projects];
+      // data.allProjects = loadedProjects;
     } catch (error) {
       alert(error.message);
     } finally {
@@ -65,11 +66,11 @@
 
       const data = await response.json();
 
-      if (data.projects.length < itemsPerPage) {
+      if (data.allProjects.length < itemsPerPage) {
         allCategoryLoaded = true;
       }
 
-      categoryResult = data.projects;
+      categoryResult = data.allProjects;
     } catch (e) {
       alert(e.message);
     } finally {
@@ -168,7 +169,7 @@
 
       <div class="col-span-full mt-8 text-xl font-semibold text-gray-700">All Projects</div>
       {#if data.allProjects.length > 0}
-        {#each data.allProjects as project}
+        {#each loadedProjects as project (project.id)}
           <Card {project} />
         {/each}
         {#if !allProjectsLoaded}
