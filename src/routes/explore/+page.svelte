@@ -37,13 +37,13 @@
       }
 
       const data = await response.json();
-      console.log({ data });
 
       if (loadedProjects?.length < itemsPerPage) {
         allProjectsLoaded = true;
       }
 
       loadedProjects = [...loadedProjects, ...data.projects];
+      // data.allProjects = loadedProjects;
     } catch (error) {
       alert(error.message);
     } finally {
@@ -169,7 +169,7 @@
 
       <div class="col-span-full mt-8 text-xl font-semibold text-gray-700">All Projects</div>
       {#if data.allProjects.length > 0}
-        {#each data.allProjects as project}
+        {#each loadedProjects as project (project.id)}
           <Card {project} />
         {/each}
         {#if !allProjectsLoaded}
