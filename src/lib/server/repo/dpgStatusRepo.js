@@ -6,7 +6,7 @@ export async function getAllDpgStatuses(supabase) {
 export async function getDpgStatuses(projectIds, supabase) {
   const { data, error } = await supabase
     .from('project_dpg_status')
-    .select('project_id')
+    .select('*')
     .in('project_id', projectIds);
 
   if (error) throw new Error(error.message);
