@@ -17,22 +17,28 @@ export async function githubWebhook(data, supabase) {
     return json({ success: false, message: 'Project not found' });
   }
 
-  //store the project update
-  const update = await createProjectUpdate(
-    {
-      project_id: project.id,
-      title: data.pull_request.title,
-      merged_url: data.pull_request.html_url,
-      author_association: data.pull_request.author_association,
-      commits: data.pull_request.commits,
-      commits_url: data.pull_request.commits_url,
-      merged: data.pull_request.merged,
-      merged_at: data.pull_request.merged_at,
-      user: data.pull_request.user,
-      code: true,
-    },
-    supabase,
-  );
+  if (data.action === 'closed' && data.pull_request?.merged === true) {
+    //store the project update
+    const update = await createProjectUpdate(
+      {
+        project_id: project.id,
+        title: data.pull_request.title,
+        merged_url: data.pull_request.html_url,
+        author_association: data.pull_request.author_association,
+        commits: data.pull_request.commits,
+        commits_url: data.pull_request.commits_url,
+        merged: data.pull_request.merged,
+        merged_at: data.pull_request.merged_at,
+        user: data.pull_request.user,
+        code: true,
+      },
+      supabase,
+    );
+  } else {
+    console.log(
+      `The action is "${data.action}" or the pull request was not merged. No specific handler for this case.`,
+    );
+  }
 
   //check DPG status
   const dpgStatus = await checkDPGStatus(githubOwner, repo, supabase);
@@ -40,5 +46,4 @@ export async function githubWebhook(data, supabase) {
   await saveDPGStstatus(project.id, dpgStatus, supabase);
 
   return json({ success: true, status: 200 });
-  
 }

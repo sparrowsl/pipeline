@@ -7,31 +7,60 @@ export async function saveDPGStstatus(projectId, openAIResponse, supabase) {
 
   const explanations = parsedResponse.explanation.split('\n\n');
 
-  const projectDpgStatusData = dpgStatuses.map((criteria, index) => {
-    const explanationMatch = explanations.find(
-      (explanation) => explanation.includes(criteria.name), // Match explanation with the status name
-    );
+  //console.log('Explanations:', explanations);
 
-    const match = explanationMatch?.match(/\*\*(.*?)\*\*.*?Score:\s*(\d+)/);
-    const score = match ? parseInt(match[2], 10) : 0;
-    //const ex = explanations[index] || 'No explanation provided.';
+  // const projectDpgStatusData = dpgStatuses.map((criteria) => {
+  //   const explanationMatch = explanations.find((explanation) =>
+  //     explanation.toLowerCase().includes(criteria.name.toLowerCase()),
+  //   );
 
-    const cleanedExplanation = explanationMatch
-      ? explanationMatch
-          .replace(/^\d+\.\s*\*\*.*?\*\*:\s*/, '') // Removes the number, bold text, and colon
-          .replace(/Score:\s*\d+/, '') // Removes "Score: X"
-          .trim() // Trims leading/trailing whitespace
-      : 'No explanation provided.';
+  //   if (!explanationMatch) {
+  //     console.log(`No matching explanation found for: ${criteria.name}`);
+  //   }
 
-    return {
-      project_id: projectId,
-      status_id: criteria.id,
-      score: score,
-      explanation: cleanedExplanation,
-    };
-  });
+  //   const scoreMatch = explanationMatch?.match(/\*\*Score\*\*:\s*(\d+)/);
+  //   const reasonMatch = explanationMatch?.match(/\*\*Reason\*\*:\s*(.*)/);
 
-  //console.log(projectDpgStatusData);
+  //   const score = scoreMatch ? parseInt(scoreMatch[1], 10) : 0;
+  //   const reason = reasonMatch ? reasonMatch[1].trim() : 'No explanation provided.';
+  //    //console.log('Reason:', reason);
+
+  //   return {
+  //     project_id: projectId,
+  //     status_id: criteria.id,
+  //     score: score,
+  //     explanation: reason,
+  //   };
+  // });
+
+  const projectDpgStatusData = await Promise.all(
+    dpgStatuses.map(async (criteria) => {
+      const explanationMatch = explanations.find((explanation) =>
+        explanation.toLowerCase().includes(criteria.name.toLowerCase()),
+      );
+
+      if (!explanationMatch) {
+        console.log(`No matching explanation found for: ${criteria.name}`);
+      }
+
+      const scoreMatch = explanationMatch ? explanationMatch.match(/\*\*Score\*\*:\s*(\d+)/) : null;
+      const reasonMatch = explanationMatch
+        ? explanationMatch.match(/\*\*Reason\*\*:\s*(.+)/)
+        : null;
+
+      const score = scoreMatch ? parseInt(scoreMatch[1], 10) : 0;
+      const reason = await Promise.resolve(
+        reasonMatch ? reasonMatch[1].trim() : 'No explanation provided.',
+      );
+
+      return {
+        project_id: projectId,
+        status_id: criteria.id,
+        score: score,
+        explanation: reason,
+      };
+    }),
+  );
 
   for (const data of projectDpgStatusData) {
     await createProjectDpgStatus(data, supabase);
