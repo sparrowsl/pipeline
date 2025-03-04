@@ -38,9 +38,13 @@
   // console.log(concat);
 
   const fetchContribs = async () => {
-    const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);
-    const data = await res.json();
-    return data;
+    try {
+      const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);
+      const data = await res.json();
+      return data;
+    } catch (_e) {
+      return [];
+    }
   };
 
   let showGitDetail = false;
