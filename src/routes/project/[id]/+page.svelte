@@ -37,9 +37,13 @@
   const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
 
   const fetchContribs = async () => {
-    const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);
-    const data = await res.json();
-    return data;
+    try {
+      const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);
+      const data = await res.json();
+      return data;
+    } catch (_e) {
+      return [];
+    }
   };
 
   let showGitDetail = false;
@@ -113,8 +117,6 @@
 
   let contributors = [];
 
-  $: totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0);
-
   const resources = [
     {
       id: 1,
@@ -165,6 +167,18 @@
 
     contributors = await fetchContribs();
   });
+
+  let totalCommits = 0;
+
+  $: {
+    if (Array.isArray(contributors)) {
+      totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
+    }
+    // if (contributors.length <= 0) {
+    //   totalCommits = 0;
+    // } else {
+    // }
+  }
 </script>
 
 <div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8">
@@ -270,14 +284,16 @@
     >
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          {contributors.length + uniqueResourceIds}
+          {contributors.length + uniqueResourceIds || 0}
         </div>
         <div class="text-sm max-md:text-[13px]">Contributors</div>
       </div>
       <div class="h-[100px] w-px bg-neutral-400 max-md:hidden"></div>
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          {project.dpgCount}<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
+          {project.dpgCount}<span class="text-3xl">/</span><span class="text-3xl text-teal-800"
+            >9</span
+          >
         </div>
         <div class="text-sm max-md:text-[12px]">DPG Status</div>
       </div>
