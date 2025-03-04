@@ -44,22 +44,18 @@
 
   <div class="mt-auto p-4">
     <div class="mb-2 flex items-center justify-between">
- <a href="/project/{project.id}">
-      <h2 class="text-xl font-semibold text-black">{project.title}</h2>
-    </a>
+      <a href="/project/{project.id}">
+        <h2 class="text-xl font-semibold text-black">{project.title}</h2>
+      </a>
       <p class="text-xs text-neutral-400">
         <DPGRating rating={project.dpgStatusCount} />
       </p>
     </div>
 
     <div class="mb-4 ml-[-2px] flex gap-2">
-      {#if project.tags.length > 0}
-        {#each project.tags as tag}
-          <CategoryTag {tag} />
-        {/each}
-      {:else}
-        <p></p>
-      {/if}
+      {#each project?.tags || [] as tag}
+        <CategoryTag {tag} />
+      {/each}
     </div>
 
     <div>

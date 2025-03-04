@@ -3,6 +3,7 @@
 
   export let projects = [];
   export let bookmarkProjects = [];
+  export let contributed = [];
 
   let navSections = [
     { id: 'created', label: 'Projects created' },
@@ -42,7 +43,7 @@
         </div>
       {:else if currentSection === 'contributed'}
         <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {#each projects as project}
+          {#each contributed as project}
             <Card {project} />
           {:else}
             <p>No contributed projects found.</p>
