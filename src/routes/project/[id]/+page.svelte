@@ -31,10 +31,10 @@
   const project = data.project;
   const projectUpdates = data.updates;
   const projectResource = data.resources;
+  const projectDPG = project.dpgStatuses;
 
   const githubLinkSplit = project?.github?.split('/') || [];
   const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
-  // console.log(concat);
 
   const fetchContribs = async () => {
     const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);

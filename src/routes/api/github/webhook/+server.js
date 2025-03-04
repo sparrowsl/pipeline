@@ -9,7 +9,7 @@ export async function POST({ request, locals }) {
   // @ts-ignore
   let supabase = locals.supabase;
 
-  await githubWebhook(body, supabase);
+   githubWebhook(body, supabase);
 
   return json({ success: 'true' }, { status: 200 });
 }

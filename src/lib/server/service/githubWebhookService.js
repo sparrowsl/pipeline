@@ -43,7 +43,7 @@ export async function githubWebhook(data, supabase) {
   //check DPG status
   const dpgStatus = await checkDPGStatus(githubOwner, repo, supabase);
 
-  await saveDPGStstatus(project.id, dpgStatus, supabase);
+  return saveDPGStstatus(project.id, dpgStatus, supabase);
 
-  return json({ success: true, status: 200 });
+  //return json({ success: true, status: 200 });
 }

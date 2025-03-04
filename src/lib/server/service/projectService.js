@@ -159,28 +159,31 @@ export async function getProjectById(id, supabase) {
   }, {});
 
   // Map allDpgStatuses to match projectDpgStatuses and include score and explanation
-  const dpgStatuses = allDpgStatuses.map((status) => {
-    const projectStatus = projectDpgStatusesMap[status.id];
-    
-    if (projectStatus) {
-      return {
-        name: status.name,
-        score: Number(projectStatus.score), // Make sure score is treated as a number
-        explanation: projectStatus.explanation,
-      };
-    }
+  const dpgStatuses = allDpgStatuses
+    .map((status) => {
+      const projectStatus = projectDpgStatusesMap[status.id];
 
-    return null; // If no match, return null
-  }).filter(Boolean); // Remove null values if any
+      if (projectStatus) {
+        return {
+          name: status.name,
+          score: Number(projectStatus.score), // Make sure score is treated as a number
+          explanation: projectStatus.explanation,
+        };
+      }
+
+      return null; // If no match, return null
+    })
+    .filter(Boolean); // Remove null values if any
+
+  const dpgTotalScore = dpgStatuses.reduce((sum, status) => sum + status.score, 0);
 
   return {
     ...project,
     tags: categories,
-    dpgCount: projectDpgStatuses.length,
+    dpgCount: dpgTotalScore,
     dpgStatuses, // Array of statuses with name, score, and explanation
   };
 }
-
 
 export async function getProjectByGithubUrl(githubUrl, supabase) {
   const project = await getProjectByGithub(githubUrl, supabase);

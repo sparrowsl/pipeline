@@ -1,6 +1,5 @@
 
 export function mapProjectsWithTagsAndStatus(projects, projectCategories, categories, dpgStatuses) {
-  console.log('dpgStatuses', dpgStatuses);
   const categoriesById = categories.reduce((acc, category) => {
     acc[category.id] = category;
     return acc;
