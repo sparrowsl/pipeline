@@ -32,6 +32,7 @@
   const projectUpdates = data.updates;
   const projectResource = data.resources;
   const projectDPG = project.dpgStatuses;
+  const uniqueResourceIds = new Set(projectResource.map((r) => r.id)).size;
 
   const githubLinkSplit = project?.github?.split('/') || [];
   const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
@@ -269,7 +270,9 @@
       class="mt-8 flex w-full items-center justify-between gap-6 rounded-[20px] bg-lime-300 p-6 text-teal-950 max-md:mt-6"
     >
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
-        <div class="text-5xl font-semibold max-md:text-3xl">6</div>
+        <div class="text-5xl font-semibold max-md:text-3xl">
+          {contributors.length + uniqueResourceIds}
+        </div>
         <div class="text-sm max-md:text-[13px]">Contributors</div>
       </div>
       <div class="h-[100px] w-px bg-neutral-400 max-md:hidden"></div>
