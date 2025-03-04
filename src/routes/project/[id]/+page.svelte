@@ -118,8 +118,6 @@
 
   let contributors = [];
 
-  $: totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0);
-
   const resources = [
     {
       id: 1,
@@ -170,6 +168,18 @@
 
     contributors = await fetchContribs();
   });
+
+  let totalCommits = 0;
+
+  $: {
+    if (Array.isArray(contributors)) {
+      totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
+    }
+    // if (contributors.length <= 0) {
+    //   totalCommits = 0;
+    // } else {
+    // }
+  }
 </script>
 
 <div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8">
