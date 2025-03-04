@@ -31,7 +31,6 @@
   const project = data.project;
   const projectUpdates = data.updates;
   const projectResource = data.resources;
-  const projectDPG = project.dpgStatuses;
   const uniqueResourceIds = new Set(projectResource.map((r) => r.id)).size;
 
   const githubLinkSplit = project?.github?.split('/') || [];
@@ -278,7 +277,7 @@
       <div class="h-[100px] w-px bg-neutral-400 max-md:hidden"></div>
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          5<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
+          {project.dpgCount}<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
         </div>
         <div class="text-sm max-md:text-[12px]">DPG Status</div>
       </div>
