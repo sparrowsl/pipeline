@@ -37,10 +37,10 @@
   }
 
   const navItems = [
-    { href: `${$page.url.pathname}/`, label: 'About', width: '70px' },
-    { href: `${$page.url.pathname}/dpg-status`, label: 'DPG Status', width: '90px' },
-    { href: `${$page.url.pathname}/updates`, label: 'Updates', width: '95px' },
-    { href: `${$page.url.pathname}/contributors`, label: 'Contributors', width: '150px' },
+    { href: `/project/${project.id}/`, label: 'About', width: '70px' },
+    { href: `/project/${project.id}/dpg-status`, label: 'DPG Status', width: '90px' },
+    { href: `/project/${project.id}/updates`, label: 'Updates', width: '95px' },
+    { href: `/project/${project.id}/contributors`, label: 'Contributors', width: '150px' },
   ];
 
   const banner = project.banner_image
@@ -158,7 +158,8 @@
       <div class="h-[100px] w-px bg-neutral-400 max-md:hidden"></div>
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          5<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
+          {project.dpgCount}<span class="text-3xl">/</span>
+          <span class="text-3xl text-teal-800">9</span>
         </div>
         <div class="text-sm max-md:text-[12px]">DPG Status</div>
       </div>
@@ -187,9 +188,9 @@
               {item.label}
             </a>
             <!-- TODO: underline this path on url change / also move up-->
-            {#if $page.url.pathname.includes(item.href)}
+            <!-- {#if $page.url.pathname.includes(item.href)}
               <div class="mt-3.5 flex min-h-[6px] max-w-full rounded bg-lime-300"></div>
-            {/if}
+            {/if} -->
           </div>
         {/each}
       </nav>

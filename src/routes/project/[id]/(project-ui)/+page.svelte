@@ -319,7 +319,7 @@
     <span class="text-sm">Last modified: {timeAgo(project.updated_at)}</span>
   </div>
 
-  <p class="mt-3 whitespace-pre-wrap text-base leading-7 text-neutral-700">
+  <p class="mt-3 whitespace-pre-wrap leading-7 text-neutral-700">
     {project.details || 'N/A'}
   </p>
 </article>
