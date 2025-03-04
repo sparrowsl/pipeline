@@ -9,8 +9,7 @@ export async function load({ parent }) {
     const res = await fetch(`https://api.github.com/repos/${repoName}/contributors`);
     const data = await res.json();
 
-    // Only return the first few contributors
-    return { contributors: data.slice(0, 4) };
+    return { contributors: data };
   } catch (e) {
     console.log(e);
     return { contributors: [] };

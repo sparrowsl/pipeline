@@ -3,6 +3,8 @@
   import GitContributorsViewAll from '$lib/GitContributorsViewAll.svelte';
   import ResourceCard from '$lib/ResourceCard.svelte';
   import ResourcesViewAll from '$lib/ResourcesViewAll.svelte';
+  import Icon from '@iconify/svelte';
+  import { page } from '$app/stores';
 
   export let data;
   console.log(data.contributors);
@@ -73,18 +75,13 @@
         class="flex w-full flex-wrap items-center justify-between gap-10 text-center font-bold max-md:max-w-full"
       >
         <h1 class="my-auto self-stretch text-4xl leading-tight text-black">GitHub Contributors</h1>
-        <button
-          class="my-auto flex items-center justify-center gap-1 self-stretch rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800"
-          on:click={toggleGitDetail}
+        <a
+          href="{$page.url.pathname}/all"
+          class="flex items-center gap-1 rounded-full border-2 border-lime-800 px-4 py-2 text-sm text-lime-800"
         >
-          <span class="my-auto self-stretch">View All</span>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d98e772819e44f8f05817c687c5960fc8aedf806399e65ef6c06fb92c13206fb?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-            alt=""
-            class="my-auto aspect-square w-5 shrink-0 self-stretch object-contain"
-          />
-        </button>
+          <span class="">View All</span>
+          <Icon icon="mdi:chevron-right" class="text-2xl" />
+        </a>
       </div>
       <div class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full">
         {#each contributors as contributor}
