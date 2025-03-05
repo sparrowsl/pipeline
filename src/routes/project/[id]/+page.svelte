@@ -174,10 +174,6 @@
     if (Array.isArray(contributors)) {
       totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
     }
-    // if (contributors.length <= 0) {
-    //   totalCommits = 0;
-    // } else {
-    // }
   }
 </script>
 
@@ -372,7 +368,7 @@
                 <div
                   class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full"
                 >
-                  {#each contributors as contributor}
+                  {#each Array.isArray(contributors) ? contributors : [] as contributor}
                     <GitContributors {contributor} {totalCommits} />
                   {/each}
                 </div>
