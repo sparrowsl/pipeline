@@ -1,23 +1,23 @@
 <script>
   import { applyAction, enhance } from '$app/forms';
-  import ProjectNav from '$lib/ProjectNav.svelte';
-  import ProjectAbout from '$lib/ProjectAbout.svelte';
-  import DpgStatus from '$lib/dpgStatus.svelte';
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import Updates from '$lib/Updates.svelte';
-  import UpdateDetail from '$lib/UpdateDetail.svelte';
-  import { amountFormat } from '$lib/utils/amountFormat.js';
-  import Icon from '@iconify/svelte';
-  import { dateFormat, timeAgo } from '$lib/utils/dateTimeFormat.js';
-  import { toast } from 'svelte-sonner';
   import { invalidateAll } from '$app/navigation';
+  import { page } from '$app/stores';
   import GitContributors from '$lib/GitContributors.svelte';
-  import ResourceCard from '$lib/ResourceCard.svelte';
-  import { createEventDispatcher } from 'svelte';
   import GitContributorsViewAll from '$lib/GitContributorsViewAll.svelte';
-  import ResourcesViewAll from '$lib/ResourcesViewAll.svelte';
   import GitUpdate from '$lib/GitUpdate.svelte';
+  import ProjectAbout from '$lib/ProjectAbout.svelte';
+  import ProjectNav from '$lib/ProjectNav.svelte';
+  import ResourceCard from '$lib/ResourceCard.svelte';
+  import ResourcesViewAll from '$lib/ResourcesViewAll.svelte';
+  import UpdateDetail from '$lib/UpdateDetail.svelte';
+  import Updates from '$lib/Updates.svelte';
+  import DpgStatus from '$lib/dpgStatus.svelte';
+  import { amountFormat } from '$lib/utils/amountFormat.js';
+  import { dateFormat } from '$lib/utils/dateTimeFormat.js';
+  import Icon from '@iconify/svelte';
+  import { onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
+  import { toast } from 'svelte-sonner';
 
   let id;
   $: id = $page.params.id;
@@ -28,9 +28,23 @@
   let date;
 
   export let data;
-  let project = data.project;
-  let projectUpdates = data.updates;
-  let projectResource = data.resources;
+  const project = data.project;
+  const projectUpdates = data.updates;
+  const projectResource = data.resources;
+  const uniqueResourceIds = new Set(projectResource.map((r) => r.id)).size;
+
+  const githubLinkSplit = project?.github?.split('/') || [];
+  const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
+
+  const fetchContribs = async () => {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${concat}/contributors`);
+      const data = await res.json();
+      return data;
+    } catch (_e) {
+      return [];
+    }
+  };
 
   let showGitDetail = false;
   let showResourceDetail = false;
@@ -50,8 +64,8 @@
   const defaultImageUrl =
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png';
 
-  let isFollowing = false;
-  let isAddingUpdate = false;
+  const isFollowing = false;
+  const isAddingUpdate = false;
 
   let showUpdatePopup = false;
 
@@ -101,40 +115,7 @@
     ? project.image
     : 'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/projectProf.png?t=2024-11-20T16%3A05%3A41.191Z';
 
-  onMount(async () => {
-    if (data.isAuthenticated) {
-      user = data.user;
-    }
-  });
-
-  let contributors = [
-    {
-      name: 'Hawa Kallon',
-      githubLink: 'https://github.com/hawakallon',
-      commits: 42,
-      avatarUrl: 'https://github.com/hawakallon.png',
-    },
-    {
-      name: 'Saidu Bundu-Kamara',
-      githubLink: 'https://github.com/saidubundukamara',
-      commits: 80,
-      avatarUrl: 'https://github.com/saidubundukamara.png',
-    },
-    {
-      name: 'Sparrow',
-      githubLink: 'https://github.com/sparrowsl',
-      commits: 80,
-      avatarUrl: 'https://github.com/sparrowsl.png',
-    },
-    {
-      name: 'Mitch',
-      githubLink: 'https://github.com/stElmitchay',
-      commits: 80,
-      avatarUrl: 'https://github.com/stElmitchay.png',
-    },
-  ];
-
-  let totalCommits = contributors.reduce((sum, contributor) => sum + contributor.commits, 0);
+  let contributors = [];
 
   const resources = [
     {
@@ -178,6 +159,26 @@
         'https://cdn.builder.io/api/v1/image/assets/TEMP/3108468c-54ac-442b-a540-6bc12e0ded13?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
     },
   ];
+
+  onMount(async () => {
+    if (data.isAuthenticated) {
+      user = data.user;
+    }
+
+    contributors = await fetchContribs();
+  });
+
+  let totalCommits = 0;
+
+  $: {
+    if (Array.isArray(contributors)) {
+      totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
+    }
+    // if (contributors.length <= 0) {
+    //   totalCommits = 0;
+    // } else {
+    // }
+  }
 </script>
 
 <!-- <div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8"> -->
@@ -282,13 +283,17 @@
       class="mt-8 flex w-full items-center justify-between gap-6 rounded-[20px] bg-lime-300 p-6 text-teal-950 max-md:mt-6"
     >
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
-        <div class="text-5xl font-semibold max-md:text-3xl">6</div>
+        <div class="text-5xl font-semibold max-md:text-3xl">
+          {contributors.length + uniqueResourceIds || 0}
+        </div>
         <div class="text-sm max-md:text-[13px]">Contributors</div>
       </div>
       <div class="h-[100px] w-px bg-neutral-400 max-md:hidden"></div>
       <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
         <div class="text-5xl font-semibold max-md:text-3xl">
-          5<span class="text-3xl">/</span><span class="text-3xl text-teal-800">9</span>
+          {project.dpgCount}<span class="text-3xl">/</span><span class="text-3xl text-teal-800"
+            >9</span
+          >
         </div>
         <div class="text-sm max-md:text-[12px]">DPG Status</div>
       </div>
@@ -319,64 +324,106 @@
     <span class="text-sm">Last modified: {timeAgo(project.updated_at)}</span>
   </div>
 
-  <p class="mt-3 whitespace-pre-wrap leading-7 text-neutral-700">
-    {project.details || 'N/A'}
-  </p>
-</article>
+  <div class="mt-4 w-full lg:mt-0 lg:w-[60%] lg:pl-4">
+    <main
+      class="flex flex-col items-start rounded-[20px] bg-white px-4 py-8 max-md:mt-6 max-md:px-4"
+    >
+      <ProjectNav
+        class="flex w-full flex-nowrap items-start overflow-x-auto whitespace-nowrap text-sm"
+        {navItems}
+        bind:activeItem={activeNavItem}
+        on:navChange={handleNavChange}
+      />
 
-<section class="mt-8 flex w-full max-w-full flex-col items-center">
-  {#if activeNavItem === 'projectDetails'}
-    <ProjectAbout {project} />
-  {:else if activeNavItem === 'dpgStatus'}
-    <DpgStatus {project} />
-  {:else if activeNavItem === 'updates'}
-    {#if showUpdateDetail}
-      <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
-    {:else if projectUpdates.length > 0}
-      <div
-        class="self-stretch font-['Inter'] text-2xl font-bold leading-tight text-[#282828] md:text-[32px] md:leading-10"
-      >
-        Updates
-      </div>
-
-      {#each projectUpdates as update}
-        {#if update.code}
-          <GitUpdate {update} />
-        {:else}
-          <Updates on:showDetail={handleShowDetail} {update} />
-        {/if}
-      {/each}
-    {:else}
-      <p>No updates</p>
-    {/if}
-  {:else if activeNavItem === 'contributors'}
-    <div class="w-full px-4 md:px-10">
-      {#if !showGitDetail && !showResourceDetail}
-        <div class="mb-6 inline-flex items-center justify-start gap-1 self-stretch">
-          <div
-            class="text-center font-['Roboto'] text-2xl font-normal leading-loose text-black md:text-[32px]"
-          ></div>
-        </div>
-
-        <div class="flex w-full flex-col pb-14 max-md:pl-5">
-          <div
-            class="flex w-full flex-wrap items-center justify-between gap-10 text-center font-bold max-md:max-w-full"
-          >
-            <h1 class="my-auto self-stretch text-4xl leading-tight text-black">
-              GitHub Contributors
-            </h1>
-            <button
-              class="my-auto flex items-center justify-center gap-1 self-stretch rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800"
-              on:click={toggleGitDetail}
+      <section class="mt-8 flex w-full max-w-full flex-col items-center">
+        {#if activeNavItem === 'projectDetails'}
+          <ProjectAbout {project} />
+        {:else if activeNavItem === 'dpgStatus'}
+          <DpgStatus {project} />
+        {:else if activeNavItem === 'updates'}
+          {#if showUpdateDetail}
+            <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
+          {:else if projectUpdates.length > 0}
+            <div
+              class="self-stretch font-['Inter'] text-2xl font-bold leading-tight text-[#282828] md:text-[32px] md:leading-10"
             >
-              <span class="my-auto self-stretch">View All</span>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d98e772819e44f8f05817c687c5960fc8aedf806399e65ef6c06fb92c13206fb?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                alt=""
-                class="my-auto aspect-square w-5 shrink-0 self-stretch object-contain"
-              />
-            </button>
+              Updates
+            </div>
+
+            {#each projectUpdates as update}
+              {#if update.code}
+                <GitUpdate {update} />
+              {:else}
+                <Updates on:showDetail={handleShowDetail} {update} />
+              {/if}
+            {/each}
+          {:else}
+            <p>No updates</p>
+          {/if}
+        {:else if activeNavItem === 'contributors'}
+          <div class="w-full px-4 md:px-10">
+            {#if !showGitDetail && !showResourceDetail}
+              <div class="mb-6 inline-flex items-center justify-start gap-1 self-stretch">
+                <div
+                  class="text-center font-['Roboto'] text-2xl font-normal leading-loose text-black md:text-[32px]"
+                ></div>
+              </div>
+
+              <div class="flex w-full flex-col pb-14 max-md:pl-5">
+                <div
+                  class="flex w-full flex-wrap items-center justify-between gap-10 text-center font-bold max-md:max-w-full"
+                >
+                  <h1 class="my-auto self-stretch text-4xl leading-tight text-black">
+                    GitHub Contributors
+                  </h1>
+                  <button
+                    class="my-auto flex items-center justify-center gap-1 self-stretch rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800"
+                    on:click={toggleGitDetail}
+                  >
+                    <span class="my-auto self-stretch">View All</span>
+                    <Icon icon="mdi:chevron-right" class="text-2xl" />
+                  </button>
+                </div>
+                <div
+                  class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full"
+                >
+                  {#each contributors as contributor}
+                    <GitContributors {contributor} {totalCommits} />
+                  {/each}
+                </div>
+              </div>
+
+              <div class="flex max-w-[846px] flex-col max-md:pl-5">
+                <div
+                  class="flex w-full flex-wrap items-center justify-between gap-10 text-center font-bold max-md:max-w-full"
+                >
+                  <h2 class="my-auto self-stretch text-4xl leading-tight text-black">Resources</h2>
+                  <button
+                    class="my-auto flex items-center justify-center gap-1 self-stretch rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800"
+                    on:click={toggleResourceDetail}
+                  >
+                    <span class="my-auto self-stretch">View All</span>
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/e13f9fadc17a702d863b8d21bc60e6c7ea08ee8a9506ba412086d7b1a1d15195?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
+                      alt=""
+                      class="my-auto aspect-square w-5 shrink-0 self-stretch object-contain"
+                    />
+                  </button>
+                </div>
+                <div class="mt-5 flex w-full flex-wrap items-start gap-5 max-md:max-w-full">
+                  {#each projectResource as resource}
+                    <ResourceCard {resource} />
+                  {/each}
+                </div>
+              </div>
+            {/if}
+
+            {#if showGitDetail}
+              <GitContributorsViewAll on:goBack={handleGoBack} />
+            {:else if showResourceDetail}
+              <ResourcesViewAll on:goBack={handleGoBack} />
+            {/if}
           </div>
           <div
             class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full"
@@ -386,44 +433,6 @@
             {/each}
           </div>
         </div>
-
-        <div class="flex max-w-[846px] flex-col max-md:pl-5">
-          <div
-            class="flex w-full flex-wrap items-center justify-between gap-10 text-center font-bold max-md:max-w-full"
-          >
-            <h2 class="my-auto self-stretch text-4xl leading-tight text-black">Resources</h2>
-            <button
-              class="my-auto flex items-center justify-center gap-1 self-stretch rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800"
-              on:click={toggleResourceDetail}
-            >
-              <span class="my-auto self-stretch">View All</span>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/e13f9fadc17a702d863b8d21bc60e6c7ea08ee8a9506ba412086d7b1a1d15195?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                alt=""
-                class="my-auto aspect-square w-5 shrink-0 self-stretch object-contain"
-              />
-            </button>
-          </div>
-          <div class="mt-5 flex w-full flex-wrap items-start gap-5 max-md:max-w-full">
-            {#each projectResource as resource}
-              <ResourceCard {resource} />
-            {/each}
-          </div>
-        </div>
-      {/if}
-
-      {#if showGitDetail}
-        <GitContributorsViewAll on:goBack={handleGoBack} />
-      {:else if showResourceDetail}
-        <ResourcesViewAll on:goBack={handleGoBack} />
-      {/if}
-    </div>
-  {/if}
-</section>
-<!-- </main>
-</div> -->
-<!-- </div> -->
 
 {#if showUpdatePopup}
   <form
