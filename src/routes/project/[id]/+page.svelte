@@ -18,6 +18,7 @@
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { toast } from 'svelte-sonner';
+  import Issues from '$lib/Issues.svelte';
 
   let id;
   $: id = $page.params.id;
@@ -86,6 +87,7 @@
     { id: 'dpgStatus', label: 'DPG Status', width: '90px' },
     { id: 'updates', label: 'Updates', width: '95px' },
     { id: 'contributors', label: 'Contributors', width: '150px' },
+    { id: 'issues', label: 'Issues', width: '70px' },
   ];
 
   function handleNavChange(event) {
@@ -175,6 +177,19 @@
       totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
     }
   }
+
+  let issue = {
+    state: "open",
+    title: "Bug: App crashes on startup",
+    number: 123,
+    created_at: "2024-03-04T12:30:00Z",
+    html_url: "https://github.com/user/repo/issues/123",
+    user: {
+      login: "octocat",
+      avatar_url: "https://avatars.githubusercontent.com/u/583231?v=4"
+    }
+  };
+  
 </script>
 
 <div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8">
@@ -406,7 +421,9 @@
               <ResourcesViewAll on:goBack={handleGoBack} />
             {/if}
           </div>
-        {/if}
+        {:else if activeNavItem === 'issues'}
+       <Issues {issue} />
+          {/if}
       </section>
     </main>
   </div>
