@@ -23,9 +23,9 @@
     <div class="flex items-center w-[70%] gap-4 p-4 border-b border-gray-300">
       <div class="flex-shrink-0">
         {#if issue.state === "open"}
-          <Icon icon="mdi:clock-outline" class="text-3xl text-green-500" />
+          <Icon icon="codicon:issues" class="text-3xl text-green-500" />
         {:else}
-          <Icon icon="mdi:clock-off-outline" class="text-3xl text-red-500" />
+          <Icon icon="lucide:circle-check" class="text-3xl text-red-500" />
         {/if}
       </div>
   
