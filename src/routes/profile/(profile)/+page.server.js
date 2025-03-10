@@ -3,27 +3,17 @@ import { error, redirect } from "@sveltejs/kit";
 import { signOut } from "$lib/server/service/authUserService.js";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ parent, fetch }) {
+export async function load({ fetch }) {
 	try {
-		const [projectsRes, bookmarksRes] = await Promise.all([
-			fetch("/api/projects/user/projects"),
-			fetch("/api/projects/user/bookmarks"),
-		]);
+		const response = await fetch("/api/projects/user/projects");
 
-		if (!projectsRes.ok || !bookmarksRes.ok) {
-			throw new Error("Failed to fetch projects or bookmarks");
+		if (!response.ok) {
+			return { projects: [] };
 		}
 
-		const [projectsData, bookmarksData] = await Promise.all([
-			projectsRes.json(),
-			bookmarksRes.json(),
-		]);
+		const { projects } = await response.json();
 
-		return {
-			projects: projectsData.projects || [],
-			bookmarks: bookmarksData.projects || [],
-			contributed: [],
-		};
+		return { projects };
 	} catch (e) {
 		return error(500, { message: e.message });
 	}

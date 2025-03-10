@@ -1,13 +1,8 @@
 <script>
   import { page } from '$app/stores';
-  import ProjectSection from '$lib/ProjectSection.svelte';
   import Icon from '@iconify/svelte';
 
   export let data;
-
-  const bookmarkProjects = [];
-  const projects = [];
-
   const user = data.user;
 
   const socialLinks = [
