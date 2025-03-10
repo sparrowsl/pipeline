@@ -1,23 +1,9 @@
 //@ts-check
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import { signOut } from "$lib/server/service/authUserService.js";
-import { supabase } from "$lib/server/supabase.js";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ fetch, locals }) {
-	const { data } = await supabase
-		.from("project_resource")
-		.select("project_id")
-		// .select('*')
-		.eq("user_id", locals?.authUser?.id);
-	const { data: contributed } = await supabase
-		.from("projects")
-		.select("*")
-		.in(
-			"id",
-			data.flatMap((d) => d.project_id),
-		);
-
+export async function load({ parent, fetch, locals }) {
 	try {
 		const [projectsRes, bookmarksRes] = await Promise.all([
 			fetch("/api/projects/user/projects"),
@@ -36,13 +22,10 @@ export async function load({ fetch, locals }) {
 		return {
 			projects: projectsData.projects || [],
 			bookmarks: bookmarksData.projects || [],
-			contributed: [...projectsData.projects, ...contributed],
+			contributed: [],
 		};
 	} catch (e) {
-		return {
-			status: 500,
-			error: new Error("Failed to load data: " + e.message),
-		};
+		return error(500, { message: e.message });
 	}
 }
 
