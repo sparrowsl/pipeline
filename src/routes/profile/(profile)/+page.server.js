@@ -34,7 +34,7 @@ export async function load({ fetch, locals }) {
 		]);
 
 		return {
-			allProjects: projectsData.projects || [],
+			projects: projectsData.projects || [],
 			bookmarks: bookmarksData.projects || [],
 			contributed: [...projectsData.projects, ...contributed],
 		};
