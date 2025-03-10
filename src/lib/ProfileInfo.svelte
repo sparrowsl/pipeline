@@ -89,32 +89,7 @@
   </p>
   <div
     class="mt-11 flex w-full flex-wrap items-center justify-between gap-4 max-md:mt-10 max-md:max-w-full"
-  >
-    <!-- <div
-      class="flex flex-wrap gap-4 items-center self-stretch my-auto whitespace-nowrap min-w-[240px] max-md:max-w-full"
-    >
-      <h2 class="my-auto self-stretch text-center text-lg leading-none text-black">Interests</h2>
-      <div
-        class="my-auto flex min-w-[140px] flex-wrap items-center gap-3 self-stretch text-base leading-none text-lime-800"
-      >
-        {#if user.interests && user.interests.length > 0}
-          {#each user.interests as interest}
-            <span
-              class="my-auto self-stretch rounded-[72px] border-2 border-solid border-lime-800 py-3.5 pl-6 pr-6 text-base max-md:px-5"
-            >
-              {interest}
-            </span>
-          {/each}
-        {:else}
-          <span
-            class="my-auto self-stretch rounded-[72px] border-2 border-solid border-lime-800 py-3 pl-6 pr-6 text-sm max-md:px-5"
-          >
-            No interests specified
-          </span>
-        {/if}
-      </div>
-    </div> -->
-  </div>
+  ></div>
   <div
     class="mt-11 flex w-full flex-wrap items-center justify-around gap-2 text-2xl font-medium leading-none max-md:mt-10 max-md:max-w-full"
   >
