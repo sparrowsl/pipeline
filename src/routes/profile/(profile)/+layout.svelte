@@ -1,5 +1,5 @@
 <script>
-  import ProfileInfo from '$lib/ProfileInfo.svelte';
+  import { page } from '$app/stores';
   import ProjectSection from '$lib/ProjectSection.svelte';
   import Icon from '@iconify/svelte';
 
@@ -10,7 +10,6 @@
 
   const user = data.user;
 
-  console.log(user);
   const socialLinks = [
     { key: 'github', icon: 'mdi:github', prefix: '' },
     { key: 'discord', icon: 'ph:discord-logo-fill', prefix: '' },
@@ -22,6 +21,8 @@
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/userProfile.png?t=2024-12-06T11%3A37%3A26.554Z';
   const defaultBannerUrl =
     'https://zyfpmpmcpzmickajgkwp.supabase.co/storage/v1/object/public/pipeline-images/defaults/banner.png?t=2024-12-06T11%3A37%3A50.969Z';
+
+  $: pathname = $page.url.pathname;
 </script>
 
 <div class="flex w-full items-start justify-center">
@@ -100,6 +101,35 @@
     </div>
 
     <div class="md:w-2/3">
+      <div class="w-full max-w-[1156px]">
+        <nav class="my-4 flex gap-6">
+          <a
+            href="/profile"
+            class=" {pathname.endsWith('/profile')
+              ? 'border-b-[#bde25b] opacity-100'
+              : 'opacity-50'} border-b-4 px-4 py-3 text-base font-semibold transition-all duration-200"
+          >
+            Projects Created
+          </a>
+          <a
+            href="/profile/contributed"
+            class="{pathname.endsWith('/contributed')
+              ? 'border-b-[#bde25b] opacity-100'
+              : 'opacity-50'} border-b-4 px-4 py-3 text-base font-semibold transition-all duration-200"
+          >
+            Projects Contributed
+          </a>
+          <a
+            href="/profile/following"
+            class="{pathname.endsWith('/following')
+              ? 'border-b-[#bde25b] opacity-100'
+              : 'opacity-50'} border-b-4 px-4 py-3 text-base font-semibold transition-all duration-200"
+          >
+            Following
+          </a>
+        </nav>
+      </div>
+
       <ProjectSection {projects} contributed={data.contributed || []} {bookmarkProjects} />
     </div>
   </div>
