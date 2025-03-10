@@ -16,8 +16,7 @@
   import { dateFormat } from '$lib/utils/dateTimeFormat.js';
   import Icon from '@iconify/svelte';
   import { onMount } from 'svelte';
-  import { createEventDispatcher } from 'svelte';
-  import { toast } from 'svelte-sonner';
+  import Issues from '$lib/Issues.svelte';
 
   let id;
   $: id = $page.params.id;
@@ -86,6 +85,7 @@
     { id: 'dpgStatus', label: 'DPG Status', width: '90px' },
     { id: 'updates', label: 'Updates', width: '95px' },
     { id: 'contributors', label: 'Contributors', width: '150px' },
+    { id: 'issues', label: 'Issues', width: '70px' },
   ];
 
   function handleNavChange(event) {
@@ -174,10 +174,6 @@
     if (Array.isArray(contributors)) {
       totalCommits = contributors.reduce((prev, curr) => prev + curr.contributions, 0) || 0;
     }
-    // if (contributors.length <= 0) {
-    //   totalCommits = 0;
-    // } else {
-    // }
   }
 </script>
 
@@ -261,7 +257,7 @@
             use:enhance={() => {
               return async ({ result }) => {
                 if (result.type === 'success') {
-                  alert('Project bookmarked successfully');
+                  alert('Project followed successfully');
                 }
               };
             }}
@@ -387,7 +383,7 @@
                 <div
                   class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full"
                 >
-                  {#each contributors as contributor}
+                  {#each Array.isArray(contributors) ? contributors : [] as contributor}
                     <GitContributors {contributor} {totalCommits} />
                   {/each}
                 </div>
@@ -425,14 +421,13 @@
               <ResourcesViewAll on:goBack={handleGoBack} />
             {/if}
           </div>
-          <div
-            class="relative z-0 mt-5 grid w-full grid-cols-2 items-start gap-4 max-md:max-w-full"
-          >
-            {#each contributors as contributor}
-              <GitContributors {...contributor} {totalCommits} />
-            {/each}
-          </div>
-        </div>
+        {:else if activeNavItem === 'issues'}
+          <Issues />
+        {/if}
+      </section>
+    </main>
+  </div>
+</div>
 
 {#if showUpdatePopup}
   <form
