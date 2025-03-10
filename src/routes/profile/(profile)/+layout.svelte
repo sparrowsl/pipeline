@@ -133,7 +133,6 @@
       <section class="p-7 max-md:mt-10 max-md:px-5">
         <slot />
       </section>
-      <ProjectSection {projects} contributed={data.contributed || []} {bookmarkProjects} />
     </div>
   </div>
 </div>

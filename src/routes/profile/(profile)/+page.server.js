@@ -3,7 +3,7 @@ import { error, redirect } from "@sveltejs/kit";
 import { signOut } from "$lib/server/service/authUserService.js";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ parent, fetch, locals }) {
+export async function load({ parent, fetch }) {
 	try {
 		const [projectsRes, bookmarksRes] = await Promise.all([
 			fetch("/api/projects/user/projects"),
