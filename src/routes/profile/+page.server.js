@@ -8,7 +8,6 @@ export async function load({ fetch, locals }) {
   const { data } = await supabase
     .from('project_resource')
     .select('project_id')
-    // .select('*')
     .eq('user_id', locals?.authUser?.id);
   const { data: contributed } = await supabase
     .from('projects')
@@ -33,8 +32,6 @@ export async function load({ fetch, locals }) {
       bookmarksRes.json(),
     ]);
 
-    console.log((projectsData.projects || []).concat(contributed));
-
     return {
       allProjects: projectsData.projects || [],
       bookmarks: bookmarksData.projects || [],
@@ -43,7 +40,7 @@ export async function load({ fetch, locals }) {
   } catch (e) {
     return {
       status: 500,
-      error: new Error('Failed to load data: ' + e.message),
+      error: new Error(`Failed to load data: ${e.message}`),
     };
   }
 }
