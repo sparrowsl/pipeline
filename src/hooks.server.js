@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import * as Sentry from '@sentry/sveltekit';
 
 import { SUPABASE_SERVICE_KEY, supabaseUrl } from '$lib/server/config.js';
 
@@ -66,4 +67,13 @@ const authGuard = async ({ event, resolve }) => {
   return resolve(event);
 };
 
-export const handle = sequence(supabase, authGuard);
+Sentry.init({
+	dsn: 'https://a25a9dd442d4a7392fbee35b9ff029f7@o4508959238651904.ingest.us.sentry.io/4508959270502400',
+	tracesSampleRate: 1,
+});
+
+export const handleError = Sentry.handleErrorWithSentry();
+
+export const handle = sequence(supabase, authGuard, Sentry.sentryHandle());
+
+
