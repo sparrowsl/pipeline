@@ -54,9 +54,7 @@
   }
 
   function toggleResourceDetail() {
-    console.log('Toggling Resource Detail');
     showResourceDetail = !showResourceDetail;
-    console.log('showResourceDetail:', showResourceDetail);
     showGitDetail = false;
   }
 
@@ -320,7 +318,7 @@
         {#if activeNavItem === 'projectDetails'}
           <ProjectAbout {project} />
         {:else if activeNavItem === 'dpgStatus'}
-          <DpgStatus {project} />
+          <DpgStatus {user} {project} />
         {:else if activeNavItem === 'updates'}
           {#if showUpdateDetail}
             <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
