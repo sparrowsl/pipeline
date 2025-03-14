@@ -1,6 +1,6 @@
 <script>
   import { ChevronDown, ChevronUp, Check } from 'lucide-svelte';
-  import Icon from "@iconify/svelte"
+  import Icon from "@iconify/svelte";
 
   export let project;
   export let user;
@@ -58,7 +58,7 @@
 
 <div class="w-full space-y-2">
   {#if dpgStatuses.length > 0}
-    <h2 class="mb-4 text-start font-['Inter'] text-2xl font-semibold text-black">
+    <h2 class="mb-4 text-start font-['Inter'] text-3xl font-semibold text-black max-md:text-xl">
       DPG Standard Checklist - {project.dpgCount}/9
     </h2>
 
@@ -66,21 +66,21 @@
       <div class="overflow-hidden rounded-md border border-[#c9c9c9]">
         <div
           on:click={() => toggleOpen(item.name)}
-          class="flex cursor-pointer items-center justify-between p-3 transition-colors hover:bg-gray-50"
+          class="flex items-center justify-between p-3 transition-colors cursor-pointer hover:bg-gray-50"
         >
           <div class="flex items-center gap-2">
             <div
               on:click|stopPropagation={() => toggleChecked(item.name)}
               class="h-5 w-5 border
-							{item.score === 1
+              {item.score === 1
                 ? 'border-green-500 bg-green-500'
                 : checkedItems.has(item.name)
                   ? 'border-gray-500 bg-gray-500'
                   : 'border-gray-300'}
-							flex items-center justify-center"
+              flex items-center justify-center"
             >
               {#if checkedItems.has(item.name) || item.score === 1}
-                <Check class="h-4 w-4 text-white" />
+                <Check class="w-4 h-4 text-white" />
               {/if}
             </div>
             <div class="font-['Inter'] text-lg font-semibold text-black">{item.name}</div>
@@ -93,7 +93,7 @@
         </div>
         {#if openItems.has(item.name)}
           <div class="p-4 text-black">
-            <div class="mb-2 flex items-center gap-1">
+            <div class="flex items-center gap-1 mb-2">
               <div class="font-['Inter'] text-sm font-semibold leading-normal text-[#8a8a8a]">
                 Verdict
               </div>
@@ -104,5 +104,18 @@
         {/if}
       </div>
     {/each}
+  {:else}
+    <div class="w-full space-y-2">
+      <h2 class="text-start text-black text-xl font-semibold font-['Inter'] mb-4 max-md:text-sm">
+        No DPG status found...
+      </h2>
+
+      <a
+        href="/"
+        class="flex items-center justify-center w-40 px-4 py-2 mx-auto mt-5 text-sm font-medium text-white transition border rounded-full border-teal-950 bg-cyan-950 hover:bg-cyan-900 font-[Inter]"
+      >
+        Evaluate Project
+      </a>
+    </div>
   {/if}
 </div>
