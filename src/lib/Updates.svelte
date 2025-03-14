@@ -29,13 +29,48 @@
 
   let date = '';
   date = dateTimeFormat(update.created_at);
+
+  let comments = [];
+  export let selectedUpdate;
+  export let data;
+
+  async function getUpdateComments() {
+    try {
+      const response = await fetch(
+        `/api/projects/singleProject/${selectedUpdate.project_id}/projectUpdates/${selectedUpdate.id}/comments`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      comments = data.comments;
+    } catch (error) {
+      error = e.message;
+      alert(error);
+    } finally {
+      loading = false;
+    }
+  }
+
+  onMount(async () => {
+    await getUpdateComments();
+  });
 </script>
 
 <div class="inline-flex w-full flex-col items-start justify-start bg-white p-4 md:p-9">
   <div class="flex flex-col items-start justify-start gap-2 self-stretch">
     <div class="flex w-full flex-col items-start justify-start gap-[13.30px] pt-[1.75px]">
       <div
-        class="self-stretch font-['Inter'] text-2xl font-bold leading-tight text-[#282828] md:text-[32px] md:leading-10"
+        class="self-stretch font-['Inter'] text-2xl leading-tight font-bold text-[#282828] md:text-[32px] md:leading-10"
       >
         {update.title}
       </div>
@@ -55,20 +90,20 @@
           <div class="inline-flex w-full flex-col justify-between">
             <div class="inline-flex items-center gap-2 self-stretch">
               <div
-                class="max-w-[200px] truncate font-['Inter'] text-sm font-normal leading-normal text-[#282828] md:max-w-none"
+                class="max-w-[200px] truncate font-['Inter'] text-sm leading-normal font-normal text-[#282828] md:max-w-none"
               >
                 {update.userProfile.name}
               </div>
               <div
                 class="inline-flex flex-col items-start justify-center rounded-[3px] bg-[#05ce78] px-[5px] py-[0.25px]"
               >
-                <div class="font-['Inter'] text-xs font-bold leading-[18px] text-white">
+                <div class="font-['Inter'] text-xs leading-[18px] font-bold text-white">
                   {update.user_id === update.userProfile.user_id ? 'Creator' : 'Member'}
                 </div>
               </div>
             </div>
             <div
-              class="self-stretch font-['Inter'] text-[13px] font-normal leading-[18px] text-[#282828]/50"
+              class="self-stretch font-['Inter'] text-[13px] leading-[18px] font-normal text-[#282828]/50"
             >
               {date}
             </div>
@@ -79,7 +114,7 @@
     <div class="flex flex-col items-start justify-start gap-1 self-stretch">
       <div class="flex flex-col items-start justify-start gap-[30px] self-stretch pb-2">
         <div
-          class="self-stretch font-['Inter'] text-base font-normal leading-relaxed text-[#282828]"
+          class="self-stretch font-['Inter'] text-base leading-relaxed font-normal text-[#282828]"
         >
           {@html truncatedContent}
         </div>
@@ -89,7 +124,9 @@
       <div class="flex items-center justify-start gap-6">
         <div class="flex items-center justify-start gap-2">
           <Icon icon="mdi:chat-outline" class="text-2xl text-[#8C8C8C]" />
-          <div class="font-['Inter'] text-sm font-normal leading-normal text-[#9b9e9e]">16</div>
+          <div class="font-['Inter'] text-sm leading-normal font-normal text-[#9b9e9e]">
+            {comments.length}
+          </div>
         </div>
       </div>
       <button

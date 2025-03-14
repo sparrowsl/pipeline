@@ -1,6 +1,7 @@
 <script>
   import Icon from '@iconify/svelte';
   import Logo from './Logo.svelte';
+  const currentYear = new Date().getFullYear();
 </script>
 
 <footer class="mt-16 bg-teal-950 py-12 text-lime-300 sm:py-16 lg:py-20">
@@ -36,12 +37,12 @@
       <Icon icon="prime:twitter" class="mt-8 block text-4xl text-lime-300" />
     </div>
 
-    <hr class="my-8 border-lime-300 border-opacity-50 sm:my-10" />
+    <hr class="border-opacity-50 my-8 border-lime-300 sm:my-10" />
 
     <div
       class="flex flex-col items-center justify-between text-sm max-md:flex-col sm:flex-row sm:text-base"
     >
-      <p class="mb-4 sm:mb-0">© 2024 Pipeline Copyright and rights reserved</p>
+      <p class="mb-4 sm:mb-0">&copy; {currentYear} Pipeline Copyright and rights reserved</p>
       <div class="flex items-center">
         <a href="/terms" class="transition-colors duration-300 hover:text-lime-400"
           >Terms and Conditions</a

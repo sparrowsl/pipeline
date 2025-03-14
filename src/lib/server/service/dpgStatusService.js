@@ -1,7 +1,8 @@
 import { getAllDpgStatuses, createProjectDpgStatus } from '$lib/server/repo/dpgStatusRepo.js';
+import { updateProjectDpg } from '$lib/server/repo/projectRepo.js';
 
 export async function saveDPGStstatus(projectId, openAIResponse, supabase) {
-  //  console.log('Project Id', projectId)
+  console.log('Project Id', projectId);
   const parsedResponse = openAIResponse;
 
   const dpgStatuses = await getAllDpgStatuses(supabase);
@@ -23,13 +24,12 @@ export async function saveDPGStstatus(projectId, openAIResponse, supabase) {
         ? explanationMatch.match(/\*\*Reason\*\*:\s*(.+)/)
         : null;
 
-      const score = await scoreMatch ? parseInt(scoreMatch[1], 10) : 0;
+      const score = (await scoreMatch) ? parseInt(scoreMatch[1], 10) : 0;
       const reason = await Promise.resolve(
         reasonMatch ? reasonMatch[1].trim() : 'No explanation provided.',
       );
 
       return {
-        project_id: projectId,
         name: criteria.name,
         status_id: criteria.id,
         score: score,
@@ -38,13 +38,15 @@ export async function saveDPGStstatus(projectId, openAIResponse, supabase) {
     }),
   );
 
+  console.log('Saving project DPG status...');
+  await updateProjectDpg(projectId, projectDpgStatusData, supabase);
 
-  for (const data of projectDpgStatusData) {
-    console.log(data.explanation)
-    await createProjectDpgStatus(data, supabase);
-  }
+  // for (const data of projectDpgStatusData) {
+  //   console.log(data.explanation)
+  //   await createProjectDpgStatus(data, supabase);
+  // }
   //save the dpg status in json format
-  console.log('.')
+  console.log('.');
 
   return projectDpgStatusData;
 }

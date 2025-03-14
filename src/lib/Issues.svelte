@@ -26,14 +26,14 @@
   };
 </script>
 
-<h2 class="mb-4 self-start text-3xl font-bold text-teal-950">Issues</h2>
+<h2 class="mb-4 self-start text-3xl font-bold text-teal-950">Tasks</h2>
 
 <div class="flex w-full flex-col items-start">
   {#await fetchProjectIssues()}
     <p>loading issues...</p>
   {:then issues}
     {#each issues as issue}
-      <div class="flex w-[70%] items-center gap-4 border-b border-gray-300 p-4">
+      <div class="flex w-[70%] items-center gap-4 border-b border-gray-300 p-4 max-md:w-full">
         <Icon icon="codicon:issues" class="text-3xl text-green-500" />
 
         <div class="flex-1">
