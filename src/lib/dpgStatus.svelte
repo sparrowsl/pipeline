@@ -5,7 +5,8 @@
   export let project;
   export let user;
 
-  $: dpgStatuses = project.dpgStatuses;
+  $: dpgStatuses = project.dpgStatus;
+  console.log('dpgStatuses', dpgStatuses);
 
   let openItems = new Set();
   let checkedItems = new Set();
@@ -57,8 +58,8 @@
 </script>
 
 <div class="w-full space-y-2">
-  {#if dpgStatuses.length > 0}
-    <h2 class="mb-4 text-start font-['Inter'] text-3xl font-semibold text-black max-md:text-xl">
+  {#if dpgStatuses}
+    <h2 class="mb-4 text-start font-['Inter'] text-2xl font-semibold text-black">
       DPG Standard Checklist - {project.dpgCount}/9
     </h2>
 
@@ -105,17 +106,13 @@
       </div>
     {/each}
   {:else}
-    <div class="w-full space-y-2">
-      <h2 class="text-start text-black text-xl font-semibold font-['Inter'] mb-4 max-md:text-sm">
-        No DPG status found...
-      </h2>
-
-      <a
-        href="/"
-        class="flex items-center justify-center w-40 px-4 py-2 mx-auto mt-5 text-sm font-medium text-white transition border rounded-full border-teal-950 bg-cyan-950 hover:bg-cyan-900 font-[Inter]"
-      >
-        Evaluate Project
-      </a>
+    <h2 class="mb-4 text-start font-['Inter'] text-2xl font-semibold text-black">
+      DPG Standard Checklist
+    </h2>
+    <div class="flex flex-col items-center gap-4">
+      <p class="text-center font-['Inter'] text-lg font-semibold text-[#8a8a8a]">
+        DPG Standard Checklist evaluating...
+      </p>    
     </div>
   {/if}
 </div>
