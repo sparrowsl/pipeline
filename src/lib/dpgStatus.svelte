@@ -3,15 +3,11 @@
   import Icon from '@iconify/svelte';
 
   export let project;
-  export let user;
 
-  $: dpgStatuses = project.dpgStatus;
-  console.log('dpgStatuses', dpgStatuses);
+  $: dpgStatuses = project.dpgStatus.status;
 
   let openItems = new Set();
   let checkedItems = new Set();
-  let loading = false;
-  let error = null;
 
   function toggleOpen(title) {
     if (openItems.has(title)) {
@@ -29,31 +25,6 @@
       checkedItems.add(title);
     }
     checkedItems = checkedItems;
-  }
-
-  async function evaluateProject() {
-    loading = true;
-    error = null;
-
-    try {
-      const response = await fetch('/api/github', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: project.github }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to evaluate project');
-      }
-
-      const data = await response.json();
-
-      dpgStatuses = data.evaluations;
-    } catch (err) {
-      error = err.message;
-    } finally {
-      loading = false;
-    }
   }
 </script>
 
@@ -73,14 +44,14 @@
             <div
               on:click|stopPropagation={() => toggleChecked(item.name)}
               class="h-5 w-5 border
-              {item.score === 1
+              {item.overallScore === 1
                 ? 'border-green-500 bg-green-500'
                 : checkedItems.has(item.name)
                   ? 'border-gray-500 bg-gray-500'
                   : 'border-gray-300'}
               flex items-center justify-center"
             >
-              {#if checkedItems.has(item.name) || item.score === 1}
+              {#if checkedItems.has(item.name) || item.overallScore === 1}
                 <Check class="h-4 w-4 text-white" />
               {/if}
             </div>
@@ -95,7 +66,7 @@
         {#if openItems.has(item.name)}
           <div class="p-4 text-black">
             <div class="mb-2 flex items-center gap-1">
-              <div class="font-['Inter'] text-sm leading-normal font-semibold text-[#8a8a8a]">
+              <div class="font-['Inter'] text-sm font-semibold leading-normal text-[#8a8a8a]">
                 Verdict
               </div>
               <Icon icon="mage:stars-b" class="text-2xl" />
@@ -105,6 +76,7 @@
         {/if}
       </div>
     {/each}
+    <p class="text-left text-sm text-[#8a8a8a]">{project.dpgStatus.final_recommendation}</p>
   {:else}
     <h2 class="mb-4 text-start font-['Inter'] text-2xl font-semibold text-black">
       DPG Standard Checklist
