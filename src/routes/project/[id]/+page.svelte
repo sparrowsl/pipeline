@@ -34,8 +34,6 @@
   const projectResource = data.resources;
   const uniqueResourceIds = new Set(projectResource.map((r) => r.id)).size;
 
-  console.log('project', project);
-
   const githubLinkSplit = project?.github?.split('/') || [];
   const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
 
@@ -68,7 +66,7 @@
   let isFollowing = false;
   let showPopup = false;
   let popupMessage = '';
-  const isAddingUpdate = false;
+  let isAddingUpdate = false;
 
   let showUpdatePopup = false;
 
@@ -122,49 +120,6 @@
   let contributors = [];
   let comments = [];
 
-  const resources = [
-    {
-      id: 1,
-      title: 'Onboading Demo video',
-      author: 'Joseph Kerr',
-      category: 'Media',
-      description:
-        'Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati',
-      imageUrl:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/580f77e5-d2eb-430b-8974-3ed3b77829c8?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
-    },
-    {
-      id: 2,
-      title: 'Marketing Flyer Design',
-      author: 'Joseph Kerr',
-      category: 'Design',
-      description:
-        'Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati',
-      imageUrl:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/b31f7283-74b4-4669-b0f7-1cf219d8ccad?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
-    },
-    {
-      id: 3,
-      title: 'UI/UX Case Study',
-      author: 'Joseph Kerr',
-      category: 'Document',
-      description:
-        'Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati',
-      imageUrl:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/79e93884-0a53-4158-8d0b-6f18819002ac?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
-    },
-    {
-      id: 4,
-      title: 'Onboading Demo video',
-      author: 'Joseph Kerr',
-      category: 'Media',
-      description:
-        'Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati Nulla sit obcaecati',
-      imageUrl:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/3108468c-54ac-442b-a540-6bc12e0ded13?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8',
-    },
-  ];
-
   onMount(async () => {
     if (data.isAuthenticated) {
       user = data.user;
@@ -205,11 +160,11 @@
     <section class="mt-3 flex w-full flex-col">
       <div class="flex items-start justify-between space-x-8 max-md:gap-2">
         <h1
-          class="flex-grow text-3xl font-semibold break-words text-black max-lg:mt-2 max-lg:text-xl"
+          class="flex-grow break-words text-3xl font-semibold text-black max-lg:mt-2 max-lg:text-xl"
         >
           {project.title || 'Project Title'}
         </h1>
-        <div class="mt-2 flex items-center gap-1 text-base whitespace-nowrap text-neutral-600">
+        <div class="mt-2 flex items-center gap-1 whitespace-nowrap text-base text-neutral-600">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/edd6d143a10aa89a67f0101c84563e276eb2ea6bc943000847a62b3bcaeb9863?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
             alt="Date icon"
@@ -236,50 +191,6 @@
       </div>
     </section>
 
-    <!-- {#if user}
-  <div class="flex items-center gap-3 mt-6">
-
-    <a
-      href="/project/{id}/contribute"
-      class="w-full rounded-full bg-[#0b383c] py-4 text-center text-base font-semibold text-[#e9f5d3] max-md:w-[50%] lg:w-[50%]"
-    >
-      <button>CONTRIBUTE</button>
-    </a>
-
-
-    {#if user.id === project.user_id}
-      <a
-        href="/project/{id}/edit"
-        class="w-full rounded-full bg-lime-300 py-4 text-center text-base font-semibold text-[#0b383c] max-md:w-[50%] lg:w-[50%]"
-      >
-        <button>EDIT PROJECT</button>
-      </a>
-  
-      {:else}
-      <form
-        class="w-[50%]"
-        action="?/bookmark"
-        method="POST"
-        use:enhance={() => {
-          return async ({ result }) => {
-            if (result.type === 'success') {
-              alert('Project followed successfully');
-            }
-          };
-        }}
-      >
-        <button
-          type="submit"
-          class="w-full py-4 text-base font-semibold text-center border-2 rounded-full"
-          class:bg-[#e9f5d3]={isFollowing}
-          class:text-black={isFollowing}
-        >
-          {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
-        </button>
-      </form>
-    {/if}
-  </div>
-{/if} -->
     {#if user}
       <div class="mt-6 flex items-center gap-3">
         <a
@@ -414,7 +325,7 @@
                   class="flex w-full items-center justify-between gap-4 text-center font-bold max-md:gap-2"
                 >
                   <h1
-                    class="min-w-0 text-4xl leading-tight whitespace-nowrap text-black max-md:text-xl"
+                    class="min-w-0 whitespace-nowrap text-4xl leading-tight text-black max-md:text-xl"
                   >
                     GitHub Contributors
                   </h1>
@@ -447,7 +358,7 @@
                   class="flex w-full items-center justify-between gap-4 text-center font-bold max-md:gap-2"
                 >
                   <h1
-                    class="min-w-0 text-4xl leading-tight whitespace-nowrap text-black max-md:text-2xl"
+                    class="min-w-0 whitespace-nowrap text-4xl leading-tight text-black max-md:text-2xl"
                   >
                     Resources
                   </h1>
@@ -491,21 +402,22 @@
     action="?/addUpdate"
     method="POST"
     use:enhance={() => {
+      isAddingUpdate = true;
       return async ({ result }) => {
         if (result.type === 'success') {
           closeUpdatePopup();
         }
-
-        await applyAction(result);
         await invalidateAll();
+        await applyAction(result);
+        isAddingUpdate = false;
       };
     }}
   >
-    <div class="bg-opacity-50 fixed inset-0 z-1000 flex items-center justify-center bg-black">
+    <div class="z-1000 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div class="relative w-[400px] max-w-full rounded-lg bg-white p-8 shadow-lg">
         <button
           on:click={closeUpdatePopup}
-          class="absolute top-2 right-2 text-2xl font-bold text-gray-500 hover:text-gray-700"
+          class="absolute right-2 top-2 text-2xl font-bold text-gray-500 hover:text-gray-700"
           style="z-index: 1000;"
         >
           &times;
@@ -527,7 +439,7 @@
         </label>
         <button
           type="submit"
-          class="w-full rounded-lg bg-lime-300 py-2 text-black"
+          class="w-full rounded-lg bg-lime-300 py-2 text-black disabled:bg-gray-500"
           disabled={isAddingUpdate}
         >
           {isAddingUpdate ? 'Adding Update...' : 'Add Update'}
