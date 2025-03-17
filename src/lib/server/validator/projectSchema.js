@@ -14,7 +14,7 @@ export const projectSchema = z.object({
     .url('Invalid GitHub URL')
     .regex(
       new RegExp(/^https?:\/\/(?:www\.)?github\.com\/([\w-]+)\/([\w.-]+)(?:\/.*)?$/),
-      'This is not a real github url',
+      'Invalid GitHub URL',
     )
     .optional(),
   linkedin: z.string().url('Invalid LinkedIn URL').optional(),
