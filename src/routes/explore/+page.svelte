@@ -1,6 +1,13 @@
 <script>
   import ProjectCategory from '$lib/ProjectCategory.svelte';
   import Card from '$lib/Card.svelte';
+  import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+  } from '$lib/components/ui/accordion';
+  import { Button } from '$lib/components/ui/button';
 
   export let data;
   let loadedProjects = data.allProjects;
@@ -11,7 +18,6 @@
   let searchTerm = '';
   let selectedTag = '';
 
-  // Pagination state
   let currentPage = 1;
   let searchPage = 1;
   let categoryPage = 1;
@@ -107,18 +113,25 @@
 <div class="mx-auto mt-8 flex w-full max-w-[1470px] flex-col justify-center gap-6 px-6 md:flex-row">
   <aside class="mt-[-15px] w-full max-md:overflow-x-auto md:mb-0 md:w-[28%]">
     <div
-      class="flex space-x-2 overflow-x-scroll rounded-md p-4 shadow-sm md:flex-col md:space-x-0 md:space-y-2 md:overflow-x-visible"
+      class="rounded-md p-4 shadow-sm md:flex-col"
       style="position: sticky; top: 0; height: fit-content;"
     >
-      <h2 class="mb-4 hidden text-xl font-semibold text-gray-800 md:block">SDGs</h2>
-      <ProjectCategory
-        on:categorySelected={handleCategorySelected}
-        class="flex min-w-max md:min-w-0 md:flex-col"
-      />
+      <span class="mb-4 hidden md:block">SDGs</span>
+
+      <Accordion type="single" value="sdgs" collapsible>
+        <AccordionItem value="sdgs">
+          <AccordionTrigger class="no-underline hover:no-underline focus:no-underline">
+            Select SDG Category
+          </AccordionTrigger>
+          <AccordionContent>
+            <ProjectCategory on:categorySelected={handleCategorySelected} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   </aside>
 
-  <section class="grid flex-1 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <section class="grid flex-1 grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
     {#if searchTerm && searchResults.length > 0}
       <div class="col-span-full text-xl font-semibold text-gray-700">
         Search results for: "{searchTerm}"
@@ -128,12 +141,7 @@
       {/each}
       {#if !searchResultsLoaded && !allSearchLoaded}
         <div class="col-span-full mt-8 flex items-center justify-center">
-          <button
-            on:click={loadMoreSearchResults}
-            class="rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-8 py-2 text-lg font-medium text-[#516027]"
-          >
-            Load more
-          </button>
+          <Button on:click={loadMoreSearchResults}>Load more</Button>
         </div>
       {/if}
     {:else if selectedTag}
@@ -142,16 +150,11 @@
       </div>
       {#if categoryResult.length > 0}
         {#each categoryResult as project}
-          <Card {project} />
+          <Card {project} class="!h-auto !flex-shrink-0" />
         {/each}
         {#if !categoryResultLoaded && !allCategoryLoaded}
           <div class="col-span-full mt-8 flex items-center justify-center">
-            <button
-              on:click={loadMoreCategoryResults}
-              class="rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-8 py-2 text-lg font-medium text-[#516027]"
-            >
-              Load more
-            </button>
+            <Button on:click={loadMoreCategoryResults}>Load more</Button>
           </div>
         {/if}
       {:else}
@@ -181,11 +184,11 @@
               role="button"
               tabindex="0"
             >
-              <div
+              <Button
                 class="items-center rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-[30px] py-[12px] transition-colors duration-300 hover:bg-[#c1da8a]"
               >
                 <span class="text-xl font-normal leading-snug text-[#516027]"> Load more </span>
-              </div>
+              </Button>
             </div>
           </div>
         {/if}
