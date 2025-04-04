@@ -1,12 +1,13 @@
 <script>
+  import { Card, CardContent } from '$lib/components/ui/card';
   import Icon from '@iconify/svelte';
 
   export let contributor;
   export let totalCommits = 0;
 </script>
 
-<div
-  class="relative z-10 flex w-full flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white p-6 text-[#0B383C] shadow-lg sm:flex-row"
+<Card
+  class="rounded-6xl shadow-6xl relative z-10 flex items-center border border-gray-200 bg-white px-6 py-2 text-[#0B383C]"
 >
   <img
     src={contributor.avatar_url}
@@ -14,7 +15,7 @@
     class="h-16 w-16 rounded-full border-2 border-[#0B383C] shadow-md"
   />
 
-  <div class="mt-4 flex w-full flex-col sm:mt-0 sm:ml-4">
+  <CardContent class="mt-4 flex w-full flex-col sm:ml-4 sm:mt-0">
     <a
       href={contributor.html_url}
       target="_blank"
@@ -25,9 +26,9 @@
     </a>
 
     <div class="mt-1 flex items-center gap-2 text-sm">
-      <span class="rounded-lg bg-[#0B383C] px-3 py-1 text-xs font-medium text-white"
-        >Commits: {contributor?.contributions}</span
-      >
+      <span class="rounded-lg bg-[#0B383C] px-3 py-1 text-xs font-medium text-white">
+        Commits: {contributor?.contributions}
+      </span>
     </div>
 
     <div class="mt-2 h-2 w-full rounded-full border-1 border-[#bde25b] bg-[#e9f5d3]">
@@ -36,5 +37,5 @@
         style="width: {Math.min((contributor?.contributions / totalCommits) * 100, 100)}%"
       ></div>
     </div>
-  </div>
-</div>
+  </CardContent>
+</Card>

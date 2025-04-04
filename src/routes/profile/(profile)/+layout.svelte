@@ -1,6 +1,7 @@
 <script>
   import { page } from '$app/stores';
   import Icon from '@iconify/svelte';
+  import { Button } from '$lib/components/ui/button';
 
   export let data;
   const user = data.user;
@@ -52,7 +53,7 @@
           class="flex w-full flex-wrap items-center justify-between gap-4 text-black max-md:max-w-full"
         >
           <h2
-            class="my-auto mt-20 self-stretch text-3xl leading-none font-semibold max-md:text-4xl"
+            class="my-auto mt-20 self-stretch text-3xl font-semibold leading-none max-md:text-4xl"
           >
             {user?.display_name || ''}
           </h2>
@@ -66,32 +67,31 @@
             {/each}
           </div>
         </div>
-        <p
-          class="mt-11 text-2xl leading-9 font-light text-black max-md:mt-10 max-md:max-w-full max-md:text-xl"
-        >
+
+        <p class="mt-11 text-2xl font-light leading-9 text-black max-md:mt-10 max-md:max-w-full">
           {user?.bio || ''}
         </p>
         <div
           class="mt-11 flex w-full flex-wrap items-center justify-between gap-4 max-md:mt-10 max-md:max-w-full"
         ></div>
         <div
-          class="mt-11 flex w-full flex-wrap items-center justify-around gap-2 text-2xl leading-none font-medium max-md:mt-10 max-md:max-w-full"
+          class="mt-11 flex w-full flex-wrap items-center justify-around gap-2 text-2xl font-medium leading-none max-md:mt-10 max-md:max-w-full"
         >
           <a href="/project/create" class="max-w-xs flex-1 md:max-w-sm">
-            <button
-              class="flex w-full items-center justify-center gap-2 rounded-full bg-teal-900 px-6 py-4 text-xl text-white max-md:text-sm"
+            <Button
+              class="flex w-full items-center justify-center gap-2 rounded-full bg-teal-900 px-6 py-4 text-xl text-white"
             >
               Create Project
-            </button>
+            </Button>
           </a>
 
           <a href="/profile/edit" class="max-w-xs flex-1 md:max-w-sm">
-            <button
-              class="flex w-full items-center justify-center gap-2 rounded-full border-2 border-lime-800 bg-lime-200 px-6 py-4 text-xl text-lime-800 max-md:py-3 max-md:text-sm"
+            <Button
+              class="flex w-full items-center justify-center gap-2 rounded-full border-2 border-lime-800 bg-lime-200 px-6 py-4 text-xl text-lime-800"
             >
               Edit Profile
               <Icon icon="mdi:pen" class="text-2xl" />
-            </button>
+            </Button>
           </a>
         </div>
       </section>

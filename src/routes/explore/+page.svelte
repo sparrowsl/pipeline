@@ -1,6 +1,13 @@
 <script>
   import ProjectCategory from '$lib/ProjectCategory.svelte';
   import Card from '$lib/Card.svelte';
+  import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+  } from '$lib/components/ui/accordion';
+  import { Button } from '$lib/components/ui/button';
 
   export let data;
   let loadedProjects = data.allProjects;
@@ -11,7 +18,6 @@
   let searchTerm = '';
   let selectedTag = '';
 
-  // Pagination state
   let currentPage = 1;
   let searchPage = 1;
   let categoryPage = 1;
@@ -104,76 +110,72 @@
   }
 </script>
 
-<div class="mx-auto mt-8 flex w-full max-w-[1470px] flex-col justify-center gap-6 px-6 md:flex-row">
-  <aside class="mt-[-15px] w-full max-md:overflow-x-auto md:mb-0 md:w-[28%]">
+<div class="mx-auto mt-8 flex w-full max-w-[1470px] flex-col justify-center gap-6 px-6 md:flex-col lg:flex-row">
+  <aside class="w-full md:mb-0 lg:w-[28%] lg:sticky lg:top-0 lg:self-start">
     <div
-      class="flex space-x-2 overflow-x-scroll rounded-md p-4 shadow-sm md:flex-col md:space-y-2 md:space-x-0 md:overflow-x-visible"
+      class="p-4 rounded-md shadow-sm"
       style="position: sticky; top: 0; height: fit-content;"
     >
-      <h2 class="mb-4 hidden text-xl font-semibold text-gray-800 md:block">SDGs</h2>
-      <ProjectCategory
-        on:categorySelected={handleCategorySelected}
-        class="flex min-w-max md:min-w-0 md:flex-col"
-      />
+      <span class="hidden mb-4 md:block">SDGs</span>
+      <Accordion type="single" value="sdgs" collapsible>
+        <AccordionItem value="sdgs">
+          <AccordionTrigger class="no-underline hover:no-underline focus:no-underline">
+            Select SDG Category
+          </AccordionTrigger>
+          <AccordionContent>
+            <ProjectCategory on:categorySelected={handleCategorySelected} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   </aside>
 
-  <section class="grid flex-1 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <section class="grid items-start flex-1 grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {#if searchTerm && searchResults.length > 0}
-      <div class="col-span-full text-xl font-semibold text-gray-700">
+      <div class="text-xl font-semibold text-gray-700 col-span-full sm:col-span-2 lg:col-span-3">
         Search results for: "{searchTerm}"
       </div>
       {#each searchResults as project}
         <Card {project} />
       {/each}
       {#if !searchResultsLoaded && !allSearchLoaded}
-        <div class="col-span-full mt-8 flex items-center justify-center">
-          <button
-            on:click={loadMoreSearchResults}
-            class="rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-8 py-2 text-lg font-medium text-[#516027]"
-          >
-            Load more
-          </button>
+        <div class="flex items-center justify-center mt-8 col-span-full sm:col-span-2 lg:col-span-3">
+          <Button on:click={loadMoreSearchResults}>Load more</Button>
         </div>
       {/if}
     {:else if selectedTag}
-      <div class="col-span-full text-xl font-semibold text-gray-700">
+      <div class="text-xl font-semibold text-gray-700 col-span-full sm:col-span-2 lg:col-span-3">
         Projects in: "{selectedTag}"
       </div>
       {#if categoryResult.length > 0}
         {#each categoryResult as project}
-          <Card {project} />
+          <Card {project} class="!h-auto !flex-shrink-0" />
         {/each}
         {#if !categoryResultLoaded && !allCategoryLoaded}
-          <div class="col-span-full mt-8 flex items-center justify-center">
-            <button
-              on:click={loadMoreCategoryResults}
-              class="rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-8 py-2 text-lg font-medium text-[#516027]"
-            >
-              Load more
-            </button>
+          <div class="flex items-center justify-center mt-8 col-span-full sm:col-span-2 lg:col-span-3">
+            <Button on:click={loadMoreCategoryResults}>Load more</Button>
           </div>
         {/if}
       {:else}
-        <p class="col-span-full text-center text-gray-600">
+        <p class="text-center text-gray-600 col-span-full sm:col-span-2 lg:col-span-3">
           No projects found for "{selectedTag}".
         </p>
       {/if}
     {:else if !searchTerm}
-      <div class="col-span-full text-xl font-semibold text-gray-700">Top Projects</div>
+      <div class="text-xl font-semibold text-gray-700 col-span-full sm:col-span-2 lg:col-span-3">Top Projects</div>
       {#each data.topProjects as project}
         <Card {project} />
       {:else}
-        <p class="text-center text-gray-600 col-span-full">No projects found.</p>
+        <p class="text-center text-gray-600 col-span-full sm:col-span-2 lg:col-span-3">No projects found.</p>
       {/each}
 
-      <div class="col-span-full mt-8 text-xl font-semibold text-gray-700">All Projects</div>
+      <div class="mt-8 text-xl font-semibold text-gray-700 col-span-full sm:col-span-2 lg:col-span-3">All Projects</div>
       {#if data.allProjects.length > 0}
         {#each loadedProjects as project (project.id)}
           <Card {project} />
         {/each}
         {#if !allProjectsLoaded}
-          <div class="col-span-full mt-8 flex w-full flex-grow items-center justify-center">
+          <div class="flex items-center justify-center flex-grow w-full mt-8 col-span-full sm:col-span-2 lg:col-span-3">
             <div
               class="flex cursor-pointer"
               on:click={loadMoreProjects}
@@ -181,19 +183,19 @@
               role="button"
               tabindex="0"
             >
-              <div
+              <Button
                 class="items-center rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-[30px] py-[12px] transition-colors duration-300 hover:bg-[#c1da8a]"
               >
-                <span class="text-xl leading-snug font-normal text-[#516027]"> Load more </span>
-              </div>
+                <span class="text-xl font-normal leading-snug text-[#516027]"> Load more </span>
+              </Button>
             </div>
           </div>
         {/if}
       {:else}
-        <p class="col-span-full text-center text-gray-600">No projects found.</p>
+        <p class="text-center text-gray-600 col-span-full sm:col-span-2 lg:col-span-3">No projects found.</p>
       {/if}
     {:else}
-      <p class="col-span-full text-center text-gray-600">No search results found.</p>
+      <p class="text-center text-gray-600 col-span-full sm:col-span-2 lg:col-span-3">No search results found.</p>
     {/if}
   </section>
 </div>

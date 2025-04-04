@@ -4,7 +4,10 @@
   import { onMount } from 'svelte';
   import { searchBarOpen } from './utils.js';
   import Icon from '@iconify/svelte';
+  import { Button } from '$lib/components/ui/button';
+  import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
 
+  let popoverOpen = false;
   let isResourcesOpen = false;
   let isMobileMenuOpen = false;
   let isSearchModalOpen = false;
@@ -20,6 +23,7 @@
   }
 
   function toggleMobileMenu() {
+    console.log('toggleMobileMenu');
     isMobileMenuOpen = !isMobileMenuOpen;
     if (!isMobileMenuOpen) {
       isResourcesOpen = false;
@@ -32,11 +36,6 @@
     if (isSearchModalOpen) {
       document.addEventListener('click', handleClickOutside);
     }
-
-    document.addEventListener('click', closeResources);
-    return () => {
-      document.removeEventListener('click', closeResources);
-    };
   });
 
   export let data = {
@@ -53,57 +52,56 @@
   </div>
 
   <div class="flex items-center md:flex lg:flex">
-    <button
+    <Button
       on:click={toggleMobileMenu}
       class="text-white focus:outline-none lg:hidden"
-      aria-label="Toggle mobile menu"
+      aria-label="Toggle mobile menu" variant="outline"
     >
       {#if isMobileMenuOpen}
         <Icon icon="mdi:close" class="text-2xl" />
       {:else}
         <Icon icon="mdi:hamburger-menu" class="text-2xl" />
       {/if}
-    </button>
+  </Button>
   </div>
 
   <div class="hidden w-full max-w-[480px] items-center justify-center lg:flex">
     <div
       class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] pr-3 pl-4"
     >
-      <button
+      <Button
         type="button"
         class="flex w-full items-center justify-between p-2"
         on:click={() => ($searchBarOpen = !$searchBarOpen)}
       >
         <span class="text-sm text-white/50">Search for a project....</span>
         <Icon icon="mdi:search" class="text-2xl text-white/50" />
-      </button>
+      </Button>
     </div>
   </div>
 
   <div class="hidden h-[42.67px] grow-0 items-center justify-end gap-4 lg:flex">
     <div class="flex items-center gap-4">
-      <a href="/" class="font-['Inter'] text-base leading-none font-semibold text-white"> Tasks </a>
-
-      <div class="resources-dropdown relative">
-        <button
-          on:click={toggleResources}
-          class="flex w-full items-center justify-between border-b border-cyan-800 px-4 py-4 focus:outline-none"
-        >
-          <span class="font-['Inter'] text-base leading-none font-semibold text-white">
-            Resources
-          </span>
-          <Icon
-            icon="radix-icons:caret-down"
-            class="transform text-2xl text-white transition-transform duration-200 {isResourcesOpen &&
-              'rotate-180'}"
-          />
-        </button>
-
-        {#if isResourcesOpen}
-          <div
-            class="absolute top-full left-0 z-100 mt-2 w-[15vh] rounded-md bg-cyan-900 shadow-lg"
+      <a href="/" class="font-['Inter'] text-base font-semibold leading-none text-white"> Tasks </a>
+      <Popover bind:open={popoverOpen}>
+        <PopoverTrigger class="focus:outline-none">
+          <Button
+            variant="ghost"
+            class="flex items-center gap-1 p-0 text-white hover:bg-transparent"
           >
+            <span class="font-['Inter'] text-base font-semibold leading-none"> Resources </span>
+            <Icon
+              icon="radix-icons:caret-down"
+              class={`text-2xl transition-transform duration-200 ${popoverOpen ? 'rotate-180' : ''}`}
+            />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          class="z-[999999] w-[18vh] rounded-md !border-cyan-800 !bg-cyan-900 p-0 shadow-lg"
+          sideOffset={5}
+          align="end"
+        >
+          <div class="flex flex-col">
             <a
               href="/resources/pipeline"
               class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
@@ -115,8 +113,8 @@
               >About DPGs</a
             >
           </div>
-        {/if}
-      </div>
+        </PopoverContent>
+      </Popover>
     </div>
 
     <div>
@@ -137,7 +135,7 @@
           <div
             class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] py-2 pr-3 pl-4 max-lg:w-full"
           >
-            <button
+            <Button
               type="button"
               class="mt-2 flex w-full justify-between"
               on:click={() => ($searchBarOpen = !$searchBarOpen)}
@@ -146,14 +144,14 @@
                 class="ml-[-18px] font-['Inter'] text-base leading-none font-semibold text-white max-lg:px-8 max-md:mb-[4px]"
                 >Search for a project...</span
               >
-            </button>
+            </Button>
           </div>
         </div>
 
         <a href="/" class="font-['Inter'] text-base font-semibold text-white"> Tasks </a>
 
-        <div class="resources-dropdown relative">
-          <button
+        <div class="relative resources-dropdown">
+          <Button
             on:click={toggleResources}
             class="flex w-full items-center justify-between border-b border-cyan-800 px-4 py-4 focus:outline-none"
           >
@@ -186,7 +184,7 @@
                 </clipPath>
               </defs>
             </svg>
-          </button>
+          </Button>
 
           {#if isResourcesOpen}
             <div
