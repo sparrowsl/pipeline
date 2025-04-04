@@ -99,7 +99,7 @@
 
             <div class="flex w-2/3 flex-col">
               <Input type="url" id="github" name="github" />
-              <p class="ml-5 mt-1 text-sm text-gray-600 max-md:w-[100%]">
+              <p class="mt-1 ml-5 text-sm text-gray-600 max-md:w-[100%]">
                 Follow <a
                   href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks"
                   target="_blank"

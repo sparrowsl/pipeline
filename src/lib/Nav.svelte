@@ -55,14 +55,15 @@
     <Button
       on:click={toggleMobileMenu}
       class="text-white focus:outline-none lg:hidden"
-      aria-label="Toggle mobile menu" variant="outline"
+      aria-label="Toggle mobile menu"
+      variant="outline"
     >
       {#if isMobileMenuOpen}
         <Icon icon="mdi:close" class="text-2xl" />
       {:else}
         <Icon icon="mdi:hamburger-menu" class="text-2xl" />
       {/if}
-  </Button>
+    </Button>
   </div>
 
   <div class="hidden w-full max-w-[480px] items-center justify-center lg:flex">
@@ -82,14 +83,14 @@
 
   <div class="hidden h-[42.67px] grow-0 items-center justify-end gap-4 lg:flex">
     <div class="flex items-center gap-4">
-      <a href="/" class="font-['Inter'] text-base font-semibold leading-none text-white"> Tasks </a>
+      <a href="/" class="font-['Inter'] text-base leading-none font-semibold text-white"> Tasks </a>
       <Popover bind:open={popoverOpen}>
         <PopoverTrigger class="focus:outline-none">
           <Button
             variant="ghost"
             class="flex items-center gap-1 p-0 text-white hover:bg-transparent"
           >
-            <span class="font-['Inter'] text-base font-semibold leading-none"> Resources </span>
+            <span class="font-['Inter'] text-base leading-none font-semibold"> Resources </span>
             <Icon
               icon="radix-icons:caret-down"
               class={`text-2xl transition-transform duration-200 ${popoverOpen ? 'rotate-180' : ''}`}
@@ -150,7 +151,7 @@
 
         <a href="/" class="font-['Inter'] text-base font-semibold text-white"> Tasks </a>
 
-        <div class="relative resources-dropdown">
+        <div class="resources-dropdown relative">
           <Button
             on:click={toggleResources}
             class="flex w-full items-center justify-between border-b border-cyan-800 px-4 py-4 focus:outline-none"

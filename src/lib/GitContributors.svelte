@@ -15,7 +15,7 @@
     class="h-16 w-16 rounded-full border-2 border-[#0B383C] shadow-md"
   />
 
-  <CardContent class="mt-4 flex w-full flex-col sm:ml-4 sm:mt-0">
+  <CardContent class="mt-4 flex w-full flex-col sm:mt-0 sm:ml-4">
     <a
       href={contributor.html_url}
       target="_blank"

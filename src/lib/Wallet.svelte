@@ -40,7 +40,7 @@
         <Input
           type="text"
           id="amount"
-          class="mt-8 w-full gap-1.5 self-stretch rounded-full border-2 border-black py-4 pl-7 pr-16 text-3xl font-thin focus-visible:ring-0 focus-visible:ring-offset-0 max-md:h-[50px] sm:max-w-full sm:px-5 sm:text-lg"
+          class="mt-8 w-full gap-1.5 self-stretch rounded-full border-2 border-black py-4 pr-16 pl-7 text-3xl font-thin focus-visible:ring-0 focus-visible:ring-offset-0 max-md:h-[50px] sm:max-w-full sm:px-5 sm:text-lg"
           placeholder="$ USDC"
         />
       </div>
