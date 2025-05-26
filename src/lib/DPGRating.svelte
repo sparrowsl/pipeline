@@ -4,11 +4,7 @@
   export let rating;
 </script>
 
-<div class="flex items-center gap-3.5 self-start text-2xl leading-none text-neutral-400">
-  <div class="my-auto flex items-center gap-1 self-stretch">
-    <Icon icon="tabler:checkbox" class="text-2xl" />
-    <div class="my-auto self-stretch">
-      <span class="text-xl font-semibold text-neutral-400">{rating || 0} </span>
-    </div>
-  </div>
+<div class="flex items-center gap-2 text-white">
+  <Icon icon="tabler:checkbox" class="text-lg text-white/80" />
+  <span class="text-sm font-bold text-white">{rating || 0}</span>
 </div>
