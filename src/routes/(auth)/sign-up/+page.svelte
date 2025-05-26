@@ -1,6 +1,5 @@
 <script>
   import { applyAction, enhance } from '$app/forms';
-  import Logo from '$lib/Logo.svelte';
   import { toast } from 'svelte-sonner';
 
   import { Button } from '$lib/components/ui/button';
@@ -35,9 +34,6 @@
       };
     }}
   >
-    <div class="mb-10 hidden max-md:block">
-      <Logo />
-    </div>
     <h2 class="mb-2 text-4xl font-semibold">Register</h2>
     <p class="mb-4 opacity-50">Enter your Info to signup for Pipeline</p>
 
