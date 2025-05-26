@@ -197,9 +197,9 @@
               tabindex="0"
             >
               <Button
-                class="items-center rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-[30px] py-[12px] transition-colors duration-300 hover:bg-[#c1da8a]"
+                class="flex w-full max-w-sm items-center justify-center rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-6 py-2.5 text-base font-semibold text-[#516027] shadow-md transition-colors hover:bg-[#c1da8a] md:text-lg"
               >
-                <span class="text-xl font-normal leading-snug text-[#516027]"> Load more </span>
+                Load more
               </Button>
             </div>
           </div>
