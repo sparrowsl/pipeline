@@ -3,7 +3,7 @@
 </script>
 
 <Toaster richColors position="top-right" closeButton />
-<main class="-mb-16 h-screen overflow-hidden bg-white md:pr-0">
+<main class="bg-white sm:-mb-16 sm:h-screen sm:overflow-hidden md:pr-0">
   <div class="flex h-full flex-col gap-0 md:flex-row md:gap-5">
     <section class="w-full flex-shrink-0 md:w-5/12">
       <div
@@ -29,7 +29,11 @@
     </section>
 
     <div class="flex min-h-0 flex-1 items-center justify-center">
-      <slot></slot>
+      <section
+        class="mt-20 flex w-full max-w-[1235px] flex-col items-center justify-center pb-20 max-md:mt-10 max-md:px-5"
+      >
+        <slot></slot>
+      </section>
     </div>
   </div>
 </main>

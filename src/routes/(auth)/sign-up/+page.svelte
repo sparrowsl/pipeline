@@ -15,55 +15,51 @@
   }
 </script>
 
-<section
-  class="mt-20 flex w-full max-w-[1235px] flex-col items-center justify-center max-md:mt-10 max-md:px-5"
+<form
+  method="POST"
+  class="mx-auto flex w-[60%] flex-col max-md:w-[90%]"
+  use:enhance={() => {
+    loading = true;
+
+    return async ({ result }) => {
+      if (result.type === 'redirect') {
+        toast.success('login successful');
+      }
+
+      await applyAction(result);
+      loading = false;
+    };
+  }}
 >
-  <form
-    method="POST"
-    class="mx-auto flex w-[60%] flex-col max-md:w-[90%]"
-    use:enhance={() => {
-      loading = true;
+  <h2 class="mb-2 text-4xl font-semibold">Register</h2>
+  <p class="mb-4 opacity-50">Enter your Info to signup for Pipeline</p>
 
-      return async ({ result }) => {
-        if (result.type === 'redirect') {
-          toast.success('login successful');
-        }
+  <div class="flex flex-col gap-2 font-medium">
+    <Label for="name" class="block">Name</Label>
+    <Input type="text" id="name" name="name" required />
+  </div>
 
-        await applyAction(result);
-        loading = false;
-      };
-    }}
-  >
-    <h2 class="mb-2 text-4xl font-semibold">Register</h2>
-    <p class="mb-4 opacity-50">Enter your Info to signup for Pipeline</p>
+  <div class="mt-4 flex flex-col gap-2 font-medium">
+    <Label for="email" class="block">Email</Label>
+    <Input type="email" id="email" name="email" required />
+  </div>
 
-    <div class="flex flex-col gap-2 font-medium">
-      <Label for="name" class="block">Name</Label>
-      <Input type="text" id="name" name="name" required />
-    </div>
+  <div class="mt-4 flex flex-col gap-2 font-medium">
+    <Label for="password" class="block">Password</Label>
+    <Input type="password" id="password" name="password" required />
+  </div>
 
-    <div class="mt-4 flex flex-col gap-2 font-medium">
-      <Label for="email" class="block">Email</Label>
-      <Input type="email" id="email" name="email" required />
-    </div>
+  <div class="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-sm leading-none">
+    Already have an account?
+    <a href="/sign-in" class="font-semibold text-neutral-400 hover:text-[#0b383c]">Sign In</a>
+  </div>
 
-    <div class="mt-4 flex flex-col gap-2 font-medium">
-      <Label for="password" class="block">Password</Label>
-      <Input type="password" id="password" name="password" required />
-    </div>
+  <Button type="submit" disabled={loading} variant="default">
+    {loading ? 'Signing up...' : 'Sign up'}
+  </Button>
 
-    <div class="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-sm leading-none">
-      Already have an account?
-      <a href="/sign-in" class="font-semibold text-neutral-400 hover:text-[#0b383c]">Sign In</a>
-    </div>
-
-    <Button type="submit" disabled={loading} variant="default">
-      {loading ? 'Signing up...' : 'Sign up'}
-    </Button>
-
-    <div class="align-start mx-auto mt-6 flex w-full gap-2 text-sm font-light max-md:mt-2">
-      <Checkbox id="remember" name="rememberMe" />
-      <Label for="remember" class="font-light">Remember me</Label>
-    </div>
-  </form>
-</section>
+  <div class="align-start mx-auto mt-6 flex w-full gap-2 text-sm font-light max-md:mt-2">
+    <Checkbox id="remember" name="rememberMe" />
+    <Label for="remember" class="font-light">Remember me</Label>
+  </div>
+</form>
