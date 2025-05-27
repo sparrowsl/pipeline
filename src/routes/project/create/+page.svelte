@@ -248,60 +248,6 @@
                 Set a realistic funding target for your project (minimum $100)
               </p>
             </div>
-
-            <Separator class="my-10 bg-gray-200" />
-
-            <!-- Payment Methods -->
-            <div class="space-y-8">
-              <div>
-                <h4 class="mb-2 text-lg font-semibold text-gray-900">Payment Method</h4>
-                <p class="text-sm text-gray-600">
-                  Choose how you'd like to receive funding for your project
-                </p>
-              </div>
-
-              <!-- Bank Account -->
-              <div class="space-y-3">
-                <Label for="bankAccount" class="text-base font-semibold text-gray-800">
-                  Bank Account Number
-                </Label>
-                <Input
-                  id="bankAccount"
-                  name="bank_acct"
-                  type="text"
-                  placeholder="Enter your bank account number"
-                  class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
-                />
-                <p class="text-sm text-gray-500">
-                  Traditional bank transfer for fiat currency payments
-                </p>
-              </div>
-
-              <!-- OR Divider -->
-              <div class="flex items-center justify-center py-6">
-                <div class="flex-grow border-t-2 border-gray-200"></div>
-                <span class="bg-white px-6 text-base font-medium text-gray-500">or</span>
-                <div class="flex-grow border-t-2 border-gray-200"></div>
-              </div>
-
-              <!-- Wallet Address -->
-              <div class="space-y-3">
-                <Label for="walletAddress" class="text-base font-semibold text-gray-800">
-                  Crypto Wallet Address
-                </Label>
-                <Input
-                  id="walletAddress"
-                  name="wallet_address"
-                  type="text"
-                  placeholder="0x... or wallet address"
-                  class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
-                />
-                <p class="text-sm leading-relaxed text-gray-500">
-                  Accepts Bitcoin, Ethereum, and other major cryptocurrencies. Ensure the address is
-                  correct as transactions cannot be reversed.
-                </p>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>
