@@ -1,5 +1,5 @@
 <script>
-  import { Popover, PopoverTrigger, PopoverContent } from '$lib/components/ui/popover';
+  import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
   import { enhance } from '$app/forms';
   import Icon from '@iconify/svelte';
   import { afterNavigate } from '$app/navigation';
@@ -19,8 +19,8 @@
 </script>
 
 <div class="relative flex items-center">
-  <Popover>
-    <PopoverTrigger class="flex w-full items-center justify-between !rounded-[51px] px-2">
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger class="flex w-full items-center justify-between !rounded-[51px] px-2">
       {#if user?.id}
         <img
           loading="lazy"
@@ -32,11 +32,11 @@
           {user.display_name}
         </span>
       {/if}
-    </PopoverTrigger>
+    </DropdownMenu.Trigger>
 
-    <PopoverContent
+    <DropdownMenu.Content
       sideOffset={8}
-      class="z-[999999] w-[280px] !rounded-2xl border-0 bg-teal-600 p-0 shadow-lg max-lg:-translate-x-[60px] max-md:left-20"
+      class="z-[999999] w-[280px] !rounded-2xl border-0 bg-[#0b383c]  p-0 shadow-lg  max-lg:-translate-x-[60px] max-md:left-20"
       align="end"
     >
       <nav class="flex flex-col py-2">
@@ -52,34 +52,32 @@
           <span class="text-white">{user.display_name}</span>
         </div>
 
-        <hr class="mt-4 w-full border-stone-300 max-lg:hidden" />
-
-        <ul class="mt-6 flex flex-col px-6 text-sm text-white">
-          <li class="flex items-center gap-4">
+        <DropdownMenu.Group class="mt-6 flex flex-col px-6 text-sm text-white">
+          <DropdownMenu.Item class="flex cursor-pointer items-center gap-4">
             <Icon icon="et:profile-male" class="text-lg" />
             <a href="/profile">Profile</a>
-          </li>
-          <li class="mt-6 flex items-center gap-4">
+          </DropdownMenu.Item>
+          <DropdownMenu.Item class="mt-6 flex cursor-pointer items-center gap-4">
             <Icon icon="stash:save-ribbon-light" class="text-lg" />
             <a href="/project/create">Create Project</a>
-          </li>
-        </ul>
+          </DropdownMenu.Item>
+        </DropdownMenu.Group>
 
-        <hr class="mt-7 w-full border-stone-300" />
+        <DropdownMenu.Separator class="mt-7 w-full border-stone-300" />
 
-        <ul class="mt-6 flex flex-col px-6 text-sm text-white">
-          <li class="flex items-center gap-4">
+        <DropdownMenu.Group class="mt-6 flex flex-col px-6 text-sm text-white">
+          <DropdownMenu.Item class="flex cursor-pointer items-center gap-4">
             <Icon icon="stash:cog-light" class="text-xl" />
             <a href="/profile/edit">Settings</a>
-          </li>
-          <li class="mt-4 flex items-center gap-4">
+          </DropdownMenu.Item>
+          <DropdownMenu.Item class="mt-4 flex cursor-pointer items-center gap-4">
             <Icon icon="humbleicons:logout" class="text-lg" />
             <form action="/profile/?/logout" method="post" use:enhance>
               <Button type="submit" class="text-left">Logout</Button>
             </form>
-          </li>
-        </ul>
+          </DropdownMenu.Item>
+        </DropdownMenu.Group>
       </nav>
-    </PopoverContent>
-  </Popover>
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>
 </div>
