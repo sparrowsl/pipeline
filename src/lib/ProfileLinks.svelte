@@ -1,52 +1,104 @@
 <script>
   import { Input } from '$lib/components/ui/input';
   import { Label } from '$lib/components/ui/label';
+  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
   export let user;
 </script>
 
-<div class="h-[80%] rounded-xl border border-neutral-200 bg-neutral-50 p-4 shadow-md">
-  <h2 class="mb-4 text-2xl font-semibold text-black">Socials</h2>
-  <div class="flex h-[80%] flex-col gap-8 bg-white p-2">
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="twitter" class="text-base font-semibold">X</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="url" id="twitter" name="twitter" value={user.twitter} />
+<Card class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+  <CardHeader class="border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-8">
+    <CardTitle class="text-3xl font-bold text-gray-900">Links & Social</CardTitle>
+    <p class="mt-3 text-base text-gray-600">
+      Connect your profile with social media and development platforms
+    </p>
+  </CardHeader>
+  <CardContent class="p-8">
+    <div class="space-y-8">
+      <!-- X (Twitter) -->
+      <div class="space-y-3">
+        <Label for="twitter" class="text-base font-semibold text-gray-800">
+          X (Twitter) Profile
+        </Label>
+        <Input
+          type="url"
+          id="twitter"
+          name="twitter"
+          value={user.twitter}
+          placeholder="https://x.com/username"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Share updates and engage with the community</p>
       </div>
-    </div>
 
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="github" class="text-base font-semibold">Github</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="url" id="github" name="github" value={user.github} />
+      <!-- GitHub -->
+      <div class="space-y-3">
+        <Label for="github" class="text-base font-semibold text-gray-800">GitHub Profile</Label>
+        <Input
+          type="url"
+          id="github"
+          name="github"
+          value={user.github}
+          placeholder="https://github.com/username"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Showcase your code repositories and contributions</p>
       </div>
-    </div>
 
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="discord" class="text-base font-semibold">Discord</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="text" id="discord" name="discord" value={user.discord} />
+      <!-- Discord -->
+      <div class="space-y-3">
+        <Label for="discord" class="text-base font-semibold text-gray-800">Discord Username</Label>
+        <Input
+          type="text"
+          id="discord"
+          name="discord"
+          value={user.discord}
+          placeholder="username#1234"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Connect with the developer community on Discord</p>
       </div>
-    </div>
 
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="linkedin" class="text-base font-semibold">LinkedIn</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="url" id="linkedin" name="linkedin" value={user.linkedin} />
+      <!-- LinkedIn -->
+      <div class="space-y-3">
+        <Label for="linkedin" class="text-base font-semibold text-gray-800">LinkedIn Profile</Label>
+        <Input
+          type="url"
+          id="linkedin"
+          name="linkedin"
+          value={user.linkedin}
+          placeholder="https://linkedin.com/in/username"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Professional profile for networking and credibility</p>
       </div>
-    </div>
 
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="website" class="text-base font-semibold">Website</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="url" id="website" name="web" value={user.website} />
+      <!-- Website -->
+      <div class="space-y-3">
+        <Label for="website" class="text-base font-semibold text-gray-800">Personal Website</Label>
+        <Input
+          type="url"
+          id="website"
+          name="web"
+          value={user.website}
+          placeholder="https://yourwebsite.com"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Your personal website or portfolio</p>
       </div>
-    </div>
 
-    <div class="mt-4 flex w-full justify-between max-md:flex-col">
-      <Label for="others" class="text-base font-semibold">Others</Label>
-      <div class="w-2/3 max-md:w-full">
-        <Input type="url" id="others" name="others" value={user.others} />
+      <!-- Others -->
+      <div class="space-y-3">
+        <Label for="others" class="text-base font-semibold text-gray-800">Other Link</Label>
+        <Input
+          type="url"
+          id="others"
+          name="others"
+          value={user.others}
+          placeholder="https://other-platform.com"
+          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+        />
+        <p class="text-sm text-gray-500">Additional relevant link (YouTube, Behance, etc.)</p>
       </div>
     </div>
-  </div>
-</div>
+  </CardContent>
+</Card>
