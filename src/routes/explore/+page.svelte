@@ -120,20 +120,20 @@
 
 <!-- Main container with dark background and proper spacing -->
 <div class="min-h-screen bg-dashboard-black">
-  <div class="container px-8 mx-auto max-w-7xl">
+  <div class="container mx-auto max-w-7xl px-8">
     <!-- Breadcrumb Navigation -->
-    <nav class="pt-8 mb-6">
+    <nav class="mb-6 pt-8">
       <div class="flex items-center gap-2">
         <a
           href="/"
-          class="font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+          class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
         >
           Home
         </a>
-        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
-        <span class="text-gray-400 text-body-lg">Explore Projects</span>
+        <span class="text-body-lg text-gray-400">Explore Projects</span>
       </div>
     </nav>
 
@@ -143,9 +143,9 @@
       <aside class="w-full lg:w-80 lg:flex-shrink-0">
         <div class="sticky top-8">
           <div
-            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+            class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
           >
-            <h3 class="mb-4 text-gray-300 text-heading-lg">Filter Projects</h3>
+            <h3 class="mb-4 text-heading-lg text-gray-300">Filter Projects</h3>
 
             <ProjectCategory on:categorySelected={handleCategorySelected} />
           </div>
@@ -153,11 +153,11 @@
       </aside>
 
       <!-- Main content -->
-      <main class="flex-1 min-w-0">
+      <main class="min-w-0 flex-1">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {#if searchTerm && searchResults.length > 0}
             <div class="col-span-full">
-              <h2 class="text-white text-heading-xl">
+              <h2 class="text-heading-xl text-white">
                 Search results for: <span class="text-dashboard-yellow-400">"{searchTerm}"</span>
               </h2>
             </div>
@@ -165,18 +165,33 @@
               <Card {project} />
             {/each}
             {#if !searchResultsLoaded && !allSearchLoaded}
-              <div class="flex items-center justify-center mt-8 col-span-full">
+              <div class="col-span-full mt-8 flex items-center justify-center">
                 <button
                   on:click={loadMoreSearchResults}
-                  class="px-6 py-3 font-medium text-white transition-colors rounded-xl bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                  class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
                 >
-                  Load more results
+                  <span class="flex items-center gap-2">
+                    Load more results
+                    <svg
+                      class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                      />
+                    </svg>
+                  </span>
                 </button>
               </div>
             {/if}
           {:else if selectedTag}
             <div class="col-span-full">
-              <h2 class="text-white text-heading-xl">
+              <h2 class="text-heading-xl text-white">
                 Projects in: <span class="text-dashboard-yellow-400">"{selectedTag}"</span>
               </h2>
             </div>
@@ -185,23 +200,38 @@
                 <Card {project} class="!h-auto !flex-shrink-0" />
               {/each}
               {#if !categoryResultLoaded && !allCategoryLoaded}
-                <div class="flex items-center justify-center mt-8 col-span-full">
+                <div class="col-span-full mt-8 flex items-center justify-center">
                   <button
                     on:click={loadMoreCategoryResults}
-                    class="px-6 py-3 font-medium text-white transition-colors rounded-xl bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                    class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
                   >
-                    Load more projects
+                    <span class="flex items-center gap-2">
+                      Load more
+                      <svg
+                        class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                        />
+                      </svg>
+                    </span>
                   </button>
                 </div>
               {/if}
             {:else}
               <div
-                class="p-8 text-center border col-span-full rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900"
+                class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
               >
-                <p class="text-gray-400 text-body-lg">
+                <p class="text-body-lg text-gray-400">
                   No projects found for "{selectedTag}".
                 </p>
-                <p class="mt-2 text-gray-500 text-body-md">
+                <p class="mt-2 text-body-md text-gray-500">
                   Try selecting a different category or browse all projects.
                 </p>
               </div>
@@ -209,8 +239,8 @@
           {:else if !searchTerm}
             <!-- Top Projects Section -->
             <div class="col-span-full">
-              <h2 class="text-white text-heading-xl">Top Projects</h2>
-              <p class="mt-2 text-gray-400 text-body-lg">
+              <h2 class="text-heading-xl text-white">Top Projects</h2>
+              <p class="mt-2 text-body-lg text-gray-400">
                 Featured projects making the biggest impact
               </p>
             </div>
@@ -225,9 +255,9 @@
             {/each}
 
             <!-- All Projects Section -->
-            <div class="mt-8 col-span-full">
-              <h2 class="text-white text-heading-xl">All Projects</h2>
-              <p class="mt-2 text-gray-400 text-body-lg">
+            <div class="col-span-full mt-8">
+              <h2 class="text-heading-xl text-white">All Projects</h2>
+              <p class="mt-2 text-body-lg text-gray-400">
                 Discover and support projects across all categories
               </p>
             </div>
@@ -236,7 +266,7 @@
                 <Card {project} />
               {/each}
               {#if !allProjectsLoaded}
-                <div class="flex items-center justify-center flex-grow w-full mt-8 col-span-full">
+                <div class="col-span-full mt-8 flex w-full flex-grow items-center justify-center">
                   <div
                     class="flex cursor-pointer"
                     on:click={loadMoreProjects}
@@ -245,27 +275,42 @@
                     tabindex="0"
                   >
                     <button
-                      class="px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                      class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
                     >
-                      Load more projects
+                      <span class="flex items-center gap-2">
+                        Load more
+                        <svg
+                          class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                          />
+                        </svg>
+                      </span>
                     </button>
                   </div>
                 </div>
               {/if}
             {:else}
               <div
-                class="p-8 text-center border col-span-full rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900"
+                class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
               >
-                <p class="text-gray-400 text-body-lg">No projects found.</p>
-                <p class="mt-2 text-gray-500 text-body-md">Check back later for new projects.</p>
+                <p class="text-body-lg text-gray-400">No projects found.</p>
+                <p class="mt-2 text-body-md text-gray-500">Check back later for new projects.</p>
               </div>
             {/if}
           {:else}
             <div
-              class="p-8 text-center border col-span-full rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900"
+              class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
             >
-              <p class="text-gray-400 text-body-lg">No search results found.</p>
-              <p class="mt-2 text-gray-500 text-body-md">
+              <p class="text-body-lg text-gray-400">No search results found.</p>
+              <p class="mt-2 text-body-md text-gray-500">
                 Try adjusting your search terms or browse all projects.
               </p>
             </div>
