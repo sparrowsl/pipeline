@@ -182,7 +182,7 @@
               <div
                 class="flex items-center justify-center gap-3 rounded-xl px-6 py-4 transition-all duration-200
                 {activeTabIndex === index
-                  ? 'bg-dashboard-yellow-400 text-dashboard-black shadow-card'
+                  ? 'bg-dashboard-yellow-400 text-dashboard-black'
                   : 'text-gray-400 hover:bg-dashboard-gray-800 hover:text-white'}"
               >
                 <Icon icon={tab.icon} class="h-5 w-5" />
