@@ -12,7 +12,7 @@
 
 <Toaster richColors position="top-right" closeButton />
 
-<div class="min-h-screen w-full bg-white">
+<div class="min-h-screen w-full bg-dashboard-black">
   <SearchModal />
   {#if $page.url.pathname !== '/sign-in' && $page.url.pathname !== '/sign-up'}
     <Nav {data} />
