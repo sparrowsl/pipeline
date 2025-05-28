@@ -7,6 +7,7 @@ import {
   getProjectsByUserId,
   getProjectsByIds,
   getProjectByGithub,
+  getProjectsWithCategories,
 } from '$lib/server/repo/projectRepo.js';
 import { createTeamMember, teamMembers } from '$lib/server/repo/memberRepo.js';
 import {
@@ -45,23 +46,26 @@ export async function getProjectsWithDetails(term, page, limit, supabase) {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
-  const projects = await getProjects(term, start, end, supabase);
+  const projects = await getProjectsWithCategories(term, start, end, supabase);
+  return mapProjectsWithDetails(projects);
+}
 
-  if (projects.length === 0) {
-    return [];
-  }
+function mapProjectsWithDetails(projects) {
+  return projects.map((project) => {
+    const tags = project.category_project?.map((cp) => cp.categories).filter(Boolean) || [];
 
-  const projectIds = projects.map((project) => project.id);
+    const dpgTotalScore =
+      project.dpgStatus?.status?.reduce(
+        (sum, status) => sum + (Number(status.overallScore) || 0),
+        0,
+      ) || 0;
 
-  //additional data
-  const projectCategories = await getProjectCategories(projectIds, supabase);
-
-  const categories = await getCategories(
-    projectCategories.map((pc) => pc.category_id),
-    supabase,
-  );
-
-  return mapProjectsWithTagsAndStatus(projects, projectCategories, categories);
+    return {
+      ...project,
+      tags,
+      dpgStatusCount: dpgTotalScore,
+    };
+  });
 }
 
 export async function getUserProjects(userId, page, limit, supabase) {
