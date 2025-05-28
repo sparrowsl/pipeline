@@ -31,13 +31,13 @@
       name: 'Projects Contributed',
       href: '/profile/contributed',
       icon: 'mdi:account-group',
-      count: 0, // TODO: Add actual count
+      count: data.contributedProjects?.length || 0,
     },
     {
       name: 'Following',
       href: '/profile/following',
       icon: 'mdi:heart',
-      count: 0, // TODO: Add actual count
+      count: data.following?.length || 0,
     },
   ];
 
@@ -129,11 +129,15 @@
                   <p class="text-body-sm text-gray-400">Projects Created</p>
                 </div>
                 <div class="text-center">
-                  <p class="text-heading-md font-semibold text-white">0</p>
+                  <p class="text-heading-md font-semibold text-white">
+                    {data.contributedProjects?.length || 0}
+                  </p>
                   <p class="text-body-sm text-gray-400">Contributions</p>
                 </div>
                 <div class="text-center">
-                  <p class="text-heading-md font-semibold text-white">0</p>
+                  <p class="text-heading-md font-semibold text-white">
+                    {data.following?.length || 0}
+                  </p>
                   <p class="text-body-sm text-gray-400">Following</p>
                 </div>
               </div>

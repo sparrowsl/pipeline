@@ -4,9 +4,9 @@
   export let data;
 </script>
 
-{#if data.projects && data.projects.length > 0}
+{#if data.contributedProjects && data.contributedProjects.length > 0}
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {#each data.projects as project}
+    {#each data.contributedProjects as project}
       <Card {project} />
     {/each}
   </div>

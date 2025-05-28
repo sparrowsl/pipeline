@@ -43,18 +43,18 @@
 
 <!-- Header Section -->
 <div class="mb-12 w-full bg-[#d1ea9a]/90 py-20">
-  <div class="mx-auto max-w-4xl px-4 text-center">
+  <div class="max-w-4xl px-4 mx-auto text-center">
     <h1 class="mb-4 font-['Inter'] text-4xl font-semibold leading-tight text-[#08292c] md:text-5xl">
       Create a Project
     </h1>
     <p class="mx-auto max-w-2xl text-lg text-[#08292c]/80">
-      Share your project with the world and start building your community
+      Share your project with the world and start building your community.
     </p>
   </div>
 </div>
 
 <!-- Main Form Container -->
-<div class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+<div class="px-4 pb-20 mx-auto max-w-7xl sm:px-6 lg:px-8">
   <form
     action=""
     method="post"
@@ -81,9 +81,9 @@
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
       <!-- Left Column - Project Basics -->
       <div class="space-y-8">
-        <Card class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
           <CardHeader
-            class="border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-8"
+            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
           >
             <CardTitle class="text-3xl font-bold text-gray-900">Project Basics</CardTitle>
             <p class="mt-3 text-base text-gray-600">
@@ -100,9 +100,9 @@
       <!-- Right Column - Links & Funding -->
       <div class="space-y-8">
         <!-- Links Section -->
-        <Card class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
           <CardHeader
-            class="border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-8"
+            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
           >
             <CardTitle class="text-3xl font-bold text-gray-900">Links & Social</CardTitle>
             <p class="mt-3 text-base text-gray-600">
@@ -121,7 +121,7 @@
                 name="email"
                 placeholder="your@email.com"
                 required
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm text-gray-500">Primary contact email for project communications</p>
             </div>
@@ -136,7 +136,7 @@
                 id="github"
                 name="github"
                 placeholder="https://github.com/username/repo"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm leading-relaxed text-gray-500">
                 Follow
@@ -169,7 +169,7 @@
                 id="linkedin"
                 name="linkedin"
                 placeholder="https://linkedin.com/in/username"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm text-gray-500">
                 Professional profile for networking and credibility
@@ -186,7 +186,7 @@
                 id="twitter"
                 name="twitter"
                 placeholder="https://x.com/username"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm text-gray-500">Share updates and engage with the community</p>
             </div>
@@ -199,7 +199,7 @@
                 id="website"
                 name="website"
                 placeholder="https://yourwebsite.com"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm text-gray-500">Official project website or landing page</p>
             </div>
@@ -212,7 +212,7 @@
                 id="other"
                 name="other"
                 placeholder="https://other-platform.com"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm text-gray-500">Additional relevant link (Discord, Slack, etc.)</p>
             </div>
@@ -220,9 +220,9 @@
         </Card>
 
         <!-- Funding Section -->
-        <Card class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
           <CardHeader
-            class="border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-8"
+            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
           >
             <CardTitle class="text-3xl font-bold text-gray-900">Funding Goals</CardTitle>
             <p class="mt-3 text-base text-gray-600">
@@ -242,7 +242,7 @@
                 min="0"
                 step="1"
                 placeholder="10000"
-                class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
+                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
               />
               <p class="text-sm leading-relaxed text-gray-500">
                 Set a realistic funding target for your project (minimum $100)
@@ -254,11 +254,11 @@
     </div>
 
     <!-- Submit Button -->
-    <div class="mt-16 flex justify-center">
+    <div class="flex justify-center mt-16">
       <Button
         type="submit"
         disabled={loading}
-        class="h-12 rounded-xl bg-teal-600 px-8 text-base font-semibold text-white shadow-md transition-all duration-200 hover:bg-teal-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-teal-600"
+        class="h-12 px-8 text-base font-semibold text-white transition-all duration-200 bg-teal-600 shadow-md rounded-xl hover:bg-teal-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-teal-600"
       >
         {loading ? 'Creating Project...' : 'Create Project'}
       </Button>
