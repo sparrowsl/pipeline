@@ -28,6 +28,8 @@
   let searchResultsLoaded = false;
   let categoryResultLoaded = false;
 
+  console.log(data.allProjects);
+
   // TODO: we would find a way around it later
   async function fetchAllProjects() {
     try {

@@ -18,12 +18,19 @@
     }
     return 'Contribute';
   };
+
+  const getButtonVariant = () => {
+    if ($page.data.isAuthenticated && project.user_id === $page.data.user?.id) {
+      return 'secondary'; // Secondary button for "View"
+    }
+    return 'primary'; // Primary button for "Contribute"
+  };
 </script>
 
 <div class="flex w-full flex-col items-center">
   <a
     href={getProjectLink()}
-    class="glass-button mt-5 flex w-full max-w-sm items-center justify-center rounded-full px-6 py-2.5 text-base font-semibold text-gray-800 transition-all duration-300 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-transparent md:text-lg"
+    class="dashboard-button dashboard-button-{getButtonVariant()} flex w-full items-center justify-center"
     role="button"
     aria-label={getButtonLabel()}
   >
@@ -31,31 +38,75 @@
   </a>
 
   {#if !$page.data.isAuthenticated}
-    <p class="mt-2 text-sm text-gray-600 sm:text-base">Please sign in to contribute.</p>
+    <p class="mt-3 text-center text-body-sm text-gray-400">Please sign in to contribute.</p>
   {/if}
 </div>
 
 <style>
-  .glass-button {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow:
-      0 4px 16px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  .dashboard-button {
+    /* Base button styling from style guide */
+    padding: 12px 24px;
+    font-weight: 500;
+    border-radius: 12px; /* rounded-xl */
+    font-size: 1rem; /* text-label-lg */
+    line-height: 1.5;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+    min-height: 44px;
+
+    /* Focus styles */
+    outline: none;
   }
 
-  .glass-button:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #1f2937;
-    border-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: none;
-    box-shadow:
-      0 6px 20px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  .dashboard-button:focus-visible {
+    outline: 2px solid rgb(139, 92, 246); /* dashboard-purple-500 */
+    outline-offset: 2px;
   }
 
-  .glass-button:active {
-    transform: scale(0.98);
+  .dashboard-button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Primary Button - Accent/CTA styling */
+  .dashboard-button-primary {
+    background: rgb(250, 204, 21); /* dashboard-yellow-400 */
+    color: rgb(0, 0, 0); /* dashboard-black */
+    font-weight: 600;
+  }
+
+  .dashboard-button-primary:hover {
+    background: rgb(245, 158, 11); /* dashboard-yellow-500 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.25);
+  }
+
+  .dashboard-button-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(250, 204, 21, 0.25);
+  }
+
+  /* Secondary Button - For "View" action */
+  .dashboard-button-secondary {
+    background: rgb(38, 38, 38); /* dashboard-gray-800 */
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(64, 64, 64); /* dashboard-gray-700 */
+  }
+
+  .dashboard-button-secondary:hover {
+    background: rgb(64, 64, 64); /* dashboard-gray-700 */
+    border-color: rgb(82, 82, 82); /* dashboard-gray-600 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .dashboard-button-secondary:active {
+    transform: translateY(0);
+    background: rgb(23, 23, 23); /* dashboard-gray-900 */
   }
 </style>
