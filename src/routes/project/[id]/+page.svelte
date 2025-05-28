@@ -339,42 +339,6 @@
       </div>
     </div>
 
-    <!-- Recent Updates Section -->
-    {#if projectUpdates.length > 0}
-      <div class="mb-8">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="font-semibold text-white text-display-lg">Recent Updates</h2>
-          {#if user && user.id === project.user_id}
-            <button
-              on:click={openUpdatePopup}
-              class="px-4 py-2 font-medium transition-colors rounded-lg bg-dashboard-yellow-400 text-label-md text-dashboard-black hover:bg-dashboard-yellow-500"
-            >
-              <Icon icon="lucide:plus" class="inline w-4 h-4 mr-2" />
-              Add Update
-            </button>
-          {/if}
-        </div>
-
-        <div class="grid gap-4 md:grid-cols-2">
-          {#each projectUpdates.slice(0, 4) as update}
-            <div class="p-4 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50">
-              {#if update.code}
-                <GitUpdate {update} />
-              {:else}
-                <div class="space-y-2">
-                  <h3 class="font-medium text-white text-heading-sm">{update.title}</h3>
-                  <p class="text-gray-400 line-clamp-2 text-body-sm">{update.body}</p>
-                  <div class="text-xs text-gray-500">
-                    {format(new Date(update.created_at), 'MMM d, yyyy')}
-                  </div>
-                </div>
-              {/if}
-            </div>
-          {/each}
-        </div>
-      </div>
-    {/if}
-
     <!-- Project About Section -->
     <div class="mb-8">
       <ProjectAbout {project} />

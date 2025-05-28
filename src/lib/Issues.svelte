@@ -29,49 +29,58 @@
   };
 </script>
 
-<h2 class="mb-4 self-start text-3xl font-bold text-teal-950">Tasks</h2>
-
-<div class="flex w-full flex-col items-start">
+<div class="flex flex-col items-start w-full">
   {#await fetchProjectIssues()}
-    <p class="text-sm text-gray-500">Loading issues...</p>
+    <p class="text-gray-400 text-body-md">Loading issues...</p>
   {:then issues}
     {#if issues.length > 0}
-      <Card class="w-full border-0 shadow-none md:w-[70%]">
+      <div class="w-full space-y-3">
         {#each issues as issue, index}
-          <CardContent class="p-0">
-            <div
-              class="flex items-center gap-4 p-4 {index !== issues.length - 1
-                ? 'border-b border-gray-300'
-                : ''}"
-            >
-              <Icon icon="codicon:issues" class="text-3xl text-green-500" />
+          <div
+            class="p-4 transition-colors duration-200 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50 hover:bg-dashboard-gray-800/50"
+          >
+            <div class="flex items-center gap-4">
+              <div class="flex-shrink-0 p-2 rounded-lg bg-green-500/10">
+                <Icon icon="octicon:issue-opened-16" class="w-5 h-5 text-green-400" />
+              </div>
 
-              <div class="min-w-0 flex-1">
+              <div class="flex-1 min-w-0">
                 <a
                   href={issue.html_url}
                   target="_blank"
-                  class="block truncate font-semibold text-teal-950 hover:underline"
+                  class="block font-semibold text-white truncate transition-colors text-heading-sm hover:text-dashboard-yellow-400"
                   title={issue.title}
                 >
                   {issue.title}
                 </a>
-                <p class="mt-1 text-sm text-gray-500">
-                  #{issue.number} · <span class="text-md">{issue.user.login}</span> opened {timeAgo(
-                    issue.created_at,
-                  )}
-                </p>
+                <div class="flex items-center gap-2 mt-1 text-gray-400 text-body-sm">
+                  <span>#{issue.number}</span>
+                  <span>·</span>
+                  <span class="text-gray-300">{issue.user.login}</span>
+                  <span>opened {timeAgo(issue.created_at)}</span>
+                </div>
               </div>
 
-              <Avatar class="h-8 w-8 flex-shrink-0">
+              <Avatar class="flex-shrink-0 w-8 h-8 border border-dashboard-gray-600">
                 <AvatarImage src={issue.user.avatar_url} alt={issue.user.login} />
-                <AvatarFallback>{issue.user.login.substring(0, 2).toUpperCase()}</AvatarFallback>
+                <AvatarFallback class="text-gray-300 bg-dashboard-gray-800 text-body-sm">
+                  {issue.user.login.substring(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </div>
-          </CardContent>
+          </div>
         {/each}
-      </Card>
+      </div>
     {:else}
-      <p class="text-sm italic text-gray-600">No open issues on this repository</p>
+      <div
+        class="p-8 text-center border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/30"
+      >
+        <Icon icon="octicon:issue-opened-16" class="w-12 h-12 mx-auto mb-4 text-gray-500" />
+        <p class="font-medium text-gray-400 text-heading-sm">No open issues</p>
+        <p class="mt-1 text-gray-500 text-body-sm">
+          This repository doesn't have any open issues at the moment.
+        </p>
+      </div>
     {/if}
   {/await}
 </div>
