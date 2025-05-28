@@ -59,22 +59,22 @@
   };
 </script>
 
-<div class="perspective-1000 group relative w-full">
+<div class="relative w-full perspective-1000 group">
   <!-- Frosted Glass Card -->
   <div
     class="frosted-glass-card relative h-full w-full transform-gpu overflow-hidden transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.02]"
   >
     <!-- Content Container -->
-    <div class="relative flex h-full flex-col overflow-hidden rounded-3xl">
+    <div class="relative flex flex-col h-full overflow-hidden rounded-3xl">
       <!-- Image Header -->
       <div class="relative h-48 overflow-hidden">
         <a href="/project/{project.id}" class="block h-full">
-          <div class="relative h-full w-full">
+          <div class="relative w-full h-full">
             <img
               loading="lazy"
               src={getImageLink()}
               alt={project.title}
-              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
             <!-- Subtle overlay for text readability -->
             <div
@@ -92,7 +92,7 @@
       </div>
 
       <!-- Content Section -->
-      <div class="relative z-10 flex flex-grow flex-col space-y-4 p-6">
+      <div class="relative z-10 flex flex-col flex-grow p-6 space-y-4">
         <!-- Title -->
         <div>
           <a href="/project/{project.id}" class="group/title">
@@ -107,7 +107,7 @@
         <!-- SDG Tags -->
         <div class="flex flex-wrap gap-2">
           {#each project?.tags || [] as tag}
-            <div class="transform transition-transform duration-200 hover:scale-110">
+            <div class="transition-transform duration-200 transform hover:scale-110">
               <CategoryTag {tag} />
             </div>
           {/each}
@@ -132,9 +132,9 @@
 
           <!-- Custom Progress Bar -->
           <div class="relative">
-            <div class="h-2 overflow-hidden rounded-full border border-gray-300/40 bg-gray-200/60">
+            <div class="h-2 overflow-hidden border rounded-full border-gray-300/40 bg-gray-200/60">
               <div
-                class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 shadow-sm transition-all duration-1000 ease-out"
+                class="h-full transition-all duration-1000 ease-out rounded-full shadow-sm bg-gradient-to-r from-blue-500 to-blue-400"
                 style="width: {Math.min(
                   (project.current_funding / project.funding_goal) * 100,
                   100,
@@ -143,7 +143,7 @@
             </div>
             <!-- Progress glow effect -->
             <div
-              class="absolute top-0 h-2 rounded-full bg-gradient-to-r from-blue-400/50 to-blue-300/50 blur-sm transition-all duration-1000 ease-out"
+              class="absolute top-0 h-2 transition-all duration-1000 ease-out rounded-full bg-gradient-to-r from-blue-400/50 to-blue-300/50 blur-sm"
               style="width: {Math.min(
                 (project.current_funding / project.funding_goal) * 100,
                 100,
