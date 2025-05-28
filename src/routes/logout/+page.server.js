@@ -3,7 +3,7 @@ import { redirect } from '@sveltejs/kit';
 import { signOut } from '$lib/server/service/authUserService.js';
 
 export const actions = {
-  logout: async ({ cookies, locals }) => {
+  default: async ({ cookies, locals }) => {
     await signOut(locals.supabase);
 
     for (const token of ['access_token', 'refresh_token']) {

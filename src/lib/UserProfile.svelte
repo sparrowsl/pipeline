@@ -72,7 +72,7 @@
           </DropdownMenu.Item>
           <DropdownMenu.Item class="mt-4 flex cursor-pointer items-center gap-4">
             <Icon icon="humbleicons:logout" class="text-lg" />
-            <form action="/profile/?/logout" method="post" use:enhance>
+            <form action="/logout" method="post" use:enhance>
               <Button type="submit" class="text-left">Logout</Button>
             </form>
           </DropdownMenu.Item>
