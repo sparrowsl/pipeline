@@ -8,24 +8,18 @@
   }
 </script>
 
-<nav
-  class="flex flex-wrap items-start justify-center gap-5 text-center text-2xl font-semibold leading-none text-lime-800 max-md:w-[100%] max-md:gap-4 max-md:text-sm"
->
-  {#each navItems as item}
-    <div class="flex flex-col items-center justify-center" style="width: {item.width};">
+<nav class="mb-8 flex w-full items-center justify-center">
+  <div class="flex rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-2">
+    {#each navItems as item}
       <button
         on:click={() => handleClick(item)}
-        class="gap-2.5 self-stretch whitespace-nowrap text-base"
+        class="relative rounded-xl px-6 py-3 text-label-lg font-medium transition-all duration-200
+        {item.id === activeItem
+          ? 'bg-dashboard-yellow-400 text-dashboard-black'
+          : 'text-gray-400 hover:bg-dashboard-gray-800 hover:text-white'}"
       >
         {item.label}
       </button>
-      {#if item.id === activeItem}
-        <div
-          class="mt-3.5 flex min-h-[6px] max-w-full rounded bg-lime-300"
-          style="width: 100%;"
-          aria-hidden="true"
-        ></div>
-      {/if}
-    </div>
-  {/each}
+    {/each}
+  </div>
 </nav>
