@@ -1,7 +1,3 @@
----
-title: dpg-evaluation-process
-
----
 
 # DPG Evaluation System Overview
 
