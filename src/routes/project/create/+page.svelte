@@ -1,5 +1,7 @@
 <script>
   import ProjectBasics from '../ProjectBasics.svelte';
+  import LinksSection from '$lib/components/LinksSection.svelte';
+  import FundingSection from '$lib/components/FundingSection.svelte';
   import { applyAction, enhance } from '$app/forms';
   import { toast } from 'svelte-sonner';
 
@@ -20,30 +22,30 @@
 
 <div class="min-h-screen bg-dashboard-black">
   <!-- Breadcrumb Navigation -->
-  <nav class="pt-8 mb-6">
-    <div class="container px-8 mx-auto max-w-7xl">
+  <nav class="mb-6 pt-8">
+    <div class="container mx-auto max-w-7xl px-8">
       <div class="flex items-center gap-2">
         <a
           href="/explore"
-          class="flex items-center gap-2 font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+          class="flex items-center gap-2 text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
         >
-          <Icon icon="lucide:arrow-left" class="w-5 h-5" />
+          <Icon icon="lucide:arrow-left" class="h-5 w-5" />
           Explore
         </a>
-        <Icon icon="lucide:chevron-right" class="w-4 h-4 text-gray-500" />
-        <span class="text-gray-400 text-body-lg">Create Project</span>
+        <Icon icon="lucide:chevron-right" class="h-4 w-4 text-gray-500" />
+        <span class="text-body-lg text-gray-400">Create Project</span>
       </div>
     </div>
   </nav>
 
   <!-- Header Section -->
   <div class="mb-12">
-    <div class="container px-8 mx-auto max-w-7xl">
+    <div class="container mx-auto max-w-7xl px-8">
       <div class="text-center">
-        <h1 class="mb-4 font-semibold leading-tight text-white text-display-2xl">
+        <h1 class="mb-4 text-display-2xl font-semibold leading-tight text-white">
           Create a Project
         </h1>
-        <p class="max-w-2xl mx-auto text-gray-300 text-body-xl">
+        <p class="mx-auto max-w-2xl text-body-xl text-gray-300">
           Share your project with the world and start building your community.
         </p>
       </div>
@@ -51,7 +53,7 @@
   </div>
 
   <!-- Main Form Container -->
-  <div class="container px-8 pb-20 mx-auto max-w-7xl">
+  <div class="container mx-auto max-w-7xl px-8 pb-20">
     <form
       action=""
       method="post"
@@ -77,11 +79,11 @@
         <!-- Left Column - Project Basics -->
         <div class="space-y-8">
           <div
-            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+            class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
           >
             <div class="mb-6">
-              <h2 class="mb-2 font-semibold text-white text-heading-xl">Project Basics</h2>
-              <p class="text-gray-300 text-body-lg">
+              <h2 class="mb-2 text-heading-xl font-semibold text-white">Project Basics</h2>
+              <p class="text-body-lg text-gray-300">
                 Tell us about your project and what makes it special
               </p>
             </div>
@@ -94,109 +96,44 @@
         <div class="space-y-8">
           <!-- Links Section -->
           <div
-            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+            class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
           >
             <div class="mb-6">
-              <h2 class="mb-2 font-semibold text-white text-heading-xl">Links & Social</h2>
-              <p class="text-gray-300 text-body-lg">
+              <h2 class="mb-2 text-heading-xl font-semibold text-white">Links & Social</h2>
+              <p class="text-body-lg text-gray-300">
                 Connect your project with social media and development platforms
               </p>
             </div>
 
-            <div class="space-y-6">
-              <!-- GitHub -->
-              <div class="space-y-2">
-                <Label for="github" class="block font-medium text-gray-300 text-label-lg">
-                  GitHub Repository
-                </Label>
-                <Input
-                  type="url"
-                  id="github"
-                  name="github"
-                  placeholder="https://github.com/username/repo"
-                  class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
-                />
-                <p class="text-gray-400 text-body-sm">
-                  Follow
-                  <a
-                    href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks"
-                    target="_blank"
-                    class="font-medium underline text-dashboard-purple-500 hover:text-dashboard-purple-400"
-                  >
-                    this guide
-                  </a>
-                  to add the
-                  <a
-                    href="https://pipeline-tau.vercel.app/api/github/webhook"
-                    target="_blank"
-                    class="font-medium underline text-dashboard-purple-500 hover:text-dashboard-purple-400"
-                  >
-                    webhook
-                  </a>
-                  for automatic updates
-                </p>
-              </div>
-
-              <!-- Website -->
-              <div class="space-y-2">
-                <Label for="website" class="block font-medium text-gray-300 text-label-lg"
-                  >Website</Label
-                >
-                <Input
-                  type="url"
-                  id="website"
-                  name="website"
-                  placeholder="https://yourwebsite.com"
-                  class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
-                />
-                <p class="text-gray-400 text-body-sm">Official project website or landing page</p>
-              </div>
-            </div>
+            <LinksSection {project} />
           </div>
 
           <!-- Funding Section -->
           <div
-            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+            class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
           >
             <div class="mb-6">
-              <h2 class="mb-2 font-semibold text-white text-heading-xl">Funding Goals</h2>
-              <p class="text-gray-300 text-body-lg">
+              <h2 class="mb-2 text-heading-xl font-semibold text-white">Funding Goals</h2>
+              <p class="text-body-lg text-gray-300">
                 Set your funding goals and payment preferences
               </p>
             </div>
 
-            <!-- Funding Goal -->
-            <div class="space-y-2">
-              <Label for="fundingGoal" class="block font-medium text-gray-300 text-label-lg">
-                Funding Goal (USD)
-              </Label>
-              <Input
-                id="fundingGoal"
-                type="number"
-                name="funding_goal"
-                min="0"
-                step="1"
-                placeholder="10000"
-                class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
-              />
-              <p class="text-gray-400 text-body-sm">
-                Set a realistic funding target for your project (minimum $100)
-              </p>
-            </div>
+            <FundingSection {project} />
           </div>
         </div>
       </div>
 
       <!-- Submit Button -->
-      <div class="flex justify-center mt-12">
+      <div class="mt-12 flex justify-center">
         <Button
           type="submit"
           disabled={loading}
-          class="px-8 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
+          class="rounded-xl bg-dashboard-yellow-400 px-8 py-3 text-label-lg font-medium text-dashboard-black transition-colors hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
         >
           {#if loading}
             <span class="flex items-center gap-2">
-              <Icon icon="lucide:loader-2" class="w-4 h-4 animate-spin" />
+              <Icon icon="lucide:loader-2" class="h-4 w-4 animate-spin" />
               Creating Project...
             </span>
           {:else}

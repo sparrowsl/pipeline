@@ -100,8 +100,8 @@
   <!-- Project Images Section -->
   <div class="space-y-4">
     <div class="space-y-2">
-      <h3 class="font-semibold text-white text-label-lg">Project Images</h3>
-      <p class="text-gray-300 text-body-sm">
+      <h3 class="text-label-lg font-semibold text-white">Project Images</h3>
+      <p class="text-body-sm text-gray-300">
         Upload your project's banner and profile images to make it stand out
       </p>
     </div>
@@ -109,21 +109,21 @@
     <div class="relative mb-16 h-[250px] md:h-[320px]">
       <Label for="banner-upload" class="cursor-pointer">
         <div
-          class="flex items-center justify-center w-full h-full overflow-hidden transition-colors duration-200 border-2 border-dashed rounded-2xl border-dashboard-gray-600 bg-dashboard-gray-800 hover:border-dashboard-gray-500"
+          class="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-dashboard-gray-600 bg-dashboard-gray-800 transition-colors duration-200 hover:border-dashboard-gray-500"
         >
           {#if ProjectBannerImage}
             <img
               src={ProjectBannerImage}
               alt="Banner"
-              class="object-cover w-full h-full rounded-2xl"
+              class="h-full w-full rounded-2xl object-cover"
             />
           {:else}
             <div class="p-8 text-center">
               <div class="mb-2 text-gray-400">
-                <Icon icon="lucide:image-plus" class="w-12 h-12 mx-auto" />
+                <Icon icon="lucide:image-plus" class="mx-auto h-12 w-12" />
               </div>
-              <p class="font-medium text-gray-300 text-body-lg">Click to upload banner image</p>
-              <p class="mt-1 text-gray-400 text-body-sm">PNG, JPG, WEBP up to 10MB</p>
+              <p class="text-body-lg font-medium text-gray-300">Click to upload banner image</p>
+              <p class="mt-1 text-body-sm text-gray-400">PNG, JPG, WEBP up to 10MB</p>
             </div>
           {/if}
         </div>
@@ -139,20 +139,20 @@
 
       <Label for="profile-upload" class="cursor-pointer">
         <div
-          class="absolute flex items-center justify-center w-24 h-24 overflow-hidden transition-shadow duration-200 border-4 rounded-full shadow-xl -bottom-12 left-6 border-dashboard-gray-700 bg-dashboard-gray-800 hover:shadow-2xl"
+          class="absolute -bottom-12 left-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-dashboard-gray-700 bg-dashboard-gray-800 shadow-xl transition-shadow duration-200 hover:shadow-2xl"
         >
           {#if ProjectProfileImage}
             <img
               src={ProjectProfileImage}
               alt="Profile"
-              class="object-cover w-full h-full rounded-full"
+              class="h-full w-full rounded-full object-cover"
             />
           {:else}
             <div class="p-2 text-center">
               <div class="mb-1 text-gray-400">
-                <Icon icon="lucide:user" class="w-6 h-6 mx-auto" />
+                <Icon icon="lucide:user" class="mx-auto h-6 w-6" />
               </div>
-              <p class="font-medium text-gray-300 text-label-sm">Profile</p>
+              <p class="text-label-sm font-medium text-gray-300">Profile</p>
             </div>
           {/if}
         </div>
@@ -172,7 +172,7 @@
   <div class="space-y-6">
     <!-- Project Title -->
     <div class="mt-16 space-y-2">
-      <Label for="projectTitle" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="projectTitle" class="block text-label-lg font-medium text-gray-300">
         Project Title *
       </Label>
       <Input
@@ -181,30 +181,30 @@
         name="title"
         bind:value={project.title}
         placeholder="Enter your project title"
-        class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+        class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
         required
       />
-      <p class="text-gray-400 text-body-sm">Choose a clear, descriptive title for your project</p>
+      <p class="text-body-sm text-gray-400">Choose a clear, descriptive title for your project</p>
     </div>
 
     <!-- Project Tags -->
     <div class="space-y-2">
-      <Label for="projectTags" class="block font-medium text-gray-300 text-label-lg"
+      <Label for="projectTags" class="block text-label-lg font-medium text-gray-300"
         >Project Tags</Label
       >
       <div
         class="relative flex min-h-[60px] w-full flex-wrap items-center rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 transition-colors duration-200 focus-within:border-transparent focus-within:ring-2 focus-within:ring-dashboard-purple-500"
       >
-        <div class="flex flex-wrap items-center flex-grow gap-2 pr-8">
+        <div class="flex flex-grow flex-wrap items-center gap-2 pr-8">
           {#each selectedTags as tag}
             <span
-              class="flex items-center px-3 py-1 font-medium rounded-lg bg-dashboard-purple-400 text-label-md text-dashboard-purple-900"
+              class="flex items-center rounded-lg bg-dashboard-purple-400 px-3 py-1 text-label-md font-medium text-dashboard-purple-900"
             >
               {#if tag.image}
                 <img
                   src={tag.image || '/placeholder.svg'}
                   alt={tag.title}
-                  class="w-4 h-4 mr-2 rounded"
+                  class="mr-2 h-4 w-4 rounded"
                 />
               {/if}
               {tag.title}
@@ -223,7 +223,7 @@
             on:click={() => (isOpen = true)}
             on:focus={() => (isOpen = true)}
             placeholder="Type to add tags..."
-            class="flex-grow p-0 text-white bg-transparent border-none outline-none text-body-lg focus-visible:ring-0"
+            class="flex-grow border-none bg-transparent p-0 text-body-lg text-white outline-none focus-visible:ring-0"
           />
           <input type="hidden" name="tags" value={JSON.stringify(selectedTags)} />
         </div>
@@ -232,7 +232,7 @@
           <PopoverTrigger>
             <button
               type="button"
-              class="absolute p-1 transform -translate-y-1/2 rounded-md right-4 top-1/2 hover:bg-dashboard-gray-700 focus:outline-none"
+              class="absolute right-4 top-1/2 -translate-y-1/2 transform rounded-md p-1 hover:bg-dashboard-gray-700 focus:outline-none"
               aria-label="Toggle tag dropdown"
             >
               <Icon
@@ -249,21 +249,21 @@
             <Command class="bg-dashboard-gray-800">
               <CommandInput
                 placeholder="Search tags..."
-                class="text-white border-none bg-dashboard-gray-800"
+                class="border-none bg-dashboard-gray-800 text-white"
               />
               <CommandEmpty class="text-gray-400">No tags found.</CommandEmpty>
-              <CommandGroup class="overflow-auto max-h-60">
+              <CommandGroup class="max-h-60 overflow-auto">
                 {#each filteredTags as tag}
                   <CommandItem
                     value={tag.title}
                     onSelect={() => addTag(tag)}
-                    class="text-gray-300 cursor-pointer hover:bg-dashboard-gray-700 hover:text-white"
+                    class="cursor-pointer text-gray-300 hover:bg-dashboard-gray-700 hover:text-white"
                   >
                     {#if tag.image}
                       <img
                         src={tag.image || '/placeholder.svg'}
                         alt={tag.title}
-                        class="w-5 h-5 mr-2 rounded"
+                        class="mr-2 h-5 w-5 rounded"
                       />
                     {/if}
                     {tag.title}
@@ -274,26 +274,26 @@
           </PopoverContent>
         </Popover>
       </div>
-      <p class="text-gray-400 text-body-sm">
+      <p class="text-body-sm text-gray-400">
         Select keywords that best describe your project category and focus
       </p>
     </div>
 
     <!-- Country -->
     <div class="space-y-2">
-      <Label for="projectCountry" class="block font-medium text-gray-300 text-label-lg"
+      <Label for="projectCountry" class="block text-label-lg font-medium text-gray-300"
         >Country *</Label
       >
       <Popover>
         <PopoverTrigger class="w-full">
           <Button
             variant="outline"
-            class="flex items-center justify-between w-full px-4 py-3 border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg hover:bg-dashboard-gray-700 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            class="flex w-full items-center justify-between rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg hover:bg-dashboard-gray-700 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
           >
             <span class="text-left {project.country ? 'text-white' : 'text-gray-400'}">
               {project.country || 'Select a country...'}
             </span>
-            <Icon icon="lucide:chevron-down" class="w-5 h-5 text-gray-400" />
+            <Icon icon="lucide:chevron-down" class="h-5 w-5 text-gray-400" />
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -302,22 +302,22 @@
           <Command class="bg-dashboard-gray-800">
             <CommandInput
               placeholder="Search country..."
-              class="text-white border-none bg-dashboard-gray-800"
+              class="border-none bg-dashboard-gray-800 text-white"
             />
             <CommandEmpty class="text-gray-400">No country found.</CommandEmpty>
-            <CommandGroup class="overflow-auto max-h-60">
+            <CommandGroup class="max-h-60 overflow-auto">
               {#each countryList as countryOption (countryOption.name)}
                 <CommandItem
                   value={countryOption.name}
                   onSelect={() => {
                     project.country = countryOption.name;
                   }}
-                  class="text-gray-300 cursor-pointer hover:bg-dashboard-gray-700 hover:text-white"
+                  class="cursor-pointer text-gray-300 hover:bg-dashboard-gray-700 hover:text-white"
                 >
                   {#if project.country === countryOption.name}
-                    <Icon icon="lucide:check" class="w-4 h-4 mr-2 text-dashboard-purple-400" />
+                    <Icon icon="lucide:check" class="mr-2 h-4 w-4 text-dashboard-purple-400" />
                   {:else}
-                    <div class="w-4 h-4 mr-2"></div>
+                    <div class="mr-2 h-4 w-4"></div>
                   {/if}
                   {countryOption.name}
                 </CommandItem>
@@ -327,14 +327,14 @@
         </PopoverContent>
       </Popover>
       <input type="hidden" name="country" value={project.country || ''} />
-      <p class="text-gray-400 text-body-sm">
+      <p class="text-body-sm text-gray-400">
         Choose the location where you are running the project
       </p>
     </div>
 
     <!-- Project Details -->
     <div class="space-y-2">
-      <Label for="projectDetails" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="projectDetails" class="block text-label-lg font-medium text-gray-300">
         Project Details *
       </Label>
       <Textarea
@@ -345,7 +345,7 @@
         class="min-h-[180px] w-full resize-none rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
         required
       />
-      <p class="text-gray-400 text-body-sm">
+      <p class="text-body-sm text-gray-400">
         A compelling pitch that's informative and easy to digest. Explain what makes your project
         special and why people should contribute.
       </p>
