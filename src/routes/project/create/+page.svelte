@@ -15,30 +15,6 @@
   let loadingMatchingDPGs = false;
   let project = { title: '', bio: '' };
   let matchProjects = [];
-
-  async function fetchMatchingDPGs() {
-    if (!project.title || !project.bio) return;
-    loadingMatchingDPGs = true;
-    try {
-      const response = await fetch('/api/github/match', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: project.title, description: project.bio }),
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-      matchProjects = data.matchProjects.data || [];
-      loadingMatchingDPGs = false;
-    } catch (error) {}
-  }
-
-  $: project.title && project.bio && fetchMatchingDPGs();
 </script>
 
 <!-- Header Section -->
@@ -69,8 +45,6 @@
           toast.info(result?.data?.error || 'Could not create project');
         } else if (result.type === 'error') {
           toast.error('Could not create a project');
-        } else {
-          toast.success('Project has been created successfully');
         }
 
         await applyAction(result);
