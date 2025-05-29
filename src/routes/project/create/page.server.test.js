@@ -45,6 +45,46 @@ describe('create project action', () => {
     expect(result.redirectTo).toBe(`/project/${fakeProjectId}`);
   });
 
+  it('simplified: should create a project and return a redirectTo URL', async () => {
+    // Arrange: mock form data as a Map (iterable)
+    const fields = {
+      title: 'Test Project',
+      details: 'This is a detailed description for testing.',
+      country: 'Andorra',
+      tags: JSON.stringify([{ id: '1', title: 'No Poverty' }]),
+      github: 'https://github.com/christex-foundation/pipeline',
+      funding_goal: '5000',
+    };
+
+    const request = {
+      formData: async () => new Map(Object.entries(fields)),
+    };
+
+    // Mock locals.supabase (not used in this test, but required by signature)
+    const locals = { supabase: {} };
+
+    // Mock fetch for /api/projects/store
+    const fakeProjectId = 'abc123';
+    const fetch = vi.fn(async (url, opts) => {
+      if (url === '/api/projects/store') {
+        return {
+          ok: true,
+          json: async () => ({
+            response: { projectId: fakeProjectId },
+          }),
+        };
+      }
+      throw new Error('Unexpected fetch');
+    });
+
+    // Act
+    const result = await actions.default({ request, locals, fetch });
+    console.log(result);
+    // Assert
+    expect(result.type).toBe('success');
+    expect(result.redirectTo).toBe(`/project/${fakeProjectId}`);
+  });
+
   it('should fail when required fields are missing', async () => {
     // Arrange: missing 'title' field
     const fields = {

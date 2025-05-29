@@ -8,6 +8,7 @@
   import { Label } from '$lib/components/ui/label';
   import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
   import { Separator } from '$lib/components/ui/separator';
+  import Icon from '@iconify/svelte';
 
   import { goto } from '$app/navigation';
 
@@ -17,196 +18,156 @@
   let matchProjects = [];
 </script>
 
-<!-- Header Section -->
-<div class="mb-12 w-full bg-[#d1ea9a]/90 py-20">
-  <div class="max-w-4xl px-4 mx-auto text-center">
-    <h1 class="mb-4 font-['Inter'] text-4xl font-semibold leading-tight text-[#08292c] md:text-5xl">
-      Create a Project
-    </h1>
-    <p class="mx-auto max-w-2xl text-lg text-[#08292c]/80">
-      Share your project with the world and start building your community.
-    </p>
+<div class="min-h-screen bg-dashboard-black">
+  <!-- Breadcrumb Navigation -->
+  <nav class="pt-8 mb-6">
+    <div class="container px-8 mx-auto max-w-7xl">
+      <div class="flex items-center gap-2">
+        <a
+          href="/explore"
+          class="flex items-center gap-2 font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+        >
+          <Icon icon="lucide:arrow-left" class="w-5 h-5" />
+          Explore
+        </a>
+        <Icon icon="lucide:chevron-right" class="w-4 h-4 text-gray-500" />
+        <span class="text-gray-400 text-body-lg">Create Project</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <div class="mb-12">
+    <div class="container px-8 mx-auto max-w-7xl">
+      <div class="text-center">
+        <h1 class="mb-4 font-semibold leading-tight text-white text-display-2xl">
+          Create a Project
+        </h1>
+        <p class="max-w-2xl mx-auto text-gray-300 text-body-xl">
+          Share your project with the world and start building your community.
+        </p>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Main Form Container -->
-<div class="px-4 pb-20 mx-auto max-w-7xl sm:px-6 lg:px-8">
-  <form
-    action=""
-    method="post"
-    enctype="multipart/form-data"
-    use:enhance={() => {
-      loading = true;
-      return async ({ result }) => {
-        if (result.type === 'success' && result.data.redirectTo) {
-          toast.success('Project has been created successfully');
-          goto(result.data.redirectTo);
-        } else if (result.type === 'failure') {
-          toast.info(result?.data?.error || 'Could not create project');
-        } else if (result.type === 'error') {
-          toast.error('Could not create a project');
-        }
+  <!-- Main Form Container -->
+  <div class="container px-8 pb-20 mx-auto max-w-7xl">
+    <form
+      action=""
+      method="post"
+      enctype="multipart/form-data"
+      use:enhance={() => {
+        loading = true;
+        return async ({ result }) => {
+          if (result.type === 'success' && result.data.redirectTo) {
+            toast.success('Project has been created successfully');
+            goto(result.data.redirectTo);
+          } else if (result.type === 'failure') {
+            toast.info(result?.data?.error || 'Could not create project');
+          } else if (result.type === 'error') {
+            toast.error('Could not create a project');
+          }
 
-        await applyAction(result);
-        loading = false;
-      };
-    }}
-  >
-    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
-      <!-- Left Column - Project Basics -->
-      <div class="space-y-8">
-        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
-          <CardHeader
-            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
+          await applyAction(result);
+          loading = false;
+        };
+      }}
+    >
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <!-- Left Column - Project Basics -->
+        <div class="space-y-8">
+          <div
+            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
           >
-            <CardTitle class="text-3xl font-bold text-gray-900">Project Basics</CardTitle>
-            <p class="mt-3 text-base text-gray-600">
-              Tell us about your project and what makes it special
-            </p>
-          </CardHeader>
-          <CardContent class="p-8">
+            <div class="mb-6">
+              <h2 class="mb-2 font-semibold text-white text-heading-xl">Project Basics</h2>
+              <p class="text-gray-300 text-body-lg">
+                Tell us about your project and what makes it special
+              </p>
+            </div>
             <ProjectBasics bind:project />
             <input type="hidden" name="matchedDPGs" value={JSON.stringify(matchProjects)} />
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
 
-      <!-- Right Column - Links & Funding -->
-      <div class="space-y-8">
-        <!-- Links Section -->
-        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
-          <CardHeader
-            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
+        <!-- Right Column - Links & Funding -->
+        <div class="space-y-8">
+          <!-- Links Section -->
+          <div
+            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
           >
-            <CardTitle class="text-3xl font-bold text-gray-900">Links & Social</CardTitle>
-            <p class="mt-3 text-base text-gray-600">
-              Connect your project with social media and development platforms
-            </p>
-          </CardHeader>
-          <CardContent class="p-8">
-            <!-- Email -->
-            <div class="space-y-3">
-              <Label for="email" class="text-base font-semibold text-gray-800">
-                Email Address *
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="your@email.com"
-                required
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm text-gray-500">Primary contact email for project communications</p>
-            </div>
-
-            <!-- GitHub -->
-            <div class="mt-8 space-y-3">
-              <Label for="github" class="text-base font-semibold text-gray-800">
-                GitHub Repository
-              </Label>
-              <Input
-                type="url"
-                id="github"
-                name="github"
-                placeholder="https://github.com/username/repo"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm leading-relaxed text-gray-500">
-                Follow
-                <a
-                  href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks"
-                  target="_blank"
-                  class="font-medium text-teal-600 underline hover:text-teal-800"
-                >
-                  this guide
-                </a>
-                to add the
-                <a
-                  href="https://pipeline-tau.vercel.app/api/github/webhook"
-                  target="_blank"
-                  class="font-medium text-teal-600 underline hover:text-teal-800"
-                >
-                  webhook
-                </a>
-                for automatic updates
+            <div class="mb-6">
+              <h2 class="mb-2 font-semibold text-white text-heading-xl">Links & Social</h2>
+              <p class="text-gray-300 text-body-lg">
+                Connect your project with social media and development platforms
               </p>
             </div>
 
-            <!-- LinkedIn -->
-            <div class="mt-8 space-y-3">
-              <Label for="linkedin" class="text-base font-semibold text-gray-800">
-                LinkedIn Profile
-              </Label>
-              <Input
-                type="url"
-                id="linkedin"
-                name="linkedin"
-                placeholder="https://linkedin.com/in/username"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm text-gray-500">
-                Professional profile for networking and credibility
+            <div class="space-y-6">
+              <!-- GitHub -->
+              <div class="space-y-2">
+                <Label for="github" class="block font-medium text-gray-300 text-label-lg">
+                  GitHub Repository
+                </Label>
+                <Input
+                  type="url"
+                  id="github"
+                  name="github"
+                  placeholder="https://github.com/username/repo"
+                  class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+                />
+                <p class="text-gray-400 text-body-sm">
+                  Follow
+                  <a
+                    href="https://docs.github.com/en/webhooks/using-webhooks/creating-webhooks"
+                    target="_blank"
+                    class="font-medium underline text-dashboard-purple-500 hover:text-dashboard-purple-400"
+                  >
+                    this guide
+                  </a>
+                  to add the
+                  <a
+                    href="https://pipeline-tau.vercel.app/api/github/webhook"
+                    target="_blank"
+                    class="font-medium underline text-dashboard-purple-500 hover:text-dashboard-purple-400"
+                  >
+                    webhook
+                  </a>
+                  for automatic updates
+                </p>
+              </div>
+
+              <!-- Website -->
+              <div class="space-y-2">
+                <Label for="website" class="block font-medium text-gray-300 text-label-lg"
+                  >Website</Label
+                >
+                <Input
+                  type="url"
+                  id="website"
+                  name="website"
+                  placeholder="https://yourwebsite.com"
+                  class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+                />
+                <p class="text-gray-400 text-body-sm">Official project website or landing page</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Funding Section -->
+          <div
+            class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+          >
+            <div class="mb-6">
+              <h2 class="mb-2 font-semibold text-white text-heading-xl">Funding Goals</h2>
+              <p class="text-gray-300 text-body-lg">
+                Set your funding goals and payment preferences
               </p>
             </div>
 
-            <!-- Twitter/X -->
-            <div class="mt-8 space-y-3">
-              <Label for="twitter" class="text-base font-semibold text-gray-800">
-                X (Twitter) Profile
-              </Label>
-              <Input
-                type="url"
-                id="twitter"
-                name="twitter"
-                placeholder="https://x.com/username"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm text-gray-500">Share updates and engage with the community</p>
-            </div>
-
-            <!-- Website -->
-            <div class="mt-8 space-y-3">
-              <Label for="website" class="text-base font-semibold text-gray-800">Website</Label>
-              <Input
-                type="url"
-                id="website"
-                name="website"
-                placeholder="https://yourwebsite.com"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm text-gray-500">Official project website or landing page</p>
-            </div>
-
-            <!-- Other -->
-            <div class="mt-8 space-y-3">
-              <Label for="other" class="text-base font-semibold text-gray-800">Other Link</Label>
-              <Input
-                type="url"
-                id="other"
-                name="other"
-                placeholder="https://other-platform.com"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
-              />
-              <p class="text-sm text-gray-500">Additional relevant link (Discord, Slack, etc.)</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <!-- Funding Section -->
-        <Card class="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
-          <CardHeader
-            class="p-8 border-b border-gray-200 bg-gradient-to-r from-teal-50 to-emerald-50"
-          >
-            <CardTitle class="text-3xl font-bold text-gray-900">Funding Goals</CardTitle>
-            <p class="mt-3 text-base text-gray-600">
-              Set your funding goals and payment preferences
-            </p>
-          </CardHeader>
-          <CardContent class="p-8">
             <!-- Funding Goal -->
-            <div class="space-y-3">
-              <Label for="fundingGoal" class="text-base font-semibold text-gray-800">
+            <div class="space-y-2">
+              <Label for="fundingGoal" class="block font-medium text-gray-300 text-label-lg">
                 Funding Goal (USD)
               </Label>
               <Input
@@ -216,26 +177,33 @@
                 min="0"
                 step="1"
                 placeholder="10000"
-                class="w-full px-4 text-base border-2 border-gray-200 h-14 rounded-xl focus:border-teal-500"
+                class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
               />
-              <p class="text-sm leading-relaxed text-gray-500">
+              <p class="text-gray-400 text-body-sm">
                 Set a realistic funding target for your project (minimum $100)
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Submit Button -->
-    <div class="flex justify-center mt-16">
-      <Button
-        type="submit"
-        disabled={loading}
-        class="h-12 px-8 text-base font-semibold text-white transition-all duration-200 bg-teal-600 shadow-md rounded-xl hover:bg-teal-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-teal-600"
-      >
-        {loading ? 'Creating Project...' : 'Create Project'}
-      </Button>
-    </div>
-  </form>
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-12">
+        <Button
+          type="submit"
+          disabled={loading}
+          class="px-8 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
+        >
+          {#if loading}
+            <span class="flex items-center gap-2">
+              <Icon icon="lucide:loader-2" class="w-4 h-4 animate-spin" />
+              Creating Project...
+            </span>
+          {:else}
+            Create Project
+          {/if}
+        </Button>
+      </div>
+    </form>
+  </div>
 </div>
