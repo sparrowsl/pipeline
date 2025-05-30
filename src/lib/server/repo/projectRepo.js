@@ -12,6 +12,27 @@ export async function getProjects(term, start, end, supabase) {
   return data || [];
 }
 
+export async function getProjectsWithCategories(term, start, end, supabase) {
+  const { data, error } = await supabase
+    .from('projects')
+    .select(
+      `
+      *,
+      category_project (
+        categories (
+          *
+        )
+      )
+    `,
+    )
+    .ilike('title', `%${term}%`)
+    .range(start, end)
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data || [];
+}
+
 export async function getProject(id, supabase) {
   const { data, error } = await supabase.from('projects').select('*').eq('id', id).single();
   if (error) throw new Error(error.message);
