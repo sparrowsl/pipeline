@@ -63,33 +63,33 @@ const config = {
           'gray-200': '#e5e5e5',
           'gray-100': '#f5f5f5',
           'gray-50': '#fafafa',
-          // Purple accent system
+          // Purple accent system (updated to #ad89fd)
           purple: {
-            50: '#faf5ff',
-            100: '#f3e8ff',
-            200: '#e9d5ff',
-            300: '#d8b4fe',
-            400: '#c084fc',
-            500: '#a855f7', // Primary purple
-            600: '#9333ea',
-            700: '#7c3aed',
-            800: '#6b21a8',
-            900: '#581c87',
-            950: '#3b0764',
+            50: '#f8f6ff',
+            100: '#f0ecff',
+            200: '#e1d9ff',
+            300: '#cbb9ff',
+            400: '#b299ff',
+            500: '#ad89fd', // Primary purple - NEW ACCENT COLOR
+            600: '#9b70fc',
+            700: '#8857fb',
+            800: '#7640e8',
+            900: '#6b34d4',
+            950: '#4a1f8a',
           },
-          // Yellow/Lime accent system
+          // Yellow/Lime accent system (updated to #bde35b)
           yellow: {
-            50: '#fefce8',
-            100: '#fef9c3',
-            200: '#fef08a',
-            300: '#fde047',
-            400: '#facc15', // Bright yellow/lime
-            500: '#eab308',
-            600: '#ca8a04',
-            700: '#a16207',
-            800: '#854d0e',
-            900: '#713f12',
-            950: '#422006',
+            50: '#fefff0',
+            100: '#fcffe0',
+            200: '#f9ffc2',
+            300: '#f3ff8d',
+            400: '#ebff4e',
+            500: '#bde35b', // Primary lime - NEW ACCENT COLOR
+            600: '#a6cc47',
+            700: '#8db535',
+            800: '#739e25',
+            900: '#5e8719',
+            950: '#324a0a',
           },
           // Semantic colors
           success: {

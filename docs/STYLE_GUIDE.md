@@ -6,6 +6,11 @@ This document outlines the design system for our financial dashboard application
 
 Our design system is built around a modern, professional financial interface with a dark theme, featuring clean typography, purposeful color usage, and clear visual hierarchy. We follow Tailwind's utility-first philosophy while maintaining consistency through standardized utility combinations.
 
+The color palette centers around two primary accent colors:
+
+- **Purple accent**: `#ad89fd` - Used for primary actions, interactive elements, and brand elements
+- **Lime accent**: `#bde35b` - Used for highlights, CTAs, and positive interactions
+
 ## Typography
 
 ### Font Family
@@ -22,64 +27,64 @@ Our design system is built around a modern, professional financial interface wit
 
 ```html
 <!-- Display 2XL - Hero numbers, main financial figures -->
-<h1 class="text-white text-display-2xl">$12,890.67</h1>
+<h1 class="text-display-2xl text-white">$12,890.67</h1>
 
 <!-- Display XL - Section headers, important metrics -->
-<h2 class="text-white text-display-xl">Monthly Revenue</h2>
+<h2 class="text-display-xl text-white">Monthly Revenue</h2>
 
 <!-- Display LG - Card titles, primary data -->
-<h3 class="text-white text-display-lg">Portfolio Value</h3>
+<h3 class="text-display-lg text-white">Portfolio Value</h3>
 
 <!-- Display MD - Secondary headings -->
-<h4 class="text-white text-display-md">Recent Transactions</h4>
+<h4 class="text-display-md text-white">Recent Transactions</h4>
 
 <!-- Display SM - Tertiary headings -->
-<h5 class="text-white text-display-sm">Account Summary</h5>
+<h5 class="text-display-sm text-white">Account Summary</h5>
 ```
 
 #### Headings (Section & Component Headers)
 
 ```html
 <!-- Heading XL - Main section titles -->
-<h2 class="text-white text-heading-xl">Dashboard Overview</h2>
+<h2 class="text-heading-xl text-white">Dashboard Overview</h2>
 
 <!-- Heading LG - Card headers, subsection titles -->
-<h3 class="text-gray-300 text-heading-lg">Investment Performance</h3>
+<h3 class="text-heading-lg text-gray-300">Investment Performance</h3>
 
 <!-- Heading MD - Component titles -->
-<h4 class="text-gray-300 text-heading-md">Latest Activity</h4>
+<h4 class="text-heading-md text-gray-300">Latest Activity</h4>
 
 <!-- Heading SM - Minor headings -->
-<h5 class="text-gray-300 text-heading-sm">Quick Actions</h5>
+<h5 class="text-heading-sm text-gray-300">Quick Actions</h5>
 ```
 
 #### Body Text (Content & Descriptions)
 
 ```html
 <!-- Body XL - Important descriptions -->
-<p class="text-gray-300 text-body-xl">Key financial insights and analysis</p>
+<p class="text-body-xl text-gray-300">Key financial insights and analysis</p>
 
 <!-- Body LG - Standard body text -->
-<p class="text-gray-300 text-body-lg">Standard content and descriptions</p>
+<p class="text-body-lg text-gray-300">Standard content and descriptions</p>
 
 <!-- Body MD - Secondary text -->
-<p class="text-gray-400 text-body-md">Additional context and details</p>
+<p class="text-body-md text-gray-400">Additional context and details</p>
 
 <!-- Body SM - Fine print, captions -->
-<p class="text-gray-500 text-body-sm">Last updated 2 minutes ago</p>
+<p class="text-body-sm text-gray-500">Last updated 2 minutes ago</p>
 ```
 
 #### Labels (UI Elements)
 
 ```html
 <!-- Label LG - Form labels, button text -->
-<label class="font-medium text-gray-300 text-label-lg">Account Balance</label>
+<label class="text-label-lg font-medium text-gray-300">Account Balance</label>
 
 <!-- Label MD - Small buttons, tags -->
-<span class="font-medium text-gray-400 text-label-md">Status: Active</span>
+<span class="text-label-md font-medium text-gray-400">Status: Active</span>
 
 <!-- Label SM - Status indicators, badges -->
-<span class="font-medium text-gray-500 text-label-sm">Updated</span>
+<span class="text-label-sm font-medium text-gray-500">Updated</span>
 ```
 
 ## Color System
@@ -105,8 +110,8 @@ Our colors are defined in the Tailwind config using the `dashboard` namespace:
 
 #### Accent Colors
 
-- `text-dashboard-purple-500` / `bg-dashboard-purple-500` - Primary brand color
-- `text-dashboard-yellow-400` / `bg-dashboard-yellow-400` - Highlights and CTAs
+- `text-dashboard-purple-500` / `bg-dashboard-purple-500` - Primary brand color (#ad89fd)
+- `text-dashboard-yellow-500` / `bg-dashboard-yellow-500` - Highlights and CTAs (#bde35b)
 - `text-dashboard-success-500` - Positive values
 - `text-dashboard-error-500` - Negative values
 - `text-dashboard-warning-500` - Warning states
@@ -115,8 +120,9 @@ Our colors are defined in the Tailwind config using the `dashboard` namespace:
 
 1. **Backgrounds**: Use dashboard gray scales for layered surfaces
 2. **Text Hierarchy**: White → gray-300 → gray-400 → gray-500 for importance
-3. **Accents**: Purple for primary actions, yellow for highlights
-4. **Semantic**: Green for positive, red for negative, yellow for warnings
+3. **Primary Accent**: Purple (#ad89fd) for primary actions, interactive elements, and brand elements
+4. **Secondary Accent**: Lime (#bde35b) for highlights, CTAs, and positive interactions
+5. **Semantic**: Green for positive, red for negative, yellow for warnings
 
 ## Component Patterns
 
@@ -126,23 +132,23 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 
 ```html
 <!-- Primary Card -->
-<div class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card">
-  <h3 class="mb-2 text-gray-300 text-heading-lg">Monthly Revenue</h3>
-  <p class="mb-4 text-white text-display-lg">$12,890.67</p>
-  <p class="text-gray-400 text-body-md">+4 Jan - 10 Feb, 2025</p>
+<div class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card">
+  <h3 class="mb-2 text-heading-lg text-gray-300">Monthly Revenue</h3>
+  <p class="mb-4 text-display-lg text-white">$12,890.67</p>
+  <p class="text-body-md text-gray-400">+4 Jan - 10 Feb, 2025</p>
 </div>
 
-<!-- Accent Card (with gradient) -->
+<!-- Accent Card (with purple gradient) -->
 <div
-  class="p-6 text-white rounded-2xl bg-gradient-to-br from-dashboard-purple-500 to-dashboard-purple-600 shadow-card"
+  class="rounded-2xl bg-gradient-to-br from-dashboard-purple-500 to-dashboard-purple-600 p-6 text-white shadow-card"
 >
   <h3 class="mb-2 text-heading-lg">Premium Features</h3>
   <p class="text-body-lg">Unlock advanced analytics and insights</p>
 </div>
 
-<!-- Highlight Card -->
-<div class="p-6 rounded-2xl bg-dashboard-yellow-400 text-dashboard-black shadow-card">
-  <h3 class="mb-2 font-semibold text-heading-lg">Special Offer</h3>
+<!-- Highlight Card (with lime accent) -->
+<div class="rounded-2xl bg-dashboard-yellow-500 p-6 text-dashboard-black shadow-card">
+  <h3 class="mb-2 text-heading-lg font-semibold">Special Offer</h3>
   <p class="text-body-lg">Limited time promotion available</p>
 </div>
 ```
@@ -150,23 +156,23 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 ### Buttons
 
 ```html
-<!-- Primary Button -->
+<!-- Primary Button (Purple) -->
 <button
-  class="px-6 py-3 font-medium text-white transition-colors rounded-xl bg-dashboard-black text-label-lg hover:bg-dashboard-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+  class="rounded-xl bg-dashboard-purple-500 px-6 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
 >
   Primary Action
 </button>
 
-<!-- Accent Button -->
+<!-- Accent Button (Lime) -->
 <button
-  class="px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+  class="rounded-xl bg-dashboard-yellow-500 px-6 py-3 text-label-lg font-medium text-dashboard-black transition-colors hover:bg-dashboard-yellow-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
 >
   Get Started
 </button>
 
 <!-- Secondary Button -->
 <button
-  class="px-6 py-3 font-medium text-white transition-colors rounded-xl bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+  class="rounded-xl bg-dashboard-gray-800 px-6 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
 >
   Secondary Action
 </button>
@@ -176,54 +182,54 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 
 ```html
 <!-- Standard Breadcrumb with Back Navigation -->
-<nav class="pt-8 mb-6">
+<nav class="mb-6 pt-8">
   <div class="flex items-center gap-2">
     <a
       href="/parent-page"
-      class="flex items-center gap-2 font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+      class="flex items-center gap-2 text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
     >
-      <icon class="w-5 h-5" />
+      <icon class="h-5 w-5" />
       <!-- Use appropriate back arrow icon -->
       Parent Page
     </a>
-    <icon class="w-4 h-4 text-gray-500" />
+    <icon class="h-4 w-4 text-gray-500" />
     <!-- Use chevron-right icon -->
-    <span class="text-gray-400 text-body-lg">Current Page</span>
+    <span class="text-body-lg text-gray-400">Current Page</span>
   </div>
 </nav>
 
 <!-- Multi-level Breadcrumb -->
-<nav class="pt-8 mb-6">
+<nav class="mb-6 pt-8">
   <div class="flex items-center gap-2">
     <a
       href="/dashboard"
-      class="font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+      class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
     >
       Dashboard
     </a>
-    <icon class="w-4 h-4 text-gray-500" />
+    <icon class="h-4 w-4 text-gray-500" />
     <a
       href="/settings"
-      class="font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+      class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
     >
       Settings
     </a>
-    <icon class="w-4 h-4 text-gray-500" />
-    <span class="text-gray-400 text-body-lg">Profile</span>
+    <icon class="h-4 w-4 text-gray-500" />
+    <span class="text-body-lg text-gray-400">Profile</span>
   </div>
 </nav>
 
 <!-- Simple Breadcrumb (without back arrow) -->
-<nav class="pt-8 mb-6">
+<nav class="mb-6 pt-8">
   <div class="flex items-center gap-2">
     <a
       href="/profile"
-      class="font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+      class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
     >
       Profile
     </a>
-    <icon class="w-4 h-4 text-gray-500" />
-    <span class="text-gray-400 text-body-lg">Edit Profile</span>
+    <icon class="h-4 w-4 text-gray-500" />
+    <span class="text-body-lg text-gray-400">Edit Profile</span>
   </div>
 </nav>
 ```
@@ -250,27 +256,32 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 ```html
 <!-- Transaction Item -->
 <div
-  class="flex items-center justify-between p-4 transition-colors rounded-lg hover:bg-dashboard-gray-800"
+  class="flex items-center justify-between rounded-lg p-4 transition-colors hover:bg-dashboard-gray-800"
 >
   <div class="flex items-center space-x-3">
-    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-dashboard-yellow-400">
-      <icon class="w-5 h-5 text-dashboard-black" />
+    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-dashboard-yellow-500">
+      <icon class="h-5 w-5 text-dashboard-black" />
     </div>
     <div>
-      <p class="text-white text-body-lg">Movie Tickets</p>
-      <p class="text-gray-400 text-body-sm">24 Apr</p>
+      <p class="text-body-lg text-white">Movie Tickets</p>
+      <p class="text-body-sm text-gray-400">24 Apr</p>
     </div>
   </div>
-  <p class="text-white text-heading-md">$12.5</p>
+  <p class="text-heading-md text-white">$12.5</p>
 </div>
 
 <!-- Navigation Link -->
 <a
   href="/dashboard"
-  class="font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+  class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
 >
   Dashboard
 </a>
+
+<!-- Status Badge -->
+<span class="rounded-full bg-dashboard-purple-500 px-3 py-1 text-xs font-medium text-white">
+  Active
+</span>
 ```
 
 ## Layout & Spacing
@@ -279,7 +290,7 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 
 ```html
 <!-- Main container -->
-<div class="container px-8 mx-auto max-w-7xl">
+<div class="container mx-auto max-w-7xl px-8">
   <!-- Content -->
 </div>
 
@@ -309,6 +320,30 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 - `rounded-lg` - Small elements (8px)
 - `rounded-full` - Circular elements
 
+## Accent Color Usage
+
+### Purple (#ad89fd) - Primary Accent
+
+Use for:
+
+- Primary buttons and CTAs
+- Interactive states and focus indicators
+- Brand elements and logos
+- Navigation highlights
+- Data visualization (primary data points)
+- Links and clickable elements
+
+### Lime (#bde35b) - Secondary Accent
+
+Use for:
+
+- Success states and positive feedback
+- Special promotions and highlights
+- Secondary CTAs
+- Achievement indicators
+- Positive metrics and growth indicators
+- Action confirmations
+
 ## Best Practices
 
 ### Tailwind Usage
@@ -337,11 +372,12 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 
 ### Color Consistency
 
-1. Stick to the dashboard color palette
-2. Use semantic colors appropriately (success, error, warning)
-3. Maintain sufficient contrast ratios
-4. Use the defined text color hierarchy
-5. Apply accent colors sparingly for emphasis
+1. Stick to the dashboard color palette with the two primary accents
+2. Use purple (#ad89fd) for primary interactions and brand elements
+3. Use lime (#bde35b) for positive actions and highlights
+4. Use semantic colors appropriately (success, error, warning)
+5. Maintain sufficient contrast ratios
+6. Apply accent colors purposefully for maximum impact
 
 ## Example Usage
 
@@ -351,16 +387,16 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 <div
   class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-cardHover"
 >
-  <div class="flex items-center justify-between mb-4">
-    <h3 class="text-gray-300 text-heading-lg">Portfolio Overview</h3>
-    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-dashboard-purple-500">
-      <icon class="w-4 h-4 text-white" />
+  <div class="mb-4 flex items-center justify-between">
+    <h3 class="text-heading-lg text-gray-300">Portfolio Overview</h3>
+    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-dashboard-purple-500">
+      <icon class="h-4 w-4 text-white" />
     </div>
   </div>
-  <p class="mb-2 text-white text-display-lg">$124,567.89</p>
+  <p class="mb-2 text-display-lg text-white">$124,567.89</p>
   <div class="flex items-center gap-2">
-    <span class="font-medium text-body-sm text-dashboard-success-500">+12.5%</span>
-    <span class="text-gray-400 text-body-sm">vs last month</span>
+    <span class="text-body-sm font-medium text-dashboard-success-500">+12.5%</span>
+    <span class="text-body-sm text-gray-400">vs last month</span>
   </div>
 </div>
 ```
@@ -370,19 +406,19 @@ Instead of custom utility classes, use these standardized Tailwind combinations:
 ```html
 <form class="space-y-6">
   <div>
-    <label class="block mb-2 font-medium text-gray-300 text-label-lg"> Account Name </label>
+    <label class="mb-2 block text-label-lg font-medium text-gray-300"> Account Name </label>
     <input
       type="text"
-      class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+      class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
       placeholder="Enter account name"
     />
   </div>
   <button
-    class="w-full px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500"
+    class="w-full rounded-xl bg-dashboard-yellow-500 px-6 py-3 text-label-lg font-medium text-dashboard-black transition-colors hover:bg-dashboard-yellow-600"
   >
     Create Account
   </button>
 </form>
 ```
 
-This utility-first approach maintains consistency while following Tailwind best practices and avoiding unnecessary custom CSS classes.
+This utility-first approach maintains consistency while following Tailwind best practices and leveraging our focused two-accent color system for maximum visual impact.
