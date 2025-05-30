@@ -31,36 +31,40 @@
     };
   }}
 >
-  <h2 class="mb-2 text-4xl font-semibold text-gray-900">Sign in</h2>
-  <p class="mb-10 text-gray-600">Enter your info to sign in</p>
+  <h2 class="mb-2 text-display-lg text-dashboard-black">Sign in</h2>
+  <p class="mb-10 text-body-lg text-gray-600">Enter your info to sign in</p>
 
   <div class="flex flex-col gap-3 font-medium">
-    <Label for="email" class="block font-medium text-gray-700">Email</Label>
+    <Label for="email" class="block text-label-lg font-medium text-dashboard-black">Email</Label>
     <Input
       type="email"
       id="email"
       name="email"
       required
-      class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:border-cyan-500 focus:shadow-md focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+      class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-dashboard-black shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:border-dashboard-purple-500 focus:shadow-md focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
       placeholder="Enter your email"
     />
   </div>
 
   <div class="mt-6 flex flex-col gap-3 font-medium">
-    <Label for="password" class="block font-medium text-gray-700">Password</Label>
+    <Label for="password" class="block text-label-lg font-medium text-dashboard-black"
+      >Password</Label
+    >
     <Input
       type="password"
       id="password"
       name="password"
       required
-      class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:border-cyan-500 focus:shadow-md focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+      class="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-dashboard-black shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:border-dashboard-purple-500 focus:shadow-md focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
       placeholder="Enter your password"
     />
   </div>
 
   <div class="mt-8 flex w-full flex-wrap items-center justify-between gap-6 text-sm leading-none">
     <span class="text-gray-600">Don't have an account?</span>
-    <a href="/sign-up" class="font-semibold text-cyan-600 transition-colors hover:text-cyan-700"
+    <a
+      href="/sign-up"
+      class="font-semibold text-dashboard-purple-500 transition-colors hover:text-dashboard-purple-600"
       >Sign Up</a
     >
   </div>
@@ -68,7 +72,7 @@
   <Button
     type="submit"
     disabled={loading}
-    class="mt-8 w-full rounded-xl bg-cyan-950 py-4 font-semibold text-white shadow-lg transition-all duration-200 hover:bg-cyan-900 hover:shadow-xl disabled:bg-gray-400 disabled:shadow-none"
+    class="mt-8 w-full rounded-xl bg-dashboard-purple-500 py-4 font-semibold text-white shadow-lg transition-all duration-200 hover:bg-dashboard-purple-600 hover:shadow-xl disabled:bg-gray-400 disabled:shadow-none"
   >
     {loading ? 'Signing in...' : 'Sign in'}
   </Button>
