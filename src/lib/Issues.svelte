@@ -29,41 +29,41 @@
   };
 </script>
 
-<div class="flex flex-col items-start w-full">
+<div class="flex w-full flex-col items-start">
   {#await fetchProjectIssues()}
-    <p class="text-gray-400 text-body-md">Loading issues...</p>
+    <p class="text-body-md text-gray-400">Loading issues...</p>
   {:then issues}
     {#if issues.length > 0}
       <div class="w-full space-y-3">
         {#each issues as issue, index}
           <div
-            class="p-4 transition-colors duration-200 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50 hover:bg-dashboard-gray-800/50"
+            class="rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-4 transition-colors duration-200 hover:bg-dashboard-gray-800/50"
           >
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 p-2 rounded-lg bg-green-500/10">
-                <Icon icon="octicon:issue-opened-16" class="w-5 h-5 text-green-400" />
+              <div class="flex-shrink-0 rounded-lg bg-green-500/10 p-2">
+                <Icon icon="octicon:issue-opened-16" class="h-5 w-5 text-green-400" />
               </div>
 
-              <div class="flex-1 min-w-0">
+              <div class="min-w-0 flex-1">
                 <a
                   href={issue.html_url}
                   target="_blank"
-                  class="block font-semibold text-white truncate transition-colors text-heading-sm hover:text-dashboard-yellow-400"
+                  class="block truncate text-heading-sm font-semibold text-white transition-colors hover:text-dashboard-yellow-400"
                   title={issue.title}
                 >
                   {issue.title}
                 </a>
-                <div class="flex items-center gap-2 mt-1 text-gray-400 text-body-sm">
+                <div class="mt-1 flex items-center gap-2 text-body-sm text-gray-400">
                   <span>#{issue.number}</span>
                   <span>·</span>
-                  <span class="text-gray-300">{issue.user.login}</span>
+                  <span class="text-gray-300 max-lg:hidden">{issue.user.login}</span>
                   <span>opened {timeAgo(issue.created_at)}</span>
                 </div>
               </div>
 
-              <Avatar class="flex-shrink-0 w-8 h-8 border border-dashboard-gray-600">
+              <Avatar class="h-8 w-8 flex-shrink-0 border border-dashboard-gray-600">
                 <AvatarImage src={issue.user.avatar_url} alt={issue.user.login} />
-                <AvatarFallback class="text-gray-300 bg-dashboard-gray-800 text-body-sm">
+                <AvatarFallback class="bg-dashboard-gray-800 text-body-sm text-gray-300">
                   {issue.user.login.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -73,11 +73,11 @@
       </div>
     {:else}
       <div
-        class="p-8 text-center border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/30"
+        class="rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-900/30 p-8 text-center"
       >
-        <Icon icon="octicon:issue-opened-16" class="w-12 h-12 mx-auto mb-4 text-gray-500" />
-        <p class="font-medium text-gray-400 text-heading-sm">No open issues</p>
-        <p class="mt-1 text-gray-500 text-body-sm">
+        <Icon icon="octicon:issue-opened-16" class="mx-auto mb-4 h-12 w-12 text-gray-500" />
+        <p class="text-heading-sm font-medium text-gray-400">No open issues</p>
+        <p class="mt-1 text-body-sm text-gray-500">
           This repository doesn't have any open issues at the moment.
         </p>
       </div>

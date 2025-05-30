@@ -6,8 +6,8 @@
   import { amountFormat } from '$lib/utils/amountFormat.js';
   import { Card, CardHeader, CardContent, CardFooter } from '$lib/components/ui/card';
   import { Progress } from '$lib/components/ui/progress';
-
   import { onMount } from 'svelte';
+
   let isOpen = false;
 
   function toggleDropdown() {
