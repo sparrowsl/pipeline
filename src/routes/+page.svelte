@@ -26,7 +26,7 @@
 <div class="min-h-screen bg-dashboard-black">
   <!-- Main Content Grid -->
   <main
-    class="mx-auto grid max-w-[1400px] grid-cols-[1fr_1.2fr] grid-rows-[1fr_auto] px-8 pt-20 max-lg:grid-cols-1 max-lg:grid-rows-[auto_auto_auto] max-lg:gap-12 max-lg:p-4"
+    class="mx-auto grid max-w-[1400px] grid-cols-[1fr_1.2fr] grid-rows-[1fr_auto] px-8 pt-20 max-lg:grid-cols-1 max-lg:grid-rows-[auto_auto_auto] max-lg:p-4"
   >
     <!-- Left Content -->
     <section
@@ -60,15 +60,15 @@
       class="relative col-start-2 row-start-1 flex items-center justify-center max-lg:col-start-1 max-lg:row-start-2 max-lg:px-8 max-lg:py-12 max-md:px-4 max-md:py-8"
     >
       <div
-        class="relative flex h-[600px] w-full items-center justify-center rounded-[30px] bg-gradient-to-br from-dashboard-gray-900 via-dashboard-gray-800 to-dashboard-gray-700 p-12 shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-md:h-[400px] max-md:p-8"
+        class="relative flex h-[600px] w-full items-center justify-center rounded-[30px] bg-gradient-to-br from-dashboard-gray-900 via-dashboard-gray-800 p-12 shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-lg:h-auto max-lg:bg-transparent max-lg:p-8 max-lg:shadow-none"
       >
         <div
-          class="organic-shape relative h-[400px] w-[400px] bg-gradient-to-br from-dashboard-purple-500 via-dashboard-purple-600 to-dashboard-purple-700 shadow-[0_20px_60px_rgba(139,92,246,0.4)] max-md:h-[300px] max-md:w-[300px]"
+          class="organic-shape relative h-[400px] w-[400px] bg-gradient-to-br from-dashboard-purple-500 via-dashboard-purple-600 to-dashboard-purple-700 shadow-[0_20px_60px_rgba(139,92,246,0.4)] max-lg:hidden"
         ></div>
 
         <!-- Stats Cards -->
         <div
-          class="absolute -bottom-12 left-0 right-0 z-10 grid grid-cols-2 gap-6 px-4 max-lg:static max-lg:mt-8 max-lg:px-0 max-md:grid-cols-1 max-md:gap-4"
+          class="absolute -bottom-12 left-0 right-0 z-10 grid grid-cols-2 gap-6 px-4 max-lg:static max-lg:mt-0 max-lg:mt-8 max-lg:grid-cols-1 max-lg:gap-4 max-lg:px-0"
         >
           <!-- Users Stats -->
           <div
@@ -127,12 +127,11 @@
   </main>
 
   <!-- What is DPG & Pipeline Section -->
-  <section class="my-32">
+  <section class="lg:my-32">
     <div class="mx-auto max-w-[1400px] px-8 max-lg:px-4">
       <!-- Main Grid - Bento Box Style -->
       <div
-        class="grid grid-cols-4 grid-rows-3 gap-6 max-lg:grid-cols-2 max-lg:grid-rows-6 max-md:grid-cols-1 max-md:grid-rows-12"
-        style="height: 800px;"
+        class="grid grid-cols-4 grid-rows-3 gap-6 max-lg:flex max-lg:h-auto max-lg:grid-cols-2 max-lg:grid-rows-6 max-lg:flex-col max-lg:gap-6 lg:h-[800px]"
       >
         <!-- What are DPGs - Large Header Card -->
         <div
@@ -142,8 +141,7 @@
             What are Digital Public Goods?
           </h2>
           <p class="text-lg text-purple-100 max-md:text-base">
-            Resources, tools, or content that are made available and accessible to the public for
-            social impact.
+            Resources, tools, or content that are made available to the public for social impact.
           </p>
           <div class="mt-6 flex items-center gap-2">
             <button
@@ -185,39 +183,60 @@
         <div
           class="col-span-1 row-span-2 rounded-[24px] bg-gradient-to-b from-dashboard-gray-800 to-dashboard-gray-900 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] max-lg:row-span-1 max-md:col-span-1"
         >
-          <h3 class="mb-8 text-center text-xl font-semibold text-white">Pipeline Process</h3>
-          <div class="flex h-full max-h-[300px] flex-col justify-between">
+          <h3 class="mb-8 text-center text-xl font-semibold text-white max-lg:mb-4">
+            Pipeline Process
+          </h3>
+          <div
+            class="flex h-full max-h-[300px] flex-col justify-between max-lg:max-h-none max-lg:flex-row max-lg:items-center max-lg:gap-4"
+          >
             <div class="text-center">
               <div
-                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-purple-500 to-dashboard-purple-600"
+                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-purple-500 to-dashboard-purple-600 max-lg:h-12 max-lg:w-12"
               >
-                <Icon icon="lucide:lightbulb" class="h-8 w-8 text-white" />
+                <Icon icon="lucide:lightbulb" class="h-8 w-8 text-white max-lg:h-6 max-lg:w-6" />
               </div>
               <h4 class="text-sm font-medium text-white">Your Idea</h4>
             </div>
 
-            <div class="flex justify-center py-4">
-              <Icon icon="lucide:arrow-down" class="h-6 w-6 text-dashboard-yellow-400" />
+            <div class="flex justify-center py-4 max-lg:py-0">
+              <Icon
+                icon="lucide:arrow-down"
+                class="h-6 w-6 text-dashboard-yellow-400 max-lg:hidden"
+              />
+              <Icon
+                icon="lucide:arrow-right"
+                class="hidden h-6 w-6 text-dashboard-yellow-400 max-lg:block"
+              />
             </div>
 
             <div class="text-center">
               <div
-                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-yellow-400 to-dashboard-yellow-500"
+                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-yellow-400 to-dashboard-yellow-500 max-lg:h-12 max-lg:w-12"
               >
-                <Icon icon="lucide:cog" class="h-8 w-8 text-dashboard-black" />
+                <Icon
+                  icon="lucide:cog"
+                  class="h-8 w-8 text-dashboard-black max-lg:h-6 max-lg:w-6"
+                />
               </div>
               <h4 class="text-sm font-medium text-white">Pipeline</h4>
             </div>
 
-            <div class="flex justify-center py-4">
-              <Icon icon="lucide:arrow-down" class="h-6 w-6 text-dashboard-success-500" />
+            <div class="flex justify-center py-4 max-lg:py-0">
+              <Icon
+                icon="lucide:arrow-down"
+                class="h-6 w-6 text-dashboard-success-500 max-lg:hidden"
+              />
+              <Icon
+                icon="lucide:arrow-right"
+                class="hidden h-6 w-6 text-dashboard-success-500 max-lg:block"
+              />
             </div>
 
             <div class="text-center">
               <div
-                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-success-500 to-dashboard-success-600"
+                class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-dashboard-success-500 to-dashboard-success-600 max-lg:h-12 max-lg:w-12"
               >
-                <Icon icon="lucide:award" class="h-8 w-8 text-white" />
+                <Icon icon="lucide:award" class="h-8 w-8 text-white max-lg:h-6 max-lg:w-6" />
               </div>
               <h4 class="text-sm font-medium text-white">DPG Registry</h4>
             </div>
@@ -256,10 +275,10 @@
 
         <!-- Pipeline Features -->
         <div
-          class="col-span-3 row-span-1 rounded-[24px] border border-dashboard-gray-700/50 bg-dashboard-gray-800/50 p-8 backdrop-blur-xl max-lg:col-span-2 max-md:col-span-1"
+          class="col-span-3 row-span-1 rounded-[24px] border border-dashboard-gray-700/50 bg-dashboard-gray-800/50 p-8 backdrop-blur-xl max-lg:col-span-1 max-lg:col-span-2"
         >
           <h3 class="mb-6 text-xl font-semibold text-white">How Pipeline Helps</h3>
-          <div class="grid grid-cols-3 gap-6 max-lg:grid-cols-1 max-lg:gap-4">
+          <div class="grid grid-cols-3 gap-6 max-lg:grid-cols-3 max-lg:gap-2">
             <div class="text-center">
               <div class="mb-3 flex justify-center">
                 <div
