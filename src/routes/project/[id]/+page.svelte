@@ -39,9 +39,7 @@
 
   export let data;
   const project = data.project;
-  const projectUpdates = data.updates;
   const projectResource = data.resources;
-  const uniqueResourceIds = new Set(projectResource.map((r) => r.id)).size;
 
   const githubLinkSplit = project?.github?.split('/') || [];
   const concat = githubLinkSplit[3] + '/' + githubLinkSplit[4];
@@ -146,31 +144,31 @@
 
 <div class="min-h-screen bg-dashboard-black">
   <!-- Breadcrumb Navigation -->
-  <nav class="pt-8 mb-6">
-    <div class="container px-8 mx-auto max-w-7xl">
+  <nav class="mb-6 pt-8">
+    <div class="container mx-auto max-w-7xl px-8">
       <div class="flex items-center gap-2">
         <a
           href="/explore"
-          class="flex items-center gap-2 font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
+          class="flex items-center gap-2 text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
         >
-          <Icon icon="lucide:arrow-left" class="w-5 h-5" />
+          <Icon icon="lucide:arrow-left" class="h-5 w-5" />
           Explore
         </a>
-        <Icon icon="lucide:chevron-right" class="w-4 h-4 text-gray-500" />
-        <span class="text-gray-400 text-body-lg">{project.title || 'Project Details'}</span>
+        <Icon icon="lucide:chevron-right" class="h-4 w-4 text-gray-500" />
+        <span class="text-body-lg text-gray-400">{project.title || 'Project Details'}</span>
       </div>
     </div>
   </nav>
 
-  <div class="container px-8 mx-auto max-w-7xl">
+  <div class="container mx-auto max-w-7xl px-8">
     <!-- Hero Section - Comprehensive Layout -->
-    <div class="flex gap-8 mb-8">
+    <div class="mb-8 flex gap-8">
       <!-- Project Image -->
       <div class="flex-shrink-0">
         <img
           loading="lazy"
           src={image}
-          class="object-cover w-48 h-64 rounded-2xl bg-dashboard-gray-800 shadow-card"
+          class="h-64 w-48 rounded-2xl bg-dashboard-gray-800 object-cover shadow-card"
           alt="Project image"
         />
       </div>
@@ -180,11 +178,11 @@
         <!-- Title and Metadata -->
         <div class="space-y-4">
           <div class="space-y-2">
-            <div class="flex items-center gap-3 text-gray-400 text-body-sm">
-              <Icon icon="lucide:calendar" class="w-4 h-4" />
+            <div class="flex items-center gap-3 text-body-sm text-gray-400">
+              <Icon icon="lucide:calendar" class="h-4 w-4" />
               <time datetime={project.created_at}>Created {date}</time>
             </div>
-            <h1 class="font-semibold leading-tight text-white text-display-xl">
+            <h1 class="text-display-xl font-semibold leading-tight text-white">
               {project.title || 'Project Title'}
             </h1>
           </div>
@@ -192,15 +190,15 @@
           <!-- DPG Status - Prominent -->
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-3">
-              <Icon icon="lucide:shield-check" class="w-5 h-5 text-dashboard-yellow-400" />
-              <div class="font-semibold text-white text-heading-md">
+              <Icon icon="lucide:shield-check" class="h-5 w-5 text-dashboard-yellow-400" />
+              <div class="text-heading-md font-semibold text-white">
                 {project.dpgCount}<span class="text-gray-400">/9</span>
               </div>
-              <span class="text-gray-300 text-body-md">DPG Standards</span>
+              <span class="text-body-md text-gray-300">DPG Standards</span>
             </div>
-            <div class="w-32 h-2 rounded-full bg-dashboard-gray-700">
+            <div class="h-2 w-32 rounded-full bg-dashboard-gray-700">
               <div
-                class="h-2 transition-all duration-300 rounded-full bg-gradient-to-r from-dashboard-yellow-400 to-dashboard-purple-500"
+                class="h-2 rounded-full bg-gradient-to-r from-dashboard-yellow-400 to-dashboard-purple-500 transition-all duration-300"
                 style="width: {(project.dpgCount / 9) * 100}%"
               ></div>
             </div>
@@ -210,7 +208,7 @@
           {#if project.tags && project.tags.length > 0}
             <div class="flex flex-wrap gap-2">
               {#each project.tags as tag}
-                <div class="transition-transform duration-200 transform hover:scale-105">
+                <div class="transform transition-transform duration-200 hover:scale-105">
                   <CategoryTag {tag} />
                 </div>
               {/each}
@@ -223,18 +221,18 @@
           <div class="flex gap-3">
             <a
               href="/project/{id}/contribute"
-              class="px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
+              class="rounded-xl bg-dashboard-yellow-400 px-6 py-3 text-label-lg font-medium text-dashboard-black transition-colors hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
             >
-              <Icon icon="lucide:heart-handshake" class="inline w-4 h-4 mr-2" />
+              <Icon icon="lucide:heart-handshake" class="mr-2 inline h-4 w-4" />
               Contribute
             </a>
 
             {#if user.id === project.user_id}
               <a
                 href="/project/{id}/edit"
-                class="px-6 py-3 font-medium text-white transition-colors border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                class="rounded-xl border border-dashboard-gray-600 bg-dashboard-gray-800 px-6 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
-                <Icon icon="lucide:edit" class="inline w-4 h-4 mr-2" />
+                <Icon icon="lucide:edit" class="mr-2 inline h-4 w-4" />
                 Edit
               </a>
             {:else}
@@ -256,14 +254,14 @@
               >
                 <button
                   type="submit"
-                  class="px-6 py-3 font-medium text-white transition-colors border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  class="rounded-xl border border-dashboard-gray-600 bg-dashboard-gray-800 px-6 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   class:bg-dashboard-purple-500={isFollowing}
                   class:border-dashboard-purple-500={isFollowing}
                   class:hover:bg-dashboard-purple-600={isFollowing}
                 >
                   <Icon
                     icon={isFollowing ? 'lucide:user-check' : 'lucide:user-plus'}
-                    class="inline w-4 h-4 mr-2"
+                    class="mr-2 inline h-4 w-4"
                   />
                   {isFollowing ? 'Following' : 'Follow'}
                 </button>
@@ -274,31 +272,31 @@
       </div>
 
       <!-- Right Sidebar - Stats & Contributors -->
-      <div class="flex-shrink-0 space-y-6 w-80">
+      <div class="w-80 flex-shrink-0 space-y-6">
         <!-- Stats Grid -->
         <div
-          class="grid grid-cols-2 gap-4 p-4 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50"
+          class="grid grid-cols-2 gap-4 rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-4"
         >
           <div class="text-center">
-            <div class="font-semibold text-white text-display-md">
+            <div class="text-display-md font-semibold text-white">
               ${amountFormat(project.current_funding || 0)}
             </div>
-            <div class="text-gray-400 text-label-sm">
+            <div class="text-label-sm text-gray-400">
               raised of ${amountFormat(project.funding_goal || 0)}
             </div>
           </div>
           <div class="text-center">
-            <div class="font-semibold text-white text-display-md">
-              {projectUpdates.length}
+            <div class="text-display-md font-semibold text-white">
+              {projectResource.length}
             </div>
-            <div class="text-gray-400 text-label-sm">updates</div>
+            <div class="text-label-sm text-gray-400">updates</div>
           </div>
         </div>
 
         <!-- Contributors - Compact Style -->
-        <div class="p-4 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="font-semibold text-white text-heading-md">Contributors</h3>
+        <div class="rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-4">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-heading-md font-semibold text-white">Contributors</h3>
             <!-- {#if contributors.length > 6}
               <button
                 class="text-gray-400 transition-colors text-label-sm hover:text-white"
@@ -316,22 +314,22 @@
                 <img
                   src={contributor.avatar_url || defaultImageUrl}
                   alt={contributor.login || 'Contributor'}
-                  class="w-10 h-10 transition-transform border-2 rounded-full border-dashboard-gray-700 bg-dashboard-gray-800 hover:z-10 hover:scale-110"
+                  class="h-10 w-10 rounded-full border-2 border-dashboard-gray-700 bg-dashboard-gray-800 transition-transform hover:z-10 hover:scale-110"
                   title={contributor.login || 'Contributor'}
                 />
               {/each}
               {#if contributors.length > 6}
                 <div
-                  class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-300 border-2 rounded-full border-dashboard-gray-700 bg-dashboard-gray-800"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-dashboard-gray-700 bg-dashboard-gray-800 text-xs font-medium text-gray-300"
                 >
                   +{contributors.length - 6}
                 </div>
               {/if}
             {:else}
               <div
-                class="flex items-center justify-center w-10 h-10 text-gray-500 border-2 border-dashed rounded-full border-dashboard-gray-600"
+                class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-dashed border-dashboard-gray-600 text-gray-500"
               >
-                <Icon icon="lucide:users" class="w-5 h-5" />
+                <Icon icon="lucide:users" class="h-5 w-5" />
               </div>
             {/if}
           </div>
@@ -345,9 +343,9 @@
     </div>
 
     <!-- Detailed Sections - Minimal Tabs -->
-    <div class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card">
+    <div class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card">
       <ProjectNav
-        class="flex items-start w-full overflow-x-auto text-sm flex-nowrap whitespace-nowrap"
+        class="flex w-full flex-nowrap items-start overflow-x-auto whitespace-nowrap text-sm"
         {navItems}
         bind:activeItem={activeNavItem}
         on:navChange={handleNavChange}
@@ -357,10 +355,10 @@
         {#if activeNavItem === 'dpgStatus'}
           <div class="space-y-6">
             <div class="text-center">
-              <h2 class="mb-2 font-semibold text-white text-display-xl">
+              <h2 class="mb-2 text-display-xl font-semibold text-white">
                 DPG Compliance Assessment
               </h2>
-              <p class="text-gray-300 text-body-lg">
+              <p class="text-body-lg text-gray-300">
                 Detailed evaluation against Digital Public Good standards
               </p>
             </div>
@@ -369,8 +367,8 @@
         {:else if activeNavItem === 'tasks'}
           <div class="space-y-6">
             <div>
-              <h2 class="mb-2 font-semibold text-white text-display-xl">Issues & Tasks</h2>
-              <p class="text-gray-300 text-body-lg">Open issues and development tasks</p>
+              <h2 class="mb-2 text-display-xl font-semibold text-white">Issues & Tasks</h2>
+              <p class="text-body-lg text-gray-300">Open issues and development tasks</p>
             </div>
             <Issues />
           </div>
@@ -403,7 +401,7 @@
       class="fixed w-full max-w-md rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]"
     >
       <DialogHeader>
-        <DialogTitle class="mb-4 font-semibold text-white text-heading-lg">Add Update</DialogTitle>
+        <DialogTitle class="mb-4 text-heading-lg font-semibold text-white">Add Update</DialogTitle>
       </DialogHeader>
 
       <form
@@ -422,22 +420,22 @@
         class="space-y-4"
       >
         <div>
-          <Label class="block mb-2 font-medium text-gray-300 text-label-lg">Title</Label>
+          <Label class="mb-2 block text-label-lg font-medium text-gray-300">Title</Label>
           <Input
             type="text"
             name="title"
-            class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
             required
             disabled={isAddingUpdate}
           />
         </div>
 
         <div>
-          <Label class="block mb-2 font-medium text-gray-300 text-label-lg">Body</Label>
+          <Label class="mb-2 block text-label-lg font-medium text-gray-300">Body</Label>
           <Textarea
             rows="4"
             name="body"
-            class="w-full px-4 py-3 text-white border rounded-lg resize-none border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            class="w-full resize-none rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
             required
             disabled={isAddingUpdate}
           />
@@ -445,12 +443,12 @@
 
         <Button
           type="submit"
-          class="w-full px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
+          class="w-full rounded-xl bg-dashboard-yellow-400 px-6 py-3 text-label-lg font-medium text-dashboard-black transition-colors hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
           disabled={isAddingUpdate}
         >
           {#if isAddingUpdate}
             <span class="flex items-center justify-center gap-2">
-              <Icon icon="lucide:loader-2" class="w-4 h-4 animate-spin" />
+              <Icon icon="lucide:loader-2" class="h-4 w-4 animate-spin" />
               Adding Update...
             </span>
           {:else}

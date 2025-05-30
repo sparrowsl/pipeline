@@ -2,25 +2,22 @@ export async function load({ params, fetch }) {
   const { id } = params;
 
   try {
-    const [projectRes, updatesRes, resourcesRes] = await Promise.all([
+    const [projectRes, resourcesRes] = await Promise.all([
       fetch(`/api/projects/singleProject/${id}`),
-      fetch(`/api/projects/singleProject/${id}/projectUpdates`),
       fetch(`/api/projects/singleProject/${id}/contribution/resources`),
     ]);
 
-    if (!projectRes.ok || !updatesRes.ok || !resourcesRes.ok) {
+    if (!projectRes.ok || !resourcesRes.ok) {
       throw new Error('Failed to fetch project');
     }
 
-    const [projectData, updatesData, resourcesData] = await Promise.all([
+    const [projectData, resourcesData] = await Promise.all([
       projectRes.json(),
-      updatesRes.json(),
       resourcesRes.json(),
     ]);
 
     return {
       project: projectData.project || [],
-      updates: updatesData.projectUpdates || [],
       resources: resourcesData.resources || [],
     };
   } catch (e) {
