@@ -144,12 +144,13 @@
             Resources, tools, or content that are made available to the public for social impact.
           </p>
           <div class="mt-6 flex items-center gap-2">
-            <button
-              class="rounded-full bg-white/20 px-6 py-2 text-sm font-medium backdrop-blur-sm transition-all hover:bg-white/30"
+            <a
+              href="/resources/digital-public-good"
+              class="flex items-center gap-2 rounded-full bg-white/20 px-6 py-3 font-semibold text-white transition-all hover:bg-dashboard-gray-800"
             >
               Learn More
-            </button>
-            <Icon icon="lucide:arrow-right" class="h-4 w-4" />
+              <Icon icon="lucide:arrow-right" class="h-4 w-4" />
+            </a>
           </div>
         </div>
 
@@ -252,12 +253,14 @@
             We help creators, contributors, and funders recognize and use DPG Standards to qualify
             projects as Digital Public Goods.
           </p>
-          <button
-            class="flex items-center gap-2 rounded-full bg-dashboard-black px-6 py-3 font-semibold text-white transition-all hover:bg-dashboard-gray-800"
+
+          <a
+            href="/resources/pipeline"
+            class="inline-flex items-center gap-2 rounded-full bg-dashboard-black px-6 py-3 font-semibold text-white transition-all hover:bg-dashboard-gray-800"
           >
-            Get Started
+            Learn More
             <Icon icon="lucide:arrow-right" class="h-4 w-4" />
-          </button>
+          </a>
         </div>
 
         <!-- Do No Harm Card -->

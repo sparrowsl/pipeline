@@ -28,13 +28,8 @@
           loading="lazy"
           src={user?.image_url ? user.image_url : defaultImageUrl}
           alt="User avatar"
-          class="aspect-square w-[43px] rounded-full object-cover ring-2 ring-dashboard-gray-600 transition-all duration-300 group-hover:scale-105 group-hover:ring-dashboard-purple-500"
+          class="aspect-square w-[35px] rounded-full object-cover ring-2 ring-dashboard-gray-600 transition-all duration-300 group-hover:scale-105 group-hover:ring-dashboard-purple-500 lg:w-[43px]"
         />
-        <span
-          class="ml-4 text-ellipsis whitespace-nowrap text-body-lg text-gray-300 transition-colors duration-200 group-hover:text-white lg:hidden"
-        >
-          {user.display_name}
-        </span>
       {/if}
     </DropdownMenu.Trigger>
 
