@@ -16,6 +16,6 @@ export const actions = {
       });
     }
 
-    redirect(307, '/sign-in');
+    redirect(307, '/');
   },
 };
