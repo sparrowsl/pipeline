@@ -34,7 +34,7 @@
     };
   });
 
-  function truncateText(text, maxLength = 20) {
+  function truncateText(text, maxLength = 25) {
     if (!text) return '';
     if (text.length > maxLength) {
       return text.slice(0, maxLength) + '...';
@@ -59,33 +59,33 @@
   };
 </script>
 
-<div class="perspective-1000 group relative w-full">
-  <!-- Frosted Glass Card -->
+<div class="group relative w-full">
+  <!-- Dashboard-styled Card -->
   <div
-    class="frosted-glass-card relative h-full w-full transform-gpu overflow-hidden transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.02]"
+    class="dashboard-card relative h-full w-full transform-gpu overflow-hidden transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-cardHover"
   >
     <!-- Content Container -->
-    <div class="relative flex h-full flex-col overflow-hidden rounded-3xl">
+    <div class="relative flex h-full flex-col overflow-hidden rounded-2xl">
       <!-- Image Header -->
-      <div class="relative h-48 overflow-hidden">
+      <div class="relative h-48 overflow-hidden rounded-t-2xl">
         <a href="/project/{project.id}" class="block h-full">
           <div class="relative h-full w-full">
             <img
               loading="lazy"
               src={getImageLink()}
               alt={project.title}
-              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <!-- Subtle overlay for text readability -->
+            <!-- Dark overlay for better contrast -->
             <div
-              class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
+              class="absolute inset-0 bg-gradient-to-t from-dashboard-black/60 via-transparent to-transparent"
             ></div>
           </div>
         </a>
 
         <!-- DPG Rating Badge -->
         <div class="absolute right-4 top-4">
-          <div class="frosted-badge">
+          <div class="dashboard-badge">
             <DPGRating rating={project.dpgStatusCount} />
           </div>
         </div>
@@ -96,18 +96,18 @@
         <!-- Title -->
         <div>
           <a href="/project/{project.id}" class="group/title">
-            <h2
-              class="text-xl font-bold leading-tight text-gray-800 transition-colors duration-200 group-hover/title:text-gray-700"
+            <h3
+              class="text-heading-lg font-semibold leading-tight text-white transition-colors duration-200 group-hover/title:text-gray-300"
             >
-              {truncateText(project.title, 25)}
-            </h2>
+              {truncateText(project.title, 30)}
+            </h3>
           </a>
         </div>
 
         <!-- SDG Tags -->
         <div class="flex flex-wrap gap-2">
           {#each project?.tags || [] as tag}
-            <div class="transform transition-transform duration-200 hover:scale-110">
+            <div class="transform transition-transform duration-200 hover:scale-105">
               <CategoryTag {tag} />
             </div>
           {/each}
@@ -118,37 +118,35 @@
 
         <!-- Funding Information -->
         <div class="space-y-3">
-          <div class="text-gray-700">
+          <div class="text-gray-300">
             <div class="flex flex-wrap items-baseline gap-1">
-              <span class="text-lg font-bold text-gray-800"
+              <span class="text-display-md font-bold text-white"
                 >${amountFormat(project.current_funding || 0)}</span
               >
-              <span class="text-sm text-gray-600">raised of</span>
-              <span class="text-lg font-bold text-gray-800"
+              <span class="text-body-sm text-gray-400">raised of</span>
+              <span class="text-heading-md font-semibold text-gray-300"
                 >${amountFormat(project.funding_goal || 0)}</span
               >
             </div>
           </div>
 
-          <!-- Custom Progress Bar -->
+          <!-- Progress Bar -->
           <div class="relative">
-            <div class="h-2 overflow-hidden rounded-full border border-gray-300/40 bg-gray-200/60">
+            <div class="h-2 overflow-hidden rounded-full bg-dashboard-gray-700">
               <div
-                class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 shadow-sm transition-all duration-1000 ease-out"
+                class="h-full rounded-full bg-gradient-to-r from-dashboard-purple-500 to-dashboard-purple-400 transition-all duration-1000 ease-out"
                 style="width: {Math.min(
                   (project.current_funding / project.funding_goal) * 100,
                   100,
                 )}%"
               ></div>
             </div>
-            <!-- Progress glow effect -->
-            <div
-              class="absolute top-0 h-2 rounded-full bg-gradient-to-r from-blue-400/50 to-blue-300/50 blur-sm transition-all duration-1000 ease-out"
-              style="width: {Math.min(
-                (project.current_funding / project.funding_goal) * 100,
-                100,
-              )}%"
-            ></div>
+            <!-- Progress percentage -->
+            <div class="mt-2">
+              <span class="text-label-sm font-medium text-gray-400">
+                {Math.round((project.current_funding / project.funding_goal) * 100)}% funded
+              </span>
+            </div>
           </div>
         </div>
 
@@ -162,90 +160,77 @@
 </div>
 
 <style>
-  .frosted-glass-card {
-    transform-style: preserve-3d;
-    /* Main frosted glass effect */
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 24px;
+  .dashboard-card {
+    /* Dashboard card styling matching style guide */
+    background: rgba(23, 23, 23, 0.85); /* dashboard-gray-900 with transparency */
+    border: 1px solid rgba(64, 64, 64, 0.6); /* dashboard-gray-700 with transparency */
+    border-radius: 16px; /* rounded-2xl */
 
-    /* Subtle shadow for depth */
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      0 4px 16px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .frosted-badge {
-    background: rgba(255, 255, 255, 0.3);
+    /* Subtle glass effect for dark theme */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
+
+    /* Dashboard shadow matching style guide */
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .dashboard-badge {
+    /* Badge styling for dark theme */
+    background: rgba(23, 23, 23, 0.9);
+    border: 1px solid rgba(64, 64, 64, 0.8);
+    border-radius: 12px; /* rounded-xl */
     padding: 8px 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
-  .perspective-1000 {
-    perspective: 1000px;
+  /* Hover effects matching dashboard style */
+  .group:hover .dashboard-card {
+    background: rgba(38, 38, 38, 0.9); /* dashboard-gray-800 with transparency */
+    border-color: rgba(82, 82, 82, 0.8); /* dashboard-gray-600 */
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
   }
 
-  /* Enhanced frosted glass texture */
-  .frosted-glass-card::before {
+  /* Subtle glass texture for dark theme */
+  .dashboard-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-    border-radius: 24px 24px 0 0;
-    z-index: 10;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    border-radius: 16px 16px 0 0;
+    z-index: 1;
   }
 
-  .frosted-glass-card::after {
+  .dashboard-card::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 1px;
     bottom: 0;
-    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-    border-radius: 24px 0 0 24px;
-    z-index: 10;
-  }
-
-  /* Hover effects for enhanced frosted glass */
-  .group:hover .frosted-glass-card {
-    background: rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.12),
-      0 8px 24px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 16px 0 0 16px;
+    z-index: 1;
   }
 
   /* Enhanced glass reflection on hover */
-  .frosted-glass-card:hover::before {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+  .group:hover .dashboard-card::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   }
 
-  .frosted-glass-card:hover::after {
-    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-  }
-
-  /* Subtle texture pattern for frosted effect */
-  .frosted-glass-card {
-    background-image: radial-gradient(
-        circle at 20% 80%,
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 50%
-      ),
-      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  .group:hover .dashboard-card::after {
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   }
 </style>

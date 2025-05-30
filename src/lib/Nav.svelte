@@ -44,16 +44,16 @@
 </script>
 
 <header
-  class="relative left-0 right-0 top-0 z-[99999] flex h-[84px] items-center justify-between bg-[#0b383c] px-4 py-5 backdrop-blur-[15px] md:px-8"
+  class="relative left-0 right-0 top-0 z-[99999] flex h-[84px] items-center justify-between border-b border-dashboard-gray-700 bg-dashboard-gray-900 px-4 py-5 backdrop-blur-[15px] md:px-8"
 >
-  <div class="flex h-6 grow-0 items-center gap-4 md:gap-12">
+  <div class="flex items-center h-6 gap-4 grow-0 md:gap-12">
     <Logo />
   </div>
 
-  <div class="flex items-center md:flex lg:flex">
+  <div class="flex items-center md:flex lg:hidden">
     <Button
       on:click={toggleMobileMenu}
-      class="text-white focus:outline-none lg:hidden"
+      class="text-white border-dashboard-gray-600 hover:bg-dashboard-gray-800 focus:outline-none "
       aria-label="Toggle mobile menu"
       variant="outline"
     >
@@ -67,66 +67,28 @@
 
   <div class="hidden w-full max-w-[480px] items-center justify-center lg:flex">
     <div
-      class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] pl-4 pr-3"
+      class="flex items-center justify-between w-full pl-4 pr-3 border rounded-full align-center border-dashboard-gray-600 bg-dashboard-gray-800"
     >
       <Button
         type="button"
-        class="flex w-full items-center justify-between p-2"
+        class="flex items-center justify-between w-full p-2 bg-transparent hover:bg-transparent"
         on:click={() => ($searchBarOpen = !$searchBarOpen)}
       >
-        <span class="text-sm text-white/50">Search for a project....</span>
-        <Icon icon="mdi:search" class="text-2xl text-white/50" />
+        <span class="text-sm text-gray-400">Search for a project....</span>
+        <Icon icon="mdi:search" class="text-2xl text-gray-400" />
       </Button>
     </div>
   </div>
 
   <div class="hidden h-[42.67px] grow-0 items-center justify-end gap-4 lg:flex">
-    <div class="flex items-center gap-4">
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger class="focus:outline-none">
-          <Button
-            variant="ghost"
-            class="flex items-center gap-1 p-0 text-white hover:bg-transparent"
-          >
-            <span class="font-['Inter'] text-base font-semibold leading-none"> Resources </span>
-            <Icon
-              icon="radix-icons:caret-down"
-              class="text-2xl transition-transform duration-200"
-            />
-          </Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          class="z-[999999] w-[18vh] rounded-md !bg-[#0b383c] p-0 shadow-lg"
-          sideOffset={5}
-          align="end"
-        >
-          <DropdownMenu.Item
-            class="border-none p-0 hover:bg-[#115d5b] focus:bg-[#115d5b] focus:outline-none"
-          >
-            <a
-              href="/resources/pipeline"
-              class="block w-full px-4 py-3 text-left text-[#d1ea9a] transition-colors hover:border-none hover:bg-[#115d5b] hover:outline-none"
-              >About Pipeline</a
-            >
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            class="border-none p-0 hover:bg-[#115d5b] focus:bg-[#115d5b] focus:outline-none"
-          >
-            <a
-              href="/resources/digital-public-good"
-              class="block w-full px-4 py-3 text-left text-[#d1ea9a] transition-colors hover:border-none hover:bg-[#115d5b] hover:outline-none"
-              >About DPGs</a
-            >
-          </DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    </div>
-
     <div>
       {#if data.isAuthenticated}
         <UserProfile {data} />
       {:else}
-        <a href="/sign-in" class="rounded-3xl bg-[#d1ea9a] px-4 py-4 text-base font-semibold">
+        <a
+          href="/sign-in"
+          class="px-6 py-3 font-semibold transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500"
+        >
           Sign up / Log in
         </a>
       {/if}
@@ -134,88 +96,34 @@
   </div>
 
   {#if isMobileMenuOpen}
-    <div class="absolute left-0 right-0 top-[84px] w-[100%] bg-[#0b383c] lg:hidden">
-      <div class="flex w-full flex-col space-y-4 px-8 py-4">
+    <div
+      class="absolute left-0 right-0 top-[84px] w-[100%] border-b border-dashboard-gray-700 bg-dashboard-gray-900 lg:hidden"
+    >
+      <div class="flex flex-col w-full px-8 py-4 space-y-4">
         <div class="mb-2 w-full max-w-[480px] items-center justify-center">
           <div
-            class="align-center flex w-full items-center justify-between rounded-[48.77px] bg-[#115d5b] py-2 pl-4 pr-3 max-lg:w-full"
+            class="flex items-center justify-between w-full py-2 pl-4 pr-3 border rounded-full align-center border-dashboard-gray-600 bg-dashboard-gray-800 max-lg:w-full"
           >
             <Button
               type="button"
-              class="mt-2 flex w-full justify-between"
+              class="flex justify-between w-full mt-2 bg-transparent hover:bg-transparent"
               on:click={() => ($searchBarOpen = !$searchBarOpen)}
             >
               <span
-                class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white max-lg:px-8 max-md:mb-[4px]"
+                class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-gray-400 max-lg:px-8 max-md:mb-[4px]"
                 >Search for a project...</span
               >
             </Button>
           </div>
         </div>
 
-        <a href="/" class="font-['Inter'] text-base font-semibold text-white"> Tasks </a>
-
-        <div class="resources-dropdown relative">
-          <Button
-            on:click={toggleResources}
-            class="flex w-full items-center justify-between border-b border-cyan-800 px-4 py-4 focus:outline-none"
-          >
-            <span class="ml-[-18px] font-['Inter'] text-base font-semibold leading-none text-white">
-              Resources
-            </span>
-            <svg
-              width="13"
-              height="12"
-              viewBox="0 0 13 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-[17px] transform transition-transform duration-200 {isResourcesOpen
-                ? 'rotate-180'
-                : ''}"
-            >
-              <g id="CaretDown" clip-path="url(#clip0_1224_8929)">
-                <path
-                  id="Vector"
-                  d="M10.0837 4.5L6.33374 8.25L2.58374 4.5"
-                  stroke="white"
-                  stroke-width="1.67"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1224_8929">
-                  <rect width="12" height="12" fill="white" transform="translate(0.334106)" />
-                </clipPath>
-              </defs>
-            </svg>
-          </Button>
-
-          {#if isResourcesOpen}
-            <div
-              class="absolute right-0 top-6 z-[9999] mt-2 w-[25vh] rounded-md bg-cyan-900 shadow-lg"
-            >
-              <a
-                href="/resources/pipeline"
-                class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
-                >About Pipeline</a
-              >
-              <a
-                href="/resources/digital-public-good"
-                class="block w-full px-4 py-3 text-left text-[#d1ea9a] hover:bg-cyan-800"
-                >About DPGs</a
-              >
-            </div>
-          {/if}
-        </div>
-
-        <div>
+        <div class="pt-4">
           {#if data.isAuthenticated}
             <UserProfile {data} />
           {:else}
             <a
               href="/sign-in"
-              class="block w-full rounded-3xl bg-[#d1ea9a] px-4 py-4 text-center text-base font-semibold"
+              class="block w-full px-6 py-3 font-semibold text-center transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500"
             >
               Sign up / Log in
             </a>

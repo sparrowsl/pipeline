@@ -35,7 +35,8 @@ export const createProjectSchema = z.object({
   bio: z
     .string({ required_error: 'project bio is required' })
     .trim()
-    .min(5, { message: 'bio is too short' }),
+    .min(5, { message: 'bio is too short' })
+    .optional(),
   country: z.enum(
     Object.values(countries).map((country) => country.name),
     { required_error: 'country is required' },

@@ -21,8 +21,23 @@
 
 <!-- Main Content Container -->
 <div class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+  <!-- Breadcrumb Navigation -->
+  <nav class="mb-6 pt-8">
+    <div class="flex items-center gap-2">
+      <a
+        href="/profile"
+        class="flex items-center gap-2 text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
+      >
+        <Icon icon="mdi:arrow-left" class="h-5 w-5" />
+        Profile
+      </a>
+      <Icon icon="mdi:chevron-right" class="h-4 w-4 text-gray-500" />
+      <span class="text-body-lg text-gray-400">Edit Profile</span>
+    </div>
+  </nav>
+
   <!-- Content Section -->
-  <section class="mx-auto max-w-7xl py-20">
+  <section class="mx-auto max-w-7xl pt-8">
     <form
       action="?/updateProfile"
       method="POST"

@@ -31,6 +31,6 @@ export const actions = {
       return fail(400, { error: error.message || 'Something went wrong' });
     }
 
-    redirect(307, '/profile');
+    redirect(307, '/explore');
   },
 };

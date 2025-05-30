@@ -28,6 +28,8 @@
   let searchResultsLoaded = false;
   let categoryResultLoaded = false;
 
+  console.log(data.allProjects);
+
   // TODO: we would find a way around it later
   async function fetchAllProjects() {
     try {
@@ -100,119 +102,221 @@
   }
 
   function handleCategorySelected(event) {
-    const selectedCategory = event.detail;
-    if (selectedCategory) {
-      selectedTag = selectedCategory.title;
-      projectByCategory(selectedCategory.id);
+    const selectedCategories = event.detail;
+    if (selectedCategories && selectedCategories.length > 0) {
+      // For now, we'll use the first selected category for API calls
+      // TODO: Update API to handle multiple categories
+      const firstCategory = selectedCategories[0];
+      selectedTag = selectedCategories.map((cat) => cat.title).join(', ');
+      projectByCategory(firstCategory.id);
     } else {
       selectedTag = '';
+      // Reset to show all projects when no categories are selected
+      loadedProjects = data.allProjects;
+      categoryResult = [];
     }
   }
 </script>
 
-<div
-  class="mx-auto mt-8 flex w-full max-w-[1470px] flex-col justify-center gap-6 px-6 md:flex-col lg:flex-row"
->
-  <aside class="w-full md:mb-0 lg:sticky lg:top-0 lg:w-[28%] lg:self-start">
-    <div class="rounded-md p-4 shadow-sm" style="position: sticky; top: 0; height: fit-content;">
-      <span class="mb-4 hidden md:block">SDGs</span>
-      <Accordion type="single" value="sdgs" collapsible>
-        <AccordionItem value="sdgs">
-          <AccordionTrigger class="no-underline hover:no-underline focus:no-underline">
-            Select SDG Category
-          </AccordionTrigger>
-          <AccordionContent>
-            <ProjectCategory on:categorySelected={handleCategorySelected} />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
-  </aside>
-
-  <section class="grid flex-1 grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {#if searchTerm && searchResults.length > 0}
-      <div class="col-span-full text-xl font-semibold text-gray-700 sm:col-span-2 lg:col-span-3">
-        Search results for: "{searchTerm}"
-      </div>
-      {#each searchResults as project}
-        <Card {project} />
-      {/each}
-      {#if !searchResultsLoaded && !allSearchLoaded}
-        <div
-          class="col-span-full mt-8 flex items-center justify-center sm:col-span-2 lg:col-span-3"
+<!-- Main container with dark background and proper spacing -->
+<div class="min-h-screen bg-dashboard-black">
+  <div class="container mx-auto max-w-7xl px-8">
+    <!-- Breadcrumb Navigation -->
+    <nav class="mb-6 pt-8">
+      <div class="flex items-center gap-2">
+        <a
+          href="/"
+          class="text-body-lg font-medium text-gray-300 transition-colors hover:text-white"
         >
-          <Button on:click={loadMoreSearchResults}>Load more</Button>
-        </div>
-      {/if}
-    {:else if selectedTag}
-      <div class="col-span-full text-xl font-semibold text-gray-700 sm:col-span-2 lg:col-span-3">
-        Projects in: "{selectedTag}"
+          Home
+        </a>
+        <svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-body-lg text-gray-400">Explore Projects</span>
       </div>
-      {#if categoryResult.length > 0}
-        {#each categoryResult as project}
-          <Card {project} class="!h-auto !flex-shrink-0" />
-        {/each}
-        {#if !categoryResultLoaded && !allCategoryLoaded}
-          <div
-            class="col-span-full mt-8 flex items-center justify-center sm:col-span-2 lg:col-span-3"
-          >
-            <Button on:click={loadMoreCategoryResults}>Load more</Button>
-          </div>
-        {/if}
-      {:else}
-        <p class="col-span-full text-center text-gray-600 sm:col-span-2 lg:col-span-3">
-          No projects found for "{selectedTag}".
-        </p>
-      {/if}
-    {:else if !searchTerm}
-      <div class="col-span-full text-xl font-semibold text-gray-700 sm:col-span-2 lg:col-span-3">
-        Top Projects
-      </div>
-      {#each data.topProjects as project}
-        <Card {project} />
-      {:else}
-        <p class="text-center text-gray-600 col-span-full sm:col-span-2 lg:col-span-3">
-          No projects found.
-        </p>
-      {/each}
+    </nav>
 
-      <div
-        class="col-span-full mt-8 text-xl font-semibold text-gray-700 sm:col-span-2 lg:col-span-3"
-      >
-        All Projects
-      </div>
-      {#if data.allProjects.length > 0}
-        {#each loadedProjects as project (project.id)}
-          <Card {project} />
-        {/each}
-        {#if !allProjectsLoaded}
+    <!-- Main content layout -->
+    <div class="flex flex-col gap-8 lg:flex-row">
+      <!-- Sidebar -->
+      <aside class="w-full lg:w-80 lg:flex-shrink-0">
+        <div class="sticky top-8">
           <div
-            class="col-span-full mt-8 flex w-full flex-grow items-center justify-center sm:col-span-2 lg:col-span-3"
+            class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
           >
-            <div
-              class="flex cursor-pointer"
-              on:click={loadMoreProjects}
-              on:keydown={(e) => e.key === 'Enter' && loadMoreProjects()}
-              role="button"
-              tabindex="0"
-            >
-              <Button
-                class="flex w-full max-w-sm items-center justify-center rounded-full border-2 border-[#516027] bg-[#d1ea9a] px-6 py-2.5 text-base font-semibold text-[#516027] shadow-md transition-colors hover:bg-[#c1da8a] md:text-lg"
-              >
-                Load more
-              </Button>
-            </div>
+            <h3 class="mb-4 text-heading-lg text-gray-300">Filter Projects</h3>
+
+            <ProjectCategory on:categorySelected={handleCategorySelected} />
           </div>
-        {/if}
-      {:else}
-        <p class="col-span-full text-center text-gray-600 sm:col-span-2 lg:col-span-3">
-          No projects found.
-        </p>
-      {/if}
-    {:else}
-      <p class="col-span-full text-center text-gray-600 sm:col-span-2 lg:col-span-3">
-        No search results found.
-      </p>
-    {/if}
-  </section>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="min-w-0 flex-1">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {#if searchTerm && searchResults.length > 0}
+            <div class="col-span-full">
+              <h2 class="text-heading-xl text-white">
+                Search results for: <span class="text-dashboard-yellow-400">"{searchTerm}"</span>
+              </h2>
+            </div>
+            {#each searchResults as project}
+              <Card {project} />
+            {/each}
+            {#if !searchResultsLoaded && !allSearchLoaded}
+              <div class="col-span-full mt-8 flex items-center justify-center">
+                <button
+                  on:click={loadMoreSearchResults}
+                  class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                >
+                  <span class="flex items-center gap-2">
+                    Load more results
+                    <svg
+                      class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            {/if}
+          {:else if selectedTag}
+            <div class="col-span-full">
+              <h2 class="text-heading-xl text-white">
+                Projects in: <span class="text-dashboard-yellow-400">"{selectedTag}"</span>
+              </h2>
+            </div>
+            {#if categoryResult.length > 0}
+              {#each categoryResult as project}
+                <Card {project} class="!h-auto !flex-shrink-0" />
+              {/each}
+              {#if !categoryResultLoaded && !allCategoryLoaded}
+                <div class="col-span-full mt-8 flex items-center justify-center">
+                  <button
+                    on:click={loadMoreCategoryResults}
+                    class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    <span class="flex items-center gap-2">
+                      Load more
+                      <svg
+                        class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              {/if}
+            {:else}
+              <div
+                class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
+              >
+                <p class="text-body-lg text-gray-400">
+                  No projects found for "{selectedTag}".
+                </p>
+                <p class="mt-2 text-body-md text-gray-500">
+                  Try selecting a different category or browse all projects.
+                </p>
+              </div>
+            {/if}
+          {:else if !searchTerm}
+            <!-- Top Projects Section -->
+            <div class="col-span-full">
+              <h2 class="text-heading-xl text-white">Top Projects</h2>
+              <p class="mt-2 text-body-lg text-gray-400">
+                Featured projects making the biggest impact
+              </p>
+            </div>
+            {#each data.topProjects as project}
+              <Card {project} />
+            {:else}
+              <div
+                class="p-8 text-center border col-span-full rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900"
+              >
+                <p class="text-gray-400 text-body-lg">No featured projects available.</p>
+              </div>
+            {/each}
+
+            <!-- All Projects Section -->
+            <div class="col-span-full mt-8">
+              <h2 class="text-heading-xl text-white">All Projects</h2>
+              <p class="mt-2 text-body-lg text-gray-400">
+                Discover and support projects across all categories
+              </p>
+            </div>
+            {#if data.allProjects.length > 0}
+              {#each loadedProjects as project (project.id)}
+                <Card {project} />
+              {/each}
+              {#if !allProjectsLoaded}
+                <div class="col-span-full mt-8 flex w-full flex-grow items-center justify-center">
+                  <div
+                    class="flex cursor-pointer"
+                    on:click={loadMoreProjects}
+                    on:keydown={(e) => e.key === 'Enter' && loadMoreProjects()}
+                    role="button"
+                    tabindex="0"
+                  >
+                    <button
+                      class="group rounded-xl border-2 border-dashboard-gray-600 px-8 py-3 text-label-lg font-medium text-gray-300 transition-all duration-300 hover:border-dashboard-gray-500 hover:bg-dashboard-gray-800/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      <span class="flex items-center gap-2">
+                        Load more
+                        <svg
+                          class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              {/if}
+            {:else}
+              <div
+                class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
+              >
+                <p class="text-body-lg text-gray-400">No projects found.</p>
+                <p class="mt-2 text-body-md text-gray-500">Check back later for new projects.</p>
+              </div>
+            {/if}
+          {:else}
+            <div
+              class="col-span-full rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-8 text-center"
+            >
+              <p class="text-body-lg text-gray-400">No search results found.</p>
+              <p class="mt-2 text-body-md text-gray-500">
+                Try adjusting your search terms or browse all projects.
+              </p>
+            </div>
+          {/if}
+        </div>
+      </main>
+    </div>
+  </div>
 </div>

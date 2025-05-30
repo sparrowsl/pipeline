@@ -32,11 +32,11 @@
 </script>
 
 <Toaster richColors position="top-right" closeButton />
-<main class="bg-white sm:-mb-16 sm:h-screen sm:overflow-hidden md:pr-0">
+<main class="bg-dashboard-black sm:-mb-16 sm:h-screen sm:overflow-hidden md:pr-0">
   <div class="flex h-full flex-col gap-0 md:flex-row md:gap-5">
     <section class="w-full flex-shrink-0 md:w-5/12">
       <div
-        class="relative flex flex-col items-center justify-center gap-2.5 bg-cyan-950 pb-10 pl-0 pr-0 pt-10 md:h-full md:py-24 md:pl-12 md:pr-2"
+        class="relative flex flex-col items-center justify-center gap-2.5 bg-dashboard-gray-900 pb-10 pl-0 pr-0 pt-10 md:h-full md:py-24 md:pl-12 md:pr-2"
       >
         {#if browser && isDesktop && !prefersReducedMotion}
           <div class="absolute inset-0 overflow-hidden">
@@ -88,7 +88,7 @@
       </div>
     </section>
 
-    <div class="flex min-h-0 flex-1 items-center justify-center">
+    <div class="flex min-h-0 flex-1 items-center justify-center bg-white">
       <section
         class="mt-20 flex w-full max-w-[1235px] flex-col items-center justify-center pb-20 max-md:mt-10 max-md:px-5"
       >
@@ -111,28 +111,28 @@
     will-change: transform, opacity;
   }
 
-  /* Primary dots - main flow elements */
+  /* Primary dots - purple accent */
   .floating-dot.primary {
     width: 10px;
     height: 10px;
-    background: linear-gradient(135deg, #10b981, #34d399);
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    background: linear-gradient(135deg, #ad89fd, #c49bff);
+    box-shadow: 0 0 15px rgba(173, 137, 253, 0.6);
   }
 
-  /* Secondary dots - accent elements */
+  /* Secondary dots - lime accent */
   .floating-dot.secondary {
     width: 6px;
     height: 6px;
-    background: linear-gradient(135deg, #06b6d4, #67e8f9);
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    background: linear-gradient(135deg, #bde35b, #caea7a);
+    box-shadow: 0 0 10px rgba(189, 227, 91, 0.5);
   }
 
-  /* Micro dots - depth and texture */
+  /* Micro dots - subtle purple tint */
   .floating-dot.micro {
     width: 3px;
     height: 3px;
-    background: linear-gradient(135deg, #fbbf24, #fde047);
-    box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+    background: linear-gradient(135deg, #ad89fd, #c49bff);
+    box-shadow: 0 0 8px rgba(173, 137, 253, 0.4);
   }
 
   /* Primary dot positions and animations */
@@ -212,8 +212,8 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(16, 185, 129, 0.7),
-      rgba(52, 211, 153, 0.4),
+      rgba(173, 137, 253, 0.7),
+      rgba(196, 155, 255, 0.4),
       transparent
     );
   }
@@ -221,13 +221,13 @@
   /* Connector lines */
   .pipeline-line.connector {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(189, 227, 91, 0.6), transparent);
   }
 
   /* Background lines */
   .pipeline-line.background {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(173, 137, 253, 0.2), transparent);
   }
 
   /* Main line positions and animations */

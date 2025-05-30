@@ -1,6 +1,6 @@
 import { createProjectSchema } from '$lib/server/validator/projectSchema.js';
 import { uploadImageAndReturnUrl } from '$lib/server/service/imageUploadService.js';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, fail, json, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -25,11 +25,11 @@ export const actions = {
     data.tags = tags;
     data.matchedDPGs = parsedMatchedDPGs;
 
-    if (banner_image.name) {
+    if (banner_image?.name) {
       data.banner_image = await uploadImageAndReturnUrl(banner_image, supabase);
     }
 
-    if (image.name) {
+    if (image?.name) {
       data.image = await uploadImageAndReturnUrl(image, supabase);
     }
 
@@ -46,7 +46,11 @@ export const actions = {
       if (!response.ok) {
         return fail(400, 'Failed to save project');
       }
-      return { success: true, redirectTo: `/project/${projectId}` };
+
+      return {
+        type: 'success',
+        redirectTo: `/project/${projectId}`,
+      };
     } catch (_) {
       return fail(500, 'Failed to save project. Please try again later.');
     }

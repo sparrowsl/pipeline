@@ -12,6 +12,7 @@
   import UpdateDetail from '$lib/UpdateDetail.svelte';
   import Updates from '$lib/Updates.svelte';
   import DpgStatus from '$lib/dpgStatus.svelte';
+  import CategoryTag from '$lib/CategoryTag.svelte';
   import { amountFormat } from '$lib/utils/amountFormat.js';
   import { dateFormat } from '$lib/utils/dateTimeFormat.js';
   import Icon from '@iconify/svelte';
@@ -27,8 +28,6 @@
 
   import { format } from 'date-fns';
   import { toast } from 'svelte-sonner';
-
-  
 
   let id;
   $: id = $page.params.id;
@@ -88,16 +87,13 @@
     showUpdatePopup = false;
   }
 
-  let activeNavItem = 'projectDetails';
+  let activeNavItem = 'dpgStatus';
   let showUpdateDetail = false;
   let selectedUpdate = null;
 
   const navItems = [
-    { id: 'projectDetails', label: 'About', width: '70px' },
-    { id: 'dpgStatus', label: 'DPG Status', width: '90px' },
-    { id: 'updates', label: 'Updates', width: '95px' },
-    { id: 'contributors', label: 'Contributors', width: '150px' },
-    { id: 'tasks', label: 'Tasks', width: '70px' },
+    { id: 'dpgStatus', label: 'DPG Assessment', width: '150px' },
+    { id: 'tasks', label: 'Issues & Tasks', width: '120px' },
   ];
 
   function handleNavChange(event) {
@@ -148,155 +144,208 @@
   }
 </script>
 
-<div class="mx-auto flex max-w-[1500px] flex-col items-start px-4 lg:flex-row lg:px-8">
-  <div class="w-full max-md:w-[100%] lg:sticky lg:top-0 lg:w-[40%] lg:pr-4">
-    <section class="relative mb-[64px] mt-6 flex w-full flex-col">
-      <!-- svelte-ignore a11y-no-redundant-roles -->
-      <!-- svelte-ignore a11y-img-redundant-alt -->
-      <img
-        loading="lazy"
-        src={banner}
-        class="z-0 flex h-[250px] w-full rounded-[24px] bg-stone-300 max-md:max-w-full object-cover"
-        role="img"
-        aria-label="Project hero image"
-        alt="Project image"
-      />
-      <!-- svelte-ignore a11y-img-redundant-alt -->
-      <img
-        loading="lazy"
-        class="absolute left-1/2 z-10 h-[120px] w-[120px] -translate-x-1/2 transform rounded-full outline outline-4 outline-white max-lg:left-[20px] lg:left-[50px] lg:translate-x-0"
-        style="top: 97%; transform: translateY(-50%);"
-        src={image}
-        alt="Project overlay image"
-      />
-    </section>
-
-    <section class="flex flex-col w-full mt-3">
-      <div class="flex justify-between max-md:gap-2">
-        <h1 class="text-3xl font-semibold text-black break-all max-lg:mt-2 max-lg:text-xl">
-          {#if project.title}
-            {#if project.title.length > 20}
-              <span class="lg:hidden" title={project.title}>{project.title.substring(0, 15)}...</span>
-              <span class="hidden lg:inline">{project.title}</span>
-            {:else}
-              {project.title}
-            {/if}
-          {:else}
-            Project Title
-          {/if}
-        </h1>
-        <div class="flex items-center gap-1 mt-2 text-base text-neutral-600">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/edd6d143a10aa89a67f0101c84563e276eb2ea6bc943000847a62b3bcaeb9863?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-            alt="Date icon"
-            class="h-[24px] w-[24px] object-contain max-md:w-[15px]"
-          />
-          <time datetime="2024-10" class="max-md:text-sm">Created: {date}</time>
-        </div>
-      </div>
-
-      <p class="mt-3 text-xl font-light leading-8 text-black max-lg:text-base">
-        {project.bio || 'Project bio'}
-      </p>
-    </section>
-
-    <section class="flex flex-wrap items-center gap-3 mt-2">
-      <div class="flex flex-wrap gap-2 text-lg text-lime-800">
-        {#if project.tags && project.tags.length > 0}
-          {#each project.tags as tag}
-            <span class="rounded-md border-2 border-[#0b383c] px-2 py-0.5 text-base max-md:px-3">
-              {tag.title}
-            </span>
-          {/each}
-        {/if}
-      </div>
-    </section>
-
-    {#if user}
-      <div class="flex items-center gap-3 mt-6">
+<div class="min-h-screen bg-dashboard-black">
+  <!-- Breadcrumb Navigation -->
+  <nav class="pt-8 mb-6">
+    <div class="container px-8 mx-auto max-w-7xl">
+      <div class="flex items-center gap-2">
         <a
-          href="/project/{id}/contribute"
-          class="w-full rounded-full bg-[#0b383c] py-4 text-center text-base font-semibold text-[#e9f5d3] max-md:w-[50%] lg:w-[50%]"
+          href="/explore"
+          class="flex items-center gap-2 font-medium text-gray-300 transition-colors text-body-lg hover:text-white"
         >
-          <button>CONTRIBUTE</button>
+          <Icon icon="lucide:arrow-left" class="w-5 h-5" />
+          Explore
         </a>
+        <Icon icon="lucide:chevron-right" class="w-4 h-4 text-gray-500" />
+        <span class="text-gray-400 text-body-lg">{project.title || 'Project Details'}</span>
+      </div>
+    </div>
+  </nav>
 
-        {#if user.id === project.user_id}
-          <a
-            href="/project/{id}/edit"
-            class="w-full rounded-full bg-lime-300 py-4 text-center text-base font-semibold text-[#0b383c] max-md:w-[50%] lg:w-[50%]"
-          >
-            <button>EDIT PROJECT</button>
-          </a>
-        {:else}
-          <form
-            class="w-[50%]"
-            action="?/bookmark"
-            method="POST"
-            use:enhance={() => {
-              return async ({ result }) => {
-                if (result.type === 'success') {
-                  isFollowing = !isFollowing;
-                  toast.success(
-                    isFollowing
-                      ? 'Project followed successfully'
-                      : 'Project unfollowed successfully',
-                  );
-                }
-              };
-            }}
-          >
-            <button
-              type="submit"
-              class="w-full py-4 text-base font-semibold text-center border-2 rounded-full"
-              class:bg-[#e9f5d3]={isFollowing}
-              class:text-black={isFollowing}
+  <div class="container px-8 mx-auto max-w-7xl">
+    <!-- Hero Section - Comprehensive Layout -->
+    <div class="flex gap-8 mb-8">
+      <!-- Project Image -->
+      <div class="flex-shrink-0">
+        <img
+          loading="lazy"
+          src={image}
+          class="object-cover w-48 h-64 rounded-2xl bg-dashboard-gray-800 shadow-card"
+          alt="Project image"
+        />
+      </div>
+
+      <!-- Main Project Info -->
+      <div class="flex-1 space-y-6">
+        <!-- Title and Metadata -->
+        <div class="space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 text-gray-400 text-body-sm">
+              <Icon icon="lucide:calendar" class="w-4 h-4" />
+              <time datetime={project.created_at}>Created {date}</time>
+            </div>
+            <h1 class="font-semibold leading-tight text-white text-display-xl">
+              {project.title || 'Project Title'}
+            </h1>
+          </div>
+
+          <!-- DPG Status - Prominent -->
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
+              <Icon icon="lucide:shield-check" class="w-5 h-5 text-dashboard-yellow-400" />
+              <div class="font-semibold text-white text-heading-md">
+                {project.dpgCount}<span class="text-gray-400">/9</span>
+              </div>
+              <span class="text-gray-300 text-body-md">DPG Standards</span>
+            </div>
+            <div class="w-32 h-2 rounded-full bg-dashboard-gray-700">
+              <div
+                class="h-2 transition-all duration-300 rounded-full bg-gradient-to-r from-dashboard-yellow-400 to-dashboard-purple-500"
+                style="width: {(project.dpgCount / 9) * 100}%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          {#if project.tags && project.tags.length > 0}
+            <div class="flex flex-wrap gap-2">
+              {#each project.tags as tag}
+                <div class="transition-transform duration-200 transform hover:scale-105">
+                  <CategoryTag {tag} />
+                </div>
+              {/each}
+            </div>
+          {/if}
+        </div>
+
+        <!-- Action Buttons -->
+        {#if user}
+          <div class="flex gap-3">
+            <a
+              href="/project/{id}/contribute"
+              class="px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
             >
-              {isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
-            </button>
-          </form>
+              <Icon icon="lucide:heart-handshake" class="inline w-4 h-4 mr-2" />
+              Contribute
+            </a>
+
+            {#if user.id === project.user_id}
+              <a
+                href="/project/{id}/edit"
+                class="px-6 py-3 font-medium text-white transition-colors border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                <Icon icon="lucide:edit" class="inline w-4 h-4 mr-2" />
+                Edit
+              </a>
+            {:else}
+              <form
+                action="?/bookmark"
+                method="POST"
+                use:enhance={() => {
+                  return async ({ result }) => {
+                    if (result.type === 'success') {
+                      isFollowing = !isFollowing;
+                      toast.success(
+                        isFollowing
+                          ? 'Project followed successfully'
+                          : 'Project unfollowed successfully',
+                      );
+                    }
+                  };
+                }}
+              >
+                <button
+                  type="submit"
+                  class="px-6 py-3 font-medium text-white transition-colors border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800 text-label-lg hover:bg-dashboard-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  class:bg-dashboard-purple-500={isFollowing}
+                  class:border-dashboard-purple-500={isFollowing}
+                  class:hover:bg-dashboard-purple-600={isFollowing}
+                >
+                  <Icon
+                    icon={isFollowing ? 'lucide:user-check' : 'lucide:user-plus'}
+                    class="inline w-4 h-4 mr-2"
+                  />
+                  {isFollowing ? 'Following' : 'Follow'}
+                </button>
+              </form>
+            {/if}
+          </div>
         {/if}
       </div>
-    {/if}
 
-    <Card class="mt-8 w-full rounded-[20px] border-0 bg-lime-300 px-6 text-teal-950 max-md:mt-6 py-8">
-      <CardContent class="flex items-center justify-between gap-6 p-0">
-        <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
-          <div class="text-5xl font-semibold max-md:text-3xl">
-            {contributors.length + uniqueResourceIds || 0}
+      <!-- Right Sidebar - Stats & Contributors -->
+      <div class="flex-shrink-0 space-y-6 w-80">
+        <!-- Stats Grid -->
+        <div
+          class="grid grid-cols-2 gap-4 p-4 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50"
+        >
+          <div class="text-center">
+            <div class="font-semibold text-white text-display-md">
+              ${amountFormat(project.current_funding || 0)}
+            </div>
+            <div class="text-gray-400 text-label-sm">
+              raised of ${amountFormat(project.funding_goal || 0)}
+            </div>
           </div>
-          <div class="text-sm max-md:text-[13px]">Contributors</div>
-        </div>
-
-        <Separator orientation="vertical" class="h-[100px] w-px bg-neutral-400 max-md:hidden" />
-
-        <div class="flex w-[120px] flex-col items-center max-md:w-[80px]">
-          <div class="text-5xl font-semibold max-md:text-3xl">
-            {project.dpgCount}<span class="text-3xl">/</span><span class="text-3xl text-teal-800"
-              >9</span
-            >
-          </div>
-          <div class="text-sm max-md:text-[12px]">DPG Status</div>
-        </div>
-
-        <Separator orientation="vertical" class="h-[100px] w-px bg-neutral-400 max-md:hidden" />
-
-        <div class="flex w-[120px] flex-col items-center max-md:w-[95px] whitespace-nowrap">
-          <div class="text-4xl font-semibold max-md:text-3xl">
-            ${amountFormat(project.current_funding || 0)}
-          </div>
-          <div class="text-sm max-md:text-[12px]">
-            raised of ${amountFormat(project.funding_goal || 0)}
+          <div class="text-center">
+            <div class="font-semibold text-white text-display-md">
+              {projectUpdates.length}
+            </div>
+            <div class="text-gray-400 text-label-sm">updates</div>
           </div>
         </div>
-      </CardContent>
-    </Card>
-  </div>
 
-  <div class="mt-4 w-full lg:mt-0 lg:w-[60%] lg:pl-4">
-    <main
-      class="flex flex-col items-start rounded-[20px] bg-white px-4 py-8 max-md:mt-6 max-md:px-4"
-    >
+        <!-- Contributors - Compact Style -->
+        <div class="p-4 border rounded-xl border-dashboard-gray-700 bg-dashboard-gray-900/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-white text-heading-md">Contributors</h3>
+            <!-- {#if contributors.length > 6}
+              <button
+                class="text-gray-400 transition-colors text-label-sm hover:text-white"
+                on:click={toggleGitDetail}
+              >
+                View all
+              </button>
+            {/if} -->
+          </div>
+
+          <!-- Avatar Row -->
+          <div class="flex items-center -space-x-2">
+            {#if Array.isArray(contributors) && contributors.length > 0}
+              {#each contributors.slice(0, 6) as contributor}
+                <img
+                  src={contributor.avatar_url || defaultImageUrl}
+                  alt={contributor.login || 'Contributor'}
+                  class="w-10 h-10 transition-transform border-2 rounded-full border-dashboard-gray-700 bg-dashboard-gray-800 hover:z-10 hover:scale-110"
+                  title={contributor.login || 'Contributor'}
+                />
+              {/each}
+              {#if contributors.length > 6}
+                <div
+                  class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-300 border-2 rounded-full border-dashboard-gray-700 bg-dashboard-gray-800"
+                >
+                  +{contributors.length - 6}
+                </div>
+              {/if}
+            {:else}
+              <div
+                class="flex items-center justify-center w-10 h-10 text-gray-500 border-2 border-dashed rounded-full border-dashboard-gray-600"
+              >
+                <Icon icon="lucide:users" class="w-5 h-5" />
+              </div>
+            {/if}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project About Section -->
+    <div class="mb-8">
+      <ProjectAbout {project} />
+    </div>
+
+    <!-- Detailed Sections - Minimal Tabs -->
+    <div class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card">
       <ProjectNav
         class="flex items-start w-full overflow-x-auto text-sm flex-nowrap whitespace-nowrap"
         {navItems}
@@ -304,186 +353,111 @@
         on:navChange={handleNavChange}
       />
 
-      <section class="flex flex-col items-center w-full max-w-full mt-8">
-        {#if activeNavItem === 'projectDetails'}
-          <ProjectAbout {project} />
-        {:else if activeNavItem === 'dpgStatus'}
-          <DpgStatus {user} {project} />
-        {:else if activeNavItem === 'updates'}
-          {#if showUpdateDetail}
-            <UpdateDetail {data} {selectedUpdate} on:goBack={handleGoBack} />
-          {:else}
-            <div class="flex justify-end w-full">
-              {#if user && user.id === project.user_id}
-                <button
-                  on:click={openUpdatePopup}
-                  class="w-32 py-4 mb-4 text-base font-semibold text-center text-black rounded-full bg-lime-300 max-md:py-2 max-md:text-sm md:w-40"
-                >
-                  ADD UPDATE
-                </button>
-              {/if}
+      <section class="mt-8">
+        {#if activeNavItem === 'dpgStatus'}
+          <div class="space-y-6">
+            <div class="text-center">
+              <h2 class="mb-2 font-semibold text-white text-display-xl">
+                DPG Compliance Assessment
+              </h2>
+              <p class="text-gray-300 text-body-lg">
+                Detailed evaluation against Digital Public Good standards
+              </p>
             </div>
-
-            {#if projectUpdates.length > 0}
-              {#each projectUpdates as update}
-                {#if update.code}
-                  <GitUpdate {update} />
-                {:else}
-                  <Updates on:showDetail={handleShowDetail} {update} {comments} />
-                {/if}
-              {/each}
-            {:else}
-              <div class="mt-6 text-center text-gray-500">No updates available.</div>
-            {/if}
-          {/if}
-        {:else if activeNavItem === 'contributors'}
-          <div class="w-auto px-4 md:w-full md:px-10">
-            {#if !showGitDetail && !showResourceDetail}
-              <div class="inline-flex items-center self-stretch justify-start gap-1 mb-6">
-                <div
-                  class="text-center font-['Roboto'] text-2xl font-normal leading-loose text-black md:text-[32px]"
-                ></div>
-              </div>
-          
-              <div class="flex flex-col w-full pb-14 max-md:pl-5">
-                    <div
-                  class="flex flex-wrap items-center justify-between w-full gap-10 font-bold text-center max-md:max-w-full"
-                >
-                  <h2 class="self-stretch my-auto text-4xl leading-tight text-black max-md:text-sm">GitHub Contributors</h2>
-          
-                  <Button
-                    class="flex items-center justify-center gap-1 whitespace-nowrap rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800 max-md:py-1"
-                    on:click={toggleGitDetail}
-                  >
-                    <span class="self-stretch my-auto">View All</span>
-                    <img
-                      loading="lazy"
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/e13f9fadc17a702d863b8d21bc60e6c7ea08ee8a9506ba412086d7b1a1d15195?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                      alt=""
-                      class="self-stretch object-contain w-5 my-auto aspect-square shrink-0"
-                    />
-                  </Button>
-                </div>
-          
-                <div
-                  class="relative z-0 grid items-start w-full grid-cols-2 gap-4 mt-5 max-md:max-w-full"
-                >
-                  {#if Array.isArray(contributors) && contributors.length > 0}
-                    {#each contributors.slice(0, 4) as contributor}
-                      <GitContributors {contributor} {totalCommits} />
-                    {/each}
-                  {:else}
-                    <div class="col-span-2 mt-6 text-center text-gray-500">No GitHub contributors available.</div>
-                  {/if}
-                </div>
-              </div>
-          
-              <div class="flex max-w-[846px] flex-col max-md:pl-5">
-                <div
-                  class="flex flex-wrap items-center justify-between w-full gap-10 font-bold text-center max-md:max-w-full"
-                >
-                  <h2 class="self-stretch my-auto text-4xl leading-tight text-black max-md:text-xl">Resources</h2>
-          
-                  <Button
-                    class="flex items-center justify-center gap-1 whitespace-nowrap rounded-[40px] border-2 border-solid border-lime-800 py-2 pl-3 pr-2 text-sm leading-none text-lime-800 max-md:py-1"
-                    on:click={toggleResourceDetail}
-                  >
-                    <span class="self-stretch my-auto">View All</span>
-                    <img
-                      loading="lazy"
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/e13f9fadc17a702d863b8d21bc60e6c7ea08ee8a9506ba412086d7b1a1d15195?placeholderIfAbsent=true&apiKey=567aaefef2da4f73a3149c6bc21f1ea8"
-                      alt=""
-                      class="self-stretch object-contain w-5 my-auto aspect-square shrink-0"
-                    />
-                  </Button>
-                </div>
-                <div class="flex flex-wrap items-start w-full gap-5 mt-5 max-md:max-w-full">
-                  {#if projectResource && projectResource.length > 0}
-                    {#each projectResource as resource}
-                      <ResourceCard {resource} />
-                    {/each}
-                  {:else}
-                    <div class="w-full mt-6 text-center text-gray-500">No resources available.</div>
-                  {/if}
-                </div>
-              </div>
-            {/if}
-          
-            {#if showGitDetail}
-             <GitContributorsViewAll on:goBack={handleGoBack} /> 
-            
-            {:else if showResourceDetail}
-              <ResourcesViewAll on:goBack={handleGoBack} />
-            {/if}
+            <DpgStatus {user} {project} />
           </div>
         {:else if activeNavItem === 'tasks'}
-          <Issues />
+          <div class="space-y-6">
+            <div>
+              <h2 class="mb-2 font-semibold text-white text-display-xl">Issues & Tasks</h2>
+              <p class="text-gray-300 text-body-lg">Open issues and development tasks</p>
+            </div>
+            <Issues />
+          </div>
         {/if}
       </section>
-    </main>
+    </div>
   </div>
 </div>
 
-<div class="relative">
-  {#if showUpdatePopup}
-    <Dialog open onOpenChange={closeUpdatePopup}>
-      <DialogContent
-        class="fixed w-full max-w-[90%] rounded-lg bg-white p-4 shadow-lg sm:p-6 sm:max-w-[85%] md:max-w-[70%] lg:max-w-[50%] xl:max-w-[30%] sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]"
+<!-- Modals -->
+{#if showGitDetail}
+  <Dialog open onOpenChange={() => (showGitDetail = false)}>
+    <DialogContent class="max-w-4xl">
+      <GitContributorsViewAll on:goBack={handleGoBack} />
+    </DialogContent>
+  </Dialog>
+{/if}
+
+{#if showResourceDetail}
+  <Dialog open onOpenChange={() => (showResourceDetail = false)}>
+    <DialogContent class="max-w-4xl">
+      <ResourcesViewAll on:goBack={handleGoBack} />
+    </DialogContent>
+  </Dialog>
+{/if}
+
+{#if showUpdatePopup}
+  <Dialog open onOpenChange={closeUpdatePopup}>
+    <DialogContent
+      class="fixed w-full max-w-md rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]"
+    >
+      <DialogHeader>
+        <DialogTitle class="mb-4 font-semibold text-white text-heading-lg">Add Update</DialogTitle>
+      </DialogHeader>
+
+      <form
+        action="?/addUpdate"
+        method="POST"
+        use:enhance={() => {
+          return async ({ form, result }) => {
+            if (result.type === 'success') {
+              closeUpdatePopup();
+              form.reset();
+            }
+            await applyAction(result);
+            await invalidateAll();
+          };
+        }}
+        class="space-y-4"
       >
-        <DialogHeader>
-          <DialogTitle class="mb-2 text-lg font-bold sm:text-xl sm:mb-4">Add Update</DialogTitle>
-        </DialogHeader>
-
-        <form
-          action="?/addUpdate"
-          method="POST"
-          use:enhance={() => {
-            return async ({ form, result }) => {
-              if (result.type === 'success') {
-                closeUpdatePopup();
-                form.reset();
-              }
-              await applyAction(result);
-              await invalidateAll();
-            };
-          }}
-        >
-          <div class="space-y-2 sm:space-y-3 w-full">
-            <Label class="block text-sm font-medium text-gray-700">
-              Title
-              <Input
-                type="text"
-                name="title"
-                class="w-full p-2 mt-1 border rounded-lg"
-                required
-                disabled={isAddingUpdate}
-              />
-            </Label>
-            <Label class="block text-sm font-medium text-gray-700">
-              Body
-              <Textarea
-                rows="3"
-                name="body"
-                class="w-full p-2 mt-1 border rounded-lg resize-none"
-                required
-                disabled={isAddingUpdate}
-              />
-            </Label>
-          </div>
-
-          <Button
-            type="submit"
-            class="w-full py-2 mt-3 sm:mt-4 text-black rounded-lg bg-lime-300 hover:bg-lime-400"
+        <div>
+          <Label class="block mb-2 font-medium text-gray-300 text-label-lg">Title</Label>
+          <Input
+            type="text"
+            name="title"
+            class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            required
             disabled={isAddingUpdate}
-          >
-            {#if isAddingUpdate}
-              <span class="flex items-center justify-center gap-2"> Adding Update... </span>
-            {:else}
-              Add Update
-            {/if}
-          </Button>
-        </form>
-      </DialogContent>
-    </Dialog>
-  {/if}
-</div>
+          />
+        </div>
+
+        <div>
+          <Label class="block mb-2 font-medium text-gray-300 text-label-lg">Body</Label>
+          <Textarea
+            rows="4"
+            name="body"
+            class="w-full px-4 py-3 text-white border rounded-lg resize-none border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-transparent focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            required
+            disabled={isAddingUpdate}
+          />
+        </div>
+
+        <Button
+          type="submit"
+          class="w-full px-6 py-3 font-medium transition-colors rounded-xl bg-dashboard-yellow-400 text-label-lg text-dashboard-black hover:bg-dashboard-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-yellow-400 disabled:pointer-events-none disabled:opacity-50"
+          disabled={isAddingUpdate}
+        >
+          {#if isAddingUpdate}
+            <span class="flex items-center justify-center gap-2">
+              <Icon icon="lucide:loader-2" class="w-4 h-4 animate-spin" />
+              Adding Update...
+            </span>
+          {:else}
+            Add Update
+          {/if}
+        </Button>
+      </form>
+    </DialogContent>
+  </Dialog>
+{/if}
