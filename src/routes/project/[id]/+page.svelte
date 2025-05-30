@@ -355,7 +355,7 @@
         {#if activeNavItem === 'dpgStatus'}
           <div class="space-y-6">
             <div class="text-center">
-              <h2 class="mb-2 text-display-xl font-semibold text-white">
+              <h2 class="mb-2 text-display-md font-semibold text-white lg:text-display-xl">
                 DPG Compliance Assessment
               </h2>
               <p class="text-body-lg text-gray-300">
@@ -367,7 +367,9 @@
         {:else if activeNavItem === 'tasks'}
           <div class="space-y-6">
             <div>
-              <h2 class="mb-2 text-display-xl font-semibold text-white">Issues & Tasks</h2>
+              <h2 class="mb-2 text-display-md font-semibold text-white lg:text-display-xl">
+                Issues & Tasks
+              </h2>
               <p class="text-body-lg text-gray-300">Open issues and development tasks</p>
             </div>
             <Issues />
