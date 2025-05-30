@@ -154,7 +154,7 @@
 
       <!-- Main content -->
       <main class="min-w-0 flex-1">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {#if searchTerm && searchResults.length > 0}
             <div class="col-span-full">
               <h2 class="text-heading-xl text-white">

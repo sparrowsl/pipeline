@@ -174,30 +174,30 @@
 
 <!-- Form container with enhanced styling -->
 <div
-  class="p-6 border rounded-2xl border-dashboard-gray-700 bg-dashboard-gray-900 shadow-card"
+  class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
   in:fly={{ y: 20, duration: 400 }}
 >
   <!-- Header with enhanced styling -->
-  <div class="flex items-center gap-3 mb-8" in:scale={{ duration: 300, delay: 100 }}>
-    <div class="p-2 rounded-lg bg-dashboard-yellow-400/10">
-      <Sparkles class="w-6 h-6 text-dashboard-yellow-400" />
+  <div class="mb-8 flex items-center gap-3" in:scale={{ duration: 300, delay: 100 }}>
+    <div class="rounded-lg bg-dashboard-yellow-400/10 p-2">
+      <Sparkles class="h-6 w-6 text-dashboard-yellow-400" />
     </div>
     <div>
-      <h2 class="text-white text-heading-xl">Submit Your Resource</h2>
-      <p class="text-gray-400 text-body-md">Help make this project better with your contribution</p>
+      <h2 class="text-heading-xl text-white">Submit Your Resource</h2>
+      <p class="text-body-md text-gray-400">Help make this project better with your contribution</p>
     </div>
   </div>
 
   {#if !selectedContributionType}
     <div
-      class="p-6 mb-8 border rounded-xl border-dashboard-yellow-400/30 bg-dashboard-yellow-400/5"
+      class="mb-8 rounded-xl border border-dashboard-yellow-400/30 bg-dashboard-yellow-400/5 p-6"
       in:fly={{ y: 10, duration: 300, delay: 200 }}
     >
-      <div class="flex items-center gap-3 mb-3">
-        <Icon icon="mdi:lightbulb" class="w-5 h-5 text-dashboard-yellow-400" />
-        <span class="font-medium text-label-lg text-dashboard-yellow-400">Get Started</span>
+      <div class="mb-3 flex items-center gap-3">
+        <Icon icon="mdi:lightbulb" class="h-5 w-5 text-dashboard-yellow-400" />
+        <span class="text-label-lg font-medium text-dashboard-yellow-400">Get Started</span>
       </div>
-      <p class="text-gray-300 text-body-md">
+      <p class="text-body-md text-gray-300">
         Please select a specific issue or DPG standard above to contribute to. This helps ensure
         your resource directly addresses the project's needs.
       </p>
@@ -208,18 +208,18 @@
     <!-- Contributing To Display -->
     {#if selectedContributionType && selectedItem}
       <div
-        class="p-4 border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800"
+        class="rounded-xl border border-dashboard-gray-600 bg-dashboard-gray-800 p-4"
         in:fly={{ y: 10, duration: 300, delay: 150 }}
       >
-        <div class="flex items-center gap-3 mb-3">
-          <div class="p-2 rounded-lg bg-dashboard-purple-500/10">
-            <Icon icon="mdi:target" class="w-5 h-5 text-dashboard-purple-500" />
+        <div class="mb-3 flex items-center gap-3">
+          <div class="rounded-lg bg-dashboard-purple-500/10 p-2">
+            <Icon icon="mdi:target" class="h-5 w-5 text-dashboard-purple-500" />
           </div>
-          <span class="font-medium text-label-lg text-dashboard-purple-300">Contributing To</span>
+          <span class="text-label-lg font-medium text-dashboard-purple-300">Contributing To</span>
         </div>
         <div class="flex items-start gap-3">
-          <div class="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-dashboard-purple-400"></div>
-          <p class="leading-relaxed text-white text-body-lg">
+          <div class="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-dashboard-purple-400"></div>
+          <p class="text-body-lg leading-relaxed text-white">
             {#if selectedContributionType === 'issue'}
               <strong>GitHub Issue #{selectedItem.number}:</strong> {selectedItem.title}
             {:else}
@@ -232,16 +232,16 @@
 
     <!-- Resource Type Field with enhanced design -->
     <div class="space-y-3" in:fly={{ y: 10, duration: 300, delay: 200 }}>
-      <Label for="category" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="category" class="block text-label-lg font-medium text-gray-300">
         Type of Resource
       </Label>
       <Select onValueChange={(value) => (resourceType = value)} value={resourceType}>
         <SelectTrigger
-          class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+          class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
         >
           <div class="flex items-center gap-3 text-white">
             {#if selectedCategory}
-              <Icon icon={selectedCategory.icon} class="w-5 h-5 text-dashboard-purple-400" />
+              <Icon icon={selectedCategory.icon} class="h-5 w-5 text-dashboard-purple-400" />
             {/if}
             <SelectValue placeholder="Select resource type" class="text-white" />
           </div>
@@ -253,10 +253,10 @@
               class="px-3 py-2 text-gray-300 hover:bg-dashboard-gray-700 focus:bg-dashboard-gray-700"
             >
               <div class="flex items-center gap-3 text-gray-300">
-                <Icon icon={category.icon} class="w-4 h-4 text-dashboard-purple-400" />
+                <Icon icon={category.icon} class="h-4 w-4 text-dashboard-purple-400" />
                 <div>
                   <div class="font-medium text-gray-300">{category.label}</div>
-                  <div class="text-gray-500 text-body-sm">{category.description}</div>
+                  <div class="text-body-sm text-gray-500">{category.description}</div>
                 </div>
               </div>
             </SelectItem>
@@ -267,7 +267,7 @@
 
     <!-- Resource Title Field with better styling -->
     <div class="space-y-3" in:fly={{ y: 10, duration: 300, delay: 250 }}>
-      <Label for="resourceTitle" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="resourceTitle" class="block text-label-lg font-medium text-gray-300">
         Resource Title
       </Label>
       <Input
@@ -275,14 +275,14 @@
         bind:value={resourceTitle}
         type="text"
         placeholder="Give your resource a descriptive title"
-        class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg placeholder:text-gray-500 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+        class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white placeholder:text-gray-500 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
         aria-label="Enter the resource title"
       />
     </div>
 
     <!-- Resource Link Field with validation -->
     <div class="space-y-3" in:fly={{ y: 10, duration: 300, delay: 300 }}>
-      <Label for="resourceLink" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="resourceLink" class="block text-label-lg font-medium text-gray-300">
         Resource Link
       </Label>
       <Input
@@ -290,34 +290,34 @@
         bind:value={resourceLink}
         type="url"
         placeholder="https://example.com/your-resource"
-        class="w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg placeholder:text-gray-500 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+        class="w-full rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white placeholder:text-gray-500 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
         aria-label="Enter the resource link"
       />
     </div>
 
     <!-- Country Field with improved UX -->
     <div class="space-y-3" in:fly={{ y: 10, duration: 300, delay: 350 }}>
-      <Label for="country" class="block font-medium text-gray-300 text-label-lg">Country</Label>
+      <Label for="country" class="block text-label-lg font-medium text-gray-300">Country</Label>
       <Popover let:open>
         <PopoverTrigger class="w-full">
           <Button
             variant="outline"
-            class="flex justify-between w-full px-4 py-3 text-white border rounded-lg border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg hover:bg-dashboard-gray-700 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
+            class="flex w-full justify-between rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-body-lg text-white hover:bg-dashboard-gray-700 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500"
           >
             <span class="text-left text-white">
               {country ? countryList.find((c) => c.code === country)?.name : 'Select your country'}
             </span>
-            <ChevronsUpDown class="w-4 h-4 opacity-50 shrink-0" />
+            <ChevronsUpDown class="h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent class="w-full p-0 border-dashboard-gray-600 bg-dashboard-gray-800">
+        <PopoverContent class="w-full border-dashboard-gray-600 bg-dashboard-gray-800 p-0">
           <Command class="bg-dashboard-gray-800">
             <CommandInput
               placeholder="Search country..."
-              class="text-white border-dashboard-gray-600 bg-dashboard-gray-800"
+              class="border-dashboard-gray-600 bg-dashboard-gray-800 text-white"
             />
             <CommandEmpty class="text-gray-400">No country found.</CommandEmpty>
-            <CommandGroup class="overflow-auto max-h-60">
+            <CommandGroup class="max-h-60 overflow-auto">
               {#each countryList as countryItem}
                 <button
                   type="button"
@@ -329,9 +329,9 @@
                 >
                   <CommandItem class="text-gray-300 hover:bg-dashboard-gray-700">
                     {#if country === countryItem.code}
-                      <Check class="w-4 h-4 mr-2" />
+                      <Check class="mr-2 h-4 w-4" />
                     {:else}
-                      <div class="w-4 h-4 mr-2"></div>
+                      <div class="mr-2 h-4 w-4"></div>
                     {/if}
                     {countryItem.name}
                   </CommandItem>
@@ -345,7 +345,7 @@
 
     <!-- Comment Field with enhanced styling -->
     <div class="space-y-3" in:fly={{ y: 10, duration: 300, delay: 400 }}>
-      <Label for="interest" class="block font-medium text-gray-300 text-label-lg">
+      <Label for="interest" class="block text-label-lg font-medium text-gray-300">
         How This Resource Helps
       </Label>
       <Textarea
@@ -359,20 +359,23 @@
     </div>
 
     <!-- Submit Button with enhanced design -->
-    <div class="flex justify-end pt-4" in:fly={{ y: 10, duration: 300, delay: 450 }}>
+    <div
+      class="flex justify-center pt-4 md:justify-end"
+      in:fly={{ y: 10, duration: 300, delay: 450 }}
+    >
       <Button
         type="submit"
-        class="px-8 py-3 font-medium text-white transition-colors rounded-xl bg-dashboard-purple-500 text-label-lg hover:bg-dashboard-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:cursor-not-allowed disabled:opacity-50"
+        class="rounded-xl bg-dashboard-purple-500 px-8 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:cursor-not-allowed disabled:opacity-50"
         disabled={loading || !isFormValid}
       >
         <div class="flex items-center gap-2">
           {#if loading}
             <div class="animate-spin">
-              <Icon icon="lucide:loader-2" class="w-4 h-4" />
+              <Icon icon="lucide:loader-2" class="h-4 w-4" />
             </div>
             <span>Submitting...</span>
           {:else}
-            <Send class="w-4 h-4" />
+            <Send class="h-4 w-4" />
             <span>Submit Resource</span>
           {/if}
         </div>

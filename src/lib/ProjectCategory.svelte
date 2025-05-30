@@ -240,27 +240,27 @@
   });
 </script>
 
-<div class="relative category-dropdown">
+<div class="category-dropdown relative">
   <!-- Selected Pills Display -->
   {#if selectedCategories.size > 0}
-    <div class="flex flex-wrap gap-2 mb-4">
+    <div class="mb-4 flex flex-wrap gap-2">
       {#each categories.filter((cat) => selectedCategories.has(cat.id)) as category}
         <div
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg border-dashboard-purple-500/30 bg-dashboard-purple-500/20"
+          class="flex items-center gap-2 rounded-lg border border-dashboard-purple-500/30 bg-dashboard-purple-500/20 px-3 py-2"
         >
           <img
             src={category.image}
             alt={category.title}
-            class="object-cover w-4 h-4 rounded-sm"
+            class="h-4 w-4 rounded-sm object-cover"
             loading="lazy"
           />
-          <span class="font-medium text-label-md text-dashboard-purple-400">{category.title}</span>
+          <span class="text-label-md font-medium text-dashboard-purple-400">{category.title}</span>
           <button
             on:click={() => toggleCategory(category)}
-            class="flex items-center justify-center w-4 h-4 ml-1 transition-colors rounded-full bg-dashboard-purple-500/30 text-dashboard-purple-300 hover:bg-dashboard-purple-500/50 hover:text-white"
+            class="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-dashboard-purple-500/30 text-dashboard-purple-300 transition-colors hover:bg-dashboard-purple-500/50 hover:text-white"
             aria-label="Remove {category.title} filter"
           >
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -273,7 +273,7 @@
       {/each}
       <button
         on:click={clearAllFilters}
-        class="font-medium text-gray-400 underline transition-colors text-label-sm hover:text-white"
+        class="text-label-sm font-medium text-gray-400 underline transition-colors hover:text-white"
       >
         Clear all
       </button>
@@ -283,12 +283,12 @@
   <!-- Dropdown Toggle Button -->
   <button
     on:click={toggleDropdown}
-    class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-gray-300 transition-colors border rounded-xl border-dashboard-gray-600 bg-dashboard-gray-800 text-body-lg hover:border-dashboard-gray-500 hover:bg-dashboard-gray-700 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500/20"
+    class="flex w-full items-center justify-between rounded-xl border border-dashboard-gray-600 bg-dashboard-gray-800 px-4 py-3 text-left text-body-lg font-medium text-gray-300 transition-colors hover:border-dashboard-gray-500 hover:bg-dashboard-gray-700 focus:border-dashboard-purple-500 focus:outline-none focus:ring-2 focus:ring-dashboard-purple-500/20"
     aria-expanded={isDropdownOpen}
     aria-haspopup="listbox"
   >
     <span class="flex items-center gap-2">
-      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -315,24 +315,24 @@
   <!-- Dropdown Menu -->
   {#if isDropdownOpen}
     <div
-      class="absolute z-50 w-full mt-2 border shadow-lg rounded-xl border-dashboard-gray-600 bg-dashboard-gray-900"
+      class="z-50 mt-2 w-full rounded-xl border border-dashboard-gray-600 bg-dashboard-gray-900 shadow-lg"
     >
-      <div class="p-2 overflow-y-auto max-h-80">
+      <div class="max-h-80 overflow-y-auto p-2">
         {#if loading}
           <div class="flex items-center justify-center py-8">
             <div
-              class="w-6 h-6 border-2 rounded-full animate-spin border-dashboard-purple-500 border-t-transparent"
+              class="h-6 w-6 animate-spin rounded-full border-2 border-dashboard-purple-500 border-t-transparent"
             ></div>
           </div>
         {:else if categories.length === 0}
           <div class="py-8 text-center">
-            <p class="text-gray-500 text-body-md">No categories available</p>
+            <p class="text-body-md text-gray-500">No categories available</p>
           </div>
         {:else}
           {#each categories as category}
             <button
               on:click={() => toggleCategory(category)}
-              class="flex items-center w-full gap-3 px-3 py-3 text-left transition-colors rounded-lg hover:bg-dashboard-gray-800 focus:bg-dashboard-gray-800 focus:outline-none"
+              class="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors hover:bg-dashboard-gray-800 focus:bg-dashboard-gray-800 focus:outline-none"
               role="option"
               aria-selected={selectedCategories.has(category.id)}
             >
@@ -346,7 +346,7 @@
               >
                 {#if selectedCategories.has(category.id)}
                   <svg
-                    class="w-3 h-3 text-white"
+                    class="h-3 w-3 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -363,20 +363,20 @@
 
               <!-- SDG Icon -->
               <div
-                class="flex items-center justify-center w-8 h-8 rounded-md bg-dashboard-gray-700"
+                class="flex h-8 w-8 items-center justify-center rounded-md bg-dashboard-gray-700"
               >
                 <img
                   src={category.image}
                   alt={category.title}
-                  class="object-cover w-6 h-6 rounded-sm"
+                  class="h-6 w-6 rounded-sm object-cover"
                   loading="lazy"
                 />
               </div>
 
               <!-- Category Info -->
-              <div class="flex-1 min-w-0">
-                <p class="font-medium text-gray-300 truncate text-body-md">{category.title}</p>
-                <p class="text-gray-500 truncate text-label-sm">SDG {category.sdg_id}</p>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-body-md font-medium text-gray-300">{category.title}</p>
+                <p class="truncate text-label-sm text-gray-500">SDG {category.sdg_id}</p>
               </div>
             </button>
           {/each}
@@ -385,10 +385,10 @@
 
       <!-- Footer with clear all option -->
       {#if selectedCategories.size > 0}
-        <div class="p-3 border-t border-dashboard-gray-700">
+        <div class="border-t border-dashboard-gray-700 p-3">
           <button
             on:click={clearAllFilters}
-            class="font-medium text-gray-400 transition-colors text-label-md hover:text-white"
+            class="text-label-md font-medium text-gray-400 transition-colors hover:text-white"
           >
             Clear all filters
           </button>

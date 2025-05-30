@@ -82,14 +82,14 @@
           {project.title || 'Project'}
         </a>
         <ChevronRight class="h-4 w-4 text-white/60" />
-        <span class="text-body-lg text-white/90">Contribute Resources</span>
+        <span class="text-body-lg text-white/90">Contribute to</span>
       </div>
     </nav>
 
     <!-- Hero Content with Progress Indicator -->
     <div class="space-y-6 text-center">
       <div>
-        <h1 class="mb-4 text-display-lg text-white">Contributing Resources</h1>
+        <h1 class="mb-2 text-display-md text-white lg:mb-4 lg:text-display-lg">Contribute to</h1>
         <h2 class="mb-2 text-heading-xl text-white">{project.title || 'Project Title'}</h2>
         <p class="text-body-xl text-white/90">
           Help this project by contributing resources to specific needs
@@ -163,7 +163,7 @@
             </div>
 
             <div
-              class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-6 shadow-card"
+              class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900 p-4 shadow-card md:p-6"
             >
               {#await (async () => {
                 const githubLinkSplit = project?.github?.split('/') || [];
@@ -175,7 +175,7 @@
                   return [];
                 }
               })()}
-                <div class="flex flex-col items-center justify-center space-y-4 py-8">
+                <div class="flex flex-col items-center justify-center space-y-4 py-6 md:py-8">
                   <div class="animate-spin">
                     <Icon icon="lucide:loader-2" class="h-8 w-8 text-dashboard-purple-500" />
                   </div>
@@ -194,10 +194,10 @@
                       >
                     </div>
 
-                    <div class="max-h-80 space-y-3 overflow-y-auto">
+                    <div class="max-h-60 space-y-3 overflow-y-auto md:max-h-80">
                       {#each issues.slice(0, 4) as issue, index}
                         <button
-                          class="group w-full rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-800 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-dashboard-purple-500/50 hover:bg-dashboard-gray-700 hover:shadow-cardHover"
+                          class="group w-full rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-800 p-3 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-dashboard-purple-500/50 hover:bg-dashboard-gray-700 hover:shadow-cardHover md:p-4"
                           on:click={() => selectContribution('issue', issue)}
                           in:fly={{ y: 10, duration: 300, delay: index * 50 }}
                         >
@@ -212,7 +212,7 @@
                             </div>
                             <div class="min-w-0 flex-1">
                               <h4
-                                class="truncate text-body-lg font-medium text-white transition-colors group-hover:text-dashboard-purple-300"
+                                class="line-clamp-2 text-body-lg font-medium text-white transition-colors group-hover:text-dashboard-purple-300 md:truncate"
                               >
                                 #{issue.number}
                                 {issue.title}
@@ -223,7 +223,7 @@
                             </div>
                             <Icon
                               icon="mdi:arrow-right"
-                              class="h-5 w-5 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-dashboard-purple-400"
+                              class="h-5 w-5 flex-shrink-0 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-dashboard-purple-400"
                             />
                           </div>
                         </button>
@@ -239,7 +239,7 @@
                     </div>
                   </div>
                 {:else}
-                  <div class="flex flex-col items-center justify-center space-y-4 py-12">
+                  <div class="flex flex-col items-center justify-center space-y-4 py-8 md:py-12">
                     <div class="rounded-2xl bg-dashboard-gray-800 p-4">
                       <Icon icon="mdi:check-circle" class="h-12 w-12 text-dashboard-success-500" />
                     </div>

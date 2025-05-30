@@ -176,18 +176,17 @@
       <div
         class="rounded-2xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-2 backdrop-blur-sm"
       >
-        <div class="flex">
+        <div class="scrollbar-hide flex overflow-x-auto md:overflow-x-visible">
           {#each tabs as tab, index}
-            <a href={tab.href} class="group relative flex-1">
+            <a href={tab.href} class="group relative flex-shrink-0 md:flex-1">
               <div
-                class="flex items-center justify-center gap-3 rounded-xl px-6 py-4 transition-all duration-200
+                class="flex items-center justify-center gap-3 rounded-xl px-4 py-4 transition-all duration-200 md:px-6
                 {activeTabIndex === index
                   ? 'bg-dashboard-yellow-400 text-dashboard-black'
                   : 'text-gray-400 hover:bg-dashboard-gray-800 hover:text-white'}"
               >
                 <Icon icon={tab.icon} class="h-5 w-5" />
-                <span class="hidden text-label-lg font-medium sm:inline">{tab.name}</span>
-                <span class="text-label-lg font-medium sm:hidden">{tab.name.split(' ')[0]}</span>
+                <span class="whitespace-nowrap text-label-lg font-medium">{tab.name}</span>
                 {#if tab.count > 0}
                   <span
                     class="rounded-full px-2 py-1 text-label-sm

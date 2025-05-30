@@ -162,13 +162,13 @@
 
   <div class="container mx-auto max-w-7xl px-8">
     <!-- Hero Section - Comprehensive Layout -->
-    <div class="mb-8 flex gap-8">
+    <div class="mb-8 flex flex-col gap-8 md:flex-row">
       <!-- Project Image -->
-      <div class="flex-shrink-0">
+      <div class="flex-shrink-0 md:flex-shrink-0">
         <img
           loading="lazy"
           src={image}
-          class="h-64 w-48 rounded-2xl bg-dashboard-gray-800 object-cover shadow-card"
+          class="h-64 w-full rounded-2xl bg-dashboard-gray-800 object-cover shadow-card md:h-64 md:w-48"
           alt="Project image"
         />
       </div>
@@ -272,7 +272,7 @@
       </div>
 
       <!-- Right Sidebar - Stats & Contributors -->
-      <div class="w-80 flex-shrink-0 space-y-6">
+      <div class="w-full flex-shrink-0 space-y-6 md:w-80">
         <!-- Stats Grid -->
         <div
           class="grid grid-cols-2 gap-4 rounded-xl border border-dashboard-gray-700 bg-dashboard-gray-900/50 p-4"
