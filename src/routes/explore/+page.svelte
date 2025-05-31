@@ -63,7 +63,7 @@
     categoryResultLoaded = true;
     try {
       const response = await fetch(
-        `/api/projects/projectByCategory/${tag}?&page=${categoryPage}&limit=${itemsPerPage}`,
+        `/api/projects/projectByCategory?categoryIds=${tag}&page=${categoryPage}&limit=${itemsPerPage}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -104,11 +104,9 @@
   function handleCategorySelected(event) {
     const selectedCategories = event.detail;
     if (selectedCategories && selectedCategories.length > 0) {
-      // For now, we'll use the first selected category for API calls
-      // TODO: Update API to handle multiple categories
-      const firstCategory = selectedCategories[0];
+      const categoryIds = selectedCategories.map((cat) => cat.id);
       selectedTag = selectedCategories.map((cat) => cat.title).join(', ');
-      projectByCategory(firstCategory.id);
+      projectByCategory(categoryIds);
     } else {
       selectedTag = '';
       // Reset to show all projects when no categories are selected
