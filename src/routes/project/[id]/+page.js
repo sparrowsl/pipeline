@@ -18,7 +18,7 @@ export async function load({ params, fetch }) {
 
     return {
       project: projectData.project || [],
-      resources: resourcesData.resources || [],
+      totalResources: resourcesData.totalResources,
     };
   } catch (e) {
     return {

@@ -1,4 +1,7 @@
-import { getProjectResource } from '$lib/server/service/projectContributionsService.js';
+import {
+  getProjectResource,
+  getProjectResources,
+} from '$lib/server/service/projectContributionsService.js';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ params, locals, setHeaders }) {
@@ -6,14 +9,14 @@ export async function GET({ params, locals, setHeaders }) {
   let supabase = locals.supabase;
 
   try {
-    const resource = await getProjectResource(id, supabase);
+    const totalResources = await getProjectResources(id, supabase);
 
     setHeaders({
       'Cache-Control': 'public, max-age=600, stale-while-revalidate=300',
       Vary: 'Accept-Encoding',
     });
 
-    return json({ resources: resource }, { status: 200 });
+    return json({ totalResources }, { status: 200 });
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
   }
