@@ -26,7 +26,6 @@ export async function getExistingBookmarksByUserId(userId, start, end, supabase)
 }
 
 export async function addBookmark(projectId, userId, supabase) {
-  console.log(userId);
   const { data, error } = await supabase
     .from('bookmark_project')
     .insert([

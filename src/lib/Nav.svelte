@@ -22,7 +22,6 @@
   }
 
   function toggleMobileMenu() {
-    console.log('toggleMobileMenu');
     isMobileMenuOpen = !isMobileMenuOpen;
     if (!isMobileMenuOpen) {
       isResourcesOpen = false;
