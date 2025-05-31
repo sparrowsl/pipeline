@@ -70,6 +70,51 @@ export async function getProjectsByUserId(userId, start, end, supabase) {
   return data;
 }
 
+export async function getProjectsByUserIdWithCategories(userId, start, end, supabase) {
+  const { data, error } = await supabase
+    .from('projects')
+    .select(
+      `
+    id,
+    title,
+    banner_image,
+    funding_goal,
+    current_funding,
+    user_id,
+    category_project!inner (
+      categories!inner (
+        image
+      )
+    )
+    `,
+    )
+    .eq('user_id', userId)
+    .range(start, end)
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+export async function getProjectsByUserIdWithContributions(userId, supabase) {
+  const { data, error } = await supabase
+    .from('projects')
+    .select(
+      `
+      id,
+    title,
+    banner_image,
+    funding_goal,
+    current_funding,
+    project_resource!inner(user_id)
+  `,
+    )
+    .eq('project_resource.user_id', userId);
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
 export async function getProjectByGithub(url, supabase) {
   const { data, error } = await supabase.from('projects').select('*').eq('github', url).single();
   if (error) throw new Error(error.message);
