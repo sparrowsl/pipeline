@@ -22,6 +22,7 @@ export async function getProjectsWithCategories(term, start, end, supabase) {
       current_funding,
       user_id,
       bio,
+      dpgStatus,
       category_project!inner (
         categories!inner (
           image
