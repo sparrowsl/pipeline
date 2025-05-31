@@ -43,7 +43,18 @@ export async function getProjectsWithCategories(term, start, end, supabase) {
 }
 
 export async function getProject(id, supabase) {
-  const { data, error } = await supabase.from('projects').select('*').eq('id', id).single();
+  const { data, error } = await supabase
+    .from('projects')
+    .select(
+      `*,
+    category_project!inner (
+        categories!inner (
+          image
+        )
+      )`,
+    )
+    .eq('id', id)
+    .single();
   if (error) throw new Error(error.message);
   return data || {};
 }
@@ -86,6 +97,7 @@ export async function getProjectsByUserIdWithCategories(userId, start, end, supa
     funding_goal,
     current_funding,
     user_id,
+    dpgStatus,
     category_project!inner (
       categories!inner (
         image

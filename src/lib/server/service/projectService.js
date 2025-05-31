@@ -67,6 +67,8 @@ function mapProjectsWithDetails(projects) {
       ...project,
       tags,
       dpgStatusCount: dpgTotalScore,
+      // export with alt name dpgCount: needed for project/[id] page
+      dpgCount: dpgTotalScore,
     };
   });
 }
@@ -100,18 +102,7 @@ export async function getProjectById(id, supabase) {
     return null;
   }
 
-  const projectCategories = await getProjectCategories([project.id], supabase);
-  const categoryIds = projectCategories.map((pc) => pc.category_id);
-  const categories = await getCategories(categoryIds, supabase);
-
-  const dpgTotalScore =
-    project?.dpgStatus?.status?.reduce((sum, status) => sum + (status.overallScore || 0), 0) || 0;
-
-  return {
-    ...project,
-    tags: categories,
-    dpgCount: dpgTotalScore,
-  };
+  return mapProjectsWithDetails([project])[0];
 }
 
 export async function getProjectByGithubUrl(githubUrl, supabase) {
