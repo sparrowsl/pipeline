@@ -416,7 +416,6 @@
               form.reset();
             }
             await applyAction(result);
-            await invalidateAll();
           };
         }}
         class="space-y-4"
