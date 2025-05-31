@@ -13,25 +13,29 @@ export async function getProjects(term, start, end, supabase) {
 }
 
 export async function getProjectsWithCategories(term, start, end, supabase) {
-  const { data, error } = await supabase
-    .from('projects')
-    .select(
-      `
+  let query = supabase.from('projects').select(
+    `
       id,
       title,
       banner_image,
       funding_goal,
       current_funding,
       user_id,
+      bio,
       category_project!inner (
         categories!inner (
           image
         )
       )
     `,
-    )
-    .range(start, end)
-    .order('created_at', { ascending: false });
+  );
+
+  // Conditionally add search filter only if term is provided
+  if (term && term.trim() !== '') {
+    query = query.ilike('title', `%${term}%`);
+  }
+
+  const { data, error } = await query.range(start, end).order('created_at', { ascending: false });
 
   if (error) throw new Error(error.message);
   return data || [];
