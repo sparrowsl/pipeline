@@ -46,7 +46,13 @@ export async function getProject(id, supabase) {
 export async function getProjectsByIds(Ids, supabase) {
   const { data, error } = await supabase
     .from('projects')
-    .select('*')
+    .select(
+      `*,  category_project!inner (
+      categories!inner (
+        image
+      )
+    )`,
+    )
     .in('id', Ids)
     .order('created_at', { ascending: false });
   if (error) throw new Error(error.message);
