@@ -43,16 +43,16 @@ const config = {
           'fonts.gstatic.com',
         ],
         'font-src': ['self', 'fonts.googleapis.com', 'fonts.gstatic.com'],
-        'img-src': [
-          'self',
-          'data:',
-          'blob:',
-          'https:', // For external images, tighten this based on your needs
-        ],
+        'img-src': ['self', 'data:', 'blob:', '*.supabase.co', '*.githubusercontent.com'],
+        'worker-src': ['self', 'blob:'],
         'connect-src': [
           'self',
           '*.supabase.co', // For Supabase API calls
           '*.sentry.io', // For Sentry error reporting
+          'https://api.github.com', // For GitHub API calls,
+          'https://api.iconify.design',
+          'https://api.simplesvg.com',
+          'https://api.unisvg.com',
         ],
         'frame-src': ['none'],
         'object-src': ['none'],
