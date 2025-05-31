@@ -20,6 +20,7 @@ import {
   addTags,
   getProjectExistingCategories,
   removeTags,
+  getProjectsByCategoriesWithPagination,
 } from '$lib/server/repo/categoryRepo.js';
 import { getDpgStatuses } from '../repo/dpgStatusRepo.js';
 import { getMultipleProfiles } from '$lib/server/repo/userProfileRepo.js';
@@ -78,28 +79,18 @@ export async function getUserProjects(userId, page, limit, supabase) {
   return mapProjectsWithDetails(projects);
 }
 
-export async function getProjectsByCategory(categoryId, page, limit, supabase) {
+export async function getProjectsByCategory(categoryIds, page, limit, supabase) {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
-  const categoryProjects = await getProjectsByCategoryId(categoryId, start, end, supabase);
-
-  const projectIds = categoryProjects.map((cp) => cp.project_id);
-
-  if (projectIds.length === 0) {
-    return [];
-  }
-
-  const projects = await getProjectsByIds(projectIds, supabase);
-
-  const projectCategories = await getProjectCategories(projectIds, supabase);
-
-  const categories = await getCategories(
-    projectCategories.map((pc) => pc.category_id),
+  const categoryProjects = await getProjectsByCategoriesWithPagination(
+    categoryIds,
+    start,
+    end,
     supabase,
   );
 
-  return mapProjectsWithTagsAndStatus(projects, projectCategories, categories);
+  return mapProjectsWithDetails(categoryProjects);
 }
 
 export async function getProjectById(id, supabase) {
