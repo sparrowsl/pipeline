@@ -77,6 +77,46 @@ const authGuard = async ({ event, resolve }) => {
   return resolve(event);
 };
 
+const apiProtection = async ({ event, resolve }) => {
+  if (event.url.pathname.startsWith('/api/')) {
+    // Define public API routes that don't require authentication
+    const publicRoutes = [
+      '/api/projects/singleProject',
+      '/api/projects', // for public project listings
+      '/api/signIn',
+      '/api/signUp',
+      // '/api/categories',
+    ];
+
+    const isPublicRoute = publicRoutes.some((route) => event.url.pathname.startsWith(route));
+
+    // For protected routes, require authentication
+    if (!isPublicRoute) {
+      const { session } = await event.locals.safeGetSession();
+
+      if (!session) {
+        return new Response('Unauthorized', { status: 401 });
+      }
+    }
+
+    // Apply origin check for all API routes (public or protected)
+    const origin = event.request.headers.get('origin');
+    const host = event.request.headers.get('host');
+    const isDevelopment = process.env.NODE_ENV === 'development';
+
+    if (origin) {
+      const expectedOrigin = `${event.url.protocol}//${host}`;
+      const isValidOrigin = origin === expectedOrigin;
+
+      if (!isValidOrigin && !isDevelopment) {
+        return new Response('Forbidden', { status: 403 });
+      }
+    }
+  }
+
+  return resolve(event);
+};
+
 const projectEvaluationWorker = new Worker(
   'projectEvaluation',
   async (job) => {
@@ -110,4 +150,4 @@ Sentry.init({
 
 export const handleError = Sentry.handleErrorWithSentry();
 
-export const handle = sequence(supabase, authGuard, Sentry.sentryHandle());
+export const handle = sequence(supabase, authGuard, apiProtection, Sentry.sentryHandle());
