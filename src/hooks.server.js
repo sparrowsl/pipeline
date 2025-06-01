@@ -79,16 +79,23 @@ const authGuard = async ({ event, resolve }) => {
 
 const apiProtection = async ({ event, resolve }) => {
   if (event.url.pathname.startsWith('/api/')) {
-    // Define public API routes that don't require authentication
+    // Define public API routes with allowed methods
     const publicRoutes = [
-      '/api/projects/singleProject',
-      '/api/projects', // for public project listings
-      '/api/signIn',
-      '/api/signUp',
-      // '/api/categories',
+      { path: '/api/projects/singleProject', methods: ['GET'] },
+      { path: '/api/projects', methods: ['GET'] },
+      { path: '/api/signIn', methods: ['POST'] },
+      { path: '/api/signUp', methods: ['POST'] },
+      // { path: '/api/categories', methods: ['GET'] },
     ];
 
-    const isPublicRoute = publicRoutes.some((route) => event.url.pathname.startsWith(route));
+    const matchedRoute = publicRoutes.find((route) => event.url.pathname.startsWith(route.path));
+
+    const isPublicRoute = matchedRoute !== undefined;
+
+    // Check if the HTTP method is allowed for public routes
+    if (isPublicRoute && !matchedRoute.methods.includes(event.request.method)) {
+      return new Response('Method Not Allowed', { status: 405 });
+    }
 
     // For protected routes, require authentication
     if (!isPublicRoute) {
