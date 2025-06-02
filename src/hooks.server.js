@@ -149,4 +149,4 @@ const projectEvaluationWorker = new Worker(
 
 console.log('Project evaluation worker is running...');
 
-export const handle = sequence(supabase, authGuard, apiProtection);
+export const handle = sequence(supabase, authGuard);
