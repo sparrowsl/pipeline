@@ -39,8 +39,8 @@
         class="flex w-full flex-col items-center"
         enctype="multipart/form-data"
         use:enhance={() => {
+          loading = true;
           return async ({ result }) => {
-            loading = true;
             if (result.type === 'failure') {
               const errorMessage = String(result?.data?.error || 'failed to edit profile');
               toast.error(errorMessage);
@@ -73,7 +73,14 @@
             class="rounded-xl bg-dashboard-purple-500 px-8 py-3 text-label-lg font-medium text-white transition-colors hover:bg-dashboard-purple-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-purple-500 disabled:pointer-events-none disabled:opacity-50"
             disabled={loading}
           >
-            {loading ? 'Updating Profile...' : 'Update Profile'}
+            {#if loading}
+              <span class="flex items-center gap-2">
+                <Icon icon="lucide:loader-2" class="h-4 w-4 animate-spin" />
+                Updating Profile...
+              </span>
+            {:else}
+              Update Profile
+            {/if}
           </button>
         </div>
       </form>
