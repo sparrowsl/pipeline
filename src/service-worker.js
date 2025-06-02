@@ -20,6 +20,16 @@ const ASSETS = [
 // Image file extensions to aggressively cache
 const IMAGE_EXTENSIONS = /\.(jpg|jpeg|png|gif|webp|svg|avif|ico)$/i;
 
+// API patterns to exclude from caching
+const API_PATTERNS = [
+  /\/api\//i, // URLs containing /api/
+];
+
+// Function to check if a URL is an API call
+function isApiCall(url) {
+  return API_PATTERNS.some((pattern) => pattern.test(url.pathname));
+}
+
 sw.addEventListener('install', (event) => {
   // Create a new cache and add all files to it
   async function addFilesToCache() {
@@ -49,6 +59,12 @@ sw.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
+  // Handle API calls - pass through without caching
+  if (isApiCall(url)) {
+    event.respondWith(handleApiRequest(event.request));
+    return;
+  }
+
   // Handle images aggressively (cache-first strategy)
   if (IMAGE_EXTENSIONS.test(url.pathname)) {
     event.respondWith(handleImageRequest(event.request));
@@ -58,6 +74,16 @@ sw.addEventListener('fetch', (event) => {
   // Handle other requests with network-first strategy
   event.respondWith(handleGeneralRequest(event.request));
 });
+
+// Simple pass-through for API calls - no caching
+async function handleApiRequest(request) {
+  try {
+    return await fetch(request);
+  } catch (error) {
+    // Let API errors bubble up naturally
+    throw error;
+  }
+}
 
 // Aggressive image caching - cache first, network fallback
 async function handleImageRequest(request) {
