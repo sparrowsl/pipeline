@@ -20,11 +20,11 @@
           X (Twitter) Profile
         </Label>
         <Input
-          type="url"
+          type="text"
           id="twitter"
           name="twitter"
           value={user.twitter}
-          placeholder="https://x.com/username"
+          placeholder="username"
           class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
         />
         <p class="text-sm text-gray-500">Share updates and engage with the community</p>
@@ -34,11 +34,11 @@
       <div class="space-y-3">
         <Label for="github" class="text-base font-semibold text-gray-800">GitHub Profile</Label>
         <Input
-          type="url"
           id="github"
+          type="text"
           name="github"
           value={user.github}
-          placeholder="https://github.com/username"
+          placeholder="username"
           class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
         />
         <p class="text-sm text-gray-500">Showcase your code repositories and contributions</p>
@@ -58,20 +58,6 @@
         <p class="text-sm text-gray-500">Connect with the developer community on Discord</p>
       </div>
 
-      <!-- LinkedIn -->
-      <div class="space-y-3">
-        <Label for="linkedin" class="text-base font-semibold text-gray-800">LinkedIn Profile</Label>
-        <Input
-          type="url"
-          id="linkedin"
-          name="linkedin"
-          value={user.linkedin}
-          placeholder="https://linkedin.com/in/username"
-          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
-        />
-        <p class="text-sm text-gray-500">Professional profile for networking and credibility</p>
-      </div>
-
       <!-- Website -->
       <div class="space-y-3">
         <Label for="website" class="text-base font-semibold text-gray-800">Personal Website</Label>
@@ -84,20 +70,6 @@
           class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
         />
         <p class="text-sm text-gray-500">Your personal website or portfolio</p>
-      </div>
-
-      <!-- Others -->
-      <div class="space-y-3">
-        <Label for="others" class="text-base font-semibold text-gray-800">Other Link</Label>
-        <Input
-          type="url"
-          id="others"
-          name="others"
-          value={user.others}
-          placeholder="https://other-platform.com"
-          class="h-14 w-full rounded-xl border-2 border-gray-200 px-4 text-base focus:border-teal-500"
-        />
-        <p class="text-sm text-gray-500">Additional relevant link (YouTube, Behance, etc.)</p>
       </div>
     </div>
   </CardContent>
