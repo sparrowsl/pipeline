@@ -130,3 +130,35 @@ async function handleGeneralRequest(request) {
     throw err;
   }
 }
+
+sw.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    event.waitUntil(
+      (async () => {
+        const { pattern } = event.data;
+        const cache = await caches.open(CACHE);
+
+        if (pattern === 'ALL') {
+          // Clear all non-image caches
+          const cacheNames = await caches.keys();
+          for (const cacheName of cacheNames) {
+            if (!cacheName.includes('images-')) {
+              await caches.delete(cacheName);
+            }
+          }
+        } else if (pattern) {
+          // Clear cache entries matching pattern
+          const keys = await cache.keys();
+          for (const request of keys) {
+            if (request.url.includes(pattern)) {
+              await cache.delete(request);
+            }
+          }
+        }
+
+        // Notify client that cache is cleared
+        event.ports[0]?.postMessage({ success: true });
+      })(),
+    );
+  }
+});
