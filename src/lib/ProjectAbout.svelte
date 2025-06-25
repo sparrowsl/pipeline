@@ -14,7 +14,7 @@
       <p class="text-body-sm text-gray-400">Last modified: No modification</p>
     {/if}
   </div>
-  <p class="text-body-lg leading-relaxed text-gray-300">
+  <p class="whitespace-break-spaces text-body-lg leading-relaxed text-gray-300">
     {project.details || project.bio || 'Project details not available.'}
   </p>
 </article>
