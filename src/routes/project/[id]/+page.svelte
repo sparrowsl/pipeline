@@ -182,9 +182,37 @@
               <Icon icon="lucide:calendar" class="h-4 w-4" />
               <time datetime={project.created_at}>Created {date}</time>
             </div>
-            <h1 class="text-display-xl font-semibold leading-tight text-white">
-              {project.title || 'Project Title'}
-            </h1>
+            <div class="flex items-center gap-4">
+              <h1 class="text-display-xl font-semibold leading-tight text-white">
+                {project.title || 'Project Title'}
+              </h1>
+
+              <!-- Social Links -->
+              <div class="flex items-center gap-3">
+                {#if project.github}
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="flex h-10 w-10 items-center justify-center rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 text-gray-400 transition-all duration-200 hover:scale-105 hover:border-dashboard-purple-500 hover:text-white"
+                    title="View on GitHub"
+                  >
+                    <Icon icon="mdi:github" class="h-5 w-5" />
+                  </a>
+                {/if}
+                {#if project.website}
+                  <a
+                    href={project.website}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="flex h-10 w-10 items-center justify-center rounded-lg border border-dashboard-gray-600 bg-dashboard-gray-800 text-gray-400 transition-all duration-200 hover:scale-105 hover:border-dashboard-purple-500 hover:text-white"
+                    title="Visit Website"
+                  >
+                    <Icon icon="mdi:globe" class="h-5 w-5" />
+                  </a>
+                {/if}
+              </div>
+            </div>
           </div>
 
           <!-- DPG Status - Prominent -->
