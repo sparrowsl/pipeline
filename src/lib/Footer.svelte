@@ -2,6 +2,23 @@
   import Icon from '@iconify/svelte';
   import Logo from './Logo.svelte';
   const currentYear = new Date().getFullYear();
+
+  // Partner logos data - you can replace these with actual partner information
+  const partners = [
+    {
+      name: 'UNICEF',
+      logo: '/unicef.png', // Replace with actual logo path
+      url: 'https://www.unicef.org',
+      alt: 'UNICEF Logo',
+    },
+    {
+      name: 'Government of Sierra Leone',
+      logo: '/mocti.png', // Replace with actual logo path
+      url: 'https://www.gov.sl',
+      alt: 'Government of Sierra Leone Logo',
+    },
+    // Add more partners as needed
+  ];
 </script>
 
 <footer
@@ -32,7 +49,8 @@
           </li>
           <li>
             <a
-              href="/resources/digital-public-good"
+              href="https://www.digitalpublicgoods.net/standard"
+              target="_blank"
               class="transition-colors duration-300 hover:text-dashboard-yellow-400"
               >Learn about DPGs</a
             >
@@ -40,10 +58,22 @@
         </ul>
       </nav>
 
-      <Icon
-        icon="prime:twitter"
-        class="mt-8 block cursor-pointer text-4xl text-gray-300 transition-colors hover:text-dashboard-yellow-400"
-      />
+      <!-- Partners Section -->
+      <div class="mt-8 sm:mt-10">
+        <h3 class="mb-4 text-center text-sm font-medium text-gray-400 sm:text-base">
+          Our Partners
+        </h3>
+        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+          {#each partners as partner}
+            <img
+              src={partner.logo}
+              alt={partner.alt}
+              class="h-8 w-auto object-contain opacity-60 transition-all duration-300 hover:opacity-100 sm:h-10"
+              loading="lazy"
+            />
+          {/each}
+        </div>
+      </div>
     </div>
 
     <hr class="my-8 border-dashboard-gray-700 sm:my-10" />
