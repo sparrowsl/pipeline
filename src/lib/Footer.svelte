@@ -12,7 +12,7 @@
       alt: 'UNICEF Logo',
     },
     {
-      name: 'Government of Sierra Leone',
+      name: 'Government of Sierra Leone | MoCTI',
       logo: '/mocti.png', // Replace with actual logo path
       url: 'https://www.gov.sl',
       alt: 'Government of Sierra Leone Logo',
@@ -68,7 +68,8 @@
             <img
               src={partner.logo}
               alt={partner.alt}
-              class="h-8 w-auto object-contain opacity-60 transition-all duration-300 hover:opacity-100 sm:h-10"
+              title={partner.name}
+              class="h-10 w-auto object-contain opacity-60 transition-all duration-300 hover:opacity-100 sm:h-12"
               loading="lazy"
             />
           {/each}
@@ -86,16 +87,14 @@
       </p>
       <div class="flex items-center">
         <a
-          href="/terms"
-          class="text-gray-400 transition-colors duration-300 hover:text-dashboard-yellow-400"
-          >Terms and Conditions</a
+          href="https://github.com/christex-foundation/pipeline"
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-2 text-gray-400 transition-colors duration-300 hover:text-dashboard-yellow-400"
         >
-        <span class="mx-2 text-gray-600">·</span>
-        <a
-          href="/privacy"
-          class="text-gray-400 transition-colors duration-300 hover:text-dashboard-yellow-400"
-          >Privacy Policy</a
-        >
+          <Icon icon="mdi:github" class="h-4 w-4" />
+          View on GitHub
+        </a>
       </div>
     </div>
   </div>
